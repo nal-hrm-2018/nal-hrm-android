@@ -1,3 +1,48 @@
 <resources>
-    <string name="app_name">hrm-management</string>
+    <string name="app_name">HRM</string>
+    <string name="title_activity_menu">MenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="nav.dashboard">Dashboard</string>
+    <string name="nav.project">Project</string>
+    <string name="nav.absence">Absence</string>
+    <string name="nav.settings">Settings</string>
+    <string name="nav.logout">Log out</string>
+    <string-array name="nav_item_activity_titles">
+        <item>Dashboard</item>
+        <item>Project</item>
+        <item>Absence</item>
+        <item>Notification</item>
+        <item>Settings</item>
+    </string-array>
+
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <string name="activity_title_about_us">About Us</string>
+    <string name="activity_title_privacy_policy">Privacy Policy</string>
+    <string name="action_clear_all">Clear All</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_mark_all_read">Mark All as Read</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_email">Username or Email</string>
+    <string name="hint_pass">Password</string>
+    <string name="text_login">LOGIN</string>
+    <string name="textview.hint.profile_name">Lưu Ngọc Lan</string>
+    <string name="textview.hint.profile_role">DEV</string>
+    <string name="textview.hint.profile_email">luungoclan@gmail.com</string>
+    <string name="textview.text.address">Address(*)</string>
+    <string name="textview.text.phone">Phone (*)</string>
+    <string name="textview.text.gender">Gender (*)</string>
+    <string name="textview.text.marital_status">Marital Status (*)</string>
+    <string name="textview.text.birthday">Birthday (*)</string>
+    <string name="textview.text.position">Position (*)</string>
+    <string name="textview.text.start_day">Start Day (*)</string>
+    <string name="textview.text.end_day">End Day (*)</string>
+    <string name="checkbox.text.remember">Remember me</string>
 </resources>
