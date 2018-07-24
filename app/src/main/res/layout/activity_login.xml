@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dal.hrm_management.MainActivity">
+    tools:context="com.dal.hrm_management.views.Login.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
