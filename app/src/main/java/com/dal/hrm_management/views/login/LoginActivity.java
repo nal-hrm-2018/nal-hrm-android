@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views.Login;
+package com.dal.hrm_management.views.login;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

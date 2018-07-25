@@ -1,5 +1,6 @@
-package com.dal.hrm_management.views.Home;
+package com.dal.hrm_management.views.home;
 
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.ExpandableListView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.MenuModel;
+import com.dal.hrm_management.views.list_employee.ListEmployee;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +39,15 @@ public class HomePage extends AppCompatActivity {
         populateExpandableList();
         initNavigationMenu();
     }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     private void populateExpandableList() {
         expandableListAdapter = new com.dal.hrm_management.adapter.ExpandableListAdapter(this,headerList,childList);
@@ -48,8 +59,11 @@ public class HomePage extends AppCompatActivity {
 
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
+                        if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Dashboard")){
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container,new ListEmployee()).commit();
+                        }
                         Log.e("GROUP",headerList.get(groupPosition).menuName);
-
                         onBackPressed();
                     }
                 }
@@ -83,11 +97,6 @@ public class HomePage extends AppCompatActivity {
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-//        menuModel = new MenuModel("Absence",true,false);
-//        headerList.add(menuModel);
-//        if (!menuModel.hasChildren) {
-//            childList.put(menuModel, null);
-//        }
         menuModel = new MenuModel("Manage",true,true,null);
         headerList.add(menuModel);
 
@@ -104,7 +113,6 @@ public class HomePage extends AppCompatActivity {
 
         }
     }
-
     private void initNavigationMenu() {
         mDrawerLayout = findViewById(R.id.drawer_main);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
