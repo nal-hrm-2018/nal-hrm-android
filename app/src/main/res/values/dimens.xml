@@ -21,4 +21,6 @@
     <dimen name="avatar_size_medium">150dp</dimen>
     <dimen name="avatar_size_small">100dp</dimen>
     <dimen name="hihi">150dp</dimen>
+    <dimen name="button.changepass.radius">5dp</dimen>
+    <dimen name="button.login.radius">50dp</dimen>
 </resources>
