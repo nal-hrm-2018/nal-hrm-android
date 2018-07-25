@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.dal.hrm_management.R;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

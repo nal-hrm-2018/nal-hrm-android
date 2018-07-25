@@ -1,18 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dal.hrm_management.views.Login.MainActivity">
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context=".views.Login.LoginActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/imv_logo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/edt_margin_bottom"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:adjustViewBounds="false"
+        android:scaleType="fitCenter"
+        android:src="@drawable/img_logo_nal" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imv_logo"
+        android:layout_marginTop="@dimen/logo_padding_bottom">
+
+        <EditText
+
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/edt_margin_bottom"
+            android:layout_marginLeft="@dimen/edt_margin_left"
+            android:layout_marginRight="@dimen/edt_margin_right"
+            android:background="@drawable/boder_edittext"
+            android:drawableRight="@drawable/ic_person_black_24dp"
+            android:drawableTint="@color/colorAccent"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/text_padding"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_large" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayoutEmail">
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/edt_margin_bottom"
+            android:layout_marginLeft="@dimen/edt_margin_left"
+            android:layout_marginRight="@dimen/edt_margin_right"
+            android:background="@drawable/boder_edittext"
+            android:drawableRight="@drawable/ic_vpn_key_black_24dp"
+            android:drawableTint="@color/colorAccent"
+            android:hint="@string/hint_pass"
+            android:inputType="textPassword"
+            android:padding="@dimen/text_padding"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_large" />
+    </android.support.design.widget.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/cb_remember"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayoutPassword"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/text_padding"
+        android:text="@string/checkbox.text.remember"
+        android:textSize="@dimen/text_size_small" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cb_remember"
+        android:layout_marginLeft="@dimen/edt_margin_left"
+        android:layout_marginRight="@dimen/edt_margin_right"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/shape_button_login"
+        android:text="@string/text_login"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_large" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

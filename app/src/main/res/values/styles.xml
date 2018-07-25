@@ -12,7 +12,11 @@
         <item name="android:color">@color/color_white</item>
         <item name="android:textSize">@dimen/nav_menu_textsize</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -21,5 +25,5 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <dimen name="nav_menu_textsize">10dp</dimen>
+
 </resources>
