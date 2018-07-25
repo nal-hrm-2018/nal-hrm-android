@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">hrm-management</string>
+    <string name="nav_header_desc">Navigaion header</string>
+    <string name="nav_header_title">Phan Thanh Tú</string>
+    <string name="nav_header_subtitle">mr.tus97@gmail.com</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="action_notification">notification</string>
 </resources>
