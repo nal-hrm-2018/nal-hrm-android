@@ -55,4 +55,6 @@
     <string name="radio.text.gender_female">Female</string>
     <string name="button.changePassword">Change Password</string>
     <string name="label.viewProfile">Your Profile</string>
+    <string name="employee_view_basic">Basic</string>
+    <string name="employee_view_project">Project</string>
 </resources>
