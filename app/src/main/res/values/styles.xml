@@ -20,7 +20,15 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
+    <style name="NameEmpInList">
+        <item name="android:textSize">@dimen/hovaten_textSize</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginLeft">@dimen/text_list_emp_margin_left</item>
+    </style>
+    <style name="infoEmpInList">
+        <item name="android:textSize">@dimen/info_textSize</item>
+        <item name="android:layout_marginLeft">@dimen/text_list_emp_margin_left</item>
+    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views.Login;
+package com.dal.hrm_management.views.login;
 
 import android.content.Intent;
 import android.os.Bundle;

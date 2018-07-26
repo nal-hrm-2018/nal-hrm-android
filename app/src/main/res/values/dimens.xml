@@ -21,6 +21,16 @@
     <dimen name="avatar_size_medium">150dp</dimen>
     <dimen name="avatar_size_small">100dp</dimen>
     <dimen name="hihi">150dp</dimen>
+    <dimen name="list_emp_margin_top_item">10dp</dimen>
+    <dimen name="image_list_emp_width">100dp</dimen>
+    <dimen name="image_list_emp_height">100dp</dimen>
+    <dimen name="image_list_emp_margin_left">8dp</dimen>
+    <dimen name="image_working_list_emp_width">48dp</dimen>
+    <dimen name="image_working_list_emp_height">48dp</dimen>
+    <dimen name="hovaten_textSize">30sp</dimen>
+    <dimen name="text_list_emp_margin_left">24dp</dimen>
+    <dimen name="info_textSize">20sp</dimen>
     <dimen name="button.changepass.radius">5dp</dimen>
     <dimen name="button.login.radius">50dp</dimen>
+    <dimen name="logo_height">150dp</dimen>
 </resources>
