@@ -4,24 +4,24 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/list_emp_margin_top_item">
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imv_ava_emp"
+        android:id="@+id/imv_avaEmp"
         android:layout_width="@dimen/image_list_emp_width"
         android:layout_height="@dimen/image_list_emp_height"
         android:background="@color/colorAccent"
         android:layout_marginLeft="@dimen/image_list_emp_margin_left" />
     <TextView
-        android:id="@+id/tv_ho_va_ten"
+        android:id="@+id/tv_hoVaTen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imv_ava_emp"
+        android:layout_toRightOf="@+id/imv_avaEmp"
         android:theme="@style/NameEmpInList"
         android:text="Họ và tên"/>
     <TextView
-        android:id="@+id/tv_chuc_vu"
+        android:id="@+id/tv_chucVu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imv_ava_emp"
-        android:layout_below="@+id/tv_ho_va_ten"
+        android:layout_toRightOf="@id/imv_avaEmp"
+        android:layout_below="@+id/tv_hoVaTen"
         android:theme="@style/infoEmpInList"
         android:text="Chức vụ"/>
     <TextView
@@ -29,11 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
-        android:layout_toRightOf="@id/imv_ava_emp"
+        android:layout_toRightOf="@id/imv_avaEmp"
         android:theme="@style/infoEmpInList"
-        android:layout_below="@id/tv_chuc_vu"/>
+        android:layout_below="@id/tv_chucVu"/>
     <ImageView
-        android:id="@+id/imv_tinh_trang_lam_viec"
+        android:id="@+id/imv_tinhTrangLamViec"
         android:layout_width="@dimen/image_working_list_emp_width"
         android:layout_height="@dimen/image_working_list_emp_height"
         android:src="@drawable/ic_close"

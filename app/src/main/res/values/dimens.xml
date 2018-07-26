@@ -30,4 +30,7 @@
     <dimen name="hovaten_textSize">30sp</dimen>
     <dimen name="text_list_emp_margin_left">24dp</dimen>
     <dimen name="info_textSize">20sp</dimen>
+    <dimen name="button.changepass.radius">5dp</dimen>
+    <dimen name="button.login.radius">50dp</dimen>
+    <dimen name="logo_height">150dp</dimen>
 </resources>

@@ -51,4 +51,8 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="action_notification">notification</string>
+    <string name="radio.text.gender_male">Male</string>
+    <string name="radio.text.gender_female">Female</string>
+    <string name="button.changePassword">Change Password</string>
+    <string name="label.viewProfile">Your Profile</string>
 </resources>
