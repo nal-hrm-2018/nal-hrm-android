@@ -66,4 +66,10 @@
     <string name="desciption.hint.start">22/9/2018</string>
     <string name="desciption.hint.end">22/09/2020</string>
     <string name="employee_view_value_chart">Value chart</string>
+    <string name="edt_check_error_invalid_email">invalid email</string>
+    <string name="error_invalid_pass">invalid password</string>
+    <string name="catch_invalid_password_empty">Password is not empty</string>
+    <string name="catch_invalid_password_length">Length password is greater 6</string>
+    <string name="catch_invalid_email_empty">Email is not empty</string>
+    <string name="error_incorrect_password">incorrect password</string>
 </resources>

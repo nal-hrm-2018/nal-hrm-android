@@ -92,25 +92,36 @@ public class HomePage extends AppCompatActivity {
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel("Project",true,false,null);
+        menuModel = new MenuModel("Project",true,false,getDrawable(R.drawable.ic_project));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel("Manage",true,true,null);
+        menuModel = new MenuModel("Absence",true,false,getDrawable(R.drawable.ic_absence));
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+
+        menuModel = new MenuModel("Manage",true,true,getDrawable(R.drawable.ic_manage));
         headerList.add(menuModel);
 
         List<MenuModel> childModelsList = new ArrayList<>();
-        MenuModel chilModel = new MenuModel("Employee",false,false,null);
+        MenuModel chilModel = new MenuModel("Employee",false,false,getDrawable(R.drawable.ic_employee));
         childModelsList.add(chilModel);
 
-        chilModel = new MenuModel("Absence1",false,false,null);
+        chilModel = new MenuModel("Absence1",false,false,getDrawable(R.drawable.ic_absence));
         childModelsList.add(chilModel);
 
         if (menuModel.hasChildren) {
             Log.d("API123","here");
             childList.put(menuModel, childModelsList);
 
+        }
+        menuModel = new MenuModel("Logout",true,false,getDrawable(R.drawable.ic_logout));
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
         }
     }
     private void initNavigationMenu() {
