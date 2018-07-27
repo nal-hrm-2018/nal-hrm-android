@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
@@ -42,12 +44,14 @@ public class ValueChartEmployeeFragment extends Fragment implements OnChartValue
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(false);
         View view = inflater.inflate(R.layout.fragment_value_chart_employee, container, false);
         initUI(view);
         initDataBarChart();
         addEventUi();
         return view;
     }
+
     private void addEventUi() {
         barChart.setOnChartValueSelectedListener(this);
     }
@@ -111,5 +115,10 @@ public class ValueChartEmployeeFragment extends Fragment implements OnChartValue
 
     }
 
-
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_search);
+        item.setVisible(false);
+    }
 }
+
