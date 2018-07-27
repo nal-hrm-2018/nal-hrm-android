@@ -72,4 +72,11 @@
     <string name="catch_invalid_password_length">Length password is greater 6</string>
     <string name="catch_invalid_email_empty">Email is not empty</string>
     <string name="error_incorrect_password">incorrect password</string>
+    <string name="textview.nameProjectEmployee">Name Project</string>
+    <string name="textview.roleProjectEmployee">Role Employee</string>
+    <string name="textview.dayStartProjectEmployee">22/09/2018</string>
+    <string name="textview.dayEndProjectEmployee">16/12/2018</string>
+    <string name="textview.statusOfProject">In-Progress</string>
+    <string name="textview.text.dayStart">Start at:</string>
+    <string name="textview.text.dayEnd">End at:</string>
 </resources>
