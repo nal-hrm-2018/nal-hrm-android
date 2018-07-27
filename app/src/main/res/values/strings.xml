@@ -57,4 +57,13 @@
     <string name="label.viewProfile">Your Profile</string>
     <string name="employee_view_basic">Basic</string>
     <string name="employee_view_project">Project</string>
+    <string name="description.hint.address">Da Nang, Viet Nam</string>
+    <string name="description.hint.phone">0123456789</string>
+    <string name="description.hint.gender">Female</string>
+    <string name="desciption.hint.statusMarital">Single</string>
+    <string name="description.hint.birth">16/12/1996</string>
+    <string name="description.hint.position">Fulltime</string>
+    <string name="desciption.hint.start">22/9/2018</string>
+    <string name="desciption.hint.end">22/09/2020</string>
+    <string name="employee_view_value_chart">Value chart</string>
 </resources>

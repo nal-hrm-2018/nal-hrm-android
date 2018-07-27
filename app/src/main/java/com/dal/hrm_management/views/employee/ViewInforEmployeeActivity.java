@@ -45,6 +45,7 @@ public class ViewInforEmployeeActivity extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new BasicEmployeeFragment(),getString(R.string.employee_view_basic));
+        adapter.addFragment(new ValueChartEmployeeFragment(),getString(R.string.employee_view_value_chart));
         adapter.addFragment(new ProjectEmployeeFragment(),getString(R.string.employee_view_project));
         viewPager.setAdapter(adapter);
     }

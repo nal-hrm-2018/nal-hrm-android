@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/boder_edittext"
-                    android:hint="Da Nang, Viet Nam"
+                    android:hint="@string/description.hint.address"
                     android:paddingBottom="@dimen/text_padding"
                     android:paddingLeft="@dimen/text_padding"
                     android:paddingRight="@dimen/text_padding"
@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/boder_edittext"
-                    android:hint="0123456789"
+                    android:hint="@string/description.hint.phone"
                     android:paddingBottom="@dimen/text_padding"
                     android:paddingLeft="@dimen/text_padding"
                     android:paddingRight="@dimen/text_padding"
@@ -138,7 +138,7 @@
                     android:paddingLeft="@dimen/text_padding"
                     android:paddingRight="@dimen/text_padding"
                     android:paddingTop="@dimen/text_padding"
-                    android:text="Female" />
+                    android:hint="@string/description.hint.gender" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                     android:paddingLeft="@dimen/text_padding"
                     android:paddingRight="@dimen/text_padding"
                     android:paddingTop="@dimen/text_padding"
-                    android:text="Single" />
+                    android:hint="@string/desciption.hint.statusMarital" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                     android:paddingLeft="@dimen/text_padding"
                     android:paddingRight="@dimen/text_padding"
                     android:paddingTop="@dimen/text_padding"
-                    android:text="16/12/1996" />
+                    android:hint="@string/description.hint.birth" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -197,7 +197,7 @@
                     android:paddingLeft="@dimen/text_padding"
                     android:paddingRight="@dimen/text_padding"
                     android:paddingTop="@dimen/text_padding"
-                    android:text="Fulltime" />
+                    android:hint="@string/description.hint.position" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -243,7 +243,7 @@
                         android:paddingLeft="@dimen/text_padding"
                         android:paddingRight="@dimen/text_padding"
                         android:paddingTop="@dimen/text_padding"
-                        android:text="22/9/2018" />
+                        android:hint="@string/desciption.hint.start" />
 
 
                     <TextView
@@ -257,16 +257,11 @@
                         android:paddingLeft="@dimen/text_padding"
                         android:paddingRight="@dimen/text_padding"
                         android:paddingTop="@dimen/text_padding"
-                        android:text="22/09/2020" />
+                        android:hint="@string/desciption.hint.end" />
                 </LinearLayout>
-
-
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
