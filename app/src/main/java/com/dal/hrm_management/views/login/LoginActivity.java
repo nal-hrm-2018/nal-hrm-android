@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.models.LoginModel;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.home.HomePage;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
@@ -130,8 +131,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void loginSucess() {
+    public void loginSucess(String token) {
         Intent intent = new Intent(LoginActivity.this, HomePage.class);
+        intent.putExtra("token",token);
         startActivity(intent);
         progressBar.setVisibility(View.INVISIBLE);
     }
