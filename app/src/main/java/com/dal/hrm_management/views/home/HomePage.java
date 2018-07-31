@@ -94,7 +94,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
-                        if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Dashboard")) {
+                        if (headerList.get(groupPosition).menuName.equalsIgnoreCase(getString(R.string.menu_dashboard))) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployee()).commit();
                         }
                         Log.e("GROUP", headerList.get(groupPosition).menuName);
@@ -121,30 +121,30 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void prepareMenuData() {
-        MenuModel menuModel = new MenuModel("Dashboard", true, false, getDrawable(R.drawable.ic_dashboard));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_dashboard), true, false, getDrawable(R.drawable.ic_dashboard));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel("Project", true, false, getDrawable(R.drawable.ic_project));
+        menuModel = new MenuModel(getString(R.string.menu_project), true, false, getDrawable(R.drawable.ic_project));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel("Absence", true, false, getDrawable(R.drawable.ic_absence));
+        menuModel = new MenuModel(getString(R.string.menu_absence), true, false, getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
 
-        menuModel = new MenuModel("Manage", true, true, getDrawable(R.drawable.ic_manage));
+        menuModel = new MenuModel(getString(R.string.menu_manage), true, true, getDrawable(R.drawable.ic_manage));
         headerList.add(menuModel);
 
         List<MenuModel> childModelsList = new ArrayList<>();
-        MenuModel chilModel = new MenuModel("Employee", false, false, getDrawable(R.drawable.ic_employee));
+        MenuModel chilModel = new MenuModel(getString(R.string.menu_employee), false, false, getDrawable(R.drawable.ic_employee));
         childModelsList.add(chilModel);
 
-        chilModel = new MenuModel("Absence1", false, false, getDrawable(R.drawable.ic_absence));
+        chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getDrawable(R.drawable.ic_absence));
         childModelsList.add(chilModel);
 
         if (menuModel.hasChildren) {
@@ -152,7 +152,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             childList.put(menuModel, childModelsList);
 
         }
-        menuModel = new MenuModel("Logout", true, false, getDrawable(R.drawable.ic_logout));
+        menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
