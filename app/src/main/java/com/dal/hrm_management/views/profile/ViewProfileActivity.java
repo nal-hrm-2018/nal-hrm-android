@@ -1,5 +1,7 @@
 package com.dal.hrm_management.views.profile;
 
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.models.profile.Profile;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
+import com.dal.hrm_management.presenters.profile.ProfilePresenter;
+import com.squareup.picasso.Picasso;
 
-public class ViewProfileActivity extends AppCompatActivity {
+public class ViewProfileActivity extends AppCompatActivity implements IProfileActivity {
 
     private ImageView imv_avatar;
     private TextView tv_name;
@@ -23,12 +30,16 @@ public class ViewProfileActivity extends AppCompatActivity {
     private TextView tv_phone;
     private TextView tv_gender;
     private TextView tv_maritalStatus;
-    private TextView tv_birthday ;
-    private TextView tv_position ;
-    private TextView tv_start ;
-    private TextView tv_end ;
+    private TextView tv_birthday;
+    private TextView tv_position;
+    private TextView tv_start;
+    private TextView tv_end;
     private Button btn_changePassword;
+    private ProgressBar progressBar;
+    private SharedPreferences sharedPreferences;
+    private ProfilePresenter profilePresenter;
 
+    String uriImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +47,17 @@ public class ViewProfileActivity extends AppCompatActivity {
         displayBackHome();
         initUI();
         addEventOnUI();
+        initPresenter();
+        getDataFromServer();
+
+    }
+
+    private void getDataFromServer() {
+        profilePresenter.getProfile(LoginPresenter.token);
+    }
+
+    private void initPresenter() {
+        profilePresenter = new ProfilePresenter(this);
     }
 
     private void addEventOnUI() {
@@ -54,13 +76,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         tv_email = (TextView) findViewById(R.id.tv_email);
         tv_address = (TextView) findViewById(R.id.tv_address);
         tv_phone = (TextView) findViewById(R.id.tv_phone);
-        tv_gender= (TextView) findViewById(R.id.tv_gender);
-        tv_maritalStatus= (TextView) findViewById(R.id.tv_maritalStatus);
+        tv_gender = (TextView) findViewById(R.id.tv_gender);
+        tv_maritalStatus = (TextView) findViewById(R.id.tv_maritalStatus);
         tv_birthday = (TextView) findViewById(R.id.tv_birthday);
         tv_position = (TextView) findViewById(R.id.tv_position);
         tv_start = (TextView) findViewById(R.id.tv_start);
         tv_end = (TextView) findViewById(R.id.tv_end);
         btn_changePassword = (Button) findViewById(R.id.btn_changepassword);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
 
     private void displayBackHome() {
@@ -87,5 +110,29 @@ public class ViewProfileActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void getProfileSuccess(Profile profile) {
+        uriImage = profile.getAvatar();
+        Uri uri = Uri.parse(uriImage);
+        Picasso.with(getBaseContext()).load(uri).into(imv_avatar);
+        tv_name.setText(profile.getName());
+        tv_role.setText(profile.getRoleId() + "");
+        tv_email.setText(profile.getEmail());
+        tv_address.setText(profile.getAddress());
+        tv_phone.setText(profile.getMobile());
+        tv_gender.setText(profile.getGender() + "");
+        tv_maritalStatus.setText(profile.getMaritalStatus() + "");
+        tv_birthday.setText(profile.getBirthday());
+        //tv_position
+        tv_start.setText(profile.getStartworkDate());
+        tv_end.setText(profile.getEndworkDate());
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void getProfileFailure() {
+        progressBar.setVisibility(View.VISIBLE);
     }
 }
