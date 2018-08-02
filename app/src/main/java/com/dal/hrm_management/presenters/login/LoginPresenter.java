@@ -13,6 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginPresenter implements ILoginPresenter {
+    public static String token;
     private ILoginActivity iLoginActivity;
 
     public LoginPresenter(ILoginActivity iLoginActivity) {
@@ -26,10 +27,12 @@ public class LoginPresenter implements ILoginPresenter {
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+
                 Log.d("Result_code", String.valueOf(response.body().getResultCode()));
                 if (response.body().getResultCode()==200){
-                    String token = response.body().getData();
+                    LoginPresenter.token = response.body().getData();
                     iLoginActivity.loginSucess(token);
+
                 }else{
                     iLoginActivity.loginFailure();
                 }
