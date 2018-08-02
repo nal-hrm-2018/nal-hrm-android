@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,15 +20,16 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.MenuModel;
-import com.dal.hrm_management.views.list_employee.ListEmployee;
+import com.dal.hrm_management.views.list_employee.ListEmployeeActivity;
+import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ExpandableListAdapter expandableListAdapter;
     ExpandableListView expandableListView;
     List<MenuModel> headerList = new ArrayList<>();
@@ -66,9 +68,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         navigation_menu = (NavigationView) findViewById(R.id.navigation_menu);
         navigation_menu.setNavigationItemSelectedListener(this);
         navHeader = navigation_menu.getHeaderView(0);
-        imv_avatar = (ImageView) navHeader.findViewById(R.id.imv_avatar);
-        tv_nameProfile = (TextView) navHeader.findViewById(R.id.tv_nameProfile);
-        tv_emailProfile = (TextView) navHeader.findViewById(R.id.tv_emailProfile);
+        imv_avatar = navHeader.findViewById(R.id.imv_avatar);
+
+        tv_nameProfile = navHeader.findViewById(R.id.tv_emailProfile_header);
+        tv_emailProfile = navHeader.findViewById(R.id.tv_emailProfile_header);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         expandableListView = findViewById(R.id.expandableListView);
@@ -94,14 +97,29 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
-                        if (headerList.get(groupPosition).menuName.equalsIgnoreCase(getString(R.string.menu_dashboard))) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployee()).commit();
+
+                        if (headerList.get(groupPosition).menuName
+                                .equals(getString(R.string.menu_dashboard))){
+
+                        }else if (headerList.get(groupPosition).menuName
+                                .equals(getString(R.string.menu_project))){
+
+                        }else if (headerList.get(groupPosition).menuName
+                                .equals(getString(R.string.menu_absence))){
+
+                        }else if (headerList.get(groupPosition).menuName
+                                .equals(getString(R.string.menu_logout))){
+                            Intent intent = new Intent(HomePage.this,LoginActivity.class);
+                            startActivity(intent);
                         }
-                        Log.e("GROUP", headerList.get(groupPosition).menuName);
+
+                        Log.e("GROUP",headerList.get(groupPosition).menuName);
+                        if (headerList.get(groupPosition).menuName.equalsIgnoreCase(getString(R.string.menu_dashboard))) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployeeActivity()).commit();
+                        }
                         onBackPressed();
                     }
                 }
-
                 return false;
             }
         });
@@ -112,25 +130,37 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
-                    Log.e("GROUP", model.menuName);
-                }
+                    Log.d("GROUP",model.menuName);
+                    if (model.menuName.equals(getString(R.string.menu_employee))){
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container,new ListEmployeeActivity()).commit();
+                    }
 
+
+                Log.e("GROUP", model.menuName);
+                    onBackPressed();
+                }
                 return false;
             }
         });
     }
 
     private void prepareMenuData() {
+
         MenuModel menuModel = new MenuModel(getString(R.string.menu_dashboard), true, false, getDrawable(R.drawable.ic_dashboard));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
+
+
         menuModel = new MenuModel(getString(R.string.menu_project), true, false, getDrawable(R.drawable.ic_project));
+
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
+
         menuModel = new MenuModel(getString(R.string.menu_absence), true, false, getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {

@@ -79,6 +79,7 @@
     <string name="textview.statusOfProject">In-Progress</string>
     <string name="textview.text.dayStart">Start at:</string>
     <string name="textview.text.dayEnd">End at:</string>
+
     <string name="menu.dashboard">Dashboard</string>
     <string name="menu_project">Project</string>
     <string name="menu_absence">Absence</string>
