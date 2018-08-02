@@ -79,11 +79,12 @@
     <string name="textview.statusOfProject">In-Progress</string>
     <string name="textview.text.dayStart">Start at:</string>
     <string name="textview.text.dayEnd">End at:</string>
-    <string name="child_absence">Manage Absence</string>
-    <string name="Employee">Employee</string>
-    <string name="Manage">Manage</string>
-    <string name="Absence">Absence</string>
-    <string name="Project">Project</string>
-    <string name="Dashboard">Dashboard</string>
-    <string name="Logout">Logout</string>
+
+    <string name="menu.dashboard">Dashboard</string>
+    <string name="menu_project">Project</string>
+    <string name="menu_absence">Absence</string>
+    <string name="menu_manage">Manage</string>
+    <string name="menu_employee">Employee</string>
+    <string name="menu_absence_empl">Absence1</string>
+    <string name="menu_logout">Logout</string>
 </resources>
