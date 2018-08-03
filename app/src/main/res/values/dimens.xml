@@ -18,8 +18,9 @@
     <dimen name="text_size_medium">17sp</dimen>
     <dimen name="text_size_small">15sp</dimen>
     <dimen name="nav_menu_textsize">10dp</dimen>
-    <dimen name="avatar_size_medium">150dp</dimen>
-    <dimen name="avatar_size_small">100dp</dimen>
+    <dimen name="avatar_size_large">150dp</dimen>
+    <dimen name="avatar_size_medium">105dp</dimen>
+    <dimen name="avatar_size_small">72dp</dimen>
     <dimen name="hihi">150dp</dimen>
     <dimen name="list_emp_margin_top_item">10dp</dimen>
     <dimen name="image_list_emp_width">100dp</dimen>
@@ -33,4 +34,7 @@
     <dimen name="button.changepass.radius">5dp</dimen>
     <dimen name="button.login.radius">50dp</dimen>
     <dimen name="logo_height">150dp</dimen>
+    <dimen name="bolder_width">2dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="icon_size_button">32dp</dimen>
 </resources>

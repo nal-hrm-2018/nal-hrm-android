@@ -77,7 +77,7 @@ public class ProjectEmployeeFragment extends Fragment implements SearchView.OnQu
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_searchproject_employee, menu);
+        inflater.inflate(R.menu.search, menu);
         super.onCreateOptionsMenu(menu, inflater);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         MenuItem searchItem = menu.findItem(R.id.action_search);

@@ -8,10 +8,12 @@
         android:id="@+id/imv_list_child"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:tint="@color/color_white"/>
     <TextView
         android:id="@+id/lblListItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_white"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
 </LinearLayout>

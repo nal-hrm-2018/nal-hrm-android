@@ -23,10 +23,11 @@
         <ExpandableListView
             android:id="@+id/expandableListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="176dp"
             android:dividerHeight="0dp"
-            android:groupIndicator="@null">
+            android:groupIndicator="@null"
+            android:background="@drawable/side_nav_bar">
         </ExpandableListView>
     </android.support.design.widget.NavigationView>
 
