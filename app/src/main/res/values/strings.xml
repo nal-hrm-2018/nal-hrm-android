@@ -87,4 +87,8 @@
     <string name="menu_employee">Employee</string>
     <string name="menu_absence_empl">Absence1</string>
     <string name="menu_logout">Logout</string>
+    <string name="tv_soNgayPhepCoTheNghi">Số ngày phép có thể nghỉ :</string>
+    <string name="tv_soNgayPhepNamNgoai">Số ngày phép năm ngoái :</string>
+    <string name="action_search">search</string>
+    <string name="tv_soNgayNghiKhongLuong">Số ngày nghỉ không lương</string>
 </resources>

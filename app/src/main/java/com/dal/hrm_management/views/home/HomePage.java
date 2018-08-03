@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.MenuModel;
+import com.dal.hrm_management.views.absence.AbsenceView;
 import com.dal.hrm_management.views.list_employee.ListEmployeeActivity;
 import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
@@ -52,6 +55,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         prepareMenuData();
         populateExpandableList();
         initNavigationMenu();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.app_bar_menu,menu);
+        return true;
     }
 
     private void addEvent() {
@@ -98,25 +108,18 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
 
-                        if (headerList.get(groupPosition).menuName
-                                .equals(getString(R.string.menu_dashboard))){
-
-                        }else if (headerList.get(groupPosition).menuName
-                                .equals(getString(R.string.menu_project))){
-
-                        }else if (headerList.get(groupPosition).menuName
-                                .equals(getString(R.string.menu_absence))){
-
-                        }else if (headerList.get(groupPosition).menuName
-                                .equals(getString(R.string.menu_logout))){
+                        if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_dashboard))){
+                            getSupportActionBar().setTitle(R.string.menu_dashboard);
+                        }else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_project))){
+                            getSupportActionBar().setTitle(R.string.menu_project);
+                        }else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_absence))){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AbsenceView()).commit();
+                            getSupportActionBar().setTitle(R.string.menu_absence);
+                        }else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))){
                             Intent intent = new Intent(HomePage.this,LoginActivity.class);
                             startActivity(intent);
                         }
-
-                        Log.e("GROUP",headerList.get(groupPosition).menuName);
-                        if (headerList.get(groupPosition).menuName.equalsIgnoreCase(getString(R.string.menu_dashboard))) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployeeActivity()).commit();
-                        }
+                        Log.d("GROUP",headerList.get(groupPosition).menuName);
                         onBackPressed();
                     }
                 }
