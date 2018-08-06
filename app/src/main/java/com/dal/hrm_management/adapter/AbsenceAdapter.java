@@ -30,9 +30,14 @@ public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataVie
 
     @Override
     public void onBindViewHolder(AbsenceAdapter.DataViewHolder holder, int position) {
-        String type = arr.get(position).getType();
-        holder.tv_type.setText(type);
+        holder.tv_type.setText(arr.get(position).getType());
+        holder.tv_startAt.setText(arr.get(position).getDateStart());
+        holder.tv_endat.setText(arr.get(position).getDateEnd());
+        holder.tv_status.setText(arr.get(position).getStatus());
+
     }
+
+
 
     @Override
     public int getItemCount() {
