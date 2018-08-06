@@ -80,8 +80,8 @@ public class AbsenceManagerForPOFragment extends Fragment {
         absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
         absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
         absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Ahihi","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+//        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
     }
 
     @Override
