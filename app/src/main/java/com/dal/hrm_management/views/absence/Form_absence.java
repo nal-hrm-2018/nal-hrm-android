@@ -37,9 +37,6 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
         initData();
         imb_tuNgay.setOnClickListener(this);
         imb_denNgay.setOnClickListener(this);
-
-
-
     }
 
     private void initData() {
