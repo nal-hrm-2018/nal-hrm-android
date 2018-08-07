@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.absence;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +29,7 @@ import java.util.List;
 public class AbsenceView extends Fragment implements IAbsenceView {
     RecyclerView rv_absence;
     AbsencePresenter absencePresenter;
+    MenuItem addAbsence;
     public List<AbsenceModel> arr = new ArrayList<AbsenceModel>();
     @Nullable
     @Override
@@ -48,6 +51,16 @@ public class AbsenceView extends Fragment implements IAbsenceView {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.app_bar_menu_absence,menu);
+        addAbsence = menu.findItem(R.id.action_add_absence);
+        addAbsence.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(getActivity(),Form_absence.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
