@@ -89,7 +89,7 @@
     <string name="menu_logout">Logout</string>
     <string name="tv_soNgayPhepCoTheNghi">Số ngày phép có thể nghỉ :</string>
     <string name="tv_soNgayPhepNamNgoai">Số ngày phép năm ngoái :</string>
-    <string name="action_search">search</string>
+    <string name="action_add_absence">new absence</string>
     <string name="tv_soNgayNghiKhongLuong">Số ngày nghỉ không lương</string>
     <string name="textview.text.name">Name (*)</string>
     <string name="textview.text.role">Role (*)</string>
@@ -105,4 +105,15 @@
     <string name="absence.status.accepted">Đã đồng ý</string>
     <string name="absence.status.canceled">Đã từ chối</string>
     <string name="s">Đã đồng ý</string>
+    <string name="form_absence_edt_tungay">Từ ngày</string>
+    <string name="form_absence_edt_denNgay">Đến ngày</string>
+    <string name="form_absence_spinner_loaiNghi">Loại nghỉ</string>
+    <string name="form_absence_edt_reason">Reason</string>
+    <string name="form_absence_edt_note">Note</string>
+    <string name="form_absence_cb_nghiBoSung">Nghỉ bổ sung</string>
+    <string name="form_absence_btn_submit">Submit</string>
+    <string name="bar_menu_absence_xinNghi">Làm đơn xin nghỉ</string>
+    <string name="form_absence_edt_thoiGianBatDau">Thời gian bắt đầu</string>
+    <string name="form_absence_edt_thoiGianKetThuc">Thời gian kết thúc</string>
+    <string name="form_absence_spinner_thoiGianNghi">Thời gian nghỉ</string>
 </resources>

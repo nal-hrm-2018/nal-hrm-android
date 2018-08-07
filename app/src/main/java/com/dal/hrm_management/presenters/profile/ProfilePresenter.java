@@ -28,7 +28,6 @@ public class ProfilePresenter implements IProfilePresenter {
     public void getProfile(String token) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         String auth = Credentials.basic("hrm_testing", "hrm_testing");
-        Log.d("token",token);
         Call<ProfileResponse> call = apiService.getProfile(auth,token);
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
