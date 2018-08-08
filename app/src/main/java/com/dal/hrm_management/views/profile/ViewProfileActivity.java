@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.profile;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -93,7 +94,8 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.profile_menu, menu);
+
         return true;
     }
 
@@ -102,7 +104,9 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
         int id = item.getItemId();
         switch (id) {
             case R.id.action_edit:
-                //TO DO: Call edit_profile_activity
+                Intent intent = new Intent(this,EditProfileActivity.class);
+                //TODO: bring profile to new activity
+                startActivityForResult(intent,200);
                 break;
             case android.R.id.home:
                 Toast.makeText(getApplicationContext(), "Comeback home", Toast.LENGTH_SHORT).show();
@@ -134,5 +138,13 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
     @Override
     public void getProfileFailure() {
         progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 200 && resultCode == RESULT_OK){
+            //TODO: request Profile
+        }
     }
 }

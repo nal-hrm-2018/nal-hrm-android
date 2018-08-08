@@ -180,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_padding"
-                    android:text="@string/textview.text.position"
+                    android:text="@string/textview.text.type"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />

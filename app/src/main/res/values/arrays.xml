@@ -5,4 +5,45 @@
         <item>Nghỉ bù</item>
         <item>Khác</item>
     </array>
+    <array name="position_arr">
+        <item>DEV</item>
+        <item>PO</item>
+        <item>BO</item>
+        <item>HR</item>
+    </array>
+    <array name="type_arr">
+        <item>Fulltime</item>
+        <item>Parttime</item>
+        <item>Intern</item>
+        <item>Contractual Employee</item>
+    </array>
+    <array name="marital_status_arr">
+        <item>Single</item>
+        <item>Married</item>
+    </array>
+    <array name="year_arr">
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+    </array>
+    <array name="month_arr">
+        <item>Tháng 1</item>
+        <item>Tháng 2</item>
+        <item>Tháng 3</item>
+        <item>Tháng 4</item>
+        <item>Tháng 5</item>
+        <item>Tháng 6</item>
+        <item>Tháng 7</item>
+        <item>Tháng 8</item>
+        <item>Tháng 9</item>
+        <item>Tháng 10</item>
+        <item>Tháng 11</item>
+        <item>Tháng 12</item>
+    </array>
+
 </resources>

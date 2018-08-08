@@ -5,11 +5,12 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,21 +18,26 @@ import android.widget.TextView;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Luu Ngoc Lan on 02-Aug-18.
  */
 
-public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceManagerForPoAdapter.MyViewHolder>  {
+public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceManagerForPoAdapter.MyViewHolder> implements Filterable {
     private List<Absence> absenceList;
     private int rowLayout;
     private Context context;
+    private List<Absence> absenceListFilter;
+    private AbsenceAdapterListener listener;
 
-    public AbsenceManagerForPoAdapter(List<Absence> absenceList, int rowLayout, Context context) {
+    public AbsenceManagerForPoAdapter(List<Absence> absenceList, int rowLayout, Context context, AbsenceAdapterListener listener) {
         this.absenceList = absenceList;
         this.rowLayout = rowLayout;
         this.context = context;
+        this.absenceListFilter = absenceList;
+        this.listener = listener;
     }
 
     @Override
@@ -41,20 +47,31 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.tv_nameEmployee.setText(absenceList.get(position).getName());
         holder.tv_nameProject.setText(absenceList.get(position).getNameProject());
         holder.tv_reason.setText(absenceList.get(position).getReason());
         holder.tv_from.setText(absenceList.get(position).getFrom());
         holder.tv_to.setText(absenceList.get(position).getTo());
-//        holder.tv_note.setText(absenceList.get(position).getNote());
+        if (absenceList.get(position).getStatus().equals(context.getString(R.string.absence_status_accepted))) {
+            holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
+            holder.tv_status.setVisibility(View.VISIBLE);
+            holder.ll_button.setVisibility(View.GONE);
+        }
+        if (absenceList.get(position).getStatus().equals(context.getString(R.string.absence_status_canceled))) {
+            holder.tv_status.setText(context.getString(R.string.absence_status_canceled));
+            holder.tv_status.setVisibility(View.VISIBLE);
+            holder.ll_button.setVisibility(View.GONE);
+        }
+        holder.setIsRecyclable(false);
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(view.getId()==R.id.imgBtn_accept){
-                    holder.tv_status.setText("Đã đông ý");
+                if (view.getId() == R.id.imgBtn_accept) {
+                    holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
                     holder.tv_status.setVisibility(View.VISIBLE);
                     holder.ll_button.setVisibility(View.GONE);
+                    absenceList.get(position).setStatus(context.getString(R.string.absence_status_accepted));
                 } else {
                     showDialogReason();
                 }
@@ -63,7 +80,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
             private void showDialogReason() {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 final EditText input = new EditText(context);
-                input.setInputType(InputType.TYPE_CLASS_TEXT );
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
                 input.setHint("Write your reason here");
                 builder.setView(input);
                 builder.setTitle("Why you deny?");
@@ -71,9 +88,10 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        holder.tv_status.setText("Đã từ chối");
+                        holder.tv_status.setText(context.getString(R.string.absence_status_canceled));
                         holder.tv_status.setVisibility(View.VISIBLE);
                         holder.ll_button.setVisibility(View.GONE);
+                        absenceList.get(position).setStatus(context.getString(R.string.absence_status_canceled));
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -87,20 +105,48 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
     }
 
 
-
     @Override
     public int getItemCount() {
-        return absenceList.size();
+        return absenceListFilter.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    absenceListFilter = absenceList;
+                } else {
+                    List<Absence> filteredList = new ArrayList<>();
+                    for (Absence row : absenceList) {
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    absenceListFilter = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = absenceListFilter;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults results) {
+                absenceListFilter = (ArrayList<Absence>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         LinearLayout absences_layout;
         TextView tv_nameEmployee;
         TextView tv_nameProject;
         TextView tv_reason;
         TextView tv_from;
         TextView tv_to;
-        TextView tv_note;
         TextView tv_status;
         LinearLayout ll_button;
         ImageButton imgBtn_cancel;
@@ -116,20 +162,24 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
             tv_from = (TextView) itemView.findViewById(R.id.tv_from);
             tv_to = (TextView) itemView.findViewById(R.id.tv_to);
             tv_status = (TextView) itemView.findViewById(R.id.tv_status);
-            //tv_note = (TextView) itemView.findViewById(R.id.tv_note);
             ll_button = (LinearLayout) itemView.findViewById(R.id.ll_button);
             imgBtn_accept = (ImageButton) itemView.findViewById(R.id.imgBtn_accept);
             imgBtn_cancel = (ImageButton) itemView.findViewById(R.id.imgBtn_cancel);
             imgBtn_accept.setOnClickListener(this);
             imgBtn_cancel.setOnClickListener(this);
         }
+
         public void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
         }
 
         @Override
         public void onClick(View v) {
-            itemClickListener.onClick(v,getAdapterPosition(),false);
+            itemClickListener.onClick(v, getAdapterPosition(), false);
         }
+    }
+
+    public interface AbsenceAdapterListener {
+        void onAbsenceSelecter(Absence absence);
     }
 }
