@@ -1,6 +1,6 @@
 package com.dal.hrm_management.views;
 
-
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.AbsenceListForHrAdapter;
@@ -28,10 +31,12 @@ public class AbsenceListHRFragment extends Fragment {
     private AbsenceListForHrAdapter adapter;
     private RecyclerView recyclerView;
     private Spinner spn_year, spn_month;
+    private TextView tv_time;
     private Button btn_filter;
 
     public AbsenceListHRFragment() {
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +64,6 @@ public class AbsenceListHRFragment extends Fragment {
         adapter_month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_month.setAdapter(adapter_month);
     }
-
 
     private void getDataFromApi() {
     }
@@ -96,8 +100,7 @@ public class AbsenceListHRFragment extends Fragment {
     }
 
     private void setEvent(View view) {
-    }
-
+           }
     private void initUI(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
