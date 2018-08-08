@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="form_holiday_arr_loaiNghi">
+        <item>Nghỉ lễ</item>
+        <item>Nghỉ bù</item>
+        <item>Khác</item>
+    </array>
+</resources>
