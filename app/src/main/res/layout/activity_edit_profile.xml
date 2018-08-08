@@ -7,7 +7,7 @@
     android:background="@android:color/white"
     tools:context="com.dal.hrm_management.views.profile.EditProfileActivity">
 
-<ScrollView
+    <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -41,29 +41,25 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/tv_nameProfile"
+                android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
                 android:hint="@string/textview.hint.profile_name"
                 android:padding="@dimen/text_padding"
-                android:paddingBottom="@dimen/text_padding"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"
                 android:textColor="@android:color/black" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/text_padding"
-                android:text="@string/textview.text.role"
+                android:text="@string/textview.text.position"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
 
             <Spinner
-                android:id="@+id/spn_roleProfile"
+                android:id="@+id/spn_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
@@ -79,16 +75,12 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/tv_emailProfile"
+                android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
                 android:hint="@string/textview.hint.profile_email"
-                android:padding="@dimen/text_padding"
-                android:paddingBottom="@dimen/text_padding"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding" />
+                android:padding="@dimen/text_padding" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
-                android:hint="Da Nang, Viet Nam"
+                android:hint="@string/profile_address"
                 android:paddingBottom="@dimen/text_padding"
                 android:paddingLeft="@dimen/text_padding"
                 android:paddingRight="@dimen/text_padding"
@@ -124,11 +116,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
-                android:hint="0123456789"
-                android:paddingBottom="@dimen/text_padding"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding" />
+                android:hint="@string/description.hint.phone"
+                android:padding="@dimen/text_padding" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -193,36 +182,30 @@
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edt_birthday"
+            <TextView
+                android:id="@+id/tv_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
-                android:paddingBottom="@dimen/text_padding"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"
-                android:text="16/12/1996" />
+                android:drawableRight="@drawable/ic_date"
+                android:padding="@dimen/text_padding"
+                android:text="@string/description.hint.birth" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/text_padding"
-                android:text="@string/textview.text.position"
+                android:text="@string/textview.text.type"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edt_position"
+            <Spinner
+                android:id="@+id/spn_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
-                android:paddingBottom="@dimen/text_padding"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"
-                android:text="Fulltime" />
+                android:padding="@dimen/text_padding"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -233,16 +216,14 @@
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edt_start"
+            <TextView
+                android:id="@+id/tv_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
-                android:paddingBottom="@dimen/text_padding"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"
-                android:text="22/9/2018" />
+                android:drawableRight="@drawable/ic_date"
+                android:padding="@dimen/text_padding"
+                android:text="@string/desciption.hint.start" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -253,17 +234,14 @@
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edt_end"
+            <TextView
+                android:id="@+id/tv_end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder_edittext"
-                android:paddingBottom="@dimen/text_padding"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"
-                android:text="22/09/2020" />
-
+                android:drawableRight="@drawable/ic_date"
+                android:padding="@dimen/text_padding"
+                android:text="@string/desciption.hint.end" />
 
         </LinearLayout>
 
