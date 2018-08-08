@@ -16,7 +16,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/login")
     Call<LoginModel> getToKen(@Header("Authorization") String auth,
-                              @Field("email") String email,
+                              @Field("username") String email,
                               @Field("password") String password);
     @Headers({
             "X-Requested-With:XMLHttpRequest",

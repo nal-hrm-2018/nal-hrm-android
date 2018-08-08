@@ -13,19 +13,22 @@
     android:padding="@dimen/activity_horizontal_margin"
     android:background="@android:color/white"
     android:weightSum="3">
-    <TextView
-        android:id="@+id/tv_time"
+    <Spinner
+        android:id="@+id/spn_year"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/boder_edittext"
-        android:drawableRight="@drawable/ic_arrow_drop_down"
-        android:gravity="center"
         android:layout_weight="1"/>
+
+    <Spinner
+        android:id="@+id/spn_month"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
     <Button
         android:id="@+id/btn_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:text="@string/absence_button_filter"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:background="@color/colorPrimary"/>

@@ -1,6 +1,5 @@
 package com.dal.hrm_management.views;
 
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ public class AbsenceListHRFragment extends Fragment {
     private List<Absence> absenceList;
     private AbsenceListForHrAdapter adapter;
     private RecyclerView recyclerView;
+    private Spinner spn_year, spn_month;
     private TextView tv_time;
     private Button btn_filter;
 
@@ -40,11 +43,26 @@ public class AbsenceListHRFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_absence_list_hr, container, false);
         setHasOptionsMenu(true);
         initUI(view);
+        initData();
         setEvent(view);
         fakeData();
         getDataFromApi();
         setDataIntoView();
         return view;
+    }
+
+    private void initData() {
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        String[] year_arr = new String[year - 2015 + 1];
+        for (int i = 2015, count = 0; i < year + 1; i++, count++) {
+            year_arr[count] = i+"";
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, year_arr);
+        spn_year.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapter_month = ArrayAdapter.createFromResource(getActivity(), R.array.month_arr, android.R.layout.simple_spinner_item);
+        adapter_month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spn_month.setAdapter(adapter_month);
     }
 
     private void getDataFromApi() {
@@ -82,36 +100,12 @@ public class AbsenceListHRFragment extends Fragment {
     }
 
     private void setEvent(View view) {
-        tv_time.setOnClickListener(new View.OnClickListener() {
-            // @Override
-            public void onClick(View v) {
-                showDatePicker();
-            }
-        });
-
-    }
-
-    private void showDatePicker() {
-        Calendar calendar = Calendar.getInstance();
-        final int date = calendar.get(Calendar.DATE);
-        int month = calendar.get(Calendar.MONTH);
-        final int year = calendar.get(Calendar.YEAR);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month++;
-                tv_time.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
-                tv_time.setText( month + "/" + year);
-            }
-        }, year, month, date);
-        datePickerDialog.show();
-    }
-
+           }
     private void initUI(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        tv_time = (TextView) view.findViewById(R.id.tv_time);
-
+        spn_month = (Spinner) view.findViewById(R.id.spn_month);
+        spn_year = (Spinner) view.findViewById(R.id.spn_year);
     }
 
 }
