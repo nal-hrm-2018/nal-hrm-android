@@ -164,26 +164,26 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showDatePicker(View view, final int id) {
-            Calendar calendar = Calendar.getInstance();
-            final int date = calendar.get(Calendar.DATE);
-            int month = calendar.get(Calendar.MONTH);
-            final int year = calendar.get(Calendar.YEAR);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    month++;
-                    if (id == R.id.tv_birthday) {
-                        tv_birthday.setText(dayOfMonth + "/" + month + "/" + year);
-                    }
-                    if (id == R.id.tv_start) {
-                        tv_start.setText(dayOfMonth + "/" + month + "/" + year);
-                    }
-                    if (id == R.id.tv_end) {
-                        tv_end.setText(dayOfMonth + "/" + month + "/" + year);
-                    }
+        Calendar calendar = Calendar.getInstance();
+        final int date = calendar.get(Calendar.DATE);
+        int month = calendar.get(Calendar.MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month++;
+                if (id == R.id.tv_birthday) {
+                    tv_birthday.setText(dayOfMonth + "/" + month + "/" + year);
                 }
-            },year,month,date);
-            datePickerDialog.show();
+                if (id == R.id.tv_start) {
+                    tv_start.setText(dayOfMonth + "/" + month + "/" + year);
+                }
+                if (id == R.id.tv_end) {
+                    tv_end.setText(dayOfMonth + "/" + month + "/" + year);
+                }
+            }
+        },year,month,date);
+        datePickerDialog.show();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

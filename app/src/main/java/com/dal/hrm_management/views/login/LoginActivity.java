@@ -19,17 +19,16 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.home.HomePageActivity;
 
+
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginActivity {
-    //declare view
     private EditText edt_email;
     private EditText edt_password;
     private Button btn_login;
     private SharedPreferences sharedPreferences;
     private CheckBox cb_remeber;
     private ProgressBar progressBar;
-    //process
     private int PASSWORD_LENGTH = 6;
-    //mvp
     LoginPresenter loginPresenter;
     public LoginActivity(){
 
