@@ -40,7 +40,7 @@
     <string name="textview.text.gender">Gender (*)</string>
     <string name="textview.text.marital_status">Marital Status (*)</string>
     <string name="textview.text.birthday">Birthday (*)</string>
-    <string name="textview.text.position">Position (*)</string>
+    <string name="textview.text.type">Type (*)</string>
     <string name="textview.text.start_day">Start Day (*)</string>
     <string name="textview.text.end_day">End Day (*)</string>
     <string name="checkbox.text.remember">Remember me</string>
@@ -92,7 +92,7 @@
     <string name="action_add_absence">new absence</string>
     <string name="tv_soNgayNghiKhongLuong">Số ngày nghỉ không lương</string>
     <string name="textview.text.name">Name (*)</string>
-    <string name="textview.text.role">Role (*)</string>
+    <string name="textview.text.position">Position (*)</string>
     <string name="textview.text.email">Email (*)</string>
     <string name="textview.nameEmployeeAbsence">Name</string>
     <string name="textview.text.symbol">-</string>
@@ -102,9 +102,8 @@
     <string name="textview.text.to">To</string>
     <string name="textview.noteAbsence">Muốn đăng kí</string>
     <string name="absence_manage_for_po_fragment.title">List absences</string>
-    <string name="absence.status.accepted">Đã đồng ý</string>
-    <string name="absence.status.canceled">Đã từ chối</string>
-    <string name="s">Đã đồng ý</string>
+    <string name="absence_status_accepted">Đã đồng ý</string>
+    <string name="absence_status_canceled">Đã từ chối</string>
     <string name="form_absence_edt_tungay">Từ ngày</string>
     <string name="form_absence_edt_denNgay">Đến ngày</string>
     <string name="form_absence_spinner_loaiNghi">Loại nghỉ</string>
@@ -120,4 +119,17 @@
     <string name="form_holiday_edt_ngayBatDau">Từ ngày</string>
     <string name="form_holiday_edt_ngayKetThuc">Đến ngày</string>
     <string name="form_holiday_edt_ghiChu">Ghi chú</string>
+    <string name="hr_view_list_absence">List Absences</string>
+    <string name="hr_holiday">Holiday</string>
+    <string name="absence_button_filter">Filter</string>
+    <string name="absence_text_type">Nghỉ theo bảo hiểm</string>
+    <string name="absence_remain">Số ngày phép còn lại:</string>
+    <string name="absence_last_year">Số ngày phép năm ngoái:</string>
+    <string name="absence_present_year">Số ngày phép có thể nghỉ:</string>
+    <string name="absence_total_days">Số ngày phép đã nghỉ:</string>
+    <string name="absence_no_salary_day">Số ngày nghỉ không lương:</string>
+    <string name="absence_insurance">Số ngày nghỉ bảo hiểm:</string>
+    <string name="absence_sub_salary">Số ngày nghỉ trừ lương:</string>
+    <string name="title_edit_profile_activity">Edit profile</string>
+    <string name="profile_address">Da Nang, Viet Nam</string>
 </resources>

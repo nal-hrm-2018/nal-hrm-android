@@ -5,4 +5,20 @@
         <item>Nghỉ bù</item>
         <item>Khác</item>
     </array>
+    <array name="position_arr">
+        <item>DEV</item>
+        <item>PO</item>
+        <item>BO</item>
+        <item>HR</item>
+    </array>
+    <array name="type_arr">
+        <item>Fulltime</item>
+        <item>Parttime</item>
+        <item>Intern</item>
+        <item>Contractual Employee</item>
+    </array>
+    <array name="marital_status_arr">
+        <item>Single</item>
+        <item>Married</item>
+    </array>
 </resources>

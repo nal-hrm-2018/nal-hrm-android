@@ -39,7 +39,6 @@ public class ProfilePresenter implements IProfilePresenter {
                     iProfileActivity.getProfileSuccess(profile);
                     Log.d("TAG","success");
                 } else {
-
                     iProfileActivity.getProfileFailure();
                 }
             }

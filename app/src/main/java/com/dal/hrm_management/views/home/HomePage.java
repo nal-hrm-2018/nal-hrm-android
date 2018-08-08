@@ -24,9 +24,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.MenuModel;
 import com.dal.hrm_management.utils.CircleTransform;
+import com.dal.hrm_management.views.AbsenceForHRFragment;
 import com.dal.hrm_management.views.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.views.absence.AbsenceView;
-import com.dal.hrm_management.views.employee.ValueChartEmployeeFragment;
 import com.dal.hrm_management.views.list_employee.ListEmployeeActivity;
 import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
@@ -153,10 +153,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     Log.d("GROUP",model.menuName);
                     if (model.menuName.equals(getString(R.string.menu_employee))){
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container,new AbsenceManagerForPOFragment()).commit();
-                    }else{
+                                .replace(R.id.fragment_container,new AbsenceForHRFragment()).commit();
+                    }else if((model.menuName.equals(getString(R.string.menu_absence_empl)))){
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container,new ValueChartEmployeeFragment()).commit();
+                                .replace(R.id.fragment_container,new AbsenceManagerForPOFragment()).commit();
                     }
 
 

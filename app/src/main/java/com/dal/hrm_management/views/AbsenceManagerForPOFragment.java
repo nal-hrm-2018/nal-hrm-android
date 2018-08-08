@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AbsenceManagerForPOFragment extends Fragment {
+public class AbsenceManagerForPOFragment extends Fragment implements AbsenceManagerForPoAdapter.AbsenceAdapterListener {
 
     private RecyclerView recyclerView;
     private List<Absence> absenceList;
@@ -54,7 +54,7 @@ public class AbsenceManagerForPOFragment extends Fragment {
     }
 
     private void setDataIntoView() {
-        adapter = new AbsenceManagerForPoAdapter(absenceList,R.layout.item_list_absence_manager_of_po,getActivity());
+        adapter = new AbsenceManagerForPoAdapter(absenceList,R.layout.item_list_absence_manager_of_po,getActivity(), this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -76,12 +76,21 @@ public class AbsenceManagerForPOFragment extends Fragment {
         absenceList.add(new Absence("Chicken Stupid","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
         absenceList.add(new Absence("Wonder Women","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Đi casting!!!","Nghỉ phép"));
         absenceList.add(new Absence("Nhóc Maruko","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Nhóc Maruko","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Nhóc Maruko","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Nhóc Maruko","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
         absenceList.add(new Absence("Thanos","Marvel","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Đi casting!!!","Nghỉ phép"));
         absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
         absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
         absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Ahihi","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-//        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
     }
 
     @Override
@@ -97,17 +106,23 @@ public class AbsenceManagerForPOFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // TODO: filter recycler view when query submitted
+                // filter recycler view when query submitted
+                adapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                // TODO: filter recycler view when text is changed
+                // filter recycler view when text is changed
+                adapter.getFilter().filter(query);
                 return false;
             }
         });
     }
 
 
+    @Override
+    public void onAbsenceSelecter(Absence absence) {
+
+    }
 }
