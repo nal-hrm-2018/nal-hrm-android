@@ -9,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
@@ -30,7 +32,8 @@ public class AbsenceListHRFragment extends Fragment {
     private RecyclerView recyclerView;
     private TextView tv_time;
     private Button btn_filter;
-
+    private Spinner spinner;
+    String[] LOAINGHI = {"Nghỉ phép", "Nghỉ không lương", "Nghỉ bệnh"};
     public AbsenceListHRFragment() {
     }
 
@@ -40,6 +43,9 @@ public class AbsenceListHRFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_absence_list_hr, container, false);
         setHasOptionsMenu(true);
         initUI(view);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.support_simple_spinner_dropdown_item, LOAINGHI);
+        spinner.setAdapter(adapter);
         setEvent(view);
         fakeData();
         getDataFromApi();
@@ -111,6 +117,7 @@ public class AbsenceListHRFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         tv_time = (TextView) view.findViewById(R.id.tv_time);
+        spinner = view.findViewById(R.id.testspinner);
 
     }
 

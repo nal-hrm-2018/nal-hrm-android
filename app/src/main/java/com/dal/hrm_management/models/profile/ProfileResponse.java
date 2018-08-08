@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
         private String resultMessage;
         @SerializedName("data")
         @Expose
-        private Profile data;
+        private Data data;
 
         /**
          * No args constructor for use in serialization
@@ -27,7 +27,7 @@ import com.google.gson.annotations.SerializedName;
          * @param resultCode
          * @param resultMessage
          */
-        public ProfileResponse(String resultCode, String resultMessage, Profile data) {
+        public ProfileResponse(String resultCode, String resultMessage, Data data) {
             super();
             this.resultCode = resultCode;
             this.resultMessage = resultMessage;
@@ -50,11 +50,11 @@ import com.google.gson.annotations.SerializedName;
             this.resultMessage = resultMessage;
         }
 
-        public Profile getData() {
+        public Data getData() {
             return data;
         }
 
-        public void setData(Profile data) {
+        public void setData(Data data) {
             this.data = data;
         }
 }

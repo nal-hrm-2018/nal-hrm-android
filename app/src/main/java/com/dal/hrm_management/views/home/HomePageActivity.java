@@ -35,13 +35,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ExpandableListAdapter expandableListAdapter;
     ExpandableListView expandableListView;
     List<MenuModel> headerList = new ArrayList<>();
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
-
     private NavigationView navigation_menu;
     private View navHeader;
     private ImageView imv_avatar;
@@ -49,11 +48,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private Toolbar toolbar;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         initUI();
         addEvent();
         loadNavHeader();
@@ -129,7 +130,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AbsenceView()).commit();
                             getSupportActionBar().setTitle(R.string.menu_absence);
                         }else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))){
-                            Intent intent = new Intent(HomePage.this,LoginActivity.class);
+                            Intent intent = new Intent(HomePageActivity.this,LoginActivity.class);
                             startActivity(intent);
                         }
 

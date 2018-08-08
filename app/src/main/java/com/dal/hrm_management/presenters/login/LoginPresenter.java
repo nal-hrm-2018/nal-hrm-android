@@ -5,6 +5,7 @@ import android.util.Log;
 import com.dal.hrm_management.models.LoginModel;
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
+import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.views.login.ILoginActivity;
 
 import okhttp3.Credentials;
@@ -21,7 +22,7 @@ public class LoginPresenter implements ILoginPresenter {
     }
     @Override
     public void getToken(String email, String password) {
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         String auth = Credentials.basic("hrm_testing", "hrm_testing");
         Call<LoginModel> call = apiService.getToKen(auth, email, password);
         call.enqueue(new Callback<LoginModel>() {
@@ -33,12 +34,15 @@ public class LoginPresenter implements ILoginPresenter {
                     LoginPresenter.token = response.body().getData();
                     iLoginActivity.loginSucess(token);
 
+
+
                 }else{
                     iLoginActivity.loginFailure();
                 }
 
 
             }
+
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
                 iLoginActivity.loginFailure();
