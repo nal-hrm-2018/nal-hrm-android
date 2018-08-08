@@ -1,7 +1,10 @@
 package com.dal.hrm_management.views.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.LoginModel;
@@ -74,17 +78,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.btn_login){
-            progressBar.setVisibility(View.VISIBLE);
-            if (cb_remeber.isChecked()) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("remeber", true);
-                editor.putString("email", edt_email.getText().toString());
-                editor.putString("password", edt_password.getText().toString());
-                editor.commit();
-            } else {
-                sharedPreferences.edit().clear().commit();
+            if (isConnected()) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (cb_remeber.isChecked()) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("remeber", true);
+                    editor.putString("email", edt_email.getText().toString());
+                    editor.putString("password", edt_password.getText().toString());
+                    editor.commit();
+                } else {
+                    sharedPreferences.edit().clear().commit();
+                }
+                checkLogin();
+            }else{
+                Toast.makeText(this,"No internet",Toast.LENGTH_LONG).show();
             }
-            checkLogin();
         }
     }
 
@@ -146,5 +154,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edt_password.setError(getString(R.string.error_incorrect_password));
         edt_password.requestFocus();
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 }
