@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
         @SerializedName("result_code")
         @Expose
-        private String resultCode;
+        private int resultCode;
         @SerializedName("result_message")
         @Expose
         private String resultMessage;
@@ -27,18 +27,18 @@ import com.google.gson.annotations.SerializedName;
          * @param resultCode
          * @param resultMessage
          */
-        public ProfileResponse(String resultCode, String resultMessage, Data data) {
+        public ProfileResponse(int resultCode, String resultMessage, Data data) {
             super();
             this.resultCode = resultCode;
             this.resultMessage = resultMessage;
             this.data = data;
         }
 
-        public String getResultCode() {
+        public int getResultCode() {
             return resultCode;
         }
 
-        public void setResultCode(String resultCode) {
+        public void setResultCode(int resultCode) {
             this.resultCode = resultCode;
         }
 

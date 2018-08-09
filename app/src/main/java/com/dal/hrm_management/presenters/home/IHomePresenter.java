@@ -1,4 +1,7 @@
 package com.dal.hrm_management.presenters.home;
 
-public class IHomePresenter {
+import com.dal.hrm_management.models.profile.Data;
+
+public interface IHomePresenter {
+    void getProfile(String token);
 }
