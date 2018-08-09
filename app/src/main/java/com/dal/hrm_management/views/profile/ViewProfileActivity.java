@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.profile.Profile;
+import com.dal.hrm_management.models.profile.Data;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.profile.ProfilePresenter;
 import com.squareup.picasso.Picasso;
@@ -54,7 +54,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
     }
 
     private void getDataFromServer() {
-        profilePresenter.getProfile(LoginPresenter.token);
+//        profilePresenter.getProfile(LoginPresenter.token);
     }
 
     private void initPresenter() {
@@ -117,22 +117,22 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
     }
 
     @Override
-    public void getProfileSuccess(Profile profile) {
-        uriImage = profile.getAvatar();
-        Uri uri = Uri.parse(uriImage);
-        Picasso.with(getBaseContext()).load(uri).into(imv_avatar);
-        tv_name.setText(profile.getName());
-        tv_role.setText(profile.getRoleId() + "");
-        tv_email.setText(profile.getEmail());
-        tv_address.setText(profile.getAddress());
-        tv_phone.setText(profile.getMobile());
-        tv_gender.setText(profile.getGender() + "");
-        tv_maritalStatus.setText(profile.getMaritalStatus() + "");
-        tv_birthday.setText(profile.getBirthday());
-        //tv_position
-        tv_start.setText(profile.getStartworkDate());
-        tv_end.setText(profile.getEndworkDate());
-        progressBar.setVisibility(View.GONE);
+    public void getProfileSuccess(Data profile) {
+//        uriImage = profile.getAvatar();
+//        Uri uri = Uri.parse(uriImage);
+//        Picasso.with(getBaseContext()).load(uri).into(imv_avatar);
+//        tv_name.setText(profile.getName());
+//        tv_role.setText(profile.getRoleId() + "");
+//        tv_email.setText(profile.getEmail());
+//        tv_address.setText(profile.getAddress());
+//        tv_phone.setText(profile.getMobile());
+//        tv_gender.setText(profile.getGender() + "");
+//        tv_maritalStatus.setText(profile.getMaritalStatus() + "");
+//        tv_birthday.setText(profile.getBirthday());
+//        //tv_position
+//        tv_start.setText(profile.getStartworkDate());
+//        tv_end.setText(profile.getEndworkDate());
+//        progressBar.setVisibility(View.GONE);
     }
 
     @Override

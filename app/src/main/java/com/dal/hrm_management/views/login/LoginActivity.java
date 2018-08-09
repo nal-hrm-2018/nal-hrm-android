@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
-import com.dal.hrm_management.views.home.HomePage;
+import com.dal.hrm_management.views.home.HomePageActivity;
+
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginActivity {
     private EditText edt_email;
@@ -135,9 +137,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void loginSucess(String token) {
-        Intent intent = new Intent(LoginActivity.this, HomePage.class);
+        Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
         intent.putExtra("token",token);
-
         startActivity(intent);
         progressBar.setVisibility(View.INVISIBLE);
     }
