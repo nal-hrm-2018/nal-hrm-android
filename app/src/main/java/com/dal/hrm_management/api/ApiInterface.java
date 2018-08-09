@@ -1,6 +1,7 @@
 package com.dal.hrm_management.api;
 
 import com.dal.hrm_management.models.LoginModel;
+import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 
 import retrofit2.Call;
@@ -30,4 +31,8 @@ public interface ApiInterface {
 //                                     @Header("token") String token);
     @GET("api/profile/")
     Call<ProfileResponse> getProfile(@Header("Authorization") String token);
+
+    @GET("api/list/employees?page=2&pageSize=5")
+    Call<ListEmpResponse> getListEmployee(@Header("Authorization") String token);
+
 }
