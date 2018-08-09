@@ -1,6 +1,5 @@
 package com.dal.hrm_management.views;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -35,7 +30,7 @@ public class AbsenceListHRFragment extends Fragment {
     private Spinner spn_year, spn_month;
     private TextView tv_time;
     private Button btn_filter;
-    private Spinner spinner;
+
     public AbsenceListHRFragment() {
     }
 
@@ -46,7 +41,6 @@ public class AbsenceListHRFragment extends Fragment {
         setHasOptionsMenu(true);
         initUI(view);
         initData();
-
         setEvent(view);
         fakeData();
         getDataFromApi();

@@ -1,25 +1,20 @@
 package com.dal.hrm_management.views.absence;
 
 import android.app.DatePickerDialog;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import com.dal.hrm_management.R;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class Form_absence extends AppCompatActivity implements View.OnClickListener{
     String[] LOAINGHI = {"Nghỉ phép", "Nghỉ không lương", "Nghỉ bệnh"};
@@ -28,7 +23,7 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     EditText edt_tuNgay,edt_denNgay;
     ImageButton imb_tuNgay,imb_denNgay;
     private int mYear, mMonth, mDay;
-    MaterialBetterSpinner loaiNghi,thoiGianNghi;
+    Spinner loaiNghi,thoiGianNghi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +38,7 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle(getString(R.string.absence_add));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.support_simple_spinner_dropdown_item, LOAINGHI);
         loaiNghi.setAdapter(adapter);
@@ -53,13 +49,13 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
 
 
     private void initView() {
-        toolbar = findViewById(R.id.form_absence_toolbar);
-        edt_tuNgay = findViewById(R.id.form_absence_edt_tuNgay);
-        edt_denNgay = findViewById(R.id.form_absence_edt_denNgay);
-        imb_tuNgay = findViewById(R.id.form_absence_imb_tuNgay);
-        imb_denNgay = findViewById(R.id.form_absence_imb_denNgay);
-        loaiNghi = findViewById(R.id.form_absence_spinner_loaiNghi);
-        thoiGianNghi = findViewById(R.id.form_absence_spinner_thoiGianNghi);
+        toolbar =(Toolbar) findViewById(R.id.form_absence_toolbar);
+        edt_tuNgay =(EditText) findViewById(R.id.form_absence_edt_tuNgay);
+        edt_denNgay =(EditText) findViewById(R.id.form_absence_edt_denNgay);
+        imb_tuNgay =(ImageButton) findViewById(R.id.form_absence_imb_tuNgay);
+        imb_denNgay =(ImageButton) findViewById(R.id.form_absence_imb_denNgay);
+        loaiNghi =(Spinner) findViewById(R.id.form_absence_spinner_loaiNghi);
+        thoiGianNghi =(Spinner) findViewById(R.id.form_absence_spinner_thoiGianNghi);
     }
 
     @Override

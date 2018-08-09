@@ -1,8 +1,8 @@
 package com.dal.hrm_management.views.manage_absence;
 
 import android.app.DatePickerDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,19 +11,18 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import com.dal.hrm_management.R;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
 
-public class form_holiday extends AppCompatActivity implements View.OnClickListener {
+public class FormHolidayActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText edt_tenNgayNghi,edt_ngayBatDau,edt_ngayKetThuc,edt_ghiChu;
-    private MaterialBetterSpinner spinner_loaiNghi;
+    private Spinner spinner_loaiNghi;
     private ImageButton imb_ngayBatDau,imb_ngayKetThuc;
     private Button btn_submit;
     private Toolbar toolbar;
-    private String[] loaiNghi = getResources().getStringArray(R.array.form_holiday_arr_loaiNghi);
 
     private int mYear, mMonth, mDay;
     private Calendar calendar;
@@ -32,6 +31,7 @@ public class form_holiday extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_holiday);
+        setTitle(getString(R.string.holiday_new));
         initView();
         supportToolbar();
         setDataSpinner();
@@ -56,8 +56,8 @@ public class form_holiday extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
     private void setDataSpinner() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.support_simple_spinner_dropdown_item, loaiNghi);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.form_holiday_arr_loaiNghi, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_loaiNghi.setAdapter(adapter);
     }
 
@@ -68,15 +68,15 @@ public class form_holiday extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
-        toolbar = findViewById(R.id.form_holiday_toolbar);
-        edt_tenNgayNghi = findViewById(R.id.form_holiday_edt_tenNgayNghi);
-        edt_ngayBatDau = findViewById(R.id.form_holiday_edt_ngayBatDau);
-        edt_ngayKetThuc = findViewById(R.id.form_holiday_edt_ngayKetThuc);
-        edt_ghiChu = findViewById(R.id.form_holiday_edt_ghiChu);
-        spinner_loaiNghi = findViewById(R.id.form_holiday_spinner_loaiNghi);
-        imb_ngayBatDau = findViewById(R.id.form_holiday_imb_ngayBatDau);
-        imb_ngayKetThuc = findViewById(R.id.form_holiday_imb_ngayKetthuc);
-        btn_submit = findViewById(R.id.form_holiday_btn_submit);
+        toolbar = (Toolbar) findViewById(R.id.form_holiday_toolbar);
+        edt_tenNgayNghi =(EditText) findViewById(R.id.form_holiday_edt_tenNgayNghi);
+        edt_ngayBatDau =(EditText) findViewById(R.id.form_holiday_edt_ngayBatDau);
+        edt_ngayKetThuc =(EditText) findViewById(R.id.form_holiday_edt_ngayKetThuc);
+        edt_ghiChu =(EditText) findViewById(R.id.form_holiday_edt_ghiChu);
+        spinner_loaiNghi =(Spinner) findViewById(R.id.form_holiday_spinner_loaiNghi);
+        imb_ngayBatDau = (ImageButton) findViewById(R.id.form_holiday_imb_ngayBatDau);
+        imb_ngayKetThuc = (ImageButton)findViewById(R.id.form_holiday_imb_ngayKetthuc);
+        btn_submit =(Button) findViewById(R.id.form_holiday_btn_submit);
     }
 
     @Override

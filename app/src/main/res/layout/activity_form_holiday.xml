@@ -4,94 +4,131 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context=".views.manage_absence.form_holiday">
+    tools:context=".views.manage_absence.FormHolidayActivity">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/form_holiday_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="?attr/actionBarSize">
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/text_padding"
+                android:textColorHint="@android:color/black">
+
                 <EditText
                     android:id="@+id/form_holiday_edt_tenNgayNghi"
-                    android:hint="@string/form_holiday_edt_tenNgayNghi"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:hint="@string/form_holiday_edt_tenNgayNghi" />
             </android.support.design.widget.TextInputLayout>
+
             <LinearLayout
-                android:weightSum="10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/text_padding"
+                android:weightSum="10">
+
                 <android.support.design.widget.TextInputLayout
-                    android:layout_weight="9"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:textColorHint="@android:color/black">
+
                     <EditText
                         android:id="@+id/form_holiday_edt_ngayBatDau"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/form_holiday_edt_ngayBatDau"/>
+                        android:hint="@string/form_holiday_edt_ngayBatDau" />
                 </android.support.design.widget.TextInputLayout>
+
                 <ImageButton
                     android:id="@+id/form_holiday_imb_ngayBatDau"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-            </LinearLayout> <LinearLayout
-                android:weightSum="10"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:src="@drawable/ic_date" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/text_padding"
+                android:weightSum="10">
+
                 <android.support.design.widget.TextInputLayout
-                    android:layout_weight="9"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:textColorHint="@android:color/black">
+
                     <EditText
                         android:id="@+id/form_holiday_edt_ngayKetThuc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/form_holiday_edt_ngayKetThuc"/>
+                        android:hint="@string/form_holiday_edt_ngayKetThuc" />
                 </android.support.design.widget.TextInputLayout>
+
                 <ImageButton
                     android:id="@+id/form_holiday_imb_ngayKetthuc"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:src="@drawable/ic_date" />
             </LinearLayout>
-            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+
+            <Spinner
                 android:id="@+id/form_holiday_spinner_loaiNghi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Loại nghỉ"/>
+                android:textColorHint="@android:color/black"
+                android:padding="@dimen/text_padding"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@android:color/black"
+                android:paddingBottom="@dimen/activity_horizontal_margin">
+
                 <EditText
                     android:id="@+id/form_holiday_edt_ghiChu"
-                    android:inputType="textMultiLine"
-                    android:lines="6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/form_holiday_edt_ghiChu"/>
+                    android:hint="@string/form_holiday_edt_ghiChu"
+                    android:inputType="textMultiLine"
+                    android:lines="6" />
             </android.support.design.widget.TextInputLayout>
+
             <Button
                 android:id="@+id/form_holiday_btn_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/form_absence_btn_submit"/>
+                android:background="@drawable/shape_button_changepassword"
+                android:text="@string/form_absence_btn_submit"
+                />
         </LinearLayout>
 
     </ScrollView>
