@@ -1,6 +1,5 @@
 package com.dal.hrm_management.api;
 
-import com.dal.hrm_management.models.ListEmployeeModel;
 import com.dal.hrm_management.models.LoginModel;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 
@@ -22,11 +21,13 @@ public interface ApiInterface {
             "X-Requested-With:XMLHttpRequest",
             "Content-Type:application/json"
     })
-    @GET("api/employee")
-    Call<ListEmployeeModel> getListEmployee(@Header("Authorization") String auth,
-                                            @Header("token") String token);
+//    @GET("api/employee")
+//    Call<ListEmployeeModel> getListEmployee(@Header("Authorization") String auth,
+//                                            @Header("token") String token);
 
+//    @GET("api/profile/")
+//    Call<ProfileResponse> getProfile(@Header("Authorization") String auth,
+//                                     @Header("token") String token);
     @GET("api/profile/")
-    Call<ProfileResponse> getProfile(@Header("Authorization") String auth,
-                                     @Header("token") String token);
+    Call<ProfileResponse> getProfile(@Header("Authorization") String token);
 }

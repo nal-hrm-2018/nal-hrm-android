@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
-import com.dal.hrm_management.models.ItemListEmployeeModel;
-import com.dal.hrm_management.models.ListEmployeeModel;
 import com.dal.hrm_management.models.LoginModel;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.list_employee.IListEmployeeActivity;
@@ -32,25 +30,24 @@ public class ListEmployeePresenter implements IListEmployeePresenter{
 
 
 
-        Call<ListEmployeeModel> call = apiService.getListEmployee(auth, LoginPresenter.token);
-        Log.d("token",LoginPresenter.token);
-        call.enqueue(new Callback<ListEmployeeModel>() {
-            @Override
-            public void onResponse(Call<ListEmployeeModel> call, Response<ListEmployeeModel> response) {
-                ListEmployeeModel listEmployeeModel= response.body();
-                if (listEmployeeModel.getResultCode() == "200"){
-                    List<ItemListEmployeeModel> list = listEmployeeModel.getData();
-                    Log.d("hihi",list.get(0).getEmail());
-                }else{
-                    Log.d("hihi",response.body().getResultCode());
-                    iListEmployeeActivity.getListEmployeeFailure();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ListEmployeeModel> call, Throwable t) {
-                iListEmployeeActivity.getListEmployeeFailure();
-            }
-        });
+//        Call<ListEmployeeModel> call = apiService.getListEmployee(auth, LoginPresenter.token);
+//        call.enqueue(new Callback<ListEmployeeModel>() {
+//            @Override
+//            public void onResponse(Call<ListEmployeeModel> call, Response<ListEmployeeModel> response) {
+//                ListEmployeeModel listEmployeeModel= response.body();
+//                if (listEmployeeModel.getResultCode() == "200"){
+//                    List<ItemListEmployeeModel> list = listEmployeeModel.getData();
+//                    Log.d("hihi",list.get(0).getEmail());
+//                }else{
+//                    Log.d("hihi",response.body().getResultCode());
+//                    iListEmployeeActivity.getListEmployeeFailure();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ListEmployeeModel> call, Throwable t) {
+//                iListEmployeeActivity.getListEmployeeFailure();
+//            }
+//        });
     }
 }
