@@ -1,6 +1,5 @@
 package com.dal.hrm_management.views;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;

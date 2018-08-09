@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_add_absence"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_add"
         android:title="@string/action_add_absence"
         android:tooltipText="@string/bar_menu_absence_xinNghi"
         app:showAsAction="ifRoom" />

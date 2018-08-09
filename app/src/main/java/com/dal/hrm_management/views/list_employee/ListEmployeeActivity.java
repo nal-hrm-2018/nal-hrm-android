@@ -5,9 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.presenters.ListEmployee.ListEmployeePresenter;
@@ -18,6 +19,7 @@ public class ListEmployeeActivity extends Fragment implements IListEmployeeActiv
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         mapMVP();
         listEmployeePresenter.getListEmployee();
         return inflater.inflate(R.layout.fragment_list_emp,container,false);
@@ -37,5 +39,11 @@ public class ListEmployeeActivity extends Fragment implements IListEmployeeActiv
     public void getListEmployeeFailure() {
         Log.d(TAG,"failure");
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

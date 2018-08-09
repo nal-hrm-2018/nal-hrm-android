@@ -8,6 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/form_absence_toolbar"
         android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
         android:layout_height="wrap_content"/>
     <ScrollView
         android:layout_below="@+id/form_absence_toolbar"
@@ -17,17 +18,22 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:background="@android:color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_horizontal_margin">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:weightSum="10"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/text_padding">
                 <android.support.design.widget.TextInputLayout
                     android:layout_weight="9"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@android:color/black"
+                    >
                     <EditText
                         android:id="@+id/form_absence_edt_tuNgay"
                         android:layout_width="match_parent"
@@ -40,6 +46,7 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_date"
+                    android:background="@color/colorAccent"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
             </LinearLayout>
@@ -47,11 +54,13 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:weightSum="10"
+                android:layout_marginBottom="@dimen/text_padding"
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputLayout
                     android:layout_weight="9"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@android:color/black">
                     <EditText
                         android:id="@+id/form_absence_edt_denNgay"
                         android:layout_width="match_parent"
@@ -62,26 +71,30 @@
                 <ImageButton
                     android:id="@+id/form_absence_imb_denNgay"
                     android:layout_weight="1"
+                    android:background="@color/colorAccent"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_date"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
             </LinearLayout>
-            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            <Spinner
                 android:id="@+id/form_absence_spinner_thoiGianNghi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/form_absence_spinner_thoiGianNghi"
-                app:met_floatingLabel="normal" />
+                android:padding="@dimen/text_padding"
+                android:layout_marginBottom="@dimen/text_padding"
+                 />
 
-            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            <Spinner
                 android:id="@+id/form_absence_spinner_loaiNghi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/form_absence_spinner_loaiNghi"
-                app:met_floatingLabel="normal" />
+                android:padding="@dimen/text_padding"
+                android:layout_marginBottom="@dimen/text_padding"
+                />
 
             <android.support.design.widget.TextInputLayout
+                android:textColorHint="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
@@ -94,8 +107,10 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:textColorHint="@android:color/black"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin">
                 <EditText
                     android:id="@+id/form_absence_edt_note"
                     android:layout_width="match_parent"
@@ -107,12 +122,14 @@
                 android:id="@+id/form_absence_cb_nghiBoSung"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:text="@string/form_absence_cb_nghiBoSung"/>
             <Button
                 android:id="@+id/form_absence_btn_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="@drawable/shape_button_changepassword"
                 android:text="@string/form_absence_btn_submit"/>
         </LinearLayout>
 

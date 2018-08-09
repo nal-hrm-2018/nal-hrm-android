@@ -32,7 +32,7 @@ public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataVie
     public void onBindViewHolder(AbsenceAdapter.DataViewHolder holder, int position) {
         holder.tv_type.setText(arr.get(position).getType());
         holder.tv_startAt.setText(arr.get(position).getDateStart());
-        holder.tv_endat.setText(arr.get(position).getDateEnd());
+        holder.tv_endAt.setText(arr.get(position).getDateEnd());
         holder.tv_status.setText(arr.get(position).getStatus());
 
     }
@@ -52,15 +52,15 @@ public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataVie
 
         private TextView tv_type;
         private TextView tv_startAt;
-        private TextView tv_endat;
+        private TextView tv_endAt;
         private TextView tv_status;
 
         public DataViewHolder(View itemView) {
             super(itemView);
-            tv_type = itemView.findViewById(R.id.item_absence_tv_type);
-            tv_startAt = itemView.findViewById(R.id.item_absence_tv_startat);
-            tv_endat = itemView.findViewById(R.id.item_absence_tv_startend);
-            tv_status = itemView.findViewById(R.id.item_absence_tv_status);
+            tv_type = itemView.findViewById(R.id.tv_type);
+            tv_startAt = itemView.findViewById(R.id.tv_startAt);
+            tv_endAt = itemView.findViewById(R.id.tv_endAt);
+            tv_status = itemView.findViewById(R.id.tv_status);
         }
     }
 }

@@ -11,8 +11,10 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.AbsenceManagerForPoAdapter;
@@ -54,7 +56,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     }
 
     private void setDataIntoView() {
-        adapter = new AbsenceManagerForPoAdapter(absenceList,R.layout.item_list_absence_manager_of_po,getActivity(), this);
+        adapter = new AbsenceManagerForPoAdapter(absenceList, R.layout.item_list_absence_manager_of_po, getActivity(), this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -71,37 +73,36 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
 
     private void fakeData() {
         absenceList = new ArrayList<>();
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Kudo Shinichi","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Chicken Stupid","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Wonder Women","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Đi casting!!!","Nghỉ phép"));
-        absenceList.add(new Absence("Nhóc Maruko","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Nhóc Maruko","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Nhóc Maruko","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Nhóc Maruko","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Thanos","Marvel","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Đi casting!!!","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
-        absenceList.add(new Absence("Trương Vô Kị","EMC_201","3/8/2018","4/8/2018","Chưa xét","Muốn đăng kí","Thích thì nghỉ","Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Kudo Shinichi", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Chicken Stupid", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Wonder Women", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Đi casting!!!", "Nghỉ phép"));
+        absenceList.add(new Absence("Nhóc Maruko", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Nhóc Maruko", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Nhóc Maruko", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Nhóc Maruko", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Thanos", "Marvel", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Đi casting!!!", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
+        absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search, menu);
+        menu.clear();
+        inflater.inflate(R.menu.absence_po_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search)
-                .getActionView();
-        searchView.setSearchableInfo(searchManager
-                .getSearchableInfo(getActivity().getComponentName()));
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -120,6 +121,16 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_export:
+                Toast.makeText(getActivity(), "Exporting....!!!", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onAbsenceSelecter(Absence absence) {

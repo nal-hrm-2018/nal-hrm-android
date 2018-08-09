@@ -132,4 +132,7 @@
     <string name="absence_sub_salary">Số ngày nghỉ trừ lương:</string>
     <string name="title_edit_profile_activity">Edit profile</string>
     <string name="profile_address">Da Nang, Viet Nam</string>
+    <string name="holiday_new">New holiday</string>
+    <string name="absence_status_waiting">waiting</string>
+    <string name="absence_add">Add Absence</string>
 </resources>
