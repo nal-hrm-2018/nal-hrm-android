@@ -1,15 +1,11 @@
 package com.dal.hrm_management.presenters.ListEmployee;
 
-import android.util.Log;
-
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
-import com.dal.hrm_management.models.LoginModel;
+import com.dal.hrm_management.models.ListEmployeeModel;
+import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
-import com.dal.hrm_management.views.list_employee.IListEmployeeActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.dal.hrm_management.views.list_employee.IListEmployee;
 
 import okhttp3.Credentials;
 import retrofit2.Call;
@@ -17,37 +13,31 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListEmployeePresenter implements IListEmployeePresenter{
-    private IListEmployeeActivity iListEmployeeActivity;
+    private IListEmployee iListEmployee;
 
-    public ListEmployeePresenter(IListEmployeeActivity iListEmployeeActivity) {
-        this.iListEmployeeActivity = iListEmployeeActivity;
+    public ListEmployeePresenter(IListEmployee iListEmployeeActivity) {
+        this.iListEmployee = iListEmployeeActivity;
     }
 
     @Override
     public void getListEmployee() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ListEmpResponse> call = apiService.getListEmployee(LoginPresenter.token);
+        call.enqueue(new Callback<ListEmpResponse>() {
+            @Override
+            public void onResponse(Call<ListEmpResponse> call, Response<ListEmpResponse> response) {
+                ListEmpResponse listEmpResponse = response.body();
+                if (listEmpResponse.getResultCode() == 200) {
+                    iListEmployee.Success(listEmpResponse.getData());
 
+                }
+            }
 
-
-//        Call<ListEmployeeModel> call = apiService.getListEmployee(auth, LoginPresenter.token);
-//        call.enqueue(new Callback<ListEmployeeModel>() {
-//            @Override
-//            public void onResponse(Call<ListEmployeeModel> call, Response<ListEmployeeModel> response) {
-//                ListEmployeeModel listEmployeeModel= response.body();
-//                if (listEmployeeModel.getResultCode() == "200"){
-//                    List<ItemListEmployeeModel> list = listEmployeeModel.getData();
-//                    Log.d("hihi",list.get(0).getEmail());
-//                }else{
-//                    Log.d("hihi",response.body().getResultCode());
-//                    iListEmployeeActivity.getListEmployeeFailure();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ListEmployeeModel> call, Throwable t) {
-//                iListEmployeeActivity.getListEmployeeFailure();
-//            }
-//        });
+            @Override
+            public void onFailure(Call<ListEmpResponse> call, Throwable t) {
+                iListEmployee.getListEmployeeFailure();
+            }
+        });
     }
+
 }

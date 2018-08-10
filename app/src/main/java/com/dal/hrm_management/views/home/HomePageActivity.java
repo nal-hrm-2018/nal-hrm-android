@@ -30,7 +30,7 @@ import com.dal.hrm_management.utils.CircleTransform;
 import com.dal.hrm_management.views.AbsenceForHRFragment;
 import com.dal.hrm_management.views.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.views.absence.AbsenceView;
-import com.dal.hrm_management.views.list_employee.ListEmployeeActivity;
+import com.dal.hrm_management.views.list_employee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
 
@@ -164,7 +164,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                     Log.d("GROUP",model.menuName);
                     if (model.menuName.equals(getString(R.string.menu_employee))){
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container,new AbsenceForHRFragment()).commit();
+                                .replace(R.id.fragment_container,new ListEmployee()).commit();
                     }else if((model.menuName.equals(getString(R.string.menu_absence_empl)))){
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container,new AbsenceManagerForPOFragment()).commit();
