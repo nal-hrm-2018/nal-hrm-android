@@ -81,7 +81,6 @@ public class ValueChartEmployeeFragment extends Fragment implements OnChartValue
         barChart.setMaxVisibleValueCount(60);
         barChart.setPinchZoom(false);
 
-        //set XAxis
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(10f);

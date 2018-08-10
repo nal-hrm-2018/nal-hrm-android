@@ -23,7 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.MenuModel;
-import com.dal.hrm_management.models.profile.Data;
+import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.utils.CircleTransform;
@@ -65,7 +65,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         addEvent();
 
 //        prepareMenuData();
-        populateExpandableList();
+//        populateExpandableList(data);
 
     }
 
@@ -106,7 +106,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         setSupportActionBar(toolbar);
         expandableListView = findViewById(R.id.expandableListView);
     }
-    private void loadNavHeader(Data data) {
+    private void loadNavHeader(Profile data) {
         tv_nameProfile.setText(data.getNameEmployee());
         tv_emailProfile.setText(data.getRole().getNameRole());
         //Chưa làm load ảnh
@@ -126,7 +126,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         }
     }
 
-    private void populateExpandableList() {
+    private void populateExpandableList(final Profile data) {
         expandableListAdapter = new com.dal.hrm_management.adapter.ExpandableListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
 
@@ -166,8 +166,14 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container,new ListEmployee()).commit();
                     }else if((model.menuName.equals(getString(R.string.menu_absence_empl)))){
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container,new AbsenceManagerForPOFragment()).commit();
+                        if (data.getRole().getNameRole().equals("HR")){
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container,new AbsenceForHRFragment()).commit();
+                        } else if(data.getRole().getNameRole().equals("PO")){
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container,new AbsenceManagerForPOFragment()).commit();
+                        }
+
                     }
                     Log.e("GROUP", model.menuName);
                     onBackPressed();
@@ -177,7 +183,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         });
     }
 
-    private void prepareMenuData(Data data) {
+    private void prepareMenuData(Profile data) {
 
         MenuModel menuModel = new MenuModel(getString(R.string.menu_dashboard), true, false, getDrawable(R.drawable.ic_dashboard));
         headerList.add(menuModel);
@@ -231,9 +237,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
 
     @Override
-    public void Success(Data data) {
+    public void Success(Profile data) {
         loadNavHeader(data);
         prepareMenuData(data);
+        populateExpandableList(data);
         Log.d("Home","thanh cong");
     }
 

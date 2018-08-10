@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listEmployee.ListEmployeeAdapter;
@@ -23,14 +25,16 @@ public class ListEmployee extends Fragment implements IListEmployee {
     private static final String TAG = ListEmployee.class.getName();
     ListEmployeePresenter listEmployeePresenter;
     private RecyclerView rv_listEmp;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        getActivity().setTitle(getString(R.string.list_employee_manage_title));
         mapMVP();
         listEmployeePresenter.getListEmployee();
-        View view = inflater.inflate(R.layout.fragment_list_emp,container,false);
-        rv_listEmp =view.findViewById(R.id.rv_listEmp);
+        View view = inflater.inflate(R.layout.fragment_list_emp, container, false);
+        rv_listEmp = view.findViewById(R.id.rv_listEmp);
         return view;
     }
 
@@ -47,20 +51,38 @@ public class ListEmployee extends Fragment implements IListEmployee {
 
     @Override
     public void Success(List<ListEmployees> listEmployee) {
-        ListEmployeeAdapter adapter = new ListEmployeeAdapter(getActivity(),listEmployee);
-        rv_listEmp.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        ListEmployeeAdapter adapter = new ListEmployeeAdapter(getActivity(), listEmployee);
+        rv_listEmp.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         rv_listEmp.setAdapter(adapter);
     }
 
     @Override
     public void getListEmployeeFailure() {
-        Log.d(TAG,"failure");
+        Log.d(TAG, "failure");
 
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.list_employee, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_export:
+                Toast.makeText(getActivity(), "Exporting....!!!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_import:
+                Toast.makeText(getActivity(), "Import....!!!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_add_new:
+                Toast.makeText(getActivity(), "Add new....!!!", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

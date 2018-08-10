@@ -55,14 +55,14 @@ public class BasicEmployeeFragment extends Fragment {
     private void initUI(View view) {
         imv_avatar = (ImageView) view.findViewById(R.id.imv_avatar);
         tv_name = (TextView) view.findViewById(R.id.tv_name);
-        tv_role = (TextView) view.findViewById(R.id.tv_role);
+        tv_role = (TextView) view.findViewById(R.id.tv_position);
         tv_email = (TextView) view.findViewById(R.id.tv_email);
         tv_address = (TextView) view.findViewById(R.id.tv_address);
         tv_phone = (TextView) view.findViewById(R.id.tv_phone);
         tv_gender= (TextView) view.findViewById(R.id.tv_gender);
         tv_maritalStatus= (TextView) view.findViewById(R.id.tv_maritalStatus);
         tv_birthday = (TextView) view.findViewById(R.id.tv_birthday);
-        tv_position = (TextView) view.findViewById(R.id.tv_position);
+        tv_position = (TextView) view.findViewById(R.id.tv_type);
         tv_start = (TextView) view.findViewById(R.id.tv_start);
         tv_end = (TextView) view.findViewById(R.id.tv_end);
     }
