@@ -5,6 +5,7 @@
     tools:context="com.dal.hrm_management.views.HolidayHRFragment">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_holiday"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -7,9 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,9 +47,10 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     private TextView tv_end;
     private ProgressBar progressBar;
     Bitmap avatarBitmap;
+    ArrayAdapter<CharSequence> adapter_position, adapter_maritalStatus, adapter_type;
 
     private ProfileEditPresenter profileEditPresenter;
-    public String position = "", maritalStatus = "", type = "";
+    public static String position = "", maritalStatus = "", type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,44 +73,23 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     }
 
     private void initData() {
-        if (position.toLowerCase().equals("dev")) {
-            spn_position.setClickable(false);
-        }
-        ArrayAdapter<CharSequence> adapter_position = ArrayAdapter.createFromResource(this, R.array.position_arr, android.R.layout.simple_spinner_item);
+        adapter_position = ArrayAdapter.createFromResource(this, R.array.position_arr, android.R.layout.simple_spinner_item);
         adapter_position.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_position.setAdapter(adapter_position);
-        if (position != null) {
-            int spinnerPosition = adapter_position.getPosition(position);
-            spn_position.setSelection(spinnerPosition);
-        }
-        ArrayAdapter<CharSequence> adapter_maritalStatus = ArrayAdapter.createFromResource(this, R.array.marital_status_arr, android.R.layout.simple_spinner_item);
+
+        adapter_maritalStatus = ArrayAdapter.createFromResource(this, R.array.marital_status_arr, android.R.layout.simple_spinner_item);
         adapter_maritalStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_maritalStatus.setAdapter(adapter_maritalStatus);
-        if (maritalStatus != null) {
-            int spinnerPosition = adapter_position.getPosition(maritalStatus);
-            spn_maritalStatus.setSelection(spinnerPosition);
-        }
 
-        ArrayAdapter<CharSequence> adapter_type = ArrayAdapter.createFromResource(this, R.array.type_arr, android.R.layout.simple_spinner_item);
+        adapter_type = ArrayAdapter.createFromResource(this, R.array.type_arr, android.R.layout.simple_spinner_item);
         adapter_type.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_type.setAdapter(adapter_type);
-
 
     }
 
     private void setEvent() {
-        Log.d("POSITION",position);
         imv_avatar.setOnClickListener(this);
         tv_birthday.setOnClickListener(this);
-        if (position.toLowerCase().equals("hr")) {
-            tv_start.setOnClickListener(this);
-            tv_end.setOnClickListener(this);
-        } else {
-            edt_email.setBackgroundColor(getResources().getColor(R.color.color_gray));
-            edt_email.setFocusable(false);
-            tv_start.setBackgroundColor(getResources().getColor(R.color.color_gray));
-            tv_end.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        }
     }
 
     private void initUI() {
@@ -157,8 +135,7 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
                 refreshDataOnView();
                 break;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -259,6 +236,27 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         tv_birthday.setText(profile.getBirthday());
         tv_start.setText(profile.getStartWorkDate());
         tv_end.setText(profile.getEndWorkDate());
+
+        if (position.toLowerCase().equals("hr")) {
+            tv_start.setOnClickListener(this);
+            tv_end.setOnClickListener(this);
+        } else {
+            edt_email.setEnabled(false);
+            tv_start.setEnabled(false);
+            tv_end.setEnabled(false);
+            spn_position.setEnabled(false);
+            spn_type.setEnabled(false);
+        }
+        if (!position.equals("")) {
+            spn_position.setSelection(adapter_position.getPosition(position));
+        }
+        if (!maritalStatus.equals("")) {
+            spn_maritalStatus.setSelection(profile.getMaritalStatusDTO().getMaritalStatus() - 1);
+        }
+        if (!type.equals("")) {
+            spn_type.setSelection(profile.getEmployeeType().getIdEmployeeType() - 1);
+        }
+
     }
 
     @Override
