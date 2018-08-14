@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.listEmployee.ListEmployees;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
 
 import java.util.List;
@@ -67,10 +67,13 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
             public void onClick(final View view, int position, boolean isLongClick) {
                 PopupMenu popup = new PopupMenu(view.getContext(), view);
                 popup.getMenuInflater().inflate(R.menu.popup_menu_employee_list, popup.getMenu());
-
+                if(LoginPresenter.position.toLowerCase().equals("po")){
+                    popup.getMenu().findItem(R.id.action_editProfile).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_resetPass).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                }
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(context.getApplicationContext(), "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
                         switch (item.getItemId()){
                             case R.id.action_viewProfile:
                                 Intent intent = new Intent(view.getContext().getApplicationContext(), ViewInforEmployeeActivity.class);

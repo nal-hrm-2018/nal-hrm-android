@@ -2,10 +2,9 @@ package com.dal.hrm_management.presenters.login;
 
 import android.util.Log;
 
-import com.dal.hrm_management.models.LoginModel;
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
-import com.dal.hrm_management.models.profile.ProfileResponse;
+import com.dal.hrm_management.models.LoginModel;
 import com.dal.hrm_management.views.login.ILoginActivity;
 
 import okhttp3.Credentials;
@@ -15,6 +14,7 @@ import retrofit2.Response;
 
 public class LoginPresenter implements ILoginPresenter {
     public static String token;
+    public static String position;
     private ILoginActivity iLoginActivity;
 
     public LoginPresenter(ILoginActivity iLoginActivity) {
@@ -33,9 +33,6 @@ public class LoginPresenter implements ILoginPresenter {
                 if (response.body().getResultCode()==200){
                     LoginPresenter.token = response.body().getData();
                     iLoginActivity.loginSucess(token);
-
-
-
                 }else{
                     iLoginActivity.loginFailure();
                 }
