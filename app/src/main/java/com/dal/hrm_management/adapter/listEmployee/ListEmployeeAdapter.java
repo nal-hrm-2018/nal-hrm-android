@@ -33,8 +33,28 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
 
     @Override
     public DataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_emp_working, parent, false);
+        View itemView;
+        switch (viewType){
+            case 1:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_emp_working, parent, false);
+                break;
+            case 2:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_emp_endworking, parent, false);
+                break;
+            default:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_emp_working, parent, false);
+                break;
+
+        }
+
         return new ListEmployeeAdapter.DataViewHolder(itemView);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(arr.get(position).getEndWorkDate() == null){
+            return 2;
+        }return 1;
     }
 
     @Override

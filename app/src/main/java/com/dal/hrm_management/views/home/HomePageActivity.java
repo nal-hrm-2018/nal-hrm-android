@@ -163,10 +163,13 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
                     Log.d("GROUP",model.menuName);
                     if (model.menuName.equals(getString(R.string.menu_employee))){
+                        getSupportActionBar().setTitle(getString(R.string.menu_employee));
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container,new ListEmployee()).commit();
                     }else if((model.menuName.equals(getString(R.string.menu_absence_empl)))){
+                        getSupportActionBar().setTitle(getString(R.string.menu_absence_empl));
                         if (data.getRole().getNameRole().equals("HR")){
+
                             getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.fragment_container,new AbsenceForHRFragment()).commit();
                         } else if(data.getRole().getNameRole().equals("PO")){
