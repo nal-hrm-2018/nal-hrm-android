@@ -7,12 +7,23 @@ public class AbsenceModel {
     private String reason;
     private String status;
 
-    public AbsenceModel(String type, String dateStart, String dateEnd, String reason, String status) {
+    public String getAllDay() {
+        return allDay;
+    }
+
+    public void setAllDay(String allDay) {
+        this.allDay = allDay;
+    }
+
+    private String allDay;
+
+    public AbsenceModel(String type, String dateStart, String dateEnd, String reason, String status,String allDay) {
         this.type = type;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.reason = reason;
         this.status = status;
+        this.allDay = allDay;
     }
 
     public String getType() {

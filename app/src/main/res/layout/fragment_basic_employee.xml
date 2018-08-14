@@ -8,6 +8,14 @@
     tools:context="com.dal.hrm_management.views.employee.BasicEmployeeFragment"
     >
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -74,7 +82,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/edt_margin_bottom"
@@ -239,7 +246,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/boder_edittext"
-                        android:paddingBottom="@dimen/text_padding"
                         android:paddingLeft="@dimen/text_padding"
                         android:paddingRight="@dimen/text_padding"
                         android:paddingTop="@dimen/text_padding"
@@ -262,12 +268,5 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone" />
 
 </RelativeLayout>

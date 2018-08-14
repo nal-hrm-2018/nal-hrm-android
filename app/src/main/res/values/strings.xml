@@ -147,4 +147,8 @@
     <string name="holiday_name">Tên ngày nghỉ</string>
     <string name="holiday_type">Loại ngày nghỉ</string>
     <string name="holiday_note">Ghi ghú</string>
+    <string name="tv_soNgayPhepDaNghi">Số ngày phép đã nghỉ</string>
+    <string name="tv_soNgayNghiBaoHiem">Số ngày nghỉ bảo hiểm</string>
+    <string name="tv_soNgayNghiTruLuong">Số ngày nghỉ trừ lương</string>
+    <string name="tv_soNgayPhepConLai">Số ngày phép còn lại</string>
 </resources>

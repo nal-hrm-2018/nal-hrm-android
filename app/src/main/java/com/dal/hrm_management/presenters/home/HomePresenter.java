@@ -26,6 +26,7 @@ public class HomePresenter implements IHomePresenter{
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 Log.d("Homepage", String.valueOf(response.body().getResultCode()));
                 if (response.body().getResultCode()==200){
+
                     ihomeActivity.Success(response.body().getProfile());
                 }
             }

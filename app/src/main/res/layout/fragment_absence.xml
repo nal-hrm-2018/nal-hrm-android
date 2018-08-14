@@ -31,10 +31,33 @@
             android:text="@string/tv_soNgayPhepNamNgoai" />
 
         <TextView
+            android:id="@+id/tv_soNgayPhepDaNghi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_soNgayPhepDaNghi" />
+
+        <TextView
             android:id="@+id/tv_SoNgayNghiKhongLuong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tv_soNgayNghiKhongLuong" />
 
+        <TextView
+            android:id="@+id/tv_soNgayNghiBaoHiem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_soNgayNghiBaoHiem" />
+
+        <TextView
+            android:id="@+id/tv_soNgayNghiTruLuong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_soNgayNghiTruLuong" />
+
+        <TextView
+            android:id="@+id/tv_soNgayPhepConLai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_soNgayPhepConLai" />
     </LinearLayout>
 </LinearLayout>

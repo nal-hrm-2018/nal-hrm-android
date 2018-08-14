@@ -15,13 +15,13 @@ public class AbsencePresenter implements IAbsencePresenter {
         this.iAbsenceView = iAbsenceView;
     }
     public void initData(){
-        AbsenceModel absenceModel = new AbsenceModel("Nghỉ phép","1","1","thích","waiting");
+        AbsenceModel absenceModel = new AbsenceModel("Nghỉ phép","03/08/2018","04/08/2018","thích","waiting","Cả ngày");
         arr.add(absenceModel);
-        absenceModel = new AbsenceModel("Nghỉ phép","2","2","thích","waiting");
+        absenceModel = new AbsenceModel("Nghỉ phép","03/08/2018","04/08/2018","thích","waiting","Cả ngày");
         arr.add(absenceModel);
-        absenceModel = new AbsenceModel("Nghỉ phép","3","3","thích","waiting");
+        absenceModel = new AbsenceModel("Nghỉ phép","03/08/2018","04/08/2018","thích","waiting","Cả ngày");
         arr.add(absenceModel);
-        absenceModel = new AbsenceModel("Nghỉ phép","4","4","thích","waiting");
+        absenceModel = new AbsenceModel("Nghỉ phép","03/08/2018","04/08/2018","thích","waiting","Cả ngày");
         arr.add(absenceModel);
     }
 }
