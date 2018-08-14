@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,13 +22,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.models.profile.Profile;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
+import com.dal.hrm_management.presenters.profile.ProfileEditPresenter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Calendar;
 
-public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditProfileActivity extends AppCompatActivity implements IProfileEditActivity, View.OnClickListener {
     private static final int REQUEST_IMAGE = 1001;
     private ImageView imv_avatar;
     private EditText edt_name;
@@ -37,7 +39,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private EditText edt_email;
     private EditText edt_address;
     private EditText edt_phone;
-    private RadioButton rb_male,rb_female;
+    private RadioButton rb_male, rb_female;
     private Spinner spn_maritalStatus;
     private TextView tv_birthday;
     private Spinner spn_type;
@@ -45,46 +47,49 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private TextView tv_end;
     private ProgressBar progressBar;
     Bitmap avatarBitmap;
+    ArrayAdapter<CharSequence> adapter_position, adapter_maritalStatus, adapter_type;
+
+    private ProfileEditPresenter profileEditPresenter;
+    public static String position = "", maritalStatus = "", type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         displayBackHome();
+        initPresenter();
+        getDataFromServer();
         initUI();
         initData();
         setEvent();
-        getData();
+    }
+
+    private void getDataFromServer() {
+        profileEditPresenter.getProfile(LoginPresenter.token);
+    }
+
+    private void initPresenter() {
+        profileEditPresenter = new ProfileEditPresenter(this);
     }
 
     private void initData() {
-        //TODO: check role
-        ArrayAdapter<CharSequence> adapter_position = ArrayAdapter.createFromResource(this,
-                R.array.position_arr, android.R.layout.simple_spinner_item);
+        adapter_position = ArrayAdapter.createFromResource(this, R.array.position_arr, android.R.layout.simple_spinner_item);
         adapter_position.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_position.setAdapter(adapter_position);
 
-        ArrayAdapter<CharSequence> adapter_maritalStatus = ArrayAdapter.createFromResource(this,
-                R.array.marital_status_arr, android.R.layout.simple_spinner_item);
+        adapter_maritalStatus = ArrayAdapter.createFromResource(this, R.array.marital_status_arr, android.R.layout.simple_spinner_item);
         adapter_maritalStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_maritalStatus.setAdapter(adapter_maritalStatus);
 
-        ArrayAdapter<CharSequence> adapter_type = ArrayAdapter.createFromResource(this, R.array.type_arr, android.R.layout.simple_spinner_item);
+        adapter_type = ArrayAdapter.createFromResource(this, R.array.type_arr, android.R.layout.simple_spinner_item);
         adapter_type.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_type.setAdapter(adapter_type);
 
-
-    }
-
-    private void getData() {
     }
 
     private void setEvent() {
         imv_avatar.setOnClickListener(this);
         tv_birthday.setOnClickListener(this);
-        //TODO: CHECK ROLE : DEV/PO: can't edit tv_start, tv_end, only HR have this permission
-        tv_start.setOnClickListener(this);
-       // tv_end.setOnClickListener(this);
     }
 
     private void initUI() {
@@ -123,42 +128,41 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         int id = item.getItemId();
         switch (id) {
             case R.id.action_save:
-                Toast.makeText(getApplicationContext(),"Saving profile!!!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Saving profile!!!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_refresh:
-               // todo: refresh data
+                // todo: refresh data
                 refreshDataOnView();
                 break;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void refreshDataOnView() {
-        Toast.makeText(getApplicationContext(),"Refresh profile!!!",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Refresh profile!!!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imv_avatar:
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                 String pictureDirectoryPath = pictureDirectory.getPath();
                 Uri data = Uri.parse(pictureDirectoryPath);
-                photoPickerIntent.setDataAndType(data,"image/*");
-                startActivityForResult(photoPickerIntent,REQUEST_IMAGE);
+                photoPickerIntent.setDataAndType(data, "image/*");
+                startActivityForResult(photoPickerIntent, REQUEST_IMAGE);
                 break;
             case R.id.tv_birthday:
-                showDatePicker(v,v.getId());
+                showDatePicker(v, v.getId());
                 break;
             case R.id.tv_start:
-                showDatePicker(v,v.getId());
+                showDatePicker(v, v.getId());
                 break;
             case R.id.tv_end:
-                showDatePicker(v,v.getId());
+                showDatePicker(v, v.getId());
                 break;
         }
     }
@@ -182,13 +186,14 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     tv_end.setText(dayOfMonth + "/" + month + "/" + year);
                 }
             }
-        },year,month,date);
+        }, year, month, date);
         datePickerDialog.show();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==RESULT_OK){
-            if(requestCode == REQUEST_IMAGE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_IMAGE) {
                 Uri imageUri = data.getData();
                 InputStream inputStream;
                 try {
@@ -198,9 +203,64 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     avatarBitmap = imageAvatar;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Image not found",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Image not found", Toast.LENGTH_SHORT).show();
                 }
             }
         }
+    }
+
+    @Override
+    public void editProfileSuccess(Profile profile) {
+
+    }
+
+    @Override
+    public void editProfileFailure() {
+
+    }
+
+    @Override
+    public void getProfileSuccess(Profile profile) {
+        position = profile.getRole().getNameRole();
+        maritalStatus = profile.getMaritalStatusDTO().getTypeMaritalStatus();
+        type = profile.getEmployeeType().getNameEmployeeType();
+        edt_name.setText(profile.getNameEmployee());
+        edt_email.setText(profile.getEmail());
+        edt_address.setText(profile.getAddress());
+        edt_phone.setText(profile.getMobile());
+        if (profile.getGenderDTO().getGender() == 1) {
+            rb_female.setChecked(true);
+        } else {
+            rb_male.setChecked(true);
+        }
+        tv_birthday.setText(profile.getBirthday());
+        tv_start.setText(profile.getStartWorkDate());
+        tv_end.setText(profile.getEndWorkDate());
+
+        if (position.toLowerCase().equals("hr")) {
+            tv_start.setOnClickListener(this);
+            tv_end.setOnClickListener(this);
+        } else {
+            edt_email.setEnabled(false);
+            tv_start.setEnabled(false);
+            tv_end.setEnabled(false);
+            spn_position.setEnabled(false);
+            spn_type.setEnabled(false);
+        }
+        if (!position.equals("")) {
+            spn_position.setSelection(adapter_position.getPosition(position));
+        }
+        if (!maritalStatus.equals("")) {
+            spn_maritalStatus.setSelection(profile.getMaritalStatusDTO().getMaritalStatus() - 1);
+        }
+        if (!type.equals("")) {
+            spn_type.setSelection(profile.getEmployeeType().getIdEmployeeType() - 1);
+        }
+
+    }
+
+    @Override
+    public void getProfileFailure() {
+
     }
 }

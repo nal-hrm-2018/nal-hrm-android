@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/activity_horizontal_margin"
-    android:layout_marginTop="@dimen/text_padding">
+    android:layout_marginBottom="@dimen/text_padding"
+    android:background="@android:color/white"
+    android:padding="@dimen/activity_horizontal_margin">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imv_avaEmp"
-        android:layout_width="@dimen/avatar_size_medium"
-        android:layout_height="@dimen/avatar_size_medium"
-        android:src="@drawable/img_avatar"
+        android:layout_width="@dimen/avatar_size_small"
+        android:layout_height="@dimen/avatar_size_small"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        />
+        android:src="@drawable/img_avatar" />
 
     <TextView
         android:id="@+id/tv_hoVaTen"
@@ -19,28 +20,34 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/imv_avaEmp"
         android:text="Họ và tên"
+        android:textSize="@dimen/text_size_large"
         android:theme="@style/NameEmpInList" />
+
     <TextView
         android:id="@+id/tv_chucVu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imv_avaEmp"
         android:layout_below="@+id/tv_hoVaTen"
-        android:theme="@style/infoEmpInList"
-        android:text="Chức vụ"/>
+        android:layout_toRightOf="@id/imv_avaEmp"
+        android:text="Chức vụ"
+        android:textSize="@dimen/text_size_medium"
+        android:theme="@style/infoEmpInList" />
+
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:layout_below="@id/tv_chucVu"
         android:layout_toRightOf="@id/imv_avaEmp"
-        android:theme="@style/infoEmpInList"
-        android:layout_below="@id/tv_chucVu"/>
+        android:text="Email"
+        android:textSize="@dimen/text_size_medium"
+        android:theme="@style/infoEmpInList" />
+
     <ImageView
         android:id="@+id/imv_tinhTrangLamViec"
         android:layout_width="@dimen/icon_size_button"
         android:layout_height="@dimen/icon_size_button"
-        android:src="@drawable/ic_cancel"
         android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_cancel" />
 </RelativeLayout>

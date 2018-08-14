@@ -50,7 +50,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_role"
+                        android:id="@+id/tv_position"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/text_padding"
@@ -189,7 +189,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_position"
+                    android:id="@+id/tv_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/boder_edittext"

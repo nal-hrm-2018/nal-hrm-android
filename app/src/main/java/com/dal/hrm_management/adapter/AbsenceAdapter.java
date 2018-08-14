@@ -46,7 +46,7 @@ public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataVie
     }
 
     /**
-     * Data ViewHolder class.
+     * Profile ViewHolder class.
      */
     public static class DataViewHolder extends RecyclerView.ViewHolder {
 

@@ -6,7 +6,7 @@ import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.ProfileResponse;
-import com.dal.hrm_management.views.profile.IProfileActivity;
+import com.dal.hrm_management.views.profile.IProfileEditActivity;
 
 import okhttp3.Credentials;
 import retrofit2.Call;
@@ -17,11 +17,11 @@ import retrofit2.Response;
  * Created by Luu Ngoc Lan on 30-Jul-18.
  */
 
-public class ProfilePresenter implements IProfilePresenter{
-    private IProfileActivity iProfileActivity;
+public class ProfileEditPresenter implements IProfilePresenter {
+    private IProfileEditActivity iProfileEditActivity;
 
-    public ProfilePresenter(IProfileActivity iProfileActivity){
-        this.iProfileActivity = iProfileActivity;
+    public ProfileEditPresenter(IProfileEditActivity iProfileEditActivity) {
+        this.iProfileEditActivity = iProfileEditActivity;
     }
 
     @Override
@@ -34,19 +34,19 @@ public class ProfilePresenter implements IProfilePresenter{
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 Log.d("test", String.valueOf(response.body().getResultCode()));
                 int statusCode = response.code();
-                if(response.body().getResultCode()==200){
+                if (response.body().getResultCode() == 200) {
                     Profile profile = response.body().getProfile();
-                    iProfileActivity.getProfileSuccess(profile);
-                    Log.d("TAG","success");
+                    iProfileEditActivity.getProfileSuccess(profile);
+                    Log.d("TAG", "success");
                 } else {
-                    iProfileActivity.getProfileFailure();
+                    iProfileEditActivity.getProfileFailure();
                 }
             }
 
             @Override
             public void onFailure(Call<ProfileResponse> call, Throwable t) {
-                    Log.d("failure","here");
-                    iProfileActivity.getProfileFailure();
+                Log.d("failure", "here");
+                iProfileEditActivity.getProfileFailure();
             }
         });
     }

@@ -35,7 +35,7 @@
     <string name="textview.hint.profile_name">Lưu Ngọc Lan</string>
     <string name="textview.hint.profile_role">DEV</string>
     <string name="textview.hint.profile_email">luungoclan@gmail.com</string>
-    <string name="textview.text.address">Address(*)</string>
+    <string name="textview.text.address">Address (*)</string>
     <string name="textview.text.phone">Phone (*)</string>
     <string name="textview.text.gender">Gender (*)</string>
     <string name="textview.text.marital_status">Marital Status (*)</string>
@@ -135,4 +135,16 @@
     <string name="holiday_new">New holiday</string>
     <string name="absence_status_waiting">waiting</string>
     <string name="absence_add">Add Absence</string>
+    <string name="profile_view_address">Address</string>
+    <string name="profile_view_phone">Phone</string>
+    <string name="profile_view_gender">Gender</string>
+    <string name="profile_view_marital_status">Marital status</string>
+    <string name="profile_view_birthday">Birthday</string>
+    <string name="profile_view_type">Type</string>
+    <string name="profile_view_start_day">Start Day</string>
+    <string name="profile_view_end_day">End Day</string>
+    <string name="list_employee_manage_title">Employees</string>
+    <string name="holiday_name">Tên ngày nghỉ</string>
+    <string name="holiday_type">Loại ngày nghỉ</string>
+    <string name="holiday_note">Ghi ghú</string>
 </resources>

@@ -6,20 +6,24 @@
         <item>Khác</item>
     </array>
     <array name="position_arr">
-        <item>DEV</item>
+        <item>Dev</item>
+        <item>ACCOUNTANT</item>
+        <item>SM</item>
         <item>PO</item>
-        <item>BO</item>
         <item>HR</item>
     </array>
     <array name="type_arr">
-        <item>Fulltime</item>
-        <item>Parttime</item>
-        <item>Intern</item>
+        <item>InterShip</item>
+        <item>FullTime</item>
+        <item>PartTime</item>
         <item>Contractual Employee</item>
+        <item>Probationary</item>
     </array>
     <array name="marital_status_arr">
         <item>Single</item>
         <item>Married</item>
+        <item>Separated</item>
+        <item>Divorced</item>
     </array>
     <array name="month_arr">
         <item>Tháng 1</item>

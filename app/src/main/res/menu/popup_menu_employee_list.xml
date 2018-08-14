@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_viewProfile"
+        android:iconTint="@color/colorAccent"
+        android:title="View Profile"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/action_editProfile"
+        android:iconTint="@color/colorAccent"
+        android:title="Edit Profile"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/action_resetPass"
+        android:iconTint="@color/colorAccent"
+        android:title="Reset Password"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/action_remove"
+        android:iconTint="@color/colorAccent"
+        android:title="Remove"
+        app:showAsAction="withText" />
+</menu>

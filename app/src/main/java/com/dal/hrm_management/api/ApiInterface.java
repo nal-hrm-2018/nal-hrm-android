@@ -32,7 +32,7 @@ public interface ApiInterface {
     @GET("api/profile/")
     Call<ProfileResponse> getProfile(@Header("Authorization") String token);
 
-    @GET("api/list/employees?page=2&pageSize=5")
+    @GET("api/list/employees?page=2&pageSize=20")
     Call<ListEmpResponse> getListEmployee(@Header("Authorization") String token);
 
 }

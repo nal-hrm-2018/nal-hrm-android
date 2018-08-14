@@ -3,157 +3,83 @@ package com.dal.hrm_management.models.profile;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Luu Ngoc Lan on 30-Jul-18.
- */
+import java.util.List;
 
 public class Profile {
-    @SerializedName("id")
+
+    @SerializedName("idEmployee")
     @Expose
-    private Integer id;
+    private Integer idEmployee;
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("name")
+    @SerializedName("nameEmployee")
     @Expose
-    private String name;
+    private String nameEmployee;
     @SerializedName("birthday")
     @Expose
     private String birthday;
-    @SerializedName("gender")
+    @SerializedName("genderDTO")
     @Expose
-    private Integer gender;
+    private GenderDTO genderDTO;
     @SerializedName("mobile")
     @Expose
     private String mobile;
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("marital_status")
+    @SerializedName("maritalStatusDTO")
     @Expose
-    private Integer maritalStatus;
-    @SerializedName("startwork_date")
+    private MaritalStatusDTO maritalStatusDTO;
+    @SerializedName("startWorkDate")
     @Expose
-    private String startworkDate;
-    @SerializedName("endwork_date")
+    private String startWorkDate;
+    @SerializedName("endWorkDate")
     @Expose
-    private String endworkDate;
+    private String endWorkDate;
     @SerializedName("curriculum_vitae")
     @Expose
-    private String curriculumVitae;
-    @SerializedName("is_employee")
-    @Expose
-    private Integer isEmployee;
+    private Object curriculumVitae;
     @SerializedName("company")
     @Expose
-    private Object company;
+    private String company;
     @SerializedName("avatar")
     @Expose
-    private String avatar;
-    @SerializedName("employee_type_id")
+    private Object avatar;
+    @SerializedName("employeeType")
     @Expose
-    private Integer employeeTypeId;
-    @SerializedName("team_id")
+    private EmployeeType employeeType;
+    @SerializedName("role")
     @Expose
-    private Integer teamId;
-    @SerializedName("role_id")
-    @Expose
-    private Integer roleId;
-    @SerializedName("is_manager")
+    private Role role;
+    @SerializedName("isManager")
     @Expose
     private Integer isManager;
-    @SerializedName("salary_id")
+    @SerializedName("salaryId")
     @Expose
-    private Object salaryId;
-    @SerializedName("work_status")
-    @Expose
-    private Integer workStatus;
-    @SerializedName("updated_at")
+    private Integer salaryId;
+    @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("updated_by_employee")
-    @Expose
-    private Object updatedByEmployee;
-    @SerializedName("created_at")
+    @SerializedName("createdAt")
     @Expose
     private Object createdAt;
-    @SerializedName("created_by_employee")
+    @SerializedName("permission")
     @Expose
-    private Object createdByEmployee;
-    @SerializedName("delete_flag")
+    private List<Permission> permission = null;
+    @SerializedName("teams")
     @Expose
-    private Integer deleteFlag;
+    private List<Team> teams = null;
+    @SerializedName("employee")
+    @Expose
+    private Boolean employee;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Profile() {
+    public Integer getIdEmployee() {
+        return idEmployee;
     }
 
-    /**
-     *
-     * @param employeeTypeId
-     * @param birthday
-     * @param createdByEmployee
-     * @param updatedByEmployee
-     * @param startworkDate
-     * @param avatar
-     * @param maritalStatus
-     * @param teamId
-     * @param updatedAt
-     * @param id
-     * @param email
-     * @param address
-     * @param createdAt
-     * @param salaryId
-     * @param company
-     * @param name
-     * @param gender
-     * @param workStatus
-     * @param isManager
-     * @param deleteFlag
-     * @param isEmployee
-     * @param curriculumVitae
-     * @param roleId
-     * @param mobile
-     * @param endworkDate
-     */
-    public Profile(Integer id, String email, String name, String birthday, Integer gender, String mobile, String address, Integer maritalStatus, String startworkDate, String endworkDate, String curriculumVitae, Integer isEmployee, Object company, String avatar, Integer employeeTypeId, Integer teamId, Integer roleId, Integer isManager, Object salaryId, Integer workStatus, String updatedAt, Object updatedByEmployee, Object createdAt, Object createdByEmployee, Integer deleteFlag) {
-        super();
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.birthday = birthday;
-        this.gender = gender;
-        this.mobile = mobile;
-        this.address = address;
-        this.maritalStatus = maritalStatus;
-        this.startworkDate = startworkDate;
-        this.endworkDate = endworkDate;
-        this.curriculumVitae = curriculumVitae;
-        this.isEmployee = isEmployee;
-        this.company = company;
-        this.avatar = avatar;
-        this.employeeTypeId = employeeTypeId;
-        this.teamId = teamId;
-        this.roleId = roleId;
-        this.isManager = isManager;
-        this.salaryId = salaryId;
-        this.workStatus = workStatus;
-        this.updatedAt = updatedAt;
-        this.updatedByEmployee = updatedByEmployee;
-        this.createdAt = createdAt;
-        this.createdByEmployee = createdByEmployee;
-        this.deleteFlag = deleteFlag;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdEmployee(Integer idEmployee) {
+        this.idEmployee = idEmployee;
     }
 
     public String getEmail() {
@@ -164,12 +90,12 @@ public class Profile {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getNameEmployee() {
+        return nameEmployee;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameEmployee(String nameEmployee) {
+        this.nameEmployee = nameEmployee;
     }
 
     public String getBirthday() {
@@ -180,12 +106,12 @@ public class Profile {
         this.birthday = birthday;
     }
 
-    public Integer getGender() {
-        return gender;
+    public GenderDTO getGenderDTO() {
+        return genderDTO;
     }
 
-    public void setGender(Integer gender) {
-        this.gender = gender;
+    public void setGenderDTO(GenderDTO genderDTO) {
+        this.genderDTO = genderDTO;
     }
 
     public String getMobile() {
@@ -204,84 +130,68 @@ public class Profile {
         this.address = address;
     }
 
-    public Integer getMaritalStatus() {
-        return maritalStatus;
+    public MaritalStatusDTO getMaritalStatusDTO() {
+        return maritalStatusDTO;
     }
 
-    public void setMaritalStatus(Integer maritalStatus) {
-        this.maritalStatus = maritalStatus;
+    public void setMaritalStatusDTO(MaritalStatusDTO maritalStatusDTO) {
+        this.maritalStatusDTO = maritalStatusDTO;
     }
 
-    public String getStartworkDate() {
-        return startworkDate;
+    public String getStartWorkDate() {
+        return startWorkDate;
     }
 
-    public void setStartworkDate(String startworkDate) {
-        this.startworkDate = startworkDate;
+    public void setStartWorkDate(String startWorkDate) {
+        this.startWorkDate = startWorkDate;
     }
 
-    public String getEndworkDate() {
-        return endworkDate;
+    public String getEndWorkDate() {
+        return endWorkDate;
     }
 
-    public void setEndworkDate(String endworkDate) {
-        this.endworkDate = endworkDate;
+    public void setEndWorkDate(String endWorkDate) {
+        this.endWorkDate = endWorkDate;
     }
 
-    public String getCurriculumVitae() {
+    public Object getCurriculumVitae() {
         return curriculumVitae;
     }
 
-    public void setCurriculumVitae(String curriculumVitae) {
+    public void setCurriculumVitae(Object curriculumVitae) {
         this.curriculumVitae = curriculumVitae;
     }
 
-    public Integer getIsEmployee() {
-        return isEmployee;
-    }
-
-    public void setIsEmployee(Integer isEmployee) {
-        this.isEmployee = isEmployee;
-    }
-
-    public Object getCompany() {
+    public String getCompany() {
         return company;
     }
 
-    public void setCompany(Object company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 
-    public String getAvatar() {
+    public Object getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(Object avatar) {
         this.avatar = avatar;
     }
 
-    public Integer getEmployeeTypeId() {
-        return employeeTypeId;
+    public EmployeeType getEmployeeType() {
+        return employeeType;
     }
 
-    public void setEmployeeTypeId(Integer employeeTypeId) {
-        this.employeeTypeId = employeeTypeId;
+    public void setEmployeeType(EmployeeType employeeType) {
+        this.employeeType = employeeType;
     }
 
-    public Integer getTeamId() {
-        return teamId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Integer getIsManager() {
@@ -292,20 +202,12 @@ public class Profile {
         this.isManager = isManager;
     }
 
-    public Object getSalaryId() {
+    public Integer getSalaryId() {
         return salaryId;
     }
 
-    public void setSalaryId(Object salaryId) {
+    public void setSalaryId(Integer salaryId) {
         this.salaryId = salaryId;
-    }
-
-    public Integer getWorkStatus() {
-        return workStatus;
-    }
-
-    public void setWorkStatus(Integer workStatus) {
-        this.workStatus = workStatus;
     }
 
     public String getUpdatedAt() {
@@ -316,14 +218,6 @@ public class Profile {
         this.updatedAt = updatedAt;
     }
 
-    public Object getUpdatedByEmployee() {
-        return updatedByEmployee;
-    }
-
-    public void setUpdatedByEmployee(Object updatedByEmployee) {
-        this.updatedByEmployee = updatedByEmployee;
-    }
-
     public Object getCreatedAt() {
         return createdAt;
     }
@@ -332,19 +226,28 @@ public class Profile {
         this.createdAt = createdAt;
     }
 
-    public Object getCreatedByEmployee() {
-        return createdByEmployee;
+    public List<Permission> getPermission() {
+        return permission;
     }
 
-    public void setCreatedByEmployee(Object createdByEmployee) {
-        this.createdByEmployee = createdByEmployee;
+    public void setPermission(List<Permission> permission) {
+        this.permission = permission;
     }
 
-    public Integer getDeleteFlag() {
-        return deleteFlag;
+    public List<Team> getTeams() {
+        return teams;
     }
 
-    public void setDeleteFlag(Integer deleteFlag) {
-        this.deleteFlag = deleteFlag;
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
+
+    public Boolean getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Boolean employee) {
+        this.employee = employee;
+    }
+
 }
