@@ -3,19 +3,21 @@ package com.dal.hrm_management.adapter.listEmployee;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.listEmployee.ListEmployees;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
 
 import java.util.List;
@@ -64,24 +66,37 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
         holder.tv_chucVu.setText(arr.get(position).getRole().getNameRole());
         holder.setItemClickListener(new ItemClickListener() {
             @Override
-            public void onClick(final View view, int position, boolean isLongClick) {
+            public void onClick(final View view, final int position, boolean isLongClick) {
                 PopupMenu popup = new PopupMenu(view.getContext(), view);
                 popup.getMenuInflater().inflate(R.menu.popup_menu_employee_list, popup.getMenu());
-
+                if(LoginPresenter.position.toLowerCase().equals("po")){
+                    popup.getMenu().findItem(R.id.action_editProfile).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_resetPass).setVisible(false);
+                    popup.getMenu().findItem(R.id.action_remove).setVisible(false);
+                }
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(context.getApplicationContext(), "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
                         switch (item.getItemId()){
                             case R.id.action_viewProfile:
                                 Intent intent = new Intent(view.getContext().getApplicationContext(), ViewInforEmployeeActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("id",position);
+                                intent.putExtra("data",bundle);
                                 context.startActivity(intent);
+                                break;
                             case R.id.action_editProfile:
+//                                Intent editIntent = new Intent(view.getContext().getApplicationContext(), EditProfileActivity.class);
+//                                context.startActivity(editIntent);
+                                break;
+                            case R.id.action_resetPass:
+                                break;
+                            case R.id.action_remove:
                                 break;
                         }
                         return true;
                     }
                 });
-
+                popup.setGravity(Gravity.DISPLAY_CLIP_HORIZONTAL);
                 popup.show();
             }
         });

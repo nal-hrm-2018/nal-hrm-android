@@ -34,13 +34,11 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     private SearchView searchView;
 
     public AbsenceManagerForPOFragment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_absence_manager_for_po, container, false);
         setHasOptionsMenu(true);
         initUi(view);
@@ -56,7 +54,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     }
 
     private void setDataIntoView() {
-        adapter = new AbsenceManagerForPoAdapter(absenceList, R.layout.item_list_absence_manager_of_po, getActivity(), this);
+        adapter = new AbsenceManagerForPoAdapter(absenceList, getActivity(), this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -76,7 +74,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         absenceList.add(new Absence("Trương Vô Kị", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
         absenceList.add(new Absence("Kudo Shinichi", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
         absenceList.add(new Absence("Chicken Stupid", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
-        absenceList.add(new Absence("Wonder Women", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Đi casting!!!", "Nghỉ phép"));
+        absenceList.add(new Absence("Wonder Women", "Marvel", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Đi casting!!!", "Nghỉ phép"));
         absenceList.add(new Absence("Nhóc Maruko", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
         absenceList.add(new Absence("Nhóc Maruko", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
         absenceList.add(new Absence("Nhóc Maruko", "EMC_201", "3/8/2018", "4/8/2018", "Chưa xét", "Muốn đăng kí", "Thích thì nghỉ", "Nghỉ phép"));
@@ -107,14 +105,12 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // filter recycler view when query submitted
                 adapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                // filter recycler view when text is changed
                 adapter.getFilter().filter(query);
                 return false;
             }
@@ -133,7 +129,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     }
 
     @Override
-    public void onAbsenceSelecter(Absence absence) {
-
+    public void onAbsenceSelected(Absence absence) {
+Toast.makeText(getActivity(),"Selected: "+absence.getName(),Toast.LENGTH_SHORT).show();
     }
 }

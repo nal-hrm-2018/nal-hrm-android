@@ -18,6 +18,7 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listEmployee.ListEmployeeAdapter;
 import com.dal.hrm_management.models.listEmployee.ListEmployees;
 import com.dal.hrm_management.presenters.ListEmployee.ListEmployeePresenter;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
 
 import java.util.List;
 
@@ -66,7 +67,10 @@ public class ListEmployee extends Fragment implements IListEmployee {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.list_employee, menu);
-
+        if(LoginPresenter.position.toLowerCase().equals("po")){
+            menu.findItem(R.id.action_add_new).setVisible(false);
+            menu.findItem(R.id.action_import).setVisible(false);
+        }
     }
 
     @Override

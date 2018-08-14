@@ -27,14 +27,12 @@ import java.util.List;
 
 public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceManagerForPoAdapter.MyViewHolder> implements Filterable {
     private List<Absence> absenceList;
-    private int rowLayout;
     private Context context;
     private List<Absence> absenceListFilter;
     private AbsenceAdapterListener listener;
 
-    public AbsenceManagerForPoAdapter(List<Absence> absenceList, int rowLayout, Context context, AbsenceAdapterListener listener) {
+    public AbsenceManagerForPoAdapter(List<Absence> absenceList, Context context, AbsenceAdapterListener listener) {
         this.absenceList = absenceList;
-        this.rowLayout = rowLayout;
         this.context = context;
         this.absenceListFilter = absenceList;
         this.listener = listener;
@@ -42,23 +40,24 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_absence_manager_of_po, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.tv_nameEmployee.setText(absenceList.get(position).getName());
-        holder.tv_nameProject.setText(absenceList.get(position).getNameProject());
-        holder.tv_reason.setText(absenceList.get(position).getReason());
-        holder.tv_from.setText(absenceList.get(position).getFrom());
-        holder.tv_to.setText(absenceList.get(position).getTo());
-        if (absenceList.get(position).getStatus().equals(context.getString(R.string.absence_status_accepted))) {
+        final Absence absence = absenceListFilter.get(position);
+        holder.tv_nameEmployee.setText(absence.getName());
+        holder.tv_nameProject.setText(absence.getNameProject());
+        holder.tv_reason.setText(absence.getReason());
+        holder.tv_from.setText(absence.getFrom());
+        holder.tv_to.setText(absence.getTo());
+        if (absence.getStatus().equals(context.getString(R.string.absence_status_accepted))) {
             holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
             holder.tv_status.setVisibility(View.VISIBLE);
             holder.ll_button.setVisibility(View.GONE);
         }
-        if (absenceList.get(position).getStatus().equals(context.getString(R.string.absence_status_canceled))) {
+        if (absence.getStatus().equals(context.getString(R.string.absence_status_canceled))) {
             holder.tv_status.setText(context.getString(R.string.absence_status_canceled));
             holder.tv_status.setVisibility(View.VISIBLE);
             holder.ll_button.setVisibility(View.GONE);
@@ -71,7 +70,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
                     holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
                     holder.tv_status.setVisibility(View.VISIBLE);
                     holder.ll_button.setVisibility(View.GONE);
-                    absenceList.get(position).setStatus(context.getString(R.string.absence_status_accepted));
+                    absence.setStatus(context.getString(R.string.absence_status_accepted));
                 } else {
                     showDialogReason();
                 }
@@ -91,7 +90,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
                         holder.tv_status.setText(context.getString(R.string.absence_status_canceled));
                         holder.tv_status.setVisibility(View.VISIBLE);
                         holder.ll_button.setVisibility(View.GONE);
-                        absenceList.get(position).setStatus(context.getString(R.string.absence_status_canceled));
+                        absence.setStatus(context.getString(R.string.absence_status_canceled));
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -121,12 +120,12 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
                 } else {
                     List<Absence> filteredList = new ArrayList<>();
                     for (Absence row : absenceList) {
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())||row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
                     absenceListFilter = filteredList;
-                }
+                };
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = absenceListFilter;
                 return filterResults;
@@ -180,6 +179,6 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
     }
 
     public interface AbsenceAdapterListener {
-        void onAbsenceSelecter(Absence absence);
+        void onAbsenceSelected(Absence absence);
     }
 }
