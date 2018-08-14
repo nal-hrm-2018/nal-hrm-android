@@ -56,7 +56,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     }
 
     private void setDataIntoView() {
-        adapter = new AbsenceManagerForPoAdapter(absenceList, R.layout.item_list_absence_manager_of_po, getActivity(), this);
+        adapter = new AbsenceManagerForPoAdapter(absenceList, getActivity(), this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
