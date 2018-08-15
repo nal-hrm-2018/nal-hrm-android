@@ -20,6 +20,7 @@ public class LoginPresenter implements ILoginPresenter {
     public LoginPresenter(ILoginActivity iLoginActivity) {
         this.iLoginActivity = iLoginActivity;
     }
+
     @Override
     public void getToken(String email, String password) {
         final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -28,21 +29,19 @@ public class LoginPresenter implements ILoginPresenter {
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-
-                Log.d("Result_code", String.valueOf(response.body().getResultCode()));
-                if (response.body().getResultCode()==200){
+                if (response.body().getResultCode() == 200) {
                     LoginPresenter.token = response.body().getData();
                     iLoginActivity.loginSucess(token);
-                }else{
+                } else if (response.body().getResultCode() == 422) {
                     iLoginActivity.loginFailure();
+                } else {
+                    iLoginActivity.errorInServer();
                 }
 
-
             }
-
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
-                iLoginActivity.loginFailure();
+                iLoginActivity.errorInServer();
             }
         });
     }
