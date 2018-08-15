@@ -17,8 +17,8 @@ import com.dal.hrm_management.R;
 import java.util.Calendar;
 
 public class Form_absence extends AppCompatActivity implements View.OnClickListener{
-    String[] LOAINGHI = {"Nghỉ phép", "Nghỉ không lương", "Nghỉ bệnh"};
-    String[] THOIGIANNGHI = {"Cả ngày","Sáng","Chiều"};
+    String[] LOAINGHI = {"Paid leave", "non salary", "insurance"};
+    String[] THOIGIANNGHI = {"All day","Morning","Afternoon"};
     Toolbar toolbar;
     EditText edt_tuNgay,edt_denNgay;
     ImageButton imb_tuNgay,imb_denNgay;

@@ -102,7 +102,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:lines="5"
                     android:hint="@string/form_absence_edt_reason"/>
             </android.support.design.widget.TextInputLayout>
 
