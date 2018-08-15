@@ -32,7 +32,7 @@ public class ProfilePresenter implements IProfilePresenter{
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                Log.d("test", String.valueOf(response.body().getResultCode()));
+
                 int statusCode = response.code();
                 if(response.body().getResultCode()==200){
                     Profile profile = response.body().getProfile();

@@ -20,9 +20,9 @@ public class ListEmployeePresenter implements IListEmployeePresenter{
     }
 
     @Override
-    public void getListEmployee() {
+    public void getListEmployee(int currentPage,int pageSize) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<ListEmpResponse> call = apiService.getListEmployee(1,20,LoginPresenter.token);
+        Call<ListEmpResponse> call = apiService.getListEmployee(currentPage,pageSize,LoginPresenter.token);
         call.enqueue(new Callback<ListEmpResponse>() {
             @Override
             public void onResponse(Call<ListEmpResponse> call, Response<ListEmpResponse> response) {

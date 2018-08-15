@@ -150,6 +150,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+    @Override
+    public void errorInServer() {
+        Toast.makeText(this,"Server error",Toast.LENGTH_LONG).show();
+    }
+
     public boolean isConnected() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
