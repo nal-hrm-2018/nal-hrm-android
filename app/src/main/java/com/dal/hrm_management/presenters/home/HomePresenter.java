@@ -5,6 +5,7 @@ import android.util.Log;
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.profile.ProfileResponse;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.home.iHomeActivity;
 
 import retrofit2.Call;
@@ -26,7 +27,7 @@ public class HomePresenter implements IHomePresenter{
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
                 Log.d("Homepage", String.valueOf(response.body().getResultCode()));
                 if (response.body().getResultCode()==200){
-
+                    LoginPresenter.position = response.body().getProfile().getRole().getNameRole();
                     ihomeActivity.Success(response.body().getProfile());
                 }
             }

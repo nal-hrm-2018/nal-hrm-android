@@ -117,8 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/form_holiday_edt_ghiChu"
-                    android:inputType="textMultiLine"
-                    android:lines="6" />
+                    android:inputType="textMultiLine" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
