@@ -24,20 +24,16 @@ public interface ApiInterface {
             "X-Requested-With:XMLHttpRequest",
             "Content-Type:application/json"
     })
-//    @GET("api/employee")
-//    Call<ListEmployeeModel> getListEmployee(@Header("Authorization") String auth,
-//                                            @Header("token") String token);
-
-//    @GET("api/profile/")
-//    Call<ProfileResponse> getProfile(@Header("Authorization") String auth,
-//                                     @Header("token") String token);
     @GET("api/profile/")
     Call<ProfileResponse> getProfile(@Header("Authorization") String token);
 
-    @GET("api/list/employees?page=2&pageSize=20")
-    Call<ListEmpResponse> getListEmployee(@Header("Authorization") String token);
+    @GET("api/list/employees")
+    Call<ListEmpResponse> getListEmployee(@Query("page") int page,
+                                          @Query("pageSize") int pageSize,
+                                          @Header("Authorization") String token);
 
     @GET("api/basic")
     Call<Profile> getBasicInforEmployee(@Query("id") int id);
+
 
 }

@@ -193,11 +193,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel(getString(R.string.menu_project), true, false, getDrawable(R.drawable.ic_project));
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
         menuModel = new MenuModel(getString(R.string.menu_absence), true, false, getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
