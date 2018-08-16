@@ -20,6 +20,7 @@ public class ViewInforEmployeeActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    public static int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,7 @@ public class ViewInforEmployeeActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        //TO DO: get name of Employee to display on actionbar
-        setTitle("Lưu Ngọc Lan");
+        setTitle("Employee's name");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

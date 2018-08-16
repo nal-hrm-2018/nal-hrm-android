@@ -92,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_padding"
-                    android:text="@string/textview.text.address"
+                    android:text="@string/profile_view_address"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_padding"
-                    android:text="@string/textview.text.phone"
+                    android:text="@string/profile_view_phone"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_padding"
-                    android:text="@string/textview.text.gender"
+                    android:text="@string/profile_view_gender"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_padding"
-                    android:text="@string/textview.text.marital_status"
+                    android:text="@string/profile_view_marital_status"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
@@ -171,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_padding"
-                    android:text="@string/textview.text.birthday"
+                    android:text="@string/profile_view_birthday"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
@@ -191,7 +191,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_padding"
-                    android:text="@string/textview.text.type"
+                    android:text="@string/profile_view_type"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
@@ -218,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/text_padding"
-                        android:text="@string/textview.text.start_day"
+                        android:text="@string/profile_view_start_day"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />
@@ -228,7 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/text_padding"
-                        android:text="@string/textview.text.end_day"
+                        android:text="@string/profile_view_end_day"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/text_size_medium"
                         android:textStyle="bold" />
@@ -247,6 +247,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/boder_edittext"
+                        android:paddingBottom="@dimen/text_padding"
                         android:paddingLeft="@dimen/text_padding"
                         android:paddingRight="@dimen/text_padding"
                         android:paddingTop="@dimen/text_padding"

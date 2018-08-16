@@ -25,7 +25,7 @@ public class LoginPresenter implements ILoginPresenter {
     public void getToken(String email, String password) {
         final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         String auth = Credentials.basic("hrm_testing", "hrm_testing");
-        Call<LoginModel> call = apiService.getToKen(auth, email, password);
+        Call<LoginModel> call = apiService.getToKen(token,email, password);
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {

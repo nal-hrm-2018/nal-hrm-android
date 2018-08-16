@@ -1,6 +1,6 @@
 package com.dal.hrm_management.models.permissions;
 
-public class permissionModel {
+public class PermissionModel {
     private String name;
     private boolean isAlow;
 
@@ -20,7 +20,7 @@ public class permissionModel {
         isAlow = alow;
     }
 
-    public permissionModel(String name, boolean isAlow) {
+    public PermissionModel(String name, boolean isAlow) {
 
         this.name = name;
         this.isAlow = isAlow;

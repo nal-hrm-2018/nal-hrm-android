@@ -102,15 +102,15 @@
                 android:id="@+id/form_holiday_spinner_loaiNghi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@android:color/black"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:padding="@dimen/text_padding"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
+                android:textColorHint="@android:color/black" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@android:color/black"
-                android:paddingBottom="@dimen/activity_horizontal_margin">
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:textColorHint="@android:color/black">
 
                 <EditText
                     android:id="@+id/form_holiday_edt_ghiChu"
@@ -126,8 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/shape_button_changepassword"
-                android:text="@string/form_absence_btn_submit"
-                />
+                android:text="@string/form_absence_btn_submit" />
         </LinearLayout>
 
     </ScrollView>

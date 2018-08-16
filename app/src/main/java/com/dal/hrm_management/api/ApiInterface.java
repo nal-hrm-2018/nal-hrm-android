@@ -2,7 +2,6 @@ package com.dal.hrm_management.api;
 
 import com.dal.hrm_management.models.LoginModel;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
-import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 
 import retrofit2.Call;
@@ -17,7 +16,7 @@ import retrofit2.http.Query;
 public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/login")
-    Call<LoginModel> getToKen(@Header("Authorization") String auth,
+    Call<LoginModel> getToKen(@Header("Authorization") String token,
                               @Field("username") String email,
                               @Field("password") String password);
     @Headers({
@@ -33,7 +32,7 @@ public interface ApiInterface {
                                           @Header("Authorization") String token);
 
     @GET("api/basic")
-    Call<Profile> getBasicInforEmployee(@Query("id") int id);
+    Call<ProfileResponse> getBasicInforEmployee(@Header("Authorization") String token, @Query("id") int id);
 
 
 }
