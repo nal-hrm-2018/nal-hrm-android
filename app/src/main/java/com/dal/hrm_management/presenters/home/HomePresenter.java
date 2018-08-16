@@ -25,10 +25,12 @@ public class HomePresenter implements IHomePresenter{
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                Log.d("Homepage", String.valueOf(response.body().getResultCode()));
+                Log.d("body main",response.body().toString());
                 if (response.body().getResultCode()==200){
                     LoginPresenter.position = response.body().getProfile().getRole().getNameRole();
                     ihomeActivity.Success(response.body().getProfile());
+                }else if (response.body() != null){
+                    ihomeActivity.Failure();
                 }
             }
 

@@ -20,12 +20,44 @@ import com.dal.hrm_management.models.listEmployee.ListEmployees;
 import com.dal.hrm_management.presenters.ListEmployee.ListEmployeePresenter;
 import com.dal.hrm_management.utils.PermissionManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListEmployee extends Fragment implements IListEmployee {
+public class ListEmployee extends Fragment implements IListEmployee{
     private static final String TAG = ListEmployee.class.getName();
     ListEmployeePresenter listEmployeePresenter;
     private RecyclerView rv_listEmp;
+    private List<ListEmployees> listEmployees = new ArrayList<ListEmployees>(); //Chứa danh sách nhân viên lưu vào trong bộ nhớ local
+    //current page
+    private int current_page =1;
+    //total page
+    private int total_page = 5;
+    private int pageSize = 15;
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+    ListEmployeeAdapter adapter;
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            super.onScrolled(recyclerView, dx, dy);
+            int visibleItemCount = layoutManager.getChildCount();
+            Log.d("visibleItemCount", String.valueOf(visibleItemCount));
+            int totalItemCount = layoutManager.getItemCount();
+            Log.d("totalItemCount", String.valueOf(totalItemCount));
+            int firstitem = layoutManager.findFirstVisibleItemPosition();
+            Log.d("firstitem", String.valueOf(firstitem));
+            if (firstitem+visibleItemCount >= totalItemCount && current_page < pageSize){
+                current_page++;
+                listEmployeePresenter.getListEmployee(current_page,pageSize);
+
+            }
+        }
+    };
+
 
     @Nullable
     @Override
@@ -33,7 +65,7 @@ public class ListEmployee extends Fragment implements IListEmployee {
         setHasOptionsMenu(true);
         getActivity().setTitle(getString(R.string.list_employee_manage_title));
         mapMVP();
-        listEmployeePresenter.getListEmployee();
+        listEmployeePresenter.getListEmployee(current_page,pageSize);
         View view = inflater.inflate(R.layout.fragment_list_emp, container, false);
         rv_listEmp = view.findViewById(R.id.rv_listEmp);
         return view;
@@ -52,9 +84,15 @@ public class ListEmployee extends Fragment implements IListEmployee {
 
     @Override
     public void Success(List<ListEmployees> listEmployee) {
-        ListEmployeeAdapter adapter = new ListEmployeeAdapter(getActivity(), listEmployee);
-        rv_listEmp.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        listEmployees.addAll(listEmployee);
+        if (adapter == null){
+            adapter = new ListEmployeeAdapter(getActivity(), listEmployees);
+        }else{
+            adapter.notifyDataSetChanged();
+        }
+        rv_listEmp.setLayoutManager(layoutManager);
         rv_listEmp.setAdapter(adapter);
+        rv_listEmp.addOnScrollListener(recyclerViewOnScrollListener);
     }
 
     @Override
@@ -97,4 +135,6 @@ public class ListEmployee extends Fragment implements IListEmployee {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

@@ -18,6 +18,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -253,7 +254,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public void Failure() {
-        Log.d("home", "failure");
+        Toast.makeText(this,"error server",Toast.LENGTH_LONG).show();
     }
 
 }

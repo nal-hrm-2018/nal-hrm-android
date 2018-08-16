@@ -5,5 +5,5 @@ package com.dal.hrm_management.presenters.ListEmployee;
 import java.util.List;
 
 public interface IListEmployeePresenter {
-    public void getListEmployee();
+    public void getListEmployee(int currentPage,int pageSize);
 }
