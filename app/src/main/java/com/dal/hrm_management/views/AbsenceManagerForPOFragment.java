@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.AbsenceManagerForPoAdapter;
 import com.dal.hrm_management.models.absence.Absence;
+import com.dal.hrm_management.utils.PermissionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,9 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         menu.clear();
         inflater.inflate(R.menu.absence_po_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        if(!PermissionManager.isPermited(PermissionManager.listPermissions,"export_project_absence_history")){
+        menu.getItem(R.id.action_export).setVisible(false);
+        }
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));

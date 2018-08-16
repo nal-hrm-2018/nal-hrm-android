@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
+import com.dal.hrm_management.utils.PermissionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,12 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         holder.tv_reason.setText(absence.getReason());
         holder.tv_from.setText(absence.getFrom());
         holder.tv_to.setText(absence.getTo());
+        if(!PermissionManager.isPermited(PermissionManager.listPermissions,"approve_absence")){
+            holder.imgBtn_accept.setVisibility(View.GONE);
+        }
+        if (!PermissionManager.isPermited(PermissionManager.listPermissions, "reject_absence")) {
+            holder.imgBtn_cancel.setVisibility(View.GONE);
+        }
         if (absence.getStatus().equals(context.getString(R.string.absence_status_accepted))) {
             holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
             holder.tv_status.setVisibility(View.VISIBLE);
@@ -63,6 +70,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
             holder.ll_button.setVisibility(View.GONE);
         }
         holder.setIsRecyclable(false);
+
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {

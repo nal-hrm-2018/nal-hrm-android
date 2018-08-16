@@ -3,7 +3,6 @@ package com.dal.hrm_management.adapter.listEmployee;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -17,8 +16,9 @@ import android.widget.TextView;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.listEmployee.ListEmployees;
-import com.dal.hrm_management.presenters.login.LoginPresenter;
+import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
+import com.dal.hrm_management.views.profile.EditProfileActivity;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
     @Override
     public DataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        switch (viewType){
+        switch (viewType) {
             case 1:
                 itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_emp_working, parent, false);
                 break;
@@ -54,9 +54,10 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
 
     @Override
     public int getItemViewType(int position) {
-        if(arr.get(position).getEndWorkDate() == null){
+        if (arr.get(position).getEndWorkDate() == null) {
             return 2;
-        }return 1;
+        }
+        return 1;
     }
 
     @Override
@@ -69,24 +70,30 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
             public void onClick(final View view, final int position, boolean isLongClick) {
                 PopupMenu popup = new PopupMenu(view.getContext(), view);
                 popup.getMenuInflater().inflate(R.menu.popup_menu_employee_list, popup.getMenu());
-                if(LoginPresenter.position.toLowerCase().equals("po")){
+                if (!PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_basic")) {
+                    popup.getMenu().findItem(R.id.action_viewProfile).setVisible(false);
+                }
+                if (!PermissionManager.isPermited(PermissionManager.listPermissions, "edit_employee_basic")) {
                     popup.getMenu().findItem(R.id.action_editProfile).setVisible(false);
+                }
+                if (!PermissionManager.isPermited(PermissionManager.listPermissions, "reset_password_employee")) {
                     popup.getMenu().findItem(R.id.action_resetPass).setVisible(false);
+                }
+                if (!PermissionManager.isPermited(PermissionManager.listPermissions, "delete_employee")) {
                     popup.getMenu().findItem(R.id.action_remove).setVisible(false);
                 }
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.action_viewProfile:
-                                Intent intent = new Intent(view.getContext().getApplicationContext(), ViewInforEmployeeActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putInt("id",position);
-                                intent.putExtra("data",bundle);
+                                Intent intent = new Intent(context, ViewInforEmployeeActivity.class);
+                                int id = arr.get(position).getIdEmployee();
+                                intent.putExtra("id_employee", id );
                                 context.startActivity(intent);
                                 break;
                             case R.id.action_editProfile:
-//                                Intent editIntent = new Intent(view.getContext().getApplicationContext(), EditProfileActivity.class);
-//                                context.startActivity(editIntent);
+                                Intent editIntent = new Intent(view.getContext().getApplicationContext(), EditProfileActivity.class);
+                                context.startActivity(editIntent);
                                 break;
                             case R.id.action_resetPass:
                                 break;

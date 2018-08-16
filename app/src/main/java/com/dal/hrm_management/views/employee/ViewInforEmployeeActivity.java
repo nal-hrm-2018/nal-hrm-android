@@ -1,6 +1,5 @@
 package com.dal.hrm_management.views.employee;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -27,19 +26,11 @@ public class ViewInforEmployeeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_infor_employee);
-        getDataFromIntent();
         initUI();
     }
 
-    private void getDataFromIntent() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("data");
-        id = bundle.getInt("id");
-    }
-
     private void initUI() {
-        //TO DO: get name of Employee to display on actionbar
-        setTitle("Lưu Ngọc Lan");
+        setTitle("Employee's name");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

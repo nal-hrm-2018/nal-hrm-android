@@ -18,7 +18,7 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listEmployee.ListEmployeeAdapter;
 import com.dal.hrm_management.models.listEmployee.ListEmployees;
 import com.dal.hrm_management.presenters.ListEmployee.ListEmployeePresenter;
-import com.dal.hrm_management.presenters.login.LoginPresenter;
+import com.dal.hrm_management.utils.PermissionManager;
 
 import java.util.List;
 
@@ -67,8 +67,16 @@ public class ListEmployee extends Fragment implements IListEmployee {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.list_employee, menu);
-        if(LoginPresenter.position.toLowerCase().equals("po")){
+        if(!PermissionManager.isPermited(PermissionManager.listPermissions,"search_employee")){
+            menu.findItem(R.id.action_search).setVisible(false);
+        }
+        if(!PermissionManager.isPermited(PermissionManager.listPermissions,"export_list_employee")){
+            menu.findItem(R.id.action_export).setVisible(false);
+        }
+        if(!PermissionManager.isPermited(PermissionManager.listPermissions,"add_new_employee")){
             menu.findItem(R.id.action_add_new).setVisible(false);
+        }
+        if (!PermissionManager.isPermited(PermissionManager.listPermissions, "import_employee_file")) {
             menu.findItem(R.id.action_import).setVisible(false);
         }
     }
