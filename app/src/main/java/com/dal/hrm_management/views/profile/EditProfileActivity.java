@@ -57,11 +57,16 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         displayBackHome();
+        getDataFromIntent();
         initPresenter();
         getDataFromServer();
         initUI();
         initData();
         setEvent();
+    }
+
+    private void getDataFromIntent() {
+        int id_empoyee = getIntent().getIntExtra("id_employee",-1);
     }
 
     private void getDataFromServer() {

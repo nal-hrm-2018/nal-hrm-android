@@ -44,7 +44,7 @@
     <string name="textview.text.start_day">Start Day (*)</string>
     <string name="textview.text.end_day">End Day (*)</string>
     <string name="checkbox.text.remember">Remember me</string>
-    <string name="app_name">hrm-management</string>
+    <string name="app_name">HRM</string>
     <string name="nav_header_desc">Navigaion header</string>
     <string name="nav_header_title">Phan Thanh Tú</string>
     <string name="nav_header_subtitle">mr.tus97@gmail.com</string>
