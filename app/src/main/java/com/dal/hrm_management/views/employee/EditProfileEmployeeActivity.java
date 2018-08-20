@@ -1,20 +1,25 @@
-package com.dal.hrm_management.views.profile;
+package com.dal.hrm_management.views.employee;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -24,16 +29,17 @@ import android.widget.Toast;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
-import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.profile.ProfileEditPresenter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class EditProfileActivity extends AppCompatActivity implements IProfileEditActivity, View.OnClickListener {
+public class EditProfileEmployeeActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_IMAGE = 1001;
     private ImageView imv_avatar;
     private EditText edt_name;
@@ -51,14 +57,15 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     private ProgressBar progressBar;
     Bitmap avatarBitmap;
     ArrayAdapter<CharSequence> adapter_position, adapter_maritalStatus, adapter_type;
-
+    ArrayList<String> teamList;
+    private boolean[] mSelectedTeams, mSelectedTeamsBackup;
     private ProfileEditPresenter profileEditPresenter;
     public static String position = "", maritalStatus = "", type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_edit_profile_employee);
         displayBackHome();
         initPresenter();
         getDataFromServer();
@@ -68,11 +75,12 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     }
 
     private void getDataFromServer() {
-        profileEditPresenter.getProfile(LoginPresenter.token);
+
     }
 
+
     private void initPresenter() {
-        profileEditPresenter = new ProfileEditPresenter(this);
+
     }
 
     private void initData() {
@@ -93,20 +101,9 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     private void setEvent() {
         imv_avatar.setOnClickListener(this);
         tv_birthday.setOnClickListener(this);
-        tv_team.setEnabled(false);
-        tv_team.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        edt_name.setEnabled(false);
-        edt_name.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        edt_email.setEnabled(false);
-        edt_email.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        tv_start.setEnabled(false);
-        tv_start.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        tv_end.setEnabled(false);
-        tv_end.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        spn_position.setEnabled(false);
-        spn_position.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        spn_type.setEnabled(false);
-        spn_type.setBackgroundColor(getResources().getColor(R.color.color_gray));
+        tv_team.setOnClickListener(this);
+        tv_start.setOnClickListener(this);
+        tv_end.setOnClickListener(this);
     }
 
     private void initUI() {
@@ -126,6 +123,9 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         tv_end = (TextView) findViewById(R.id.tv_end);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+        teamList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.team_arr)));
+        mSelectedTeams = new boolean[teamList.size()];
+        mSelectedTeamsBackup = new boolean[teamList.size()];
     }
 
     private void displayBackHome() {
@@ -176,6 +176,9 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
             case R.id.tv_birthday:
                 showDatePicker(v, v.getId());
                 break;
+            case R.id.tv_team:
+                showCheckBoxDialog();
+                break;
             case R.id.tv_start:
                 showDatePicker(v, v.getId());
                 break;
@@ -184,6 +187,77 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
                 break;
         }
     }
+
+    private void showCheckBoxDialog() {
+        tv_team.setText("");
+        for (int k = 0; k < mSelectedTeams.length; k++) {
+            mSelectedTeamsBackup[k] = mSelectedTeams[k];
+        }
+        String[] teams = getResources().getStringArray(R.array.team_arr);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_title_checkbox, null);
+
+        TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
+        final CheckBox cbAll = (CheckBox) layout.findViewById(R.id.cbSelectAll);
+
+        tvTitle.setText("Select Teams");
+        cbAll.setChecked(isCheckAllTeams());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCustomTitle(layout);
+        builder.setMultiChoiceItems(teams, mSelectedTeams, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                cbAll.setChecked(isCheckAllTeams());
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ArrayList<String> list = new ArrayList<>();
+                for (int k = 0; k < mSelectedTeams.length; k++) {
+                    if (mSelectedTeams[k]) {
+                        list.add(teamList.get(k));
+                    }
+                }
+                if (list.size() != 0) {
+                    for (int i = 0; i < list.size() - 1; i++) {
+                        tv_team.setText(tv_team.getText() + list.get(i) + ", ");
+                    }
+                    tv_team.setText(tv_team.getText() + list.get(list.size() - 1));
+                }
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for (int k = 0; k < mSelectedTeams.length; k++) {
+                    mSelectedTeams[k] = mSelectedTeamsBackup[k];
+                }
+            }
+        });
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        cbAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = cbAll.isChecked();
+                ListView listView = dialog.getListView();
+                for (int i = 0; i < listView.getCount(); i++) {
+                    listView.setItemChecked(i, isChecked);
+                    mSelectedTeams[i] = isChecked;
+                }
+            }
+        });
+    }
+
+    private boolean isCheckAllTeams() {
+        for (int i = 0; i < mSelectedTeams.length; i++) {
+            if (!mSelectedTeams[i]) return false;
+        }
+        return true;
+    }
+
 
     private void showDatePicker(View view, final int id) {
         Calendar calendar = Calendar.getInstance();
@@ -225,26 +299,6 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
                 }
             }
         }
-    }
-
-    @Override
-    public void editProfileSuccess(Profile profile) {
-
-    }
-
-    @Override
-    public void editProfileFailure() {
-
-    }
-
-    @Override
-    public void getProfileSuccess(Profile profile) {
-        loadDataToView(profile);
-    }
-
-    @Override
-    public void getProfileFailure() {
-        progressBar.setVisibility(View.VISIBLE);
     }
 
     private void loadDataToView(Profile profile) {

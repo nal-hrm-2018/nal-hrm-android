@@ -17,8 +17,8 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.listEmployee.ListEmployees;
 import com.dal.hrm_management.utils.PermissionManager;
+import com.dal.hrm_management.views.employee.EditProfileEmployeeActivity;
 import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
-import com.dal.hrm_management.views.profile.EditProfileActivity;
 
 import java.util.List;
 
@@ -92,7 +92,9 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
                                 context.startActivity(intent);
                                 break;
                             case R.id.action_editProfile:
-                                Intent editIntent = new Intent(view.getContext().getApplicationContext(), EditProfileActivity.class);
+                                Intent editIntent = new Intent(view.getContext().getApplicationContext(), EditProfileEmployeeActivity.class);
+                                int id_1 = arr.get(position).getIdEmployee();
+                                editIntent.putExtra("id_employee", id_1 );
                                 context.startActivity(editIntent);
                                 break;
                             case R.id.action_resetPass:

@@ -32,22 +32,23 @@
     <string name="hint_email">Username or Email</string>
     <string name="hint_pass">Password</string>
     <string name="text_login">LOGIN</string>
-    <string name="textview.hint.profile_name">Lưu Ngọc Lan</string>
+    <string name="textview.hint.profile_name">Your Name</string>
     <string name="textview.hint.profile_role">DEV</string>
-    <string name="textview.hint.profile_email">luungoclan@gmail.com</string>
+    <string name="textview.hint.profile_email">abc@gmail.com</string>
     <string name="textview.text.address">Address (*)</string>
     <string name="textview.text.phone">Phone (*)</string>
     <string name="textview.text.gender">Gender (*)</string>
     <string name="textview.text.marital_status">Marital Status (*)</string>
     <string name="textview.text.birthday">Birthday (*)</string>
     <string name="textview.text.type">Type (*)</string>
+    <string name="textview.text.team">Team (*)</string>
     <string name="textview.text.start_day">Start Day (*)</string>
     <string name="textview.text.end_day">End Day (*)</string>
     <string name="checkbox.text.remember">Remember me</string>
     <string name="app_name">HRM</string>
     <string name="nav_header_desc">Navigaion header</string>
-    <string name="nav_header_title">Phan Thanh Tú</string>
-    <string name="nav_header_subtitle">mr.tus97@gmail.com</string>
+    <string name="nav_header_title">Your Name</string>
+    <string name="nav_header_subtitle">abc@gmail.com</string>
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="action_notification">notification</string>
@@ -151,4 +152,6 @@
     <string name="tv_soNgayNghiBaoHiem">Số ngày nghỉ bảo hiểm</string>
     <string name="tv_soNgayNghiTruLuong">Số ngày nghỉ trừ lương</string>
     <string name="tv_soNgayPhepConLai">Số ngày phép còn lại</string>
+    <string name="profile_view_team">Team</string>
+    <string name="desciption.hint.team">PHP</string>
 </resources>

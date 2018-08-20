@@ -26,6 +26,7 @@
         <item>Divorced</item>
     </array>
     <array name="month_arr">
+        <item>Tất cả</item>
         <item>Tháng 1</item>
         <item>Tháng 2</item>
         <item>Tháng 3</item>
@@ -38,5 +39,18 @@
         <item>Tháng 10</item>
         <item>Tháng 11</item>
         <item>Tháng 12</item>
+    </array>
+    <array name="team_arr">
+        <item>DOTNET</item>
+        <item>PHP</item>
+        <item>iOS</item>
+        <item>Android</item>
+        <item>Agile Leader</item>
+        <item>PMO</item>
+        <item>HD</item>
+        <item>SWAT</item>
+        <item>CLB CodeGym</item>
+        <item>Doraemon</item>
+        <item>Comtor</item>
     </array>
 </resources>

@@ -12,27 +12,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.home.HomePageActivity;
 
 
-
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener,ILoginActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, ILoginActivity {
     private EditText edt_email;
     private EditText edt_password;
     private Button btn_login;
     private SharedPreferences sharedPreferences;
     private CheckBox cb_remeber;
-    private ProgressBar progressBar;
+    private LinearLayout messageBar;
+    private TextView tv_error;
     private int PASSWORD_LENGTH = 6;
     LoginPresenter loginPresenter;
     public LoginActivity(){
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,23 +59,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
     private void mapViewWithActivity() {
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
         btn_login = findViewById(R.id.btn_login);
         cb_remeber = findViewById(R.id.cb_remember);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
-
+        messageBar = (LinearLayout) findViewById(R.id.messageBar);
+        tv_error = (TextView) findViewById(R.id.tv_error);
+        messageBar.setVisibility(View.GONE);
         sharedPreferences = getSharedPreferences("remeberMe", MODE_PRIVATE);
     }
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.btn_login){
+        if (view.getId() == R.id.btn_login) {
             if (isConnected()) {
-                progressBar.setVisibility(View.VISIBLE);
+                messageBar.setVisibility(View.GONE);
                 if (cb_remeber.isChecked()) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("remeber", true);
@@ -85,8 +85,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     sharedPreferences.edit().clear().commit();
                 }
                 checkLogin();
-            }else{
-                Toast.makeText(this,"No internet",Toast.LENGTH_LONG).show();
+            } else {
+                messageBar.setVisibility(View.VISIBLE);
+                tv_error.setText("No Internet!");
             }
         }
     }
@@ -125,9 +126,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             focusView.requestFocus();
         } else {
             //success
-            loginPresenter.getToken(email,pass);
+            loginPresenter.getToken(email, pass);
         }
-        progressBar.setVisibility(View.INVISIBLE);
+        messageBar.setVisibility(View.GONE);
     }
 
     private boolean isEmailValid(String email) {
@@ -138,26 +139,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void loginSucess(String token) {
         Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-        intent.putExtra("token",token);
+        intent.putExtra("token", token);
         startActivity(intent);
-        progressBar.setVisibility(View.INVISIBLE);
+        messageBar.setVisibility(View.GONE);
     }
 
     @Override
     public void loginFailure() {
         edt_password.setError(getString(R.string.error_incorrect_password));
         edt_password.requestFocus();
-        progressBar.setVisibility(View.INVISIBLE);
+        messageBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void errorInServer() {
-        Toast.makeText(this,"Server error",Toast.LENGTH_LONG).show();
+        messageBar.setVisibility(View.VISIBLE);
+        tv_error.setText("Disconnect Server!");
     }
 
     public boolean isConnected() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
             return true;

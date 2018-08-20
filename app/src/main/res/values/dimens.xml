@@ -37,4 +37,6 @@
     <dimen name="bolder_width">2dp</dimen>
     <dimen name="icon_size">24dp</dimen>
     <dimen name="icon_size_button">24dp</dimen>
+    <dimen name="dialog_title_padding">24dp</dimen>
+    <dimen name="dialog_title_checkbox_title_size">24dp</dimen>
 </resources>

@@ -14,8 +14,11 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.profile.Profile;
+import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.profile.ProfilePresenter;
+
+import java.util.List;
 
 public class ViewProfileActivity extends AppCompatActivity implements IProfileActivity {
 
@@ -29,6 +32,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
     private TextView tv_maritalStatus;
     private TextView tv_birthday;
     private TextView tv_type;
+    private TextView tv_team;
     private TextView tv_start;
     private TextView tv_end;
     private Button btn_changePassword;
@@ -77,6 +81,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
         tv_maritalStatus = (TextView) findViewById(R.id.tv_maritalStatus);
         tv_birthday = (TextView) findViewById(R.id.tv_birthday);
         tv_type = (TextView) findViewById(R.id.tv_type);
+        tv_team = (TextView) findViewById(R.id.tv_team);
         tv_start = (TextView) findViewById(R.id.tv_start);
         tv_end = (TextView) findViewById(R.id.tv_end);
         btn_changePassword = (Button) findViewById(R.id.btn_changepassword);
@@ -124,6 +129,11 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
         tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
         tv_birthday.setText(profile.getBirthday());
         tv_type.setText(profile.getEmployeeType().getNameEmployeeType());
+        List<Team> teamList = profile.getTeams();
+        for (int i = 0; i < teamList.size() - 1; i++) {
+            tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+        }
+        tv_team.setText(tv_team.getText()+teamList.get(teamList.size()-1).getNameTeam());
         tv_start.setText(profile.getStartWorkDate());
         tv_end.setText(profile.getEndWorkDate());
         progressBar.setVisibility(View.GONE);
