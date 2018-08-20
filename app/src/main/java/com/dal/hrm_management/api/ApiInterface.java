@@ -37,6 +37,8 @@ public interface ApiInterface {
 
     @GET("api/project/employee")
     Call<ListProjectEmpAttendResponse> getProjectEmployeeAttend(@Query("id") int id,
+                                                                @Query("page") int page,
+                                                                @Query("pageSize") int pageSize,
                                                                 @Header("Authorization") String token);
 
 
