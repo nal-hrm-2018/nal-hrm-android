@@ -29,14 +29,15 @@ public class ListProjectEmpAttendPresenter implements IListProjectEmpAttendPrese
     @Override
     public void getListProjectEmployeeAttend(int id) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<ListProjectEmpAttendResponse> call = apiService.getProjectEmployeeAttend(id, LoginPresenter.token);
+        Call<ListProjectEmpAttendResponse> call = apiService.getProjectEmployeeAttend(id,1,20, LoginPresenter.token);
         call.enqueue(new Callback<ListProjectEmpAttendResponse>() {
             @Override
             public void onResponse(Call<ListProjectEmpAttendResponse> call, Response<ListProjectEmpAttendResponse> response) {
                 Log.d("Project","Success");
                 ListProjectEmpAttendResponse listProjectEmpAttendResponse = response.body();
                 if (listProjectEmpAttendResponse.getResultCode() == 200){
-                    ArrayList<ProjectAndProcess> projectAndProcess = listProjectEmpAttendResponse.getData();
+                    total_project = listProjectEmpAttendResponse.getData().getTotal();
+                    ArrayList<ProjectAndProcess> projectAndProcess = listProjectEmpAttendResponse.getData().getList();
                     iListProjectEmployeeAttendFragment.Success(projectAndProcess);
                 }else if (listProjectEmpAttendResponse.getResultCode() ==403){
                     iListProjectEmployeeAttendFragment.PermissionDeny();
