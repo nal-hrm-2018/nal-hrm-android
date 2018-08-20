@@ -1,4 +1,4 @@
-package com.dal.hrm_management.adapter;
+package com.dal.hrm_management.adapter.listProjectEmployeeAttend;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.ProjectEmployee;
+import com.dal.hrm_management.models.listProjectEmpAttend.ProjectAndProcess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,11 +21,11 @@ import java.util.List;
  */
 
 public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployeeAdapter.ProjectEmployeeViewHolder>  {
-    private List<ProjectEmployee> projects;
+    private ArrayList<ProjectAndProcess> projects;
     private int rowLayout;
     private Context context;
 
-    public ProjectEmployeeAdapter(List<ProjectEmployee> projects, int rowLayout, Context context) {
+    public ProjectEmployeeAdapter(ArrayList<ProjectAndProcess> projects, int rowLayout, Context context) {
         this.projects = projects;
         this.rowLayout = rowLayout;
         this.context = context;
@@ -37,13 +39,11 @@ public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployee
 
     @Override
     public void onBindViewHolder(ProjectEmployeeViewHolder holder, int position) {
-        holder.tv_nameProject.setText(projects.get(position).getNameProject());
-        holder.tv_role.setText(projects.get(position).getRole());
-        holder.tv_dayStart.setText(projects.get(position).getStartDay());
-        holder.tv_dayEnd.setText(projects.get(position).getEndDay());
-        holder.tv_status.setText(projects.get(position).getStatus());
-        if (projects.get(position).getStatus().equals("Closed"))
-            holder.imv_status.setColorFilter(R.color.colorAccent);
+        holder.tv_nameProject.setText(projects.get(position).getProject().getNameProject());
+        holder.tv_role.setText(projects.get(position).getProcesses().getRole().getNameRole());
+        holder.tv_dayStart.setText(projects.get(position).getProcesses().getStartDate());
+        holder.tv_dayEnd.setText(projects.get(position).getProcesses().getEndDate());
+        holder.tv_status.setText(projects.get(position).getProject().getStatus().getNameStatus());
     }
 
     @Override

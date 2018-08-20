@@ -1,26 +1,25 @@
-package com.dal.hrm_management.models;
+package com.dal.hrm_management.models.login;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ListEmployeeModel {
+public class LoginModel {
 
     @SerializedName("result_code")
     @Expose
-    private String resultCode;
+    private Integer resultCode;
     @SerializedName("result_message")
     @Expose
     private String resultMessage;
     @SerializedName("data")
     @Expose
-    private List<ItemListEmployeeModel> data = null;
+    private String data;
 
-    public String getResultCode() {
+    public Integer getResultCode() {
         return resultCode;
     }
 
-    public void setResultCode(String resultCode) {
+    public void setResultCode(Integer resultCode) {
         this.resultCode = resultCode;
     }
 
@@ -32,11 +31,11 @@ public class ListEmployeeModel {
         this.resultMessage = resultMessage;
     }
 
-    public List<ItemListEmployeeModel> getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(List<ItemListEmployeeModel> data) {
+    public void setData(String data) {
         this.data = data;
     }
 

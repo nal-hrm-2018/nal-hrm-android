@@ -30,7 +30,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tv_error;
     private int PASSWORD_LENGTH = 6;
     LoginPresenter loginPresenter;
-    public LoginActivity(){
+
+    public LoginActivity() {
 
     }
 
@@ -153,8 +154,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void errorInServer() {
-        messageBar.setVisibility(View.VISIBLE);
         tv_error.setText("Disconnect Server!");
+        messageBar.setVisibility(View.INVISIBLE);
     }
 
     public boolean isConnected() {
