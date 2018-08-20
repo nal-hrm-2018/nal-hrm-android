@@ -1,4 +1,4 @@
-package com.dal.hrm_management.models;
+package com.dal.hrm_management.models.login;
 
 import android.graphics.drawable.Drawable;
 

@@ -58,10 +58,6 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
         id_employee = getActivity().getIntent().getIntExtra("id_employee", -1);
     }
 
-    private void loadData() {
-        //TO DO: get data
-    }
-
     private void initUI(View view) {
 
         imv_avatar = (ImageView) view.findViewById(R.id.imv_avatar);
@@ -86,7 +82,7 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
         tv_email.setText(profile.getEmail());
         tv_address.setText(profile.getAddress());
         tv_phone.setText(profile.getMobile());
-        ;
+
         tv_gender.setText(profile.getGenderDTO().getNameGender());
         tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
         tv_birthday.setText(profile.getBirthday());

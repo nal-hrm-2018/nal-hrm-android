@@ -1,10 +1,8 @@
 package com.dal.hrm_management.presenters.login;
 
-import android.util.Log;
-
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
-import com.dal.hrm_management.models.LoginModel;
+import com.dal.hrm_management.models.login.LoginModel;
 import com.dal.hrm_management.views.login.ILoginActivity;
 
 import okhttp3.Credentials;

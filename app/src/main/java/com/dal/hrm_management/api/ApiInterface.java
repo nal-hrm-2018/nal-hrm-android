@@ -1,6 +1,7 @@
 package com.dal.hrm_management.api;
 
-import com.dal.hrm_management.models.LoginModel;
+import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
+import com.dal.hrm_management.models.login.LoginModel;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 
@@ -33,6 +34,10 @@ public interface ApiInterface {
 
     @GET("api/basic")
     Call<ProfileResponse> getBasicInforEmployee(@Header("Authorization") String token, @Query("id") int id);
+
+    @GET("api/project/employee")
+    Call<ListProjectEmpAttendResponse> getProjectEmployeeAttend(@Query("id") int id,
+                                                                @Header("Authorization") String token);
 
 
 }

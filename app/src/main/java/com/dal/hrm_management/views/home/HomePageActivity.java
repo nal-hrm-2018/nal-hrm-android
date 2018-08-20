@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.MenuModel;
+import com.dal.hrm_management.models.login.MenuModel;
 import com.dal.hrm_management.models.profile.Permission;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.presenters.home.HomePresenter;
@@ -66,9 +66,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         getDataFromJson();
         initNavigationMenu();
         addEvent();
-
-//        prepareMenuData();
-//        populateExpandableList(data);
 
     }
 
@@ -145,6 +142,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceView()).commit();
                             getSupportActionBar().setTitle(R.string.menu_absence);
                         } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
+                            PermissionManager.listPermissions.clear();
                             Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
