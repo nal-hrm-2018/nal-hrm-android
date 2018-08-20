@@ -15,7 +15,7 @@ public class ListProjectEmpAttendResponse {
     private String resultMessage;
     @SerializedName("data")
     @Expose
-    private ArrayList<ProjectAndProcess> data = null;
+    private DataProjectEmpAttend data;
 
     public Integer getResultCode() {
         return resultCode;
@@ -33,12 +33,13 @@ public class ListProjectEmpAttendResponse {
         this.resultMessage = resultMessage;
     }
 
-    public ArrayList<ProjectAndProcess> getData() {
+    public DataProjectEmpAttend getData() {
         return data;
     }
 
-    public void setData(ArrayList<ProjectAndProcess> data) {
+    public void setData(DataProjectEmpAttend data) {
         this.data = data;
     }
+
 
 }
