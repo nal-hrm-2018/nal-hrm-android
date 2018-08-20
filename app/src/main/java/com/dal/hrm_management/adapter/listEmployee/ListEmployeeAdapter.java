@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,18 +21,24 @@ import com.dal.hrm_management.models.listEmployee.ListEmployees;
 import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.views.employee.EditProfileEmployeeActivity;
 import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
+import com.dal.hrm_management.views.list_employee.ListEmployee;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapter.DataViewHolder> {
+public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapter.DataViewHolder> implements Filterable {
     private List<ListEmployees> arr;
     private Context context;
+    private List<ListEmployees> employeesListFiltered;
+    private EmployeesAdapterListener listener;
 
-    public ListEmployeeAdapter(Context context, List<ListEmployees> arr) {
+    public ListEmployeeAdapter(Context context, List<ListEmployees> arr, EmployeesAdapterListener listener) {
         this.context = context;
         this.arr = arr;
+        this.employeesListFiltered = arr;
+        this.listener = listener;
     }
 
     @Override
@@ -54,7 +62,7 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
 
     @Override
     public int getItemViewType(int position) {
-        if (arr.get(position).getEndWorkDate() == null) {
+        if (employeesListFiltered.get(position).getEndWorkDate() == null) {
             return 2;
         }
         return 1;
@@ -62,9 +70,10 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
 
     @Override
     public void onBindViewHolder(final DataViewHolder holder, int position) {
-        holder.tv_hoVaTen.setText(arr.get(position).getNameEmployee());
-        holder.tv_email.setText(arr.get(position).getEmail());
-        holder.tv_chucVu.setText(arr.get(position).getRole().getNameRole());
+        final ListEmployees employee = employeesListFiltered.get(position);
+        holder.tv_hoVaTen.setText(employee.getNameEmployee());
+        holder.tv_email.setText(employee.getEmail());
+        holder.tv_chucVu.setText(employee.getRole().getNameRole());
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(final View view, final int position, boolean isLongClick) {
@@ -87,14 +96,14 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
                         switch (item.getItemId()) {
                             case R.id.action_viewProfile:
                                 Intent intent = new Intent(context, ViewInforEmployeeActivity.class);
-                                int id = arr.get(position).getIdEmployee();
-                                intent.putExtra("id_employee", id );
+                                int id = employee.getIdEmployee();
+                                intent.putExtra("id_employee", id);
                                 context.startActivity(intent);
                                 break;
                             case R.id.action_editProfile:
                                 Intent editIntent = new Intent(view.getContext().getApplicationContext(), EditProfileEmployeeActivity.class);
-                                int id_1 = arr.get(position).getIdEmployee();
-                                editIntent.putExtra("id_employee", id_1 );
+                                int id_1 = employee.getIdEmployee();
+                                editIntent.putExtra("id_employee", id_1);
                                 context.startActivity(editIntent);
                                 break;
                             case R.id.action_resetPass:
@@ -113,7 +122,38 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
 
     @Override
     public int getItemCount() {
-        return arr == null ? 0 : arr.size();
+        return employeesListFiltered == null ? 0 : employeesListFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    employeesListFiltered = arr;
+                } else {
+                    List<ListEmployees> filteredList = new ArrayList<>();
+                    for (ListEmployees row : arr) {
+                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    employeesListFiltered = filteredList;
+                }
+                ;
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = employeesListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                employeesListFiltered = (List<ListEmployees>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public static class DataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -143,5 +183,9 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
         public void onClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), false);
         }
+    }
+
+    public interface EmployeesAdapterListener {
+        void onEmployeeSelected(ListEmployee employee);
     }
 }

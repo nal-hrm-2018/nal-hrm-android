@@ -1,10 +1,13 @@
 package com.dal.hrm_management.views.list_employee;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,12 +27,13 @@ import com.dal.hrm_management.utils.PermissionManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListEmployee extends Fragment implements IListEmployee{
+public class ListEmployee extends Fragment implements IListEmployee, ListEmployeeAdapter.EmployeesAdapterListener {
     private static final String TAG = ListEmployee.class.getName();
     ListEmployeePresenter listEmployeePresenter;
     private RecyclerView rv_listEmp;
     private ProgressBar list_emp_pb_loadEmp;
     private List<ListEmployees> listEmployees = new ArrayList<ListEmployees>(); //Chứa danh sách nhân viên lưu vào trong bộ nhớ local
+    private SearchView searchView;
     //current page
     private int current_page =1;
     private int pageSize = 15;
@@ -57,7 +61,6 @@ public class ListEmployee extends Fragment implements IListEmployee{
             }
         }
     };
-
 
     @Nullable
     @Override
@@ -88,7 +91,7 @@ public class ListEmployee extends Fragment implements IListEmployee{
         list_emp_pb_loadEmp.setVisibility(View.GONE);
         listEmployees.addAll(listEmployee);
         if (adapter == null){
-            adapter = new ListEmployeeAdapter(getActivity(), listEmployees);
+            adapter = new ListEmployeeAdapter(getActivity(), listEmployees,this);
         }else{
             adapter.notifyDataSetChanged();
         }
@@ -119,6 +122,23 @@ public class ListEmployee extends Fragment implements IListEmployee{
         if (!PermissionManager.isPermited(PermissionManager.listPermissions, "import_employee_file")) {
             menu.findItem(R.id.action_import).setVisible(false);
         }
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -139,4 +159,8 @@ public class ListEmployee extends Fragment implements IListEmployee{
     }
 
 
+    @Override
+    public void onEmployeeSelected(ListEmployee employee) {
+
+    }
 }
