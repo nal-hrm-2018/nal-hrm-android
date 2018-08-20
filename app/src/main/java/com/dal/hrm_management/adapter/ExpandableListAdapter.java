@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.MenuModel;
+import com.dal.hrm_management.models.login.MenuModel;
 
 import java.util.HashMap;
 import java.util.List;

@@ -14,7 +14,7 @@ public class ListEmpResponse {
     private String resultMessage;
     @SerializedName("data")
     @Expose
-    private List<ListEmployees> data = null;
+    private DataListEmployeeResponse data;
 
     public Integer getResultCode() {
         return resultCode;
@@ -32,11 +32,11 @@ public class ListEmpResponse {
         this.resultMessage = resultMessage;
     }
 
-    public List<ListEmployees> getData() {
+    public DataListEmployeeResponse getData() {
         return data;
     }
 
-    public void setData(List<ListEmployees> data) {
+    public void setData(DataListEmployeeResponse data) {
         this.data = data;
     }
 

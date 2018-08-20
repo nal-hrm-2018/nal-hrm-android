@@ -1,9 +1,11 @@
-package com.dal.hrm_management.models;
+package com.dal.hrm_management.models.listProjectEmpAttend;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginModel {
+public class ListProjectEmpAttendResponse {
 
     @SerializedName("result_code")
     @Expose
@@ -13,7 +15,7 @@ public class LoginModel {
     private String resultMessage;
     @SerializedName("data")
     @Expose
-    private String data;
+    private ArrayList<ProjectAndProcess> data = null;
 
     public Integer getResultCode() {
         return resultCode;
@@ -31,11 +33,11 @@ public class LoginModel {
         this.resultMessage = resultMessage;
     }
 
-    public String getData() {
+    public ArrayList<ProjectAndProcess> getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(ArrayList<ProjectAndProcess> data) {
         this.data = data;
     }
 

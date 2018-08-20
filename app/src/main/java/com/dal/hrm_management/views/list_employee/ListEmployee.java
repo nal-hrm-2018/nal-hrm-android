@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
@@ -27,11 +28,10 @@ public class ListEmployee extends Fragment implements IListEmployee{
     private static final String TAG = ListEmployee.class.getName();
     ListEmployeePresenter listEmployeePresenter;
     private RecyclerView rv_listEmp;
+    private ProgressBar list_emp_pb_loadEmp;
     private List<ListEmployees> listEmployees = new ArrayList<ListEmployees>(); //Chứa danh sách nhân viên lưu vào trong bộ nhớ local
     //current page
     private int current_page =1;
-    //total page
-    private int total_page = 5;
     private int pageSize = 15;
     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
     ListEmployeeAdapter adapter;
@@ -43,15 +43,15 @@ public class ListEmployee extends Fragment implements IListEmployee{
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//            super.onScrolled(recyclerView, dx, dy);
             int visibleItemCount = layoutManager.getChildCount();
             Log.d("visibleItemCount", String.valueOf(visibleItemCount));
             int totalItemCount = layoutManager.getItemCount();
             Log.d("totalItemCount", String.valueOf(totalItemCount));
             int firstitem = layoutManager.findFirstVisibleItemPosition();
             Log.d("firstitem", String.valueOf(firstitem));
-            if (firstitem+visibleItemCount >= totalItemCount && current_page < pageSize){
+            if (firstitem+visibleItemCount >= totalItemCount && current_page < ListEmployeePresenter.total_page_employee){
                 current_page++;
+                list_emp_pb_loadEmp.setVisibility(View.VISIBLE);
                 listEmployeePresenter.getListEmployee(current_page,pageSize);
 
             }
@@ -68,6 +68,7 @@ public class ListEmployee extends Fragment implements IListEmployee{
         listEmployeePresenter.getListEmployee(current_page,pageSize);
         View view = inflater.inflate(R.layout.fragment_list_emp, container, false);
         rv_listEmp = view.findViewById(R.id.rv_listEmp);
+        list_emp_pb_loadEmp = view.findViewById(R.id.list_emp_pb_loadEmp);
         return view;
     }
 
@@ -84,6 +85,7 @@ public class ListEmployee extends Fragment implements IListEmployee{
 
     @Override
     public void Success(List<ListEmployees> listEmployee) {
+        list_emp_pb_loadEmp.setVisibility(View.GONE);
         listEmployees.addAll(listEmployee);
         if (adapter == null){
             adapter = new ListEmployeeAdapter(getActivity(), listEmployees);

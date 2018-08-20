@@ -14,6 +14,7 @@ import retrofit2.Response;
 
 public class HomePresenter implements IHomePresenter{
     private iHomeActivity ihomeActivity;
+    public static int idEmployee;
     public HomePresenter(iHomeActivity iHomeActivity) {
         this.ihomeActivity = iHomeActivity;
     }
@@ -28,6 +29,7 @@ public class HomePresenter implements IHomePresenter{
                 Log.d("body main",response.body().toString());
                 if (response.body().getResultCode()==200){
                     LoginPresenter.position = response.body().getProfile().getRole().getNameRole();
+                    idEmployee = response.body().getProfile().getIdEmployee();
                     ihomeActivity.Success(response.body().getProfile());
                 }else if (response.body() != null){
                     ihomeActivity.Failure();

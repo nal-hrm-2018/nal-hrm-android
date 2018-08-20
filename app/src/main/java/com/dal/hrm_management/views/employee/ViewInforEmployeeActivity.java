@@ -14,13 +14,14 @@ import com.dal.hrm_management.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*Intent có extra nhưng không get Extra tại đây mà get tại các fragment chứa nó
+ * Ví dụ như basic employeeFragment */
 public class ViewInforEmployeeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    public static int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
