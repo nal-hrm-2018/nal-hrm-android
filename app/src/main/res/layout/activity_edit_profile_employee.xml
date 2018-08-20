@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_gray"
-    tools:context="com.dal.hrm_management.views.profile.EditProfileActivity">
-
+    tools:context="com.dal.hrm_management.views.employee.EditProfileEmployeeActivity">
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -281,3 +280,7 @@
         android:visibility="visible" />
 
 </RelativeLayout>
+
+
+
+

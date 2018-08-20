@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="@dimen/activity_vertical_margin"
+    android:background="@color/color_white"
+    android:layout_margin="@dimen/text_padding"
     tools:context=".views.profile.ViewProfileActivity">
 
     <ScrollView
@@ -21,6 +21,7 @@
                 android:id="@+id/basic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -28,6 +29,7 @@
                     android:layout_width="@dimen/avatar_size_small"
                     android:layout_height="@dimen/avatar_size_small"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/text_padding"
                     android:src="@drawable/img_avatar" />
 
                 <LinearLayout
@@ -50,9 +52,12 @@
                         android:id="@+id/tv_position"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/text_padding"
+                        android:layout_margin="@dimen/text_padding"
+                        android:background="@color/colorAccent"
+                        android:paddingLeft="@dimen/text_padding"
+                        android:paddingRight="@dimen/text_padding"
                         android:text="@string/textview.hint.profile_role"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         android:textSize="@dimen/text_size_medium" />
 
                     <TextView
@@ -136,6 +141,7 @@
                     android:paddingRight="@dimen/text_padding"
                     android:paddingTop="@dimen/text_padding"
                     android:text="Female" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -174,6 +180,7 @@
                     android:paddingLeft="@dimen/text_padding"
                     android:paddingRight="@dimen/text_padding"
                     android:paddingTop="@dimen/text_padding"
+                    android:drawableRight="@drawable/ic_date"
                     android:text="16/12/1996" />
 
                 <TextView
@@ -195,6 +202,26 @@
                     android:paddingRight="@dimen/text_padding"
                     android:paddingTop="@dimen/text_padding"
                     android:text="Fulltime" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/profile_view_team"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_team"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/boder_edittext"
+                    android:paddingBottom="@dimen/text_padding"
+                    android:paddingLeft="@dimen/text_padding"
+                    android:paddingRight="@dimen/text_padding"
+                    android:paddingTop="@dimen/text_padding"
+                    android:drawableRight="@drawable/ic_people"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -240,6 +267,7 @@
                         android:paddingLeft="@dimen/text_padding"
                         android:paddingRight="@dimen/text_padding"
                         android:paddingTop="@dimen/text_padding"
+                        android:drawableRight="@drawable/ic_date"
                         android:text="22/9/2018" />
 
 
@@ -254,6 +282,7 @@
                         android:paddingLeft="@dimen/text_padding"
                         android:paddingRight="@dimen/text_padding"
                         android:paddingTop="@dimen/text_padding"
+                        android:drawableRight="@drawable/ic_date"
                         android:text="22/09/2020" />
                 </LinearLayout>
 
@@ -265,8 +294,8 @@
                     android:background="@drawable/shape_button_changepassword"
                     android:text="@string/button.changePassword"
                     android:textAllCaps="false"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_medium" />
 
             </LinearLayout>
 
