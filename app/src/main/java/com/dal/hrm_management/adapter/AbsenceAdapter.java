@@ -33,7 +33,6 @@ public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataVie
         holder.tv_type.setText(arr.get(position).getType());
         holder.tv_startAt.setText(arr.get(position).getDateStart());
         holder.tv_endAt.setText(arr.get(position).getDateEnd());
-        holder.tv_status.setText(arr.get(position).getStatus());
         holder.item_absence_tv_reason.setText(arr.get(position).getReason());
         holder.tv_thoigianNghi.setText(arr.get(position).getAllDay());
 
@@ -56,7 +55,6 @@ public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataVie
         private TextView tv_type;
         private TextView tv_startAt;
         private TextView tv_endAt;
-        private TextView tv_status;
         private TextView tv_thoigianNghi;
         private TextView item_absence_tv_reason;
 
@@ -65,10 +63,8 @@ public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataVie
             tv_type = itemView.findViewById(R.id.tv_type);
             tv_startAt = itemView.findViewById(R.id.tv_startAt);
             tv_endAt = itemView.findViewById(R.id.tv_endAt);
-            tv_status = itemView.findViewById(R.id.tv_status);
             tv_thoigianNghi = itemView.findViewById(R.id.tv_thoigianNghi);
             item_absence_tv_reason = itemView.findViewById(R.id.item_absence_tv_reason);
-
         }
     }
 }

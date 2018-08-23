@@ -1,145 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/text_padding"
-    android:weightSum="2"
-    tools:context="com.dal.hrm_management.DetailAbsenceEmployeeActivity">
+    android:background="#fcfcfc">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.9" />
+        android:layout_height="300dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <LinearLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingtoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/side_nav_bar"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_SoNgayPhepCoTheNghi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/tv_soNgayPhepCoTheNghi" />
+
+                <TextView
+                    android:id="@+id/tv_SoNgayPhepNamNgoai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/tv_soNgayPhepNamNgoai" />
+
+                <TextView
+                    android:id="@+id/tv_soNgayPhepDaNghi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/tv_soNgayPhepDaNghi" />
+
+                <TextView
+                    android:id="@+id/tv_SoNgayNghiKhongLuong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/tv_soNgayNghiKhongLuong" />
+
+                <TextView
+                    android:id="@+id/tv_soNgayNghiBaoHiem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/tv_soNgayNghiBaoHiem" />
+
+                <TextView
+                    android:id="@+id/tv_soNgayNghiTruLuong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/tv_soNgayNghiTruLuong" />
+
+                <TextView
+                    android:id="@+id/tv_soNgayPhepConLai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/tv_soNgayPhepConLai" />
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="5">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2    "
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_absence"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="@string/absence_present_year"
-                android:textSize="@dimen/text_size_medium" />
+                android:layout_height="wrap_content" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="@string/absence_last_year"
-                android:textSize="@dimen/text_size_medium" />
+            <ImageButton
+                android:id="@+id/imBtn_show"
+                android:layout_width="@dimen/icon_size_lager"
+                android:layout_height="@dimen/icon_size_lager"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="@drawable/shape_button_round"
+                android:src="@drawable/ic_eye"
+                android:tint="@color/color_white" />
+        </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="@string/absence_total_days"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="@string/absence_no_salary_day"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="@string/absence_insurance"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="@string/absence_sub_salary"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:paddingLeft="@dimen/text_padding"
-                android:text="@string/absence_remain"
-                android:textSize="@dimen/text_size_medium" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_absenceDayOfPresentYear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:id="@+id/tv_absenceDayOfLastYear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:id="@+id/tv_totalAbsenceDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:id="@+id/tv_noSalaryDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:id="@+id/tv_insuranceDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:id="@+id/tv_subSalaryDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:textSize="@dimen/text_size_medium" />
-
-            <TextView
-                android:id="@+id/tv_remainDay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/boder_edittext"
-                android:textSize="@dimen/text_size_medium" />
-        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
 
 
-    </LinearLayout>
-</LinearLayout>
+

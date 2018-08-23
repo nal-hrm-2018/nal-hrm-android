@@ -29,17 +29,17 @@ import android.widget.Toast;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
-import com.dal.hrm_management.presenters.profile.ProfileEditPresenter;
+import com.dal.hrm_management.presenters.employee.EditProfileEmployeePresenter;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class EditProfileEmployeeActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditProfileEmployeeActivity extends AppCompatActivity implements View.OnClickListener, IEditProfileEmployeeActivity {
     private static final int REQUEST_IMAGE = 1001;
     private ImageView imv_avatar;
     private EditText edt_name;
@@ -55,11 +55,11 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
     private TextView tv_start;
     private TextView tv_end;
     private ProgressBar progressBar;
+    private EditProfileEmployeePresenter editProfileEmployeePresenter;
+    private boolean[] mSelectedTeams, mSelectedTeamsBackup;
     Bitmap avatarBitmap;
     ArrayAdapter<CharSequence> adapter_position, adapter_maritalStatus, adapter_type;
-    ArrayList<String> teamList;
-    private boolean[] mSelectedTeams, mSelectedTeamsBackup;
-    private ProfileEditPresenter profileEditPresenter;
+    List<String> teamListData;
     public static String position = "", maritalStatus = "", type = "";
 
     @Override
@@ -68,19 +68,19 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         setContentView(R.layout.activity_edit_profile_employee);
         displayBackHome();
         initPresenter();
-        getDataFromServer();
         initUI();
         initData();
         setEvent();
     }
 
-    private void getDataFromServer() {
-
-    }
-
-
     private void initPresenter() {
-
+        editProfileEmployeePresenter = new EditProfileEmployeePresenter(this);
+        if (getIntent().getIntExtra("id_employee_edit", -1) < 0) {
+            showError();
+        } else {
+            editProfileEmployeePresenter.getTeams(LoginPresenter.token);
+            editProfileEmployeePresenter.getProfileEmployee(getIntent().getIntExtra("id_employee_edit", -1));
+        }
     }
 
     private void initData() {
@@ -95,7 +95,7 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         adapter_type = ArrayAdapter.createFromResource(this, R.array.type_arr, android.R.layout.simple_spinner_item);
         adapter_type.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_type.setAdapter(adapter_type);
-
+        teamListData = new ArrayList<>();
     }
 
     private void setEvent() {
@@ -123,9 +123,7 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         tv_end = (TextView) findViewById(R.id.tv_end);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-        teamList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.team_arr)));
-        mSelectedTeams = new boolean[teamList.size()];
-        mSelectedTeamsBackup = new boolean[teamList.size()];
+
     }
 
     private void displayBackHome() {
@@ -189,11 +187,12 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
     }
 
     private void showCheckBoxDialog() {
+        final String inforBackup = tv_team.getText().toString();
         tv_team.setText("");
         for (int k = 0; k < mSelectedTeams.length; k++) {
             mSelectedTeamsBackup[k] = mSelectedTeams[k];
         }
-        String[] teams = getResources().getStringArray(R.array.team_arr);
+        String[] teams = teamListData.toArray(new String[0]);
 
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.dialog_title_checkbox, null);
@@ -217,7 +216,7 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
                 ArrayList<String> list = new ArrayList<>();
                 for (int k = 0; k < mSelectedTeams.length; k++) {
                     if (mSelectedTeams[k]) {
-                        list.add(teamList.get(k));
+                        list.add(teamListData.get(k));
                     }
                 }
                 if (list.size() != 0) {
@@ -233,6 +232,7 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
                 for (int k = 0; k < mSelectedTeams.length; k++) {
                     mSelectedTeams[k] = mSelectedTeamsBackup[k];
                 }
+                tv_team.setText(inforBackup);
             }
         });
         final AlertDialog dialog = builder.create();
@@ -317,6 +317,12 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         List<Team> teamList = profile.getTeams();
         for (int i = 0; i < teamList.size() - 1; i++) {
             tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+            for (int k = 0; k < teamListData.size(); k++) {
+                if (teamList.get(i).equals(teamListData.get(k))) {
+                    mSelectedTeamsBackup[k] = true;
+                    mSelectedTeams[k] = true;
+                }
+            }
         }
         tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
         tv_birthday.setText(profile.getBirthday());
@@ -334,4 +340,43 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         progressBar.setVisibility(View.GONE);
     }
 
+    @Override
+    public void getBasicEmployeeSuccess(Profile profile) {
+        loadDataToView(profile);
+    }
+
+    @Override
+    public void getBasicEmployeeFailed() {
+        showError();
+    }
+
+    @Override
+    public void editProfileSuccess(Profile profile) {
+
+    }
+
+    @Override
+    public void editProfileFailure() {
+
+    }
+
+    @Override
+    public void getTeamsSuccess(List<Team> teams) {
+        for (Team item : teams) {
+            teamListData.add(item.getNameTeam());
+        }
+        mSelectedTeams = new boolean[teamListData.size()];
+        mSelectedTeamsBackup = new boolean[teamListData.size()];
+    }
+
+    @Override
+    public void getTeamsFailed() {
+//        teamListData = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.team_arr)));
+//        mSelectedTeams = new boolean[teamListData.size()];
+//        mSelectedTeamsBackup = new boolean[teamListData.size()];
+    }
+
+    private void showError() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
 }

@@ -1,9 +1,11 @@
 package com.dal.hrm_management.api;
 
+import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
 import com.dal.hrm_management.models.login.LoginModel;
-import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
+import com.dal.hrm_management.models.profile.RolesResponse;
+import com.dal.hrm_management.models.profile.TeamsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -40,6 +42,11 @@ public interface ApiInterface {
                                                                 @Query("page") int page,
                                                                 @Query("pageSize") int pageSize,
                                                                 @Header("Authorization") String token);
+    @GET("api/list/role")
+    Call<RolesResponse> getRoles(@Header("Authorization") String token);
+    @GET("api/list/team")
+    Call<TeamsResponse> getTeams(@Header("Authorization") String token);
+
 
 
 }
