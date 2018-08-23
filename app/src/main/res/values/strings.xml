@@ -154,4 +154,5 @@
     <string name="tv_soNgayPhepConLai">Số ngày phép còn lại</string>
     <string name="profile_view_team">Team</string>
     <string name="desciption.hint.team">PHP</string>
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 </resources>

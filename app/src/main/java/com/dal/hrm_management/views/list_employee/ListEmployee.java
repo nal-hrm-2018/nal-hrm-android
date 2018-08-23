@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listEmployee.ListEmployeeAdapter;
-import com.dal.hrm_management.models.listEmployee.ListEmployees;
+import com.dal.hrm_management.models.listEmployee.Employee;
 import com.dal.hrm_management.presenters.ListEmployee.ListEmployeePresenter;
 import com.dal.hrm_management.utils.PermissionManager;
 
@@ -32,7 +32,7 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
     ListEmployeePresenter listEmployeePresenter;
     private RecyclerView rv_listEmp;
     private ProgressBar list_emp_pb_loadEmp;
-    private List<ListEmployees> listEmployees = new ArrayList<ListEmployees>(); //Chứa danh sách nhân viên lưu vào trong bộ nhớ local
+    private List<Employee> listEmployees = new ArrayList<Employee>(); //Chứa danh sách nhân viên lưu vào trong bộ nhớ local
     private SearchView searchView;
     //current page
     private int current_page =1;
@@ -87,7 +87,7 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
 
 
     @Override
-    public void Success(List<ListEmployees> listEmployee) {
+    public void Success(List<Employee> listEmployee) {
         list_emp_pb_loadEmp.setVisibility(View.GONE);
         listEmployees.addAll(listEmployee);
         if (adapter == null){

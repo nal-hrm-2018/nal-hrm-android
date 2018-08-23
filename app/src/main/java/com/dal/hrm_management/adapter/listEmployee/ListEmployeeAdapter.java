@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
-import com.dal.hrm_management.models.listEmployee.ListEmployees;
+import com.dal.hrm_management.models.listEmployee.Employee;
 import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.views.employee.EditProfileEmployeeActivity;
 import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
@@ -29,12 +29,12 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapter.DataViewHolder> implements Filterable {
-    private List<ListEmployees> arr;
+    private List<Employee> arr;
     private Context context;
-    private List<ListEmployees> employeesListFiltered;
+    private List<Employee> employeesListFiltered;
     private EmployeesAdapterListener listener;
 
-    public ListEmployeeAdapter(Context context, List<ListEmployees> arr, EmployeesAdapterListener listener) {
+    public ListEmployeeAdapter(Context context, List<Employee> arr, EmployeesAdapterListener listener) {
         this.context = context;
         this.arr = arr;
         this.employeesListFiltered = arr;
@@ -70,7 +70,7 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
 
     @Override
     public void onBindViewHolder(final DataViewHolder holder, int position) {
-        final ListEmployees employee = employeesListFiltered.get(position);
+        final Employee employee = employeesListFiltered.get(position);
         holder.tv_hoVaTen.setText(employee.getNameEmployee());
         holder.tv_email.setText(employee.getEmail());
         holder.tv_chucVu.setText(employee.getRole().getNameRole());
@@ -103,7 +103,7 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
                             case R.id.action_editProfile:
                                 Intent editIntent = new Intent(view.getContext().getApplicationContext(), EditProfileEmployeeActivity.class);
                                 int id_1 = employee.getIdEmployee();
-                                editIntent.putExtra("id_employee", id_1);
+                                editIntent.putExtra("id_employee_edit", id_1);
                                 context.startActivity(editIntent);
                                 break;
                             case R.id.action_resetPass:
@@ -134,10 +134,10 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
                 if (charString.isEmpty()) {
                     employeesListFiltered = arr;
                 } else {
-                    List<ListEmployees> filteredList = new ArrayList<>();
-                    for (ListEmployees row : arr) {
-                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row);
+                    List<Employee> filteredList = new ArrayList<>();
+                    for (Employee employee : arr) {
+                        if (employee.getNameEmployee().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(employee);
                         }
                     }
                     employeesListFiltered = filteredList;
@@ -150,7 +150,7 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                employeesListFiltered = (List<ListEmployees>) results.values;
+                employeesListFiltered = (List<Employee>) results.values;
                 notifyDataSetChanged();
             }
         };

@@ -7,7 +7,7 @@ public class DataListEmployeeResponse {
     private Integer total;
     @SerializedName("list")
     @Expose
-    private java.util.List<com.dal.hrm_management.models.listEmployee.ListEmployees> list = null;
+    private java.util.List<Employee> list = null;
 
     public Integer getTotal() {
         return total;
@@ -17,11 +17,11 @@ public class DataListEmployeeResponse {
         this.total = total;
     }
 
-    public java.util.List<com.dal.hrm_management.models.listEmployee.ListEmployees> getList() {
+    public java.util.List<Employee> getList() {
         return list;
     }
 
-    public void setList(java.util.List<com.dal.hrm_management.models.listEmployee.ListEmployees> list) {
+    public void setList(java.util.List<Employee> list) {
         this.list = list;
     }
     

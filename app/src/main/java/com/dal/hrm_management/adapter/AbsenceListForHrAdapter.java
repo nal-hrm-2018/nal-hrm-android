@@ -11,7 +11,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dal.hrm_management.DetailAbsenceEmployeeActivity;
+import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 
