@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
@@ -32,6 +33,7 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
     ListEmployeePresenter listEmployeePresenter;
     private RecyclerView rv_listEmp;
     private ProgressBar list_emp_pb_loadEmp;
+    private TextView fra_tv_nothingToShow;
     private List<Employee> listEmployees = new ArrayList<Employee>(); //Chứa danh sách nhân viên lưu vào trong bộ nhớ local
     private SearchView searchView;
     //current page
@@ -71,6 +73,7 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
         listEmployeePresenter.getListEmployee(current_page,pageSize);
         View view = inflater.inflate(R.layout.fragment_list_emp, container, false);
         rv_listEmp = view.findViewById(R.id.rv_listEmp);
+        fra_tv_nothingToShow = view.findViewById(R.id.fra_tv_nothingToShow);
         list_emp_pb_loadEmp = view.findViewById(R.id.list_emp_pb_loadEmp);
         return view;
     }
@@ -102,8 +105,9 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
 
     @Override
     public void getListEmployeeFailure() {
-        Log.d(TAG, "failure");
-
+        Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();
+        fra_tv_nothingToShow.setVisibility(View.VISIBLE);
+        list_emp_pb_loadEmp.setVisibility(View.GONE);
     }
 
     @Override
