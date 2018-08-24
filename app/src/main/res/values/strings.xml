@@ -155,4 +155,5 @@
     <string name="profile_view_team">Team</string>
     <string name="desciption.hint.team">PHP</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="fra_list_emp_nothingToShow">Nothing to show</string>
 </resources>

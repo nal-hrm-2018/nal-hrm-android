@@ -211,7 +211,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
             if (menuModel.hasChildren) {
                 childList.put(menuModel, childModelsList);
-
             }
         }
         menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
@@ -253,6 +252,44 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     @Override
     public void Failure() {
         Toast.makeText(this,"error server",Toast.LENGTH_LONG).show();
+        prepareMenuData();
+        populateExpandableList();
+    }
+
+    /**
+     * Đăng nhập fail không có profile
+     */
+    private void populateExpandableList() {
+        expandableListAdapter = new com.dal.hrm_management.adapter.ExpandableListAdapter(this, headerList, childList);
+        expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                if (headerList.get(groupPosition).isGroup) {
+                    if (!headerList.get(groupPosition).hasChildren) {
+                        if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
+                            PermissionManager.listPermissions.clear();
+                            Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }
+                        onBackPressed();
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Khi đã vào home mà không nhận được dữ liệu profile thì chỉ cần hiển thị đăng xuất
+     */
+    private void prepareMenuData() {
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.dal.hrm_management.presenters.home;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
@@ -13,6 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomePresenter implements IHomePresenter{
+    private static  final String TAG = HomePresenter.class.getSimpleName();
     private iHomeActivity ihomeActivity;
     public static int idEmployee;
     public HomePresenter(iHomeActivity iHomeActivity) {
@@ -26,21 +28,25 @@ public class HomePresenter implements IHomePresenter{
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                Log.d("body main",response.body().toString());
-                if (response.body().getResultCode()==200){
+                Log.d(TAG + "code", String.valueOf(response.code()));
+                if (response.code() >= 300){
+                    ihomeActivity.Failure();
+                }else if (response.code() >=200){
                     LoginPresenter.position = response.body().getProfile().getRole().getNameRole();
                     idEmployee = response.body().getProfile().getIdEmployee();
                     ihomeActivity.Success(response.body().getProfile());
-                }else if (response.body() != null){
+                }else{
                     ihomeActivity.Failure();
                 }
+
             }
 
             @Override
             public void onFailure(Call<ProfileResponse> call, Throwable t) {
-                ihomeActivity.Failure();
+
             }
         });
+
 
 
     }

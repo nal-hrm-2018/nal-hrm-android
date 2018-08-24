@@ -26,11 +26,17 @@ public class ListEmployeePresenter implements IListEmployeePresenter{
         call.enqueue(new Callback<ListEmpResponse>() {
             @Override
             public void onResponse(Call<ListEmpResponse> call, Response<ListEmpResponse> response) {
-                ListEmpResponse listEmpResponse = response.body();
-                if (listEmpResponse.getResultCode() == 200) {
-                    total_page_employee = listEmpResponse.getData().getTotal();
-                    iListEmployee.Success(listEmpResponse.getData().getList());
+                if (response.code() >= 300){
+                    iListEmployee.getListEmployeeFailure();
+                }else if (response.code() >=200){
+                    ListEmpResponse listEmpResponse = response.body();
+                    if (listEmpResponse.getResultCode() == 200) {
+                        total_page_employee = listEmpResponse.getData().getTotal();
+                        iListEmployee.Success(listEmpResponse.getData().getList());
 
+                    }
+                }else{
+                    iListEmployee.getListEmployeeFailure();
                 }
             }
 

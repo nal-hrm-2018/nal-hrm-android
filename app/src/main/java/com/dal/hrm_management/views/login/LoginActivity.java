@@ -6,17 +6,22 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
+import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
 import com.dal.hrm_management.views.home.HomePageActivity;
 
 
@@ -27,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private SharedPreferences sharedPreferences;
     private CheckBox cb_remeber;
     private LinearLayout messageBar;
+    private ProgressBar progressBar;
     private TextView tv_error;
     private int PASSWORD_LENGTH = 6;
     LoginPresenter loginPresenter;
@@ -81,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (isConnected()) {
                     messageBar.setVisibility(View.VISIBLE);
                     tv_error.setText("Signing...");
-
                     if (cb_remeber.isChecked()) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean("remeber", true);
@@ -93,8 +98,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                     checkLogin();
                 } else {
-                    messageBar.setVisibility(View.VISIBLE);
-                    tv_error.setText("No Internet!");
+                    Toast toast= Toast.makeText(getApplicationContext(),
+                            "No internet", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.show();
                 }
                 break;
             case R.id.edt_email:
@@ -139,6 +146,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
+            messageBar.setVisibility(View.GONE);
+            btn_login.setEnabled(true);
         } else {
             //success
             loginPresenter.getToken(email, pass);
@@ -169,10 +178,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void errorInServer() {
-        tv_error.setText("Disconnect Server!");
         messageBar.setVisibility(View.GONE);
+        Toast toast= Toast.makeText(getApplicationContext(),
+                "Server Error", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+        btn_login.setEnabled(true);
     }
 
+    /**
+     * Kiểm tra có kết nối internet hay không
+     * @return trạng thái kết nối internet
+     */
     public boolean isConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
