@@ -19,8 +19,7 @@ import retrofit2.http.Query;
 public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/login")
-    Call<LoginModel> getToKen(@Header("Authorization") String token,
-                              @Field("username") String email,
+    Call<LoginModel> getToKen(@Field("username") String email,
                               @Field("password") String password);
     @Headers({
             "X-Requested-With:XMLHttpRequest",

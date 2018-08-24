@@ -63,6 +63,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void mapViewWithActivity() {
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
+        edt_email.setOnClickListener(this);
+        edt_password.setOnClickListener(this);
         btn_login = findViewById(R.id.btn_login);
         cb_remeber = findViewById(R.id.cb_remember);
         messageBar = (LinearLayout) findViewById(R.id.messageBar);
@@ -73,24 +75,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_login) {
-            if (isConnected()) {
-                messageBar.setVisibility(View.GONE);
-                if (cb_remeber.isChecked()) {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("remeber", true);
-                    editor.putString("email", edt_email.getText().toString());
-                    editor.putString("password", edt_password.getText().toString());
-                    editor.commit();
+        switch (view.getId()) {
+            case R.id.btn_login:
+                btn_login.setEnabled(false);
+                if (isConnected()) {
+                    messageBar.setVisibility(View.VISIBLE);
+                    tv_error.setText("Signing...");
+
+                    if (cb_remeber.isChecked()) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("remeber", true);
+                        editor.putString("email", edt_email.getText().toString());
+                        editor.putString("password", edt_password.getText().toString());
+                        editor.commit();
+                    } else {
+                        sharedPreferences.edit().clear().commit();
+                    }
+                    checkLogin();
                 } else {
-                    sharedPreferences.edit().clear().commit();
+                    messageBar.setVisibility(View.VISIBLE);
+                    tv_error.setText("No Internet!");
                 }
-                checkLogin();
-            } else {
-                messageBar.setVisibility(View.VISIBLE);
-                tv_error.setText("No Internet!");
-            }
+                break;
+            case R.id.edt_email:
+                messageBar.setVisibility(View.GONE);
+                break;
+            case R.id.edt_password:
+                messageBar.setVisibility(View.GONE);
+                break;
         }
+
     }
 
     private void checkLogin() {
@@ -129,7 +143,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //success
             loginPresenter.getToken(email, pass);
         }
-        messageBar.setVisibility(View.GONE);
     }
 
     private boolean isEmailValid(String email) {
@@ -143,19 +156,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra("token", token);
         startActivity(intent);
         messageBar.setVisibility(View.GONE);
+        btn_login.setEnabled(true);
     }
 
     @Override
     public void loginFailure() {
         edt_password.setError(getString(R.string.error_incorrect_password));
         edt_password.requestFocus();
-        messageBar.setVisibility(View.VISIBLE);
+        messageBar.setVisibility(View.GONE);
+        btn_login.setEnabled(true);
     }
 
     @Override
     public void errorInServer() {
         tv_error.setText("Disconnect Server!");
-        messageBar.setVisibility(View.INVISIBLE);
+        messageBar.setVisibility(View.GONE);
     }
 
     public boolean isConnected() {
