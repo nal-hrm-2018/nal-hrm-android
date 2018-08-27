@@ -284,6 +284,7 @@ public class Profile {
         this.createdAt = createdAt;
     }
 
+
     public List<Permission> getPermissions() {
         return permissions;
     }

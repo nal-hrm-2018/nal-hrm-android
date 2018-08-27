@@ -75,11 +75,13 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
         rv_listEmp = view.findViewById(R.id.rv_listEmp);
         fra_tv_nothingToShow = view.findViewById(R.id.fra_tv_nothingToShow);
         list_emp_pb_loadEmp = view.findViewById(R.id.list_emp_pb_loadEmp);
+        list_emp_pb_loadEmp.setVisibility(View.VISIBLE);
         return view;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
     }

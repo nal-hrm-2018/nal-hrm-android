@@ -35,14 +35,15 @@ public class BasicEmployeePresenter implements IBasicEmployeePresenter {
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                Log.d(TAG + "code", String.valueOf(response.code()));
-                if (response.code() >= 300){
+                int statusCode = response.code();
+                if (statusCode >= 300){
+                    //get json failure
                     iBasicEmployeeFragment.getBasicEmployeeFailed();
-                }else if (response.code() >=200){
+                }else if (statusCode >= 200){
                     Profile profile = response.body().getProfile();
                     iBasicEmployeeFragment.getBasicEmployeeSuccess(profile);
                     Log.d("TAG", "success");
-                } else {
+                }else{
                     iBasicEmployeeFragment.getBasicEmployeeFailed();
                 }
             }
