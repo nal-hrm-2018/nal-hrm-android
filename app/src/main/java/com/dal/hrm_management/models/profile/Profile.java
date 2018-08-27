@@ -64,9 +64,9 @@ public class Profile {
     @SerializedName("createdAt")
     @Expose
     private Object createdAt;
-    @SerializedName("permission")
+    @SerializedName("permissions")
     @Expose
-    private List<Permission> permission = null;
+    private List<Permission> permissions = null;
     @SerializedName("teams")
     @Expose
     private List<Team> teams = null;
@@ -227,11 +227,11 @@ public class Profile {
     }
 
     public List<Permission> getPermission() {
-        return permission;
+        return permissions;
     }
 
     public void setPermission(List<Permission> permission) {
-        this.permission = permission;
+        this.permissions = permission;
     }
 
     public List<Team> getTeams() {

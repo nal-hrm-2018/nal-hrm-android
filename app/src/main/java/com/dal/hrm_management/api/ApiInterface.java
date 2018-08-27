@@ -28,15 +28,15 @@ public interface ApiInterface {
     @GET("api/profile/")
     Call<ProfileResponse> getProfile(@Header("Authorization") String token);
 
-    @GET("api/list/employees")
+    @GET("api/employee/list")
     Call<ListEmpResponse> getListEmployee(@Query("page") int page,
                                           @Query("pageSize") int pageSize,
                                           @Header("Authorization") String token);
 
-    @GET("api/basic")
+    @GET("api/employee/basic")
     Call<ProfileResponse> getBasicInforEmployee(@Header("Authorization") String token, @Query("id") int id);
 
-    @GET("api/project/employee")
+    @GET("api/employee/project")
     Call<ListProjectEmpAttendResponse> getProjectEmployeeAttend(@Query("id") int id,
                                                                 @Query("page") int page,
                                                                 @Query("pageSize") int pageSize,
