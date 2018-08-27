@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.absence.Absence;
+import com.dal.hrm_management.models.fakeData.Absence;
 import com.dal.hrm_management.utils.PermissionManager;
 
 import java.util.ArrayList;

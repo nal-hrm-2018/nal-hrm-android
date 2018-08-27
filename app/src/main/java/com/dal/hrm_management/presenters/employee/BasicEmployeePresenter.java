@@ -13,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.ContentValues.TAG;
 import static com.dal.hrm_management.presenters.login.LoginPresenter.token;
 
 /**
@@ -34,9 +35,10 @@ public class BasicEmployeePresenter implements IBasicEmployeePresenter {
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                Log.d("test", String.valueOf(response.body().getResultCode()));
-                int statusCode = response.code();
-                if (response.body().getResultCode() == 200) {
+                Log.d(TAG + "code", String.valueOf(response.code()));
+                if (response.code() >= 300){
+                    iBasicEmployeeFragment.getBasicEmployeeFailed();
+                }else if (response.code() >=200){
                     Profile profile = response.body().getProfile();
                     iBasicEmployeeFragment.getBasicEmployeeSuccess(profile);
                     Log.d("TAG", "success");

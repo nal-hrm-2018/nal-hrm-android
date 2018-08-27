@@ -1,68 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="10">
-        <android.support.v7.widget.RecyclerView
-            android:layout_weight="9"
-            android:id="@+id/fragment_absence_rv_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    <ScrollView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_absence"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="16dp"
-            android:orientation="vertical">
+        android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/tv_SoNgayPhepCoTheNghi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_soNgayPhepCoTheNghi" />
-
-            <TextView
-                android:id="@+id/tv_SoNgayPhepNamNgoai"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_soNgayPhepNamNgoai" />
-
-            <TextView
-                android:id="@+id/tv_soNgayPhepDaNghi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_soNgayPhepDaNghi" />
-
-            <TextView
-                android:id="@+id/tv_SoNgayNghiKhongLuong"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_soNgayNghiKhongLuong" />
-
-            <TextView
-                android:id="@+id/tv_soNgayNghiBaoHiem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_soNgayNghiBaoHiem" />
-
-            <TextView
-                android:id="@+id/tv_soNgayNghiTruLuong"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_soNgayNghiTruLuong" />
-
-            <TextView
-                android:id="@+id/tv_soNgayPhepConLai"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_soNgayPhepConLai" />
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/imBtn_show"
+        android:layout_width="@dimen/icon_size_lager"
+        android:layout_height="@dimen/icon_size_lager"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/shape_button_round"
+        android:src="@drawable/ic_eye"
+        android:tint="@color/color_white" />
+</RelativeLayout>

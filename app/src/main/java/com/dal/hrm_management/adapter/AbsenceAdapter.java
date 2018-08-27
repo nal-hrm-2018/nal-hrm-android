@@ -9,16 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.fakeData.AbsenceModel;
+import com.dal.hrm_management.models.absence.Absence;
 
 import java.util.List;
 
-public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataViewHolder> {
-    private List<AbsenceModel> arr;
+public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataViewHolder> {
+    private List<Absence> absences;
     private Context context;
 
-    public AbsenceAdapter(List<AbsenceModel> arr, Context context) {
-        this.arr = arr;
+    public AbsenceAdapter(List<Absence> arr, Context context) {
+        this.absences = arr;
         this.context = context;
     }
 
@@ -30,21 +30,18 @@ public class AbsenceAdapter  extends RecyclerView.Adapter<AbsenceAdapter.DataVie
 
     @Override
     public void onBindViewHolder(AbsenceAdapter.DataViewHolder holder, int position) {
-        holder.tv_type.setText(arr.get(position).getType());
-        holder.tv_startAt.setText(arr.get(position).getDateStart());
-        holder.tv_endAt.setText(arr.get(position).getDateEnd());
-        holder.item_absence_tv_reason.setText(arr.get(position).getReason());
-        holder.tv_thoigianNghi.setText(arr.get(position).getAllDay());
-
-
+        holder.tv_type.setText(absences.get(position).getAbsenceType().getDescription());
+        holder.tv_startAt.setText(absences.get(position).getFromDate());
+        holder.tv_endAt.setText(absences.get(position).getToDate());
+        holder.item_absence_tv_reason.setText(absences.get(position).getReason());
+        holder.tv_thoigianNghi.setText(absences.get(position).getAbsenceTime().getDescription());
     }
-
 
 
     @Override
     public int getItemCount() {
-        Log.d("size", String.valueOf(arr.size()));
-        return arr == null ? 0 : arr.size();
+        Log.d("size", String.valueOf(absences.size()));
+        return absences == null ? 0 : absences.size();
     }
 
     /**

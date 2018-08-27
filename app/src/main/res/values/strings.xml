@@ -88,10 +88,10 @@
     <string name="menu_employee">Employee</string>
     <string name="menu_absence_empl">Absence1</string>
     <string name="menu_logout">Logout</string>
-    <string name="tv_soNgayPhepCoTheNghi">Số ngày phép có thể nghỉ :</string>
-    <string name="tv_soNgayPhepNamNgoai">Số ngày phép năm ngoái :</string>
+    <string name="tv_allowAbsence">Số ngày phép có thể nghỉ :</string>
+    <string name="tv_remainingAbsenceDays">Số ngày phép còn lại :</string>
     <string name="action_add_absence">new absence</string>
-    <string name="tv_soNgayNghiKhongLuong">Số ngày nghỉ không lương</string>
+    <string name="tv_annualLeave">Số ngày nghỉ hằng năm</string>
     <string name="textview.text.name">Name (*)</string>
     <string name="textview.text.position">Position (*)</string>
     <string name="textview.text.email">Email (*)</string>
@@ -148,12 +148,13 @@
     <string name="holiday_name">Tên ngày nghỉ</string>
     <string name="holiday_type">Loại ngày nghỉ</string>
     <string name="holiday_note">Ghi ghú</string>
-    <string name="tv_soNgayPhepDaNghi">Số ngày phép đã nghỉ</string>
-    <string name="tv_soNgayNghiBaoHiem">Số ngày nghỉ bảo hiểm</string>
-    <string name="tv_soNgayNghiTruLuong">Số ngày nghỉ trừ lương</string>
-    <string name="tv_soNgayPhepConLai">Số ngày phép còn lại</string>
+    <string name="tv_unpaidLeave">Số ngày nghỉ không lương :</string>
+    <string name="tv_bereavementLeave">Nghỉ tang :</string>
+    <string name="tv_maternityLeave">Số ngày nghỉ thai sản :</string>
+    <string name="tv_marriageLeave">Số ngày nghỉ cưới hỏi :</string>
     <string name="profile_view_team">Team</string>
     <string name="desciption.hint.team">PHP</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="fra_list_emp_nothingToShow">Nothing to show</string>
+    <string name="infor_null">--</string>
 </resources>

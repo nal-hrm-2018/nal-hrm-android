@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.profile.Profile;
@@ -106,6 +107,6 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
 
     @Override
     public void getBasicEmployeeFailed() {
-
+        Toast.makeText(getActivity(),"Not get data",Toast.LENGTH_SHORT).show();
     }
 }
