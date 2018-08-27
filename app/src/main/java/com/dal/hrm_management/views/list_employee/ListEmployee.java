@@ -55,8 +55,9 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
             Log.d("totalItemCount", String.valueOf(totalItemCount));
             int firstitem = layoutManager.findFirstVisibleItemPosition();
             Log.d("firstitem", String.valueOf(firstitem));
-            if (firstitem+visibleItemCount >= totalItemCount && current_page < ListEmployeePresenter.total_page_employee){
+            if (firstitem+visibleItemCount >= totalItemCount && current_page*pageSize < ListEmployeePresenter.total_employee){
                 current_page++;
+                Log.d(TAG + "current page: ", String.valueOf(current_page));
                 list_emp_pb_loadEmp.setVisibility(View.VISIBLE);
                 listEmployeePresenter.getListEmployee(current_page,pageSize);
 
@@ -73,6 +74,7 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
         listEmployeePresenter.getListEmployee(current_page,pageSize);
         View view = inflater.inflate(R.layout.fragment_list_emp, container, false);
         rv_listEmp = view.findViewById(R.id.rv_listEmp);
+        rv_listEmp.setVisibility(View.GONE);
         fra_tv_nothingToShow = view.findViewById(R.id.fra_tv_nothingToShow);
         list_emp_pb_loadEmp = view.findViewById(R.id.list_emp_pb_loadEmp);
         list_emp_pb_loadEmp.setVisibility(View.VISIBLE);
@@ -93,13 +95,14 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
 
     @Override
     public void Success(List<Employee> listEmployee) {
-        list_emp_pb_loadEmp.setVisibility(View.GONE);
+        rv_listEmp.setVisibility(View.VISIBLE);
         listEmployees.addAll(listEmployee);
         if (adapter == null){
             adapter = new ListEmployeeAdapter(getActivity(), listEmployees,this);
         }else{
             adapter.notifyDataSetChanged();
         }
+        list_emp_pb_loadEmp.setVisibility(View.GONE);
         rv_listEmp.setLayoutManager(layoutManager);
         rv_listEmp.setAdapter(adapter);
         rv_listEmp.addOnScrollListener(recyclerViewOnScrollListener);

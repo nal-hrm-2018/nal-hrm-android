@@ -19,6 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListProjectEmpAttendPresenter implements IListProjectEmpAttendPresenter {
+    private static  final String TAG = ListProjectEmpAttendPresenter.class.getSimpleName();
     private IListProjectEmployeeAttendFragment iListProjectEmployeeAttendFragment;
     public static int total_project;
     public ListProjectEmpAttendPresenter(IListProjectEmployeeAttendFragment iListProjectEmployeeAttendFragment) {
@@ -33,14 +34,14 @@ public class ListProjectEmpAttendPresenter implements IListProjectEmpAttendPrese
         call.enqueue(new Callback<ListProjectEmpAttendResponse>() {
             @Override
             public void onResponse(Call<ListProjectEmpAttendResponse> call, Response<ListProjectEmpAttendResponse> response) {
-                Log.d("Project","Success");
-                ListProjectEmpAttendResponse listProjectEmpAttendResponse = response.body();
-                if (listProjectEmpAttendResponse.getResultCode() == 200){
+                Log.d(TAG+" response code :", String.valueOf(response.code()));
+                if (response.code() >=300){
+                    iListProjectEmployeeAttendFragment.Failure();
+                }else if (response.code() >= 200){
+                    ListProjectEmpAttendResponse listProjectEmpAttendResponse = response.body();
                     total_project = listProjectEmpAttendResponse.getData().getTotal();
                     ArrayList<ProjectAndProcess> projectAndProcess = listProjectEmpAttendResponse.getData().getList();
                     iListProjectEmployeeAttendFragment.Success(projectAndProcess);
-                }else if (listProjectEmpAttendResponse.getResultCode() ==403){
-                    iListProjectEmployeeAttendFragment.PermissionDeny();
                 }else {
                     iListProjectEmployeeAttendFragment.Failure();
                 }

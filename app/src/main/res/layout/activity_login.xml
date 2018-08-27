@@ -103,35 +103,6 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_large" />
-
-            <LinearLayout
-                android:id="@+id/messageBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/background_message_error"
-                android:orientation="horizontal"
-                android:padding="@dimen/activity_horizontal_margin">
-
-                <ProgressBar
-                    android:id="@+id/login_progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin" />
-
-                <TextView
-                    android:id="@+id/tv_error"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:hint="Error"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textColor="@android:color/black" />
-            </LinearLayout>
         </RelativeLayout>
-
     </ScrollView>
 </LinearLayout>
