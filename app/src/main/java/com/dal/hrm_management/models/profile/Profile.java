@@ -42,7 +42,7 @@ public class Profile {
     private Object curriculumVitae;
     @SerializedName("company")
     @Expose
-    private String company;
+    private Object company;
     @SerializedName("avatar")
     @Expose
     private Object avatar;
@@ -60,10 +60,10 @@ public class Profile {
     private Integer salaryId;
     @SerializedName("updatedAt")
     @Expose
-    private String updatedAt;
+    private Object updatedAt;
     @SerializedName("createdAt")
     @Expose
-    private Object createdAt;
+    private String createdAt;
     @SerializedName("permissions")
     @Expose
     private List<Permission> permissions = null;
@@ -73,6 +73,64 @@ public class Profile {
     @SerializedName("employee")
     @Expose
     private Boolean employee;
+
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public Profile() {
+    }
+
+    /**
+     *
+     * @param employeeType
+     * @param birthday
+     * @param endWorkDate
+     * @param idEmployee
+     * @param avatar
+     * @param startWorkDate
+     * @param updatedAt
+     * @param teams
+     * @param genderDTO
+     * @param email
+     * @param nameEmployee
+     * @param address
+     * @param createdAt
+     * @param salaryId
+     * @param maritalStatusDTO
+     * @param company
+     * @param permissions
+     * @param role
+     * @param isManager
+     * @param employee
+     * @param curriculumVitae
+     * @param mobile
+     */
+    public Profile(Integer idEmployee, String email, String nameEmployee, String birthday, GenderDTO genderDTO, String mobile, String address, MaritalStatusDTO maritalStatusDTO, String startWorkDate, String endWorkDate, Object curriculumVitae, Object company, Object avatar, EmployeeType employeeType, Role role, Integer isManager, Integer salaryId, Object updatedAt, String createdAt, List<Permission> permissions, List<Team> teams, Boolean employee) {
+        super();
+        this.idEmployee = idEmployee;
+        this.email = email;
+        this.nameEmployee = nameEmployee;
+        this.birthday = birthday;
+        this.genderDTO = genderDTO;
+        this.mobile = mobile;
+        this.address = address;
+        this.maritalStatusDTO = maritalStatusDTO;
+        this.startWorkDate = startWorkDate;
+        this.endWorkDate = endWorkDate;
+        this.curriculumVitae = curriculumVitae;
+        this.company = company;
+        this.avatar = avatar;
+        this.employeeType = employeeType;
+        this.role = role;
+        this.isManager = isManager;
+        this.salaryId = salaryId;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
+        this.permissions = permissions;
+        this.teams = teams;
+        this.employee = employee;
+    }
 
     public Integer getIdEmployee() {
         return idEmployee;
@@ -162,11 +220,11 @@ public class Profile {
         this.curriculumVitae = curriculumVitae;
     }
 
-    public String getCompany() {
+    public Object getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public void setCompany(Object company) {
         this.company = company;
     }
 
@@ -174,7 +232,7 @@ public class Profile {
         return avatar;
     }
 
-    public void setAvatar(Object avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -211,27 +269,28 @@ public class Profile {
     }
 
     public String getUpdatedAt() {
-        return updatedAt;
+        return String.valueOf(updatedAt);
     }
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Object getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Object createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public List<Permission> getPermission() {
+
+    public List<Permission> getPermissions() {
         return permissions;
     }
 
-    public void setPermission(List<Permission> permission) {
-        this.permissions = permission;
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     public List<Team> getTeams() {
@@ -249,5 +308,4 @@ public class Profile {
     public void setEmployee(Boolean employee) {
         this.employee = employee;
     }
-
 }

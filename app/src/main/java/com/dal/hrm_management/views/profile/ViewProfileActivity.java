@@ -41,6 +41,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
     private ProfilePresenter profilePresenter;
 
     String uriImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,8 +107,8 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
         int id = item.getItemId();
         switch (id) {
             case R.id.action_edit:
-                Intent intent = new Intent(this,EditProfileActivity.class);
-                startActivityForResult(intent,200);
+                Intent intent = new Intent(this, EditProfileActivity.class);
+                startActivityForResult(intent, 200);
                 break;
             case android.R.id.home:
                 finish();
@@ -120,22 +121,46 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
 //        uriImage = profile.getAvatar();
 //        Uri uri = Uri.parse(uriImage);
 //        Picasso.with(getBaseContext()).load(uri).into(imv_avatar);
-        tv_name.setText(profile.getNameEmployee());
-        tv_position.setText(profile.getRole().getNameRole());
-        tv_email.setText(profile.getEmail());
-        tv_address.setText(profile.getAddress());
-        tv_phone.setText(profile.getMobile());
-        tv_gender.setText(profile.getGenderDTO().getNameGender());
-        tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
-        tv_birthday.setText(profile.getBirthday());
-        tv_type.setText(profile.getEmployeeType().getNameEmployeeType());
+        if (profile.getNameEmployee() != null) {
+            tv_name.setText(profile.getNameEmployee());
+        } else tv_name.setText(R.string.infor_null);
+        if (profile.getRole().getNameRole() != null) {
+            tv_position.setText(profile.getRole().getNameRole());
+        } else tv_position.setText(R.string.infor_null);
+        if (profile.getEmail() != null) {
+            tv_email.setText(profile.getEmail());
+        } else tv_email.setText(R.string.infor_null);
+        if (profile.getAddress() != null) {
+            tv_address.setText(profile.getAddress());
+        } else tv_address.setText(R.string.infor_null);
+        if (profile.getMobile() != null) {
+            tv_phone.setText(profile.getMobile());
+        } else tv_phone.setText(R.string.infor_null);
+        if (profile.getGenderDTO().getNameGender() != null) {
+            tv_gender.setText(profile.getGenderDTO().getNameGender());
+        } else tv_gender.setText(R.string.infor_null);
+        if (profile.getMaritalStatusDTO().getTypeMaritalStatus() != null) {
+            tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
+        } else tv_maritalStatus.setText(R.string.infor_null);
+        if (profile.getBirthday() != null) {
+            tv_birthday.setText(profile.getBirthday());
+        } else tv_birthday.setText(R.string.infor_null);
+        if (profile.getEmployeeType().getNameEmployeeType() != null) {
+            tv_type.setText(profile.getEmployeeType().getNameEmployeeType());
+        } else tv_type.setText(R.string.infor_null);
         List<Team> teamList = profile.getTeams();
-        for (int i = 0; i < teamList.size() - 1; i++) {
-            tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+        if (teamList.size() != 0) {
+            for (int i = 0; i < teamList.size() - 1; i++) {
+                tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+            }
+            tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
         }
-        tv_team.setText(tv_team.getText()+teamList.get(teamList.size()-1).getNameTeam());
-        tv_start.setText(profile.getStartWorkDate());
-        tv_end.setText(profile.getEndWorkDate());
+        if (profile.getStartWorkDate() != null) {
+            tv_start.setText(profile.getStartWorkDate());
+        } else tv_start.setText(R.string.infor_null);
+        if (profile.getEndWorkDate() != null) {
+            tv_end.setText(profile.getEndWorkDate());
+        } else tv_end.setText(R.string.infor_null);
         progressBar.setVisibility(View.GONE);
     }
 
@@ -147,7 +172,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 200 && resultCode == RESULT_OK){
+        if (requestCode == 200 && resultCode == RESULT_OK) {
             getDataFromServer();
         }
     }

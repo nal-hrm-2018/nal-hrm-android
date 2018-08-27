@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.AbsenceAdapter;
-import com.dal.hrm_management.models.fakeData.AbsenceModel;
+import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.presenters.absenceEmployee.DetailAbsenceEmployeePresenter;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
     private RecyclerView rv_absence;
     private ImageButton imBtn_show;
     private DetailAbsenceEmployeePresenter detailAbsenceEmployeePresenter;
-    private List<AbsenceModel> absenceModelList;
+    private List<Absence> absenceModelList;
     private CollapsingToolbarLayout collapsingtoolbar;
     private Toolbar toolbar;
 
@@ -51,7 +51,6 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
     private void mapMVP() {
         detailAbsenceEmployeePresenter = new DetailAbsenceEmployeePresenter(this);
         detailAbsenceEmployeePresenter.initData();
-        absenceModelList = detailAbsenceEmployeePresenter.arr;
     }
 
     private void initUi() {

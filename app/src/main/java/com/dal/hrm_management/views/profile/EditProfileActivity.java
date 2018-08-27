@@ -261,10 +261,12 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
             rb_male.setChecked(true);
         }
         List<Team> teamList = profile.getTeams();
-        for (int i = 0; i < teamList.size() - 1; i++) {
-            tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+        if(teamList.size()!=0){
+            for (int i = 0; i < teamList.size() - 1; i++) {
+                tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+            }
+            tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
         }
-        tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
         tv_birthday.setText(profile.getBirthday());
         tv_start.setText(profile.getStartWorkDate());
         tv_end.setText(profile.getEndWorkDate());

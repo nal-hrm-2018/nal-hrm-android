@@ -36,7 +36,9 @@ public class ProfilePresenter implements IProfilePresenter{
                 int statusCode = response.code();
                 if(response.body().getResultCode()==200){
                     Profile profile = response.body().getProfile();
-                    iProfileActivity.getProfileSuccess(profile);
+                    if(profile!=null){
+                        iProfileActivity.getProfileSuccess(profile);
+                    } else iProfileActivity.getProfileFailure();
                     Log.d("TAG","success");
                 } else {
                     iProfileActivity.getProfileFailure();

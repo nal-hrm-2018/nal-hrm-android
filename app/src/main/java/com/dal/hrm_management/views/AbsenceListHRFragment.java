@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.AbsenceListForHrAdapter;
-import com.dal.hrm_management.models.absence.Absence;
+import com.dal.hrm_management.models.fakeData.Absence;
 
 import java.util.ArrayList;
 import java.util.Calendar;

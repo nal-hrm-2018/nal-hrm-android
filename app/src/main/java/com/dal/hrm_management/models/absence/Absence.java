@@ -1,76 +1,96 @@
 package com.dal.hrm_management.models.absence;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Luu Ngoc Lan on 02-Aug-18.
  */
-
 public class Absence {
-    private String name;
-    private String nameProject;
-    private String from;
-    private String to;
-    private String status;
-    private String note;
+
+    @SerializedName("idAbsences")
+    @Expose
+    private Integer idAbsences;
+    @SerializedName("employeeId")
+    @Expose
+    private Integer employeeId;
+    @SerializedName("fromDate")
+    @Expose
+    private String fromDate;
+    @SerializedName("toDate")
+    @Expose
+    private String toDate;
+    @SerializedName("reason")
+    @Expose
     private String reason;
-    private String type;
+    @SerializedName("description")
+    @Expose
+    private Object description;
+    @SerializedName("absenceType")
+    @Expose
+    private AbsenceType absenceType;
+    @SerializedName("absenceTime")
+    @Expose
+    private AbsenceTime absenceTime;
 
-    public Absence(String name, String nameProject, String from, String to, String status, String note, String reason, String type) {
-        this.name = name;
-        this.nameProject = nameProject;
-        this.from = from;
-        this.to = to;
-        this.status = status;
-        this.note = note;
+    /**
+     * No args constructor for use in serialization
+     */
+    public Absence() {
+    }
+
+    /**
+     * @param employeeId
+     * @param fromDate
+     * @param reason
+     * @param absenceTime
+     * @param description
+     * @param absenceType
+     * @param toDate
+     * @param idAbsences
+     */
+    public Absence(Integer idAbsences, Integer employeeId, String fromDate, String toDate, String reason, Object description, AbsenceType absenceType, AbsenceTime absenceTime) {
+        super();
+        this.idAbsences = idAbsences;
+        this.employeeId = employeeId;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
         this.reason = reason;
-        this.type = type;
+        this.description = description;
+        this.absenceType = absenceType;
+        this.absenceTime = absenceTime;
     }
 
-    public String getName() {
-        return name;
+    public Integer getIdAbsences() {
+        return idAbsences;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdAbsences(Integer idAbsences) {
+        this.idAbsences = idAbsences;
     }
 
-    public String getNameProject() {
-        return nameProject;
+    public Integer getEmployeeId() {
+        return employeeId;
     }
 
-    public void setNameProject(String nameProject) {
-        this.nameProject = nameProject;
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public String getFrom() {
-        return from;
+    public String getFromDate() {
+        return fromDate;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public String getTo() {
-        return to;
+    public String getToDate() {
+        return toDate;
     }
 
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
     }
 
     public String getReason() {
@@ -81,11 +101,28 @@ public class Absence {
         this.reason = reason;
     }
 
-    public String getType() {
-        return type;
+    public Object getDescription() {
+        return description;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDescription(Object description) {
+        this.description = description;
     }
+
+    public AbsenceType getAbsenceType() {
+        return absenceType;
+    }
+
+    public void setAbsenceType(AbsenceType absenceType) {
+        this.absenceType = absenceType;
+    }
+
+    public AbsenceTime getAbsenceTime() {
+        return absenceTime;
+    }
+
+    public void setAbsenceTime(AbsenceTime absenceTime) {
+        this.absenceTime = absenceTime;
+    }
+
 }
