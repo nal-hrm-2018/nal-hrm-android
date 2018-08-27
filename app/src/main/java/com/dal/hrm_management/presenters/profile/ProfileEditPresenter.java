@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class ProfileEditPresenter implements IProfilePresenter {
     private IProfileEditActivity iProfileEditActivity;
-
+    private final String TAG = ProfileEditPresenter.class.getSimpleName();
     public ProfileEditPresenter(IProfileEditActivity iProfileEditActivity) {
         this.iProfileEditActivity = iProfileEditActivity;
     }
@@ -32,13 +32,13 @@ public class ProfileEditPresenter implements IProfilePresenter {
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                Log.d("test", String.valueOf(response.body().getResultCode()));
-                int statusCode = response.code();
-                if (response.body().getResultCode() == 200) {
+                Log.d(TAG + " response code: ", String.valueOf(response.code()));
+                if(response.code() >=300){
+                    iProfileEditActivity.getProfileFailure();
+                }else if (response.code() >= 200){
                     Profile profile = response.body().getProfile();
                     iProfileEditActivity.getProfileSuccess(profile);
-                    Log.d("TAG", "success");
-                } else {
+                }else {
                     iProfileEditActivity.getProfileFailure();
                 }
             }

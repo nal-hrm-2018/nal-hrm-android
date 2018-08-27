@@ -13,7 +13,7 @@ import retrofit2.Response;
 
 public class ListEmployeePresenter implements IListEmployeePresenter{
     private IListEmployee iListEmployee;
-    public static int total_page_employee;
+    public static int total_employee;
 
     public ListEmployeePresenter(IListEmployee iListEmployeeActivity) {
         this.iListEmployee = iListEmployeeActivity;
@@ -31,7 +31,7 @@ public class ListEmployeePresenter implements IListEmployeePresenter{
                 }else if (response.code() >=200){
                     ListEmpResponse listEmpResponse = response.body();
                     if (listEmpResponse.getResultCode() == 200) {
-                        total_page_employee = listEmpResponse.getData().getTotal();
+                        total_employee = listEmpResponse.getData().getTotal();
                         iListEmployee.Success(listEmpResponse.getData().getList());
 
                     }

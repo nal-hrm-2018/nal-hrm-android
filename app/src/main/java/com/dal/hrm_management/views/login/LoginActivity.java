@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.login;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,10 +32,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btn_login;
     private SharedPreferences sharedPreferences;
     private CheckBox cb_remeber;
-    private LinearLayout messageBar;
-    private ProgressBar progressBar;
-    private TextView tv_error;
     private int PASSWORD_LENGTH = 6;
+    private ProgressDialog progressDialog;
     LoginPresenter loginPresenter;
 
     public LoginActivity() {
@@ -73,10 +72,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edt_password.setOnClickListener(this);
         btn_login = findViewById(R.id.btn_login);
         cb_remeber = findViewById(R.id.cb_remember);
-        messageBar = (LinearLayout) findViewById(R.id.messageBar);
-        tv_error = (TextView) findViewById(R.id.tv_error);
-        messageBar.setVisibility(View.GONE);
         sharedPreferences = getSharedPreferences("remeberMe", MODE_PRIVATE);
+        initProgressProcess();
+    }
+
+    private void initProgressProcess() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Signing");
     }
 
     @Override
@@ -85,8 +88,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
                 btn_login.setEnabled(false);
                 if (isConnected()) {
-                    messageBar.setVisibility(View.VISIBLE);
-                    tv_error.setText("Signing...");
+                    progressDialog.show();
                     if (cb_remeber.isChecked()) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putBoolean("remeber", true);
@@ -105,10 +107,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             case R.id.edt_email:
-                messageBar.setVisibility(View.GONE);
-                break;
             case R.id.edt_password:
-                messageBar.setVisibility(View.GONE);
+                progressDialog.dismiss();
                 break;
         }
 
@@ -146,8 +146,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-            messageBar.setVisibility(View.GONE);
             btn_login.setEnabled(true);
+            progressDialog.dismiss();
         } else {
             //success
             loginPresenter.getToken(email, pass);
@@ -164,21 +164,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
         intent.putExtra("token", token);
         startActivity(intent);
-        messageBar.setVisibility(View.GONE);
         btn_login.setEnabled(true);
+        progressDialog.dismiss();
     }
 
     @Override
     public void loginFailure() {
         edt_password.setError(getString(R.string.error_incorrect_password));
         edt_password.requestFocus();
-        messageBar.setVisibility(View.GONE);
         btn_login.setEnabled(true);
+        progressDialog.dismiss();
     }
 
     @Override
     public void errorInServer() {
-        messageBar.setVisibility(View.GONE);
+        progressDialog.dismiss();
         Toast toast= Toast.makeText(getApplicationContext(),
                 "Server Error", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);

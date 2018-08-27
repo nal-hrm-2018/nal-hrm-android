@@ -1,5 +1,7 @@
 package com.dal.hrm_management.presenters.employee;
 
+import android.util.Log;
+
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.profile.Profile;
@@ -23,7 +25,7 @@ import static com.dal.hrm_management.presenters.login.LoginPresenter.token;
 
 public class EditProfileEmployeePresenter implements IEditProfileEmployeePresenter {
     private IEditProfileEmployeeActivity iEditProfileEmployeeActivity;
-
+    private final String TAG = EditProfileEmployeePresenter.class.getSimpleName();
     public EditProfileEmployeePresenter(IEditProfileEmployeeActivity iEditProfileEmployeeActivity) {
         this.iEditProfileEmployeeActivity = iEditProfileEmployeeActivity;
     }
@@ -36,11 +38,13 @@ public class EditProfileEmployeePresenter implements IEditProfileEmployeePresent
         call.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                int statusCode = response.code();
-                if (response.body().getResultCode() == 200) {
+                Log.d(TAG + " response code : ", String.valueOf(response.code()));
+                if (response.code() >=300){
+                    iEditProfileEmployeeActivity.getBasicEmployeeFailed();
+                }else if (response.code() >=200){
                     Profile profile = response.body().getProfile();
                     iEditProfileEmployeeActivity.getBasicEmployeeSuccess(profile);
-                } else {
+                }else{
                     iEditProfileEmployeeActivity.getBasicEmployeeFailed();
                 }
             }
@@ -60,11 +64,13 @@ public class EditProfileEmployeePresenter implements IEditProfileEmployeePresent
         call.enqueue(new Callback<TeamsResponse>() {
             @Override
             public void onResponse(Call<TeamsResponse> call, Response<TeamsResponse> response) {
-                int statusCode = response.code();
-                if (response.body().getResultCode() == 200) {
+                Log.d(TAG + " response code :", String.valueOf(response.code()));
+                if (response.code() >=300){
+                    iEditProfileEmployeeActivity.getTeamsFailed();
+                }else if (response.code() >=200){
                     List<Team> teams = response.body().getTeams();
                     iEditProfileEmployeeActivity.getTeamsSuccess(teams);
-                } else {
+                }else{
                     iEditProfileEmployeeActivity.getTeamsFailed();
                 }
             }
