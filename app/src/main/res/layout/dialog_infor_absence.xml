@@ -12,53 +12,130 @@
         android:layout_marginBottom="16dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_SoNgayPhepCoTheNghi"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding"
-            android:text="@string/tv_soNgayPhepCoTheNghi" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_SoNgayPhepNamNgoai"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding"
-            android:text="@string/tv_soNgayPhepNamNgoai" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/tv_allowAbsence" />
 
-        <TextView
-            android:id="@+id/tv_soNgayPhepDaNghi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding"
-            android:text="@string/tv_soNgayPhepDaNghi" />
+            <TextView
+                android:id="@+id/tv_allowAbsence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_SoNgayNghiKhongLuong"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding"
-            android:text="@string/tv_soNgayNghiKhongLuong" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_soNgayNghiBaoHiem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding"
-            android:text="@string/tv_soNgayNghiBaoHiem" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/tv_remainingAbsenceDays" />
 
-        <TextView
-            android:id="@+id/tv_soNgayNghiTruLuong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding"
-            android:text="@string/tv_soNgayNghiTruLuong" />
+            <TextView
+                android:id="@+id/tv_remainingAbsenceDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_soNgayPhepConLai"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/text_padding"
-            android:text="@string/tv_soNgayPhepConLai" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/tv_unpaidLeave" />
+
+            <TextView
+                android:id="@+id/tv_unpaidLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/tv_annualLeave" />
+
+            <TextView
+                android:id="@+id/tv_annualLeave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/tv_marriageLeave" />
+
+            <TextView
+                android:id="@+id/tv_marriageLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/tv_maternityLeave" />
+
+            <TextView
+                android:id="@+id/tv_maternityLeave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding"
+                android:text="@string/tv_bereavementLeave" />
+
+            <TextView
+                android:id="@+id/tv_bereavementLeave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/text_padding" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

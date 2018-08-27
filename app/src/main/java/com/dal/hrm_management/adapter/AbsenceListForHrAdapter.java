@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.absence.Absence;
+import com.dal.hrm_management.models.fakeData.Absence;
 
 import java.util.List;
 

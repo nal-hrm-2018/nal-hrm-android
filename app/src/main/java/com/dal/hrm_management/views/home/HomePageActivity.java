@@ -32,7 +32,7 @@ import com.dal.hrm_management.utils.CircleTransform;
 import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.views.AbsenceForHRFragment;
 import com.dal.hrm_management.views.AbsenceManagerForPOFragment;
-import com.dal.hrm_management.views.absence.AbsenceView;
+import com.dal.hrm_management.views.absence.AbsenceViewFragment;
 import com.dal.hrm_management.views.list_employee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
@@ -139,7 +139,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_project))) {
                             getSupportActionBar().setTitle(R.string.menu_project);
                         } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_absence))) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceView()).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceViewFragment()).commit();
                             getSupportActionBar().setTitle(R.string.menu_absence);
                         } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
                             PermissionManager.listPermissions.clear();
@@ -222,9 +222,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void getPermission(Profile data) {
-        List<Permission> listPermissionModels = data.getPermission();
-        for (Permission permission : listPermissionModels) {
-            PermissionManager.listPermissions.add(permission.getNamePermission());
+        if(data.getPermissions()!=null){
+            List<Permission> listPermissionModels = data.getPermissions();
+            for (Permission permission : listPermissionModels) {
+                PermissionManager.listPermissions.add(permission.getNamePermission());
+            }
         }
     }
 
