@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.employee;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -106,6 +107,7 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         tv_end.setOnClickListener(this);
     }
 
+    @SuppressLint("ResourceAsColor")
     private void initUI() {
         imv_avatar = (ImageView) findViewById(R.id.imv_avatar);
         edt_name = (EditText) findViewById(R.id.edt_name);
@@ -123,7 +125,8 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         tv_end = (TextView) findViewById(R.id.tv_end);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-
+        edt_email.setEnabled(false);
+        edt_email.setBackgroundColor(getResources().getColor(R.color.color_gray));
     }
 
     private void displayBackHome() {
@@ -305,29 +308,63 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         position = profile.getRole().getNameRole();
         maritalStatus = profile.getMaritalStatusDTO().getTypeMaritalStatus();
         type = profile.getEmployeeType().getNameEmployeeType();
-        edt_name.setText(profile.getNameEmployee());
-        edt_email.setText(profile.getEmail());
-        edt_address.setText(profile.getAddress());
-        edt_phone.setText(profile.getMobile());
+        if (profile.getNameEmployee() != null) {
+            edt_name.setText(profile.getNameEmployee());
+        } else {
+            edt_name.setText(R.string.infor_null);
+        }
+
+        if (profile.getEmail() != null) {
+            edt_email.setText(profile.getEmail());
+        } else {
+            edt_email.setText(R.string.infor_null);
+        }
+
+        if (profile.getAddress() != null) {
+            edt_address.setText(profile.getAddress());
+        } else {
+            edt_address.setText(R.string.infor_null);
+        }
+
+        if (profile.getMobile() != null) {
+            edt_phone.setText(profile.getMobile());
+        } else {
+            edt_phone.setText(R.string.infor_null);
+        }
+
         if (profile.getGenderDTO().getGender() == 1) {
             rb_female.setChecked(true);
         } else {
             rb_male.setChecked(true);
         }
         List<Team> teamList = profile.getTeams();
-        for (int i = 0; i < teamList.size() - 1; i++) {
-            tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
-            for (int k = 0; k < teamListData.size(); k++) {
-                if (teamList.get(i).equals(teamListData.get(k))) {
-                    mSelectedTeamsBackup[k] = true;
-                    mSelectedTeams[k] = true;
-                }
+        if (teamList.size() != 0) {
+            for (int i = 0; i < teamList.size() - 1; i++) {
+                tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
             }
+            tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
+        } else {
+            tv_team.setText(R.string.infor_null);
         }
-        tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
-        tv_birthday.setText(profile.getBirthday());
-        tv_start.setText(profile.getStartWorkDate());
-        tv_end.setText(profile.getEndWorkDate());
+
+        if (profile.getBirthday() != null) {
+            tv_birthday.setText(profile.getBirthday());
+        } else {
+            tv_birthday.setText(R.string.infor_null);
+        }
+
+        if (profile.getStartWorkDate() != null) {
+            tv_start.setText(profile.getStartWorkDate());
+        } else {
+            tv_start.setText(R.string.infor_null);
+        }
+
+        if (profile.getEndWorkDate() != null) {
+            tv_end.setText(profile.getEndWorkDate());
+        } else {
+            tv_end.setText(R.string.infor_null);
+        }
+
         if (!position.equals("")) {
             spn_position.setSelection(adapter_position.getPosition(position));
         }
@@ -371,9 +408,6 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
 
     @Override
     public void getTeamsFailed() {
-//        teamListData = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.team_arr)));
-//        mSelectedTeams = new boolean[teamListData.size()];
-//        mSelectedTeamsBackup = new boolean[teamListData.size()];
     }
 
     private void showError() {

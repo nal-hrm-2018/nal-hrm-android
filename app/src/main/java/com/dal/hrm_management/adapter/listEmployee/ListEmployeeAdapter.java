@@ -73,6 +73,20 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
         final Employee employee = employeesListFiltered.get(position);
         holder.tv_hoVaTen.setText(employee.getNameEmployee());
         holder.tv_email.setText(employee.getEmail());
+        String role = employee.getRole().getNameRole();
+        if (role.toLowerCase().equals("hr")) {
+            holder.tv_chucVu.setBackgroundColor(context.getResources().getColor(R.color.color_red));
+            holder.tv_chucVu.setTextColor(context.getResources().getColor(R.color.color_white));
+        } else if (role.toLowerCase().equals("po")) {
+            holder.tv_chucVu.setBackgroundColor(context.getResources().getColor(R.color.color_orange));
+            holder.tv_chucVu.setTextColor(context.getResources().getColor(R.color.color_white));
+        } else if (role.toLowerCase().equals("dev")) {
+            holder.tv_chucVu.setBackgroundColor(context.getResources().getColor(R.color.color_green));
+            holder.tv_chucVu.setTextColor(context.getResources().getColor(R.color.color_white));
+        } else if (role.toLowerCase().equals("accountant")) {
+            holder.tv_chucVu.setBackgroundColor(context.getResources().getColor(R.color.color_gray));
+            holder.tv_chucVu.setTextColor(context.getResources().getColor(android.R.color.black));
+        }
         holder.tv_chucVu.setText(employee.getRole().getNameRole());
         holder.setItemClickListener(new ItemClickListener() {
             @Override

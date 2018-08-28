@@ -6,4 +6,5 @@ package com.dal.hrm_management.presenters.profile;
 
 public interface IProfilePresenter {
     public void getProfile(String token);
+
 }

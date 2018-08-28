@@ -194,7 +194,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        if (data.getRole().getNameRole().equals("HR") || data.getRole().getNameRole().equals("PO") ||data.getRole().getNameRole().equals("SM")) {
+        if (data.getRole().getNameRole().equals("HR") || data.getRole().getNameRole().equals("PO") || data.getRole().getNameRole().equals("SM")) {
             menuModel = new MenuModel(getString(R.string.menu_manage), true, true, getDrawable(R.drawable.ic_manage));
             headerList.add(menuModel);
 
@@ -204,7 +204,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 chilModel = new MenuModel(getString(R.string.menu_employee), false, false, getDrawable(R.drawable.ic_employee));
                 childModelsList.add(chilModel);
             }
-                if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_absence_history")){
+            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_project_absence_history")) {
+                chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getDrawable(R.drawable.ic_absence));
+                childModelsList.add(chilModel);
+            }
+            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_absence_history")) {
                 chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getDrawable(R.drawable.ic_absence));
                 childModelsList.add(chilModel);
             }
@@ -222,7 +226,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void getPermission(Profile data) {
-        if(data.getPermissions()!=null){
+        if (data.getPermissions() != null) {
             List<Permission> listPermissionModels = data.getPermissions();
             for (Permission permission : listPermissionModels) {
                 PermissionManager.listPermissions.add(permission.getNamePermission());
@@ -253,7 +257,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public void Failure() {
-        Toast.makeText(this,"error server",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "error server", Toast.LENGTH_LONG).show();
         prepareMenuData();
         populateExpandableList();
     }

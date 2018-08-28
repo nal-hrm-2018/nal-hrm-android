@@ -87,26 +87,62 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
     @Override
     public void getBasicEmployeeSuccess(Profile profile) {
         getActivity().setTitle(profile.getNameEmployee());
-        tv_name.setText(profile.getNameEmployee());
-        tv_role.setText(profile.getRole().getNameRole());
-        tv_email.setText(profile.getEmail());
-        tv_address.setText(profile.getAddress());
-        tv_phone.setText(profile.getMobile());
-        tv_gender.setText(profile.getGenderDTO().getNameGender());
-        tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
-        tv_birthday.setText(profile.getBirthday());
-        tv_position.setText(profile.getEmployeeType().getNameEmployeeType());
+        if (profile.getNameEmployee() != null) {
+            tv_name.setText(profile.getNameEmployee());
+        } else tv_name.setText(R.string.infor_null);
+        if (profile.getRole().getNameRole() != null) {
+            String role = profile.getRole().getNameRole();
+            if (role.toLowerCase().equals("hr")) {
+                tv_role.setBackgroundColor(getResources().getColor(R.color.color_red));
+            } else if (role.toLowerCase().equals("po")) {
+                tv_role.setBackgroundColor(getResources().getColor(R.color.color_orange));
+            } else if (role.toLowerCase().equals("dev")) {
+                tv_role.setBackgroundColor(getResources().getColor(R.color.color_green));
+            } else if (role.toLowerCase().equals("accountant")) {
+                tv_role.setBackgroundColor(getResources().getColor(R.color.color_gray));
+            }
+            tv_role.setText(role);
+        } else tv_position.setText(R.string.infor_null);
+        if (profile.getEmail() != null) {
+            tv_email.setText(profile.getEmail());
+        } else tv_email.setText(R.string.infor_null);
+        if (profile.getAddress() != null) {
+            tv_address.setText(profile.getAddress());
+        } else tv_address.setText(R.string.infor_null);
+        if (profile.getMobile() != null) {
+            tv_phone.setText(profile.getMobile());
+        } else tv_phone.setText(R.string.infor_null);
+        if (profile.getGenderDTO().getNameGender() != null) {
+            tv_gender.setText(profile.getGenderDTO().getNameGender());
+        } else tv_gender.setText(R.string.infor_null);
+        if (profile.getMaritalStatusDTO().getTypeMaritalStatus() != null) {
+            tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
+        } else tv_maritalStatus.setText(R.string.infor_null);
+        if (profile.getBirthday() != null) {
+            tv_birthday.setText(profile.getBirthday());
+        } else tv_birthday.setText(R.string.infor_null);
+        if (profile.getEmployeeType().getNameEmployeeType() != null) {
+            tv_position.setText(profile.getEmployeeType().getNameEmployeeType());
+        } else tv_position.setText(R.string.infor_null);
         List<Team> teamList = profile.getTeams();
-        for (int i = 0; i < teamList.size() - 1; i++) {
-            tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+        if (teamList.size() != 0) {
+            for (int i = 0; i < teamList.size() - 1; i++) {
+                tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+            }
+            tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
+        } else {
+            tv_team.setText(R.string.infor_null);
         }
-        tv_team.setText(tv_team.getText()+teamList.get(teamList.size()-1).getNameTeam());
-        tv_start.setText(profile.getStartWorkDate());
-        tv_end.setText(profile.getEndWorkDate());
+        if (profile.getStartWorkDate() != null) {
+            tv_start.setText(profile.getStartWorkDate());
+        } else tv_start.setText(R.string.infor_null);
+        if (profile.getEndWorkDate() != null) {
+            tv_end.setText(profile.getEndWorkDate());
+        } else tv_end.setText(R.string.infor_null);
     }
 
     @Override
     public void getBasicEmployeeFailed() {
-        Toast.makeText(getActivity(),"Not get data",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Not get data", Toast.LENGTH_SHORT).show();
     }
 }

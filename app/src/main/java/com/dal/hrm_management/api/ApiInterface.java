@@ -53,6 +53,4 @@ public interface ApiInterface {
                                           @Query("pageSize") int pageSize,
                                           @Header("Authorization") String token);
 
-
-
 }

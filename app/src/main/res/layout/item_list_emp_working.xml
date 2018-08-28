@@ -20,7 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/imv_avaEmp"
         android:text="Họ và tên"
-        android:textSize="@dimen/text_size_large"
+        android:textSize="@dimen/text_size_medium"
         android:theme="@style/NameEmpInList" />
 
     <TextView
@@ -30,7 +30,9 @@
         android:layout_below="@+id/tv_hoVaTen"
         android:layout_toRightOf="@id/imv_avaEmp"
         android:text="Chức vụ"
-        android:textSize="@dimen/text_size_medium"
+        android:paddingLeft="@dimen/text_padding"
+        android:paddingRight="@dimen/text_padding"
+        android:textSize="@dimen/text_size_small"
         android:theme="@style/infoEmpInList" />
 
     <TextView
@@ -40,7 +42,7 @@
         android:layout_below="@id/tv_chucVu"
         android:layout_toRightOf="@id/imv_avaEmp"
         android:text="Email"
-        android:textSize="@dimen/text_size_medium"
+        android:textSize="@dimen/text_size_small"
         android:theme="@style/infoEmpInList" />
 
     <ImageView
