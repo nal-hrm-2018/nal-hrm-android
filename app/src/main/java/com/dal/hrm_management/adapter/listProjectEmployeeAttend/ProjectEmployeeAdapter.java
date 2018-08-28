@@ -5,16 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.ProjectEmployee;
 import com.dal.hrm_management.models.listProjectEmpAttend.ProjectAndProcess;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Luu Ngoc Lan on 27-Jul-18.
@@ -43,7 +40,13 @@ public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployee
         holder.tv_role.setText(projects.get(position).getProcesses().getRole().getNameRole());
         holder.tv_dayStart.setText(projects.get(position).getProcesses().getStartDate());
         holder.tv_dayEnd.setText(projects.get(position).getProcesses().getEndDate());
-        holder.tv_status.setText(projects.get(position).getProject().getStatus().getNameStatus());
+        String status = projects.get(position).getProject().getStatus().getNameStatus();
+        if(status.toLowerCase().equals("kick off")){
+            holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_green));
+        } else {
+            holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_orange));
+        }
+        holder.tv_status.setText(status);
     }
 
     @Override
@@ -62,7 +65,6 @@ public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployee
         TextView tv_role;
         TextView tv_dayStart;
         TextView tv_dayEnd;
-        ImageView imv_status;
         TextView tv_status;
 
         public ProjectEmployeeViewHolder(View itemView) {
@@ -72,7 +74,6 @@ public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployee
             tv_role = (TextView) itemView.findViewById(R.id.tv_roleEmployee);
             tv_dayStart = (TextView) itemView.findViewById(R.id.tv_dayStart);
             tv_dayEnd = (TextView) itemView.findViewById(R.id.tv_dayEnd);
-            imv_status = (ImageView) itemView.findViewById(R.id.imv_status);
             tv_status = (TextView) itemView.findViewById(R.id.tv_status);
         }
     }
