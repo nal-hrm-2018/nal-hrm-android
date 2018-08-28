@@ -1,6 +1,8 @@
 package com.dal.hrm_management.views.employee;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,11 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.api.ApiImageClient;
+import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.employee.BasicEmployeePresenter;
 
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,6 +96,31 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
 
     @Override
     public void getBasicEmployeeSuccess(Profile profile) {
+        RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
+        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ResponseBody> call;
+        if (profile.getAvatar() != null) {
+            call = retrofitImageAPI.getImageDetails(auth, profile.getAvatar().toString());
+        } else {
+            call = retrofitImageAPI.getImageDetails(auth, "default_avatar.png");
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                        imv_avatar.setImageBitmap(bitmap);
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
         getActivity().setTitle(profile.getNameEmployee());
         if (profile.getNameEmployee() != null) {
             tv_name.setText(profile.getNameEmployee());

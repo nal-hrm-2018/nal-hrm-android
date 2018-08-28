@@ -2,9 +2,11 @@ package com.dal.hrm_management.views.profile;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,13 +16,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.api.ApiImageClient;
+import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.profile.ProfilePresenter;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ViewProfileActivity extends AppCompatActivity implements IProfileActivity {
 
@@ -120,9 +129,32 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
 
     @Override
     public void getProfileSuccess(Profile profile) {
-        uriImage = "http://52.14.120.158/avatar/8.jpg";
-        Uri uri = Uri.parse(uriImage);
-        Picasso.with(getBaseContext()).load(uri).into(imv_avatar);
+        RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
+        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ResponseBody> call;
+        if (profile.getAvatar() != null) {
+            call = retrofitImageAPI.getImageDetails(auth, profile.getAvatar().toString());
+        } else {
+            call = retrofitImageAPI.getImageDetails(auth, "default_avatar.png");
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Log.d("DATA", response.body().toString());
+                        Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                        imv_avatar.setImageBitmap(bitmap);
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
         if (profile.getNameEmployee() != null) {
             tv_name.setText(profile.getNameEmployee());
         } else tv_name.setText(R.string.infor_null);
@@ -149,13 +181,13 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
         } else tv_birthday.setText(R.string.infor_null);
         if (profile.getEmployeeType().getNameEmployeeType() != null) {
             String type = profile.getEmployeeType().getNameEmployeeType();
-            if(type.toLowerCase().equals("hr")){
+            if (type.toLowerCase().equals("hr")) {
                 tv_position.setBackgroundColor(getResources().getColor(R.color.color_red));
-            } else if(type.toLowerCase().equals("po")){
+            } else if (type.toLowerCase().equals("po")) {
                 tv_position.setBackgroundColor(getResources().getColor(R.color.color_orange));
             } else if (type.toLowerCase().equals("dev")) {
                 tv_position.setBackgroundColor(getResources().getColor(R.color.color_green));
-            }else if (type.toLowerCase().equals("accountant")) {
+            } else if (type.toLowerCase().equals("accountant")) {
                 tv_position.setBackgroundColor(getResources().getColor(R.color.color_gray));
             }
             tv_type.setText(profile.getEmployeeType().getNameEmployeeType());
@@ -190,4 +222,5 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
             getDataFromServer();
         }
     }
+
 }

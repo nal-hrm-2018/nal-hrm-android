@@ -28,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.api.ApiImageClient;
+import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.employee.EditProfileEmployeePresenter;
@@ -39,6 +41,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditProfileEmployeeActivity extends AppCompatActivity implements View.OnClickListener, IEditProfileEmployeeActivity {
     private static final int REQUEST_IMAGE = 1001;
@@ -308,70 +316,142 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         position = profile.getRole().getNameRole();
         maritalStatus = profile.getMaritalStatusDTO().getTypeMaritalStatus();
         type = profile.getEmployeeType().getNameEmployeeType();
-        if (profile.getNameEmployee() != null) {
-            edt_name.setText(profile.getNameEmployee());
+
+        RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
+        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ResponseBody> call;
+        if (profile.getAvatar() != null) {
+            call = retrofitImageAPI.getImageDetails(auth, profile.getAvatar().toString());
         } else {
+            call = retrofitImageAPI.getImageDetails(auth, "default_avatar.png");
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                        imv_avatar.setImageBitmap(bitmap);
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
+
+        if (profile.getNameEmployee() != null)
+
+        {
+            edt_name.setText(profile.getNameEmployee());
+        } else
+
+        {
             edt_name.setText(R.string.infor_null);
         }
 
-        if (profile.getEmail() != null) {
+        if (profile.getEmail() != null)
+
+        {
             edt_email.setText(profile.getEmail());
-        } else {
+        } else
+
+        {
             edt_email.setText(R.string.infor_null);
         }
 
-        if (profile.getAddress() != null) {
+        if (profile.getAddress() != null)
+
+        {
             edt_address.setText(profile.getAddress());
-        } else {
+        } else
+
+        {
             edt_address.setText(R.string.infor_null);
         }
 
-        if (profile.getMobile() != null) {
+        if (profile.getMobile() != null)
+
+        {
             edt_phone.setText(profile.getMobile());
-        } else {
+        } else
+
+        {
             edt_phone.setText(R.string.infor_null);
         }
 
-        if (profile.getGenderDTO().getGender() == 1) {
+        if (profile.getGenderDTO().
+
+                getGender() == 1)
+
+        {
             rb_female.setChecked(true);
-        } else {
+        } else
+
+        {
             rb_male.setChecked(true);
         }
+
         List<Team> teamList = profile.getTeams();
-        if (teamList.size() != 0) {
+        if (teamList.size() != 0)
+
+        {
             for (int i = 0; i < teamList.size() - 1; i++) {
                 tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
             }
             tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
-        } else {
+        } else
+
+        {
             tv_team.setText(R.string.infor_null);
         }
 
-        if (profile.getBirthday() != null) {
+        if (profile.getBirthday() != null)
+
+        {
             tv_birthday.setText(profile.getBirthday());
-        } else {
+        } else
+
+        {
             tv_birthday.setText(R.string.infor_null);
         }
 
-        if (profile.getStartWorkDate() != null) {
+        if (profile.getStartWorkDate() != null)
+
+        {
             tv_start.setText(profile.getStartWorkDate());
-        } else {
+        } else
+
+        {
             tv_start.setText(R.string.infor_null);
         }
 
-        if (profile.getEndWorkDate() != null) {
+        if (profile.getEndWorkDate() != null)
+
+        {
             tv_end.setText(profile.getEndWorkDate());
-        } else {
+        } else
+
+        {
             tv_end.setText(R.string.infor_null);
         }
 
-        if (!position.equals("")) {
+        if (!position.equals(""))
+
+        {
             spn_position.setSelection(adapter_position.getPosition(position));
         }
-        if (!maritalStatus.equals("")) {
+        if (!maritalStatus.equals(""))
+
+        {
             spn_maritalStatus.setSelection(profile.getMaritalStatusDTO().getMaritalStatus() - 1);
         }
-        if (!type.equals("")) {
+        if (!type.equals(""))
+
+        {
             spn_type.setSelection(profile.getEmployeeType().getIdEmployeeType() - 1);
         }
         progressBar.setVisibility(View.GONE);

@@ -36,7 +36,6 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
     private TextView tv_message_nothing;
     private List<Employee> listEmployees = new ArrayList<Employee>(); //Chứa danh sách nhân viên lưu vào trong bộ nhớ local
     private SearchView searchView;
-    //current page
     private int current_page =1;
     private int pageSize = 15;
     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

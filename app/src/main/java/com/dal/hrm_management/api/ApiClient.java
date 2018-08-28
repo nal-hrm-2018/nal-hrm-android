@@ -4,28 +4,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-//    public static final String BASE_URL = "http://52.14.120.158/";
     public static final String BASE_URL = "https://hrm-testing.herokuapp.com/";
-    public static final String BASE_URL_IMAGE = "http://52.14.120.158/";
 
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
-        if (retrofit==null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit;
-    }
-
-    public static Retrofit getImageClient() {
         if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL_IMAGE)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         }
         return retrofit;
     }

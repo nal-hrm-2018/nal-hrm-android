@@ -3,6 +3,8 @@ package com.dal.hrm_management.adapter.listEmployee;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
+import com.dal.hrm_management.api.ApiImageClient;
+import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.listEmployee.Employee;
 import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.views.employee.EditProfileEmployeeActivity;
@@ -27,6 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapter.DataViewHolder> implements Filterable {
     private List<Employee> arr;
@@ -71,6 +80,32 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
     @Override
     public void onBindViewHolder(final DataViewHolder holder, int position) {
         final Employee employee = employeesListFiltered.get(position);
+        holder.setIsRecyclable(false);
+        RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
+        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ResponseBody> call;
+        if (employee.getAvatar() != null) {
+            call = retrofitImageAPI.getImageDetails(auth, employee.getAvatar().toString());
+        } else {
+            call = retrofitImageAPI.getImageDetails(auth, "default_avatar.png");
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                        holder.imv_avaEmp.setImageBitmap(bitmap);
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
         holder.tv_hoVaTen.setText(employee.getNameEmployee());
         holder.tv_email.setText(employee.getEmail());
         String role = employee.getRole().getNameRole();

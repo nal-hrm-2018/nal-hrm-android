@@ -27,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.api.ApiImageClient;
+import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
@@ -38,6 +40,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditProfileActivity extends AppCompatActivity implements IProfileEditActivity, View.OnClickListener {
     private static final int REQUEST_IMAGE = 1001;
@@ -278,6 +286,31 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         position = profile.getRole().getNameRole();
         maritalStatus = profile.getMaritalStatusDTO().getTypeMaritalStatus();
         type = profile.getEmployeeType().getNameEmployeeType();
+        RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
+        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ResponseBody> call;
+        if (profile.getAvatar() != null) {
+            call = retrofitImageAPI.getImageDetails(auth, profile.getAvatar().toString());
+        } else {
+            call = retrofitImageAPI.getImageDetails(auth, "default_avatar.png");
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                        imv_avatar.setImageBitmap(bitmap);
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
         if (profile.getNameEmployee() != null) {
             edt_name.setText(profile.getNameEmployee());
         } else {

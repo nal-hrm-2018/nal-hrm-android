@@ -1,6 +1,8 @@
 package com.dal.hrm_management.views.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -20,15 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.api.ApiImageClient;
+import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.login.MenuModel;
 import com.dal.hrm_management.models.profile.Permission;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
-import com.dal.hrm_management.utils.CircleTransform;
 import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.views.AbsenceForHRFragment;
 import com.dal.hrm_management.views.AbsenceManagerForPOFragment;
@@ -40,6 +41,12 @@ import com.dal.hrm_management.views.profile.ViewProfileActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, iHomeActivity {
 
@@ -110,8 +117,33 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     private void loadNavHeader(Profile data) {
         tv_nameProfile.setText(data.getNameEmployee());
         tv_emailProfile.setText(data.getRole().getNameRole());
-        //Chưa làm load ảnh
-        Glide.with(this).load(R.drawable.img_avatar).crossFade().thumbnail(0.9f).bitmapTransform(new CircleTransform(this)).diskCacheStrategy(DiskCacheStrategy.ALL).into(imv_avatar);
+        RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
+        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ResponseBody> call;
+        if (data.getAvatar() != null) {
+            call = retrofitImageAPI.getImageDetails(auth, data.getAvatar().toString());
+        } else {
+            call = retrofitImageAPI.getImageDetails(auth, "default_avatar.png");
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Log.d("DATA", response.body().toString());
+                        Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                        imv_avatar.setImageBitmap(bitmap);
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
+
     }
 
     @Override
