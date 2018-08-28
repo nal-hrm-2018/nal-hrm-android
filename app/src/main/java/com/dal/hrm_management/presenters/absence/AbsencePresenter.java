@@ -1,12 +1,12 @@
 package com.dal.hrm_management.presenters.absence;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.AbsencesResponse;
-import com.dal.hrm_management.models.absence.addAbsence.AbsenceForm;
 import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.absence.IAbsenceFormActivity;
@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,14 +64,21 @@ public class AbsencePresenter implements IAbsencePresenter {
     }
 
     @Override
-    public void addAbsence(String json) {
-        Log.d(TAG,json);
+    public void addAbsence(RequestBody json) {
+        Log.d(TAG,json.toString());
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<AddAbsenceResponse> call = apiService.addAbsence(LoginPresenter.token,json);
         call.enqueue(new Callback<AddAbsenceResponse>() {
             @Override
             public void onResponse(Call<AddAbsenceResponse> call, Response<AddAbsenceResponse> response) {
                 Log.d(TAG, String.valueOf(response.code()));
+                if (response.code() >= 300){
+                    iAbsenceFormActivity.Failure();
+                }else if (response.code() >=200){
+                    iAbsenceFormActivity.Success();
+                }else{
+                    iAbsenceFormActivity.Failure();
+                }
             }
 
             @Override

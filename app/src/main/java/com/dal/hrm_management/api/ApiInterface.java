@@ -1,7 +1,6 @@
 package com.dal.hrm_management.api;
 
 import com.dal.hrm_management.models.absence.AbsencesResponse;
-import com.dal.hrm_management.models.absence.addAbsence.AbsenceForm;
 import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
@@ -13,6 +12,7 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -60,5 +60,5 @@ public interface ApiInterface {
                                           @Header("Authorization") String token);
     @POST("/api/absence/add")
     Call<AddAbsenceResponse> addAbsence(@Header("Authorization") String token,
-                                        @Body String json);
+                                        @Body RequestBody json);
 }
