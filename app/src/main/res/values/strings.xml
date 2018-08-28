@@ -157,4 +157,5 @@
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="fra_list_emp_nothingToShow">Nothing to show</string>
     <string name="infor_null">--</string>
+    <string name="error_field_is_not_empty">Field is not empty</string>
 </resources>

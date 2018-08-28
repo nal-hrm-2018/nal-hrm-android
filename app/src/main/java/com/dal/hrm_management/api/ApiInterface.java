@@ -1,6 +1,7 @@
 package com.dal.hrm_management.api;
 
 import com.dal.hrm_management.models.absence.AbsencesResponse;
+import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
 import com.dal.hrm_management.models.login.LoginModel;
@@ -8,7 +9,9 @@ import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
 import com.dal.hrm_management.models.profile.TeamsResponse;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -52,5 +55,8 @@ public interface ApiInterface {
     Call<AbsencesResponse> getListAbsence(@Query("page") int page,
                                           @Query("pageSize") int pageSize,
                                           @Header("Authorization") String token);
+    @POST("/api/absence/add")
+    Call<AddAbsenceResponse> addAbsence(@Header("Authorization") String token,
+                                        @Body RequestBody json);
 
 }
