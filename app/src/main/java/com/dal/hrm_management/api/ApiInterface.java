@@ -2,6 +2,7 @@ package com.dal.hrm_management.api;
 
 import com.dal.hrm_management.models.absence.AbsencesResponse;
 import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
+import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
 import com.dal.hrm_management.models.login.LoginModel;
@@ -35,15 +36,15 @@ public interface ApiInterface {
     @GET("api/profile/")
     Call<ProfileResponse> getProfile(@Header("Authorization") String token);
 
-    @GET("api/employee/list")
+    @GET("api/manage/employee/list")
     Call<ListEmpResponse> getListEmployee(@Query("page") int page,
                                           @Query("pageSize") int pageSize,
                                           @Header("Authorization") String token);
 
-    @GET("api/employee/basic")
+    @GET("/api/manage/employee/basic")
     Call<ProfileResponse> getBasicInforEmployee(@Header("Authorization") String token, @Query("id") int id);
 
-    @GET("api/employee/project")
+    @GET("/api/manage/employee/project")
     Call<ListProjectEmpAttendResponse> getProjectEmployeeAttend(@Query("id") int id,
                                                                 @Query("page") int page,
                                                                 @Query("pageSize") int pageSize,
@@ -54,11 +55,13 @@ public interface ApiInterface {
     @GET("api/list/team")
     Call<TeamsResponse> getTeams(@Header("Authorization") String token);
 
-    @GET("api/employee/absence")
+    @GET("/api/absence")
     Call<AbsencesResponse> getListAbsence(@Query("page") int page,
                                           @Query("pageSize") int pageSize,
                                           @Header("Authorization") String token);
     @POST("/api/absence/add")
     Call<AddAbsenceResponse> addAbsence(@Header("Authorization") String token,
                                         @Body RequestBody json);
+    @GET("/api/list/type/absence")
+    Call<TypeAbsenceResponse> getTypeAbsence(@Header("Authorization") String token);
 }

@@ -3,10 +3,12 @@ package com.dal.hrm_management.models.absence;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Luu Ngoc Lan on 02-Aug-18.
  */
-public class Absence {
+public class Absence implements Serializable {
 
     @SerializedName("idAbsences")
     @Expose
@@ -25,7 +27,7 @@ public class Absence {
     private String reason;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description;
     @SerializedName("absenceType")
     @Expose
     private AbsenceType absenceType;
@@ -49,7 +51,7 @@ public class Absence {
      * @param toDate
      * @param idAbsences
      */
-    public Absence(Integer idAbsences, Integer employeeId, String fromDate, String toDate, String reason, Object description, AbsenceType absenceType, AbsenceTime absenceTime) {
+    public Absence(Integer idAbsences, Integer employeeId, String fromDate, String toDate, String reason, String description, AbsenceType absenceType, AbsenceTime absenceTime) {
         super();
         this.idAbsences = idAbsences;
         this.employeeId = employeeId;
@@ -101,11 +103,11 @@ public class Absence {
         this.reason = reason;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
