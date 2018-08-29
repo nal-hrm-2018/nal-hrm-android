@@ -1,6 +1,7 @@
 package com.dal.hrm_management.views.absence;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,21 +19,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.models.absence.Absence;
+import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
 import com.dal.hrm_management.presenters.absence.IAbsencePresenter;
+import com.dal.hrm_management.utils.ExtraUltils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import okhttp3.RequestBody;
 
 public class Form_absence extends AppCompatActivity implements View.OnClickListener,IAbsenceFormActivity{
     private final String TAG = Form_absence.class.getSimpleName();
-    String[] LOAINGHI = {"annual leave", "unpaid leave", "maternity leave","marriage leave","bereavement leave","subtract salary","insurance date"};
     String[] THOIGIANNGHI = {"All day","Morning","Afternoon"};
     Toolbar toolbar;
     Button btnSubmit;
@@ -43,9 +48,8 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     Spinner loaiNghi,thoiGianNghi;
     //time
     Calendar c = Calendar.getInstance();
-
-
-
+    //List type absence
+    List<TypeAbsence> listAbsence;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,27 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
         initView();
         mapMVP();
         initData();
+        getExtra();
+    }
+
+    private void getExtra() {
+        Absence absence = (Absence) getIntent().getSerializableExtra(ExtraUltils.KEY_PUT_ABSENCE_INTENT);
+        if (absence !=null){
+            setTitle(getResources().getString(R.string.text_title_edit_absence));
+            edt_tuNgay.setText(absence.getFromDate());
+            edt_denNgay.setText(absence.getToDate());
+            loaiNghi.setSelection(absence.getAbsenceType().getIdAbsenceType());
+            thoiGianNghi.setSelection(absence.getAbsenceTime().getIdAbsenceTime());
+            edtReason.setText(absence.getReason());
+            edtNote.setText(absence.getDescription());
+            edt_tuNgay.setOnClickListener(null);
+            edt_denNgay.setOnClickListener(null);
+            loaiNghi.setEnabled(false);
+            thoiGianNghi.setEnabled(false);
+            edtReason.setEnabled(false);
+            edtNote.setEnabled(false);
+            btnSubmit.setVisibility(View.GONE);
+        }
     }
 
     private void mapMVP() {
@@ -64,13 +89,9 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle(getString(R.string.absence_add));
+        absencePresenter.getTypeAbsence();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.support_simple_spinner_dropdown_item, LOAINGHI);
-        loaiNghi.setGravity(View.TEXT_ALIGNMENT_CENTER);
-        loaiNghi.setAdapter(adapter);
-        adapter = new ArrayAdapter<String>(this,
                 R.layout.support_simple_spinner_dropdown_item, THOIGIANNGHI);
-        thoiGianNghi.setGravity(View.TEXT_ALIGNMENT_CENTER);
         thoiGianNghi.setAdapter(adapter);
         //init time
 
@@ -129,7 +150,6 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
                     Log.d(TAG + " EndDate: ", edt_denNgay.getText().toString());
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
                         jsonObject.put("absenceTypeId", absenceTypeId);
                         jsonObject.put("fromDate", edt_tuNgay.getText().toString());
                         jsonObject.put("toDate", edt_denNgay.getText().toString());
@@ -188,6 +208,7 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
             edt_denNgay.setError(getResources().getString(R.string.error_field_is_not_empty));
             focusView = edt_denNgay;
         }
+        //Đang thiếu validate
         return focusView;
     }
 
@@ -200,14 +221,8 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     }
 
     private int getAbsenceTypeId(String absenceType) {
-        switch (absenceType){
-            case "annual_leave": return 1;
-            case "unpaid_leave": return 2;
-            case "maternity_leave": return 3;
-            case "marriage_leave": return 4;
-            case "bereavement_leave": return 5;
-            case "subtract_salary_date": return 6;
-            case "insurance_date": return 7;
+        for (TypeAbsence type:listAbsence) {
+            if (type.getNameAbsenceType().equalsIgnoreCase(absenceType))return type.getIdAbsenceType();
         }
         return 1;
     }
@@ -215,11 +230,25 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     @Override
     public void Success() {
         Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
-        finish();
+        Intent intent = new Intent(getApplicationContext(),AbsenceViewFragment.class);
+        startActivity(intent);
     }
 
     @Override
     public void Failure() {
         Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadTypeAbsenceSuccess(List list) {
+        listAbsence = list;
+        ArrayAdapter<TypeAbsence> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,listAbsence);
+        loaiNghi.setAdapter(adapter);
+    }
+
+    @Override
+    public void loadTypeAbsenceFailure() {
+        Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

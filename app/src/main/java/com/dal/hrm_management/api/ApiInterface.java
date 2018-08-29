@@ -2,9 +2,11 @@ package com.dal.hrm_management.api;
 
 import com.dal.hrm_management.models.absence.AbsencesResponse;
 import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
+import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
 import com.dal.hrm_management.models.login.LoginModel;
+import com.dal.hrm_management.models.manageAbsence.hr.ManageAbsenceResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
 import com.dal.hrm_management.models.profile.TeamsResponse;
@@ -37,6 +39,7 @@ public interface ApiInterface {
                                           @Query("pageSize") int pageSize,
                                           @Header("Authorization") String token);
 
+
     @GET("api/manage/employee/basic")
     Call<ProfileResponse> getBasicInforEmployee(@Header("Authorization") String token, @Query("id") int id);
 
@@ -51,6 +54,7 @@ public interface ApiInterface {
     @GET("api/list/team")
     Call<TeamsResponse> getTeams(@Header("Authorization") String token);
 
+
     @GET("api/absence")
     Call<AbsencesResponse> getListAbsence(@Query("page") int page,
                                           @Query("pageSize") int pageSize,
@@ -58,5 +62,15 @@ public interface ApiInterface {
     @POST("/api/absence/add")
     Call<AddAbsenceResponse> addAbsence(@Header("Authorization") String token,
                                         @Body RequestBody json);
+    @GET("/api/list/type/absence")
+    Call<TypeAbsenceResponse> getTypeAbsence(@Header("Authorization") String token);
+
+    /**
+     * Get list absence of employee - all employee
+     */
+    @GET("/api/manage/absence/list")
+    Call<ManageAbsenceResponse> getListAbsenceForHr(@Query("page") int page,
+                                                    @Query("pageSize") int pageSize,
+                                                    @Header("Authorization") String token);
 
 }

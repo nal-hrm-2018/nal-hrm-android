@@ -1,15 +1,9 @@
-package com.dal.hrm_management.models.absence;
+package com.dal.hrm_management.models.absence.addAbsence;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-/**
- * Created by Luu Ngoc Lan on 24-Aug-18.
- */
-public class AbsenceType implements Serializable {
-
+public class TypeAbsence {
     @SerializedName("idAbsenceType")
     @Expose
     private Integer idAbsenceType;
@@ -19,26 +13,6 @@ public class AbsenceType implements Serializable {
     @SerializedName("description")
     @Expose
     private String description;
-
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public AbsenceType() {
-    }
-
-    /**
-     *
-     * @param description
-     * @param idAbsenceType
-     * @param nameAbsenceType
-     */
-    public AbsenceType(Integer idAbsenceType, String nameAbsenceType, String description) {
-        super();
-        this.idAbsenceType = idAbsenceType;
-        this.nameAbsenceType = nameAbsenceType;
-        this.description = description;
-    }
 
     public Integer getIdAbsenceType() {
         return idAbsenceType;
@@ -64,4 +38,8 @@ public class AbsenceType implements Serializable {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return nameAbsenceType.replace("_"," ");
+    }
 }

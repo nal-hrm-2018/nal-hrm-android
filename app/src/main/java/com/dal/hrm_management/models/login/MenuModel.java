@@ -3,12 +3,13 @@ package com.dal.hrm_management.models.login;
 import android.graphics.drawable.Drawable;
 
 public class MenuModel {
+    public String id;
     public String menuName;
     public Drawable drawable;
     public boolean hasChildren, isGroup;
 
-    public MenuModel(String menuName, boolean isGroup, boolean hasChildren,Drawable drawable) {
-
+    public MenuModel(String id,String menuName, boolean isGroup, boolean hasChildren,Drawable drawable) {
+        this.id = id;
         this.menuName = menuName;
         this.isGroup = isGroup;
         this.hasChildren = hasChildren;

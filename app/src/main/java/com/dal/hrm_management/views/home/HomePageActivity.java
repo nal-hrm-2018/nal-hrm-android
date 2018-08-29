@@ -31,16 +31,18 @@ import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.utils.PermissionManager;
-import com.dal.hrm_management.views.AbsenceForHRFragment;
+import com.dal.hrm_management.views.manage_absence.Hr.AbsenceForHRFragment;
 import com.dal.hrm_management.views.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.views.absence.AbsenceViewFragment;
 import com.dal.hrm_management.views.list_employee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;
+import com.dal.hrm_management.views.manage_absence.Hr.holiday.HolidayHRFragment;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import okhttp3.Credentials;
 import okhttp3.ResponseBody;
@@ -151,8 +153,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -166,14 +166,14 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
-                        if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_dashboard))) {
+                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_dashboard))) {
                             getSupportActionBar().setTitle(R.string.menu_dashboard);
-                        } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_project))) {
+                        } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_project))) {
                             getSupportActionBar().setTitle(R.string.menu_project);
-                        } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_absence))) {
+                        } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_absence))) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceViewFragment()).commit();
                             getSupportActionBar().setTitle(R.string.menu_absence);
-                        } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
+                        } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_logout))) {
                             PermissionManager.listPermissions.clear();
                             Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
                             startActivity(intent);
@@ -193,18 +193,19 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
                     Log.d("GROUP", model.menuName);
-                    if (model.menuName.equals(getString(R.string.menu_employee))) {
+                    if (model.id.equals(getString(R.string.menu_id_manage_employee))) {
                         getSupportActionBar().setTitle(getString(R.string.menu_employee));
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployee()).commit();
-                    } else if ((model.menuName.equals(getString(R.string.menu_absence_empl)))) {
+                    } else if ((model.id.equals(getString(R.string.menu_id_manage_employee)))) {
                         getSupportActionBar().setTitle(getString(R.string.menu_absence_empl));
                         if (data.getRole().getNameRole().equals("HR")) {
-
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceForHRFragment()).commit();
                         } else if (data.getRole().getNameRole().equals("PO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
                         }
-
+                    }else if (model.id.equals(getString(R.string.menu_id_manage_holiday))){
+                        getSupportActionBar().setTitle("Holiday");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HolidayHRFragment()).commit();
                     }
                     Log.e("GROUP", model.menuName);
                     onBackPressed();
@@ -216,32 +217,33 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     private void prepareMenuData(Profile data) {
 
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_dashboard), true, false, getDrawable(R.drawable.ic_dashboard));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_dashboard),getString(R.string.menu_dashboard), true, false, getDrawable(R.drawable.ic_dashboard));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel(getString(R.string.menu_absence), true, false, getDrawable(R.drawable.ic_absence));
+        menuModel = new MenuModel(getString(R.string.menu_id_absence),getString(R.string.menu_absence), true, false, getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
         if (data.getRole().getNameRole().equals("HR") || data.getRole().getNameRole().equals("PO") || data.getRole().getNameRole().equals("SM")) {
-            menuModel = new MenuModel(getString(R.string.menu_manage), true, true, getDrawable(R.drawable.ic_manage));
+            menuModel = new MenuModel(getString(R.string.menu_id_manage),getString(R.string.menu_manage), true, true, getDrawable(R.drawable.ic_manage));
             headerList.add(menuModel);
 
             List<MenuModel> childModelsList = new ArrayList<>();
             MenuModel chilModel;
             if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_list_employee")) {
-                chilModel = new MenuModel(getString(R.string.menu_employee), false, false, getDrawable(R.drawable.ic_employee));
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_employee),getString(R.string.menu_employee), false, false, null);
                 childModelsList.add(chilModel);
             }
-            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_project_absence_history")) {
-                chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getDrawable(R.drawable.ic_absence));
+            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_absence_history")
+                    ||PermissionManager.isPermited(PermissionManager.listPermissions, "view_project_absence_history")) {
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_absence),getString(R.string.menu_absence_empl), false, false, null);
                 childModelsList.add(chilModel);
             }
-            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_absence_history")) {
-                chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getDrawable(R.drawable.ic_absence));
+            if (data.getRole().getNameRole().equals("HR")){
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday),"Holiday",false,false,null);
                 childModelsList.add(chilModel);
             }
 
@@ -249,7 +251,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 childList.put(menuModel, childModelsList);
             }
         }
-        menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
+        menuModel = new MenuModel(getString(R.string.menu_id_logout),getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
@@ -323,7 +325,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
      * Khi đã vào home mà không nhận được dữ liệu profile thì chỉ cần hiển thị đăng xuất
      */
     private void prepareMenuData() {
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
+        MenuModel menuModel = new MenuModel("Logout",getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
