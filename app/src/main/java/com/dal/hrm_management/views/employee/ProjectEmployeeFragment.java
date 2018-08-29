@@ -15,15 +15,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listProjectEmployeeAttend.ProjectEmployeeAdapter;
-import com.dal.hrm_management.models.ProjectEmployee;
 import com.dal.hrm_management.models.listProjectEmpAttend.ProjectAndProcess;
 import com.dal.hrm_management.presenters.listProject.ListProjectEmpAttendPresenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +33,7 @@ public class ProjectEmployeeFragment extends Fragment
     private RecyclerView recyclerView;
     private ArrayList<ProjectAndProcess> projects = new ArrayList<ProjectAndProcess>();
     private ProjectEmployeeAdapter adapter;
-
+    private TextView tv_message_nothing;
     private ListProjectEmpAttendPresenter presenter;
 
     public ProjectEmployeeFragment() {
@@ -66,6 +65,7 @@ public class ProjectEmployeeFragment extends Fragment
     private void initUi(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        tv_message_nothing = (TextView) view.findViewById(R.id.tv_message_nothing);
     }
 
     @Override
@@ -93,10 +93,15 @@ public class ProjectEmployeeFragment extends Fragment
 
     @Override
     public void Success(ArrayList<ProjectAndProcess> projectAndProcess) {
-        projects.addAll(projectAndProcess);
-        adapter = new ProjectEmployeeAdapter(projects,R.layout.item_project_employee, getActivity());
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        if(projectAndProcess.size()!=0){
+            projects.addAll(projectAndProcess);
+            adapter = new ProjectEmployeeAdapter(projects,R.layout.item_project_employee, getActivity());
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        } else {
+            tv_message_nothing.setText("No Project to show!");
+            tv_message_nothing.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

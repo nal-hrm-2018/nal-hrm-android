@@ -37,6 +37,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     private LinearLayoutManager layoutManager;
     private AbsenceAdapter adapter;
     private ImageButton imBtn_show;
+    private TextView tv_message_nothing;
     private TextView tv_allowAbsence, tv_remainingAbsenceDays, tv_unpaidLeave, tv_annualLeave, tv_marriageLeave, tv_maternityLeave, tv_bereavementLeave;
 
     @Nullable
@@ -59,8 +60,10 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         rv_absence = root.findViewById(R.id.rv_absence);
         rv_absence.setHasFixedSize(false);
         rv_absence.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        tv_message_nothing = (TextView) root.findViewById(R.id.tv_message_nothing);
         imBtn_show = (ImageButton) root.findViewById(R.id.imBtn_show);
         imBtn_show.setOnClickListener(this);
+
     }
 
 
@@ -90,7 +93,13 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         this.dataAbsence = dataAbsence;
         absenceList = dataAbsence.getListAbsence().getAbsence();
         if (absenceList != null) {
-            rv_absence.setAdapter(new AbsenceAdapter(absenceList, getActivity()));
+            if(absenceList.size()!=0){
+                rv_absence.setAdapter(new AbsenceAdapter(absenceList, getActivity()));
+                tv_message_nothing.setVisibility(View.GONE);
+            } else {
+                tv_message_nothing.setText("No absence to show!");
+                tv_message_nothing.setVisibility(View.VISIBLE);
+            }
         }
     }
 

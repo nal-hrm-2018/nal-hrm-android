@@ -1,20 +1,25 @@
 package com.dal.hrm_management.views.profile;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -22,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.api.ApiImageClient;
+import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
@@ -30,8 +37,15 @@ import com.dal.hrm_management.presenters.profile.ProfileEditPresenter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditProfileActivity extends AppCompatActivity implements IProfileEditActivity, View.OnClickListener {
     private static final int REQUEST_IMAGE = 1001;
@@ -49,6 +63,8 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     private TextView tv_start;
     private TextView tv_end;
     private ProgressBar progressBar;
+    private boolean[] mSelectedTeams, mSelectedTeamsBackup;
+    List<String> teamListData;
     Bitmap avatarBitmap;
     ArrayAdapter<CharSequence> adapter_position, adapter_maritalStatus, adapter_type;
 
@@ -61,18 +77,15 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         setContentView(R.layout.activity_edit_profile);
         displayBackHome();
         initPresenter();
-        getDataFromServer();
         initUI();
         initData();
         setEvent();
     }
 
-    private void getDataFromServer() {
-        profileEditPresenter.getProfile(LoginPresenter.token);
-    }
-
     private void initPresenter() {
         profileEditPresenter = new ProfileEditPresenter(this);
+        profileEditPresenter.getProfile(LoginPresenter.token);
+        profileEditPresenter.getTeams(LoginPresenter.token);
     }
 
     private void initData() {
@@ -93,20 +106,24 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     private void setEvent() {
         imv_avatar.setOnClickListener(this);
         tv_birthday.setOnClickListener(this);
-        tv_team.setEnabled(false);
-        tv_team.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        edt_name.setEnabled(false);
-        edt_name.setBackgroundColor(getResources().getColor(R.color.color_gray));
         edt_email.setEnabled(false);
         edt_email.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        tv_start.setEnabled(false);
-        tv_start.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        tv_end.setEnabled(false);
-        tv_end.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        spn_position.setEnabled(false);
-        spn_position.setBackgroundColor(getResources().getColor(R.color.color_gray));
-        spn_type.setEnabled(false);
-        spn_type.setBackgroundColor(getResources().getColor(R.color.color_gray));
+        if (!position.toLowerCase().equals("hr")) {
+            tv_team.setEnabled(false);
+            tv_team.setBackgroundColor(getResources().getColor(R.color.color_gray));
+            edt_name.setEnabled(false);
+            edt_name.setBackgroundColor(getResources().getColor(R.color.color_gray));
+            tv_start.setEnabled(false);
+            tv_start.setBackgroundColor(getResources().getColor(R.color.color_gray));
+            tv_end.setEnabled(false);
+            tv_end.setBackgroundColor(getResources().getColor(R.color.color_gray));
+            spn_position.setEnabled(false);
+            spn_position.setBackgroundColor(getResources().getColor(R.color.color_gray));
+            spn_type.setEnabled(false);
+            spn_type.setBackgroundColor(getResources().getColor(R.color.color_gray));
+        } else {
+            tv_team.setOnClickListener(this);
+        }
     }
 
     private void initUI() {
@@ -126,6 +143,7 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         tv_end = (TextView) findViewById(R.id.tv_end);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+        teamListData = new ArrayList<>();
     }
 
     private void displayBackHome() {
@@ -181,6 +199,9 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
                 break;
             case R.id.tv_end:
                 showDatePicker(v, v.getId());
+                break;
+            case R.id.tv_team:
+                showCheckBoxDialog();
                 break;
         }
     }
@@ -238,6 +259,20 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     }
 
     @Override
+    public void getTeamsSuccess(List<Team> teams) {
+        for (Team item : teams) {
+            teamListData.add(item.getNameTeam());
+        }
+        mSelectedTeams = new boolean[teamListData.size()];
+        mSelectedTeamsBackup = new boolean[teamListData.size()];
+    }
+
+    @Override
+    public void getTeamsFailed() {
+
+    }
+
+    @Override
     public void getProfileSuccess(Profile profile) {
         loadDataToView(profile);
     }
@@ -251,25 +286,88 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         position = profile.getRole().getNameRole();
         maritalStatus = profile.getMaritalStatusDTO().getTypeMaritalStatus();
         type = profile.getEmployeeType().getNameEmployeeType();
-        edt_name.setText(profile.getNameEmployee());
-        edt_email.setText(profile.getEmail());
-        edt_address.setText(profile.getAddress());
-        edt_phone.setText(profile.getMobile());
+        RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
+        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ResponseBody> call;
+        if (profile.getAvatar() != null) {
+            call = retrofitImageAPI.getImageDetails(auth, profile.getAvatar().toString());
+        } else {
+            call = retrofitImageAPI.getImageDetails(auth, "default_avatar.png");
+        }
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                        imv_avatar.setImageBitmap(bitmap);
+                    } else {
+                    }
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
+        if (profile.getNameEmployee() != null) {
+            edt_name.setText(profile.getNameEmployee());
+        } else {
+            edt_name.setText(R.string.infor_null);
+        }
+
+        if (profile.getEmail() != null) {
+            edt_email.setText(profile.getEmail());
+        } else {
+            edt_email.setText(R.string.infor_null);
+        }
+
+        if (profile.getAddress() != null) {
+            edt_address.setText(profile.getAddress());
+        } else {
+            edt_address.setText(R.string.infor_null);
+        }
+
+        if (profile.getMobile() != null) {
+            edt_phone.setText(profile.getMobile());
+        } else {
+            edt_phone.setText(R.string.infor_null);
+        }
+
         if (profile.getGenderDTO().getGender() == 1) {
             rb_female.setChecked(true);
         } else {
             rb_male.setChecked(true);
         }
         List<Team> teamList = profile.getTeams();
-        if(teamList.size()!=0){
+        if (teamList.size() != 0) {
             for (int i = 0; i < teamList.size() - 1; i++) {
                 tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
             }
             tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
+        } else {
+            tv_team.setText(R.string.infor_null);
         }
-        tv_birthday.setText(profile.getBirthday());
-        tv_start.setText(profile.getStartWorkDate());
-        tv_end.setText(profile.getEndWorkDate());
+
+        if (profile.getBirthday() != null) {
+            tv_birthday.setText(profile.getBirthday());
+        } else {
+            tv_birthday.setText(R.string.infor_null);
+        }
+
+        if (profile.getStartWorkDate() != null) {
+            tv_start.setText(profile.getStartWorkDate());
+        } else {
+            tv_start.setText(R.string.infor_null);
+        }
+
+        if (profile.getEndWorkDate() != null) {
+            tv_end.setText(profile.getEndWorkDate());
+        } else {
+            tv_end.setText(R.string.infor_null);
+        }
+
         if (!position.equals("")) {
             spn_position.setSelection(adapter_position.getPosition(position));
         }
@@ -282,4 +380,75 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         progressBar.setVisibility(View.GONE);
     }
 
+    private void showCheckBoxDialog() {
+        final String inforBackup = tv_team.getText().toString();
+        tv_team.setText("");
+        for (int k = 0; k < mSelectedTeams.length; k++) {
+            mSelectedTeamsBackup[k] = mSelectedTeams[k];
+        }
+        String[] teams = teamListData.toArray(new String[0]);
+
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_title_checkbox, null);
+
+        TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
+        final CheckBox cbAll = (CheckBox) layout.findViewById(R.id.cbSelectAll);
+
+        tvTitle.setText("Select Teams");
+        cbAll.setChecked(isCheckAllTeams());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCustomTitle(layout);
+        builder.setMultiChoiceItems(teams, mSelectedTeams, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                cbAll.setChecked(isCheckAllTeams());
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ArrayList<String> list = new ArrayList<>();
+                for (int k = 0; k < mSelectedTeams.length; k++) {
+                    if (mSelectedTeams[k]) {
+                        list.add(teamListData.get(k));
+                    }
+                }
+                if (list.size() != 0) {
+                    for (int i = 0; i < list.size() - 1; i++) {
+                        tv_team.setText(tv_team.getText() + list.get(i) + ", ");
+                    }
+                    tv_team.setText(tv_team.getText() + list.get(list.size() - 1));
+                }
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for (int k = 0; k < mSelectedTeams.length; k++) {
+                    mSelectedTeams[k] = mSelectedTeamsBackup[k];
+                }
+                tv_team.setText(inforBackup);
+            }
+        });
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        cbAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = cbAll.isChecked();
+                ListView listView = dialog.getListView();
+                for (int i = 0; i < listView.getCount(); i++) {
+                    listView.setItemChecked(i, isChecked);
+                    mSelectedTeams[i] = isChecked;
+                }
+            }
+        });
+    }
+
+    private boolean isCheckAllTeams() {
+        for (int i = 0; i < mSelectedTeams.length; i++) {
+            if (!mSelectedTeams[i]) return false;
+        }
+        return true;
+    }
 }

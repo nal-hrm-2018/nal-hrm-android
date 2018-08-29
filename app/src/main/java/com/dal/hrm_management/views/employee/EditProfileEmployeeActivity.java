@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.employee;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.api.ApiImageClient;
+import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.employee.EditProfileEmployeePresenter;
@@ -38,6 +41,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.Credentials;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditProfileEmployeeActivity extends AppCompatActivity implements View.OnClickListener, IEditProfileEmployeeActivity {
     private static final int REQUEST_IMAGE = 1001;
@@ -106,6 +115,7 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         tv_end.setOnClickListener(this);
     }
 
+    @SuppressLint("ResourceAsColor")
     private void initUI() {
         imv_avatar = (ImageView) findViewById(R.id.imv_avatar);
         edt_name = (EditText) findViewById(R.id.edt_name);
@@ -123,7 +133,8 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         tv_end = (TextView) findViewById(R.id.tv_end);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-
+        edt_email.setEnabled(false);
+        edt_email.setBackgroundColor(getResources().getColor(R.color.color_gray));
     }
 
     private void displayBackHome() {
@@ -305,36 +316,142 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
         position = profile.getRole().getNameRole();
         maritalStatus = profile.getMaritalStatusDTO().getTypeMaritalStatus();
         type = profile.getEmployeeType().getNameEmployeeType();
-        edt_name.setText(profile.getNameEmployee());
-        edt_email.setText(profile.getEmail());
-        edt_address.setText(profile.getAddress());
-        edt_phone.setText(profile.getMobile());
-        if (profile.getGenderDTO().getGender() == 1) {
-            rb_female.setChecked(true);
+
+        RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
+        String auth = Credentials.basic("hrm_testing", "hrm_testing");
+        Call<ResponseBody> call;
+        if (profile.getAvatar() != null) {
+            call = retrofitImageAPI.getImageDetails(auth, profile.getAvatar().toString());
         } else {
-            rb_male.setChecked(true);
+            call = retrofitImageAPI.getImageDetails(auth, "default_avatar.png");
         }
-        List<Team> teamList = profile.getTeams();
-        for (int i = 0; i < teamList.size() - 1; i++) {
-            tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
-            for (int k = 0; k < teamListData.size(); k++) {
-                if (teamList.get(i).equals(teamListData.get(k))) {
-                    mSelectedTeamsBackup[k] = true;
-                    mSelectedTeams[k] = true;
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                        imv_avatar.setImageBitmap(bitmap);
+                    } else {
+                    }
+                } else {
                 }
             }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
+
+        if (profile.getNameEmployee() != null)
+
+        {
+            edt_name.setText(profile.getNameEmployee());
+        } else
+
+        {
+            edt_name.setText(R.string.infor_null);
         }
-        tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
-        tv_birthday.setText(profile.getBirthday());
-        tv_start.setText(profile.getStartWorkDate());
-        tv_end.setText(profile.getEndWorkDate());
-        if (!position.equals("")) {
+
+        if (profile.getEmail() != null)
+
+        {
+            edt_email.setText(profile.getEmail());
+        } else
+
+        {
+            edt_email.setText(R.string.infor_null);
+        }
+
+        if (profile.getAddress() != null)
+
+        {
+            edt_address.setText(profile.getAddress());
+        } else
+
+        {
+            edt_address.setText(R.string.infor_null);
+        }
+
+        if (profile.getMobile() != null)
+
+        {
+            edt_phone.setText(profile.getMobile());
+        } else
+
+        {
+            edt_phone.setText(R.string.infor_null);
+        }
+
+        if (profile.getGenderDTO().
+
+                getGender() == 1)
+
+        {
+            rb_female.setChecked(true);
+        } else
+
+        {
+            rb_male.setChecked(true);
+        }
+
+        List<Team> teamList = profile.getTeams();
+        if (teamList.size() != 0)
+
+        {
+            for (int i = 0; i < teamList.size() - 1; i++) {
+                tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
+            }
+            tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
+        } else
+
+        {
+            tv_team.setText(R.string.infor_null);
+        }
+
+        if (profile.getBirthday() != null)
+
+        {
+            tv_birthday.setText(profile.getBirthday());
+        } else
+
+        {
+            tv_birthday.setText(R.string.infor_null);
+        }
+
+        if (profile.getStartWorkDate() != null)
+
+        {
+            tv_start.setText(profile.getStartWorkDate());
+        } else
+
+        {
+            tv_start.setText(R.string.infor_null);
+        }
+
+        if (profile.getEndWorkDate() != null)
+
+        {
+            tv_end.setText(profile.getEndWorkDate());
+        } else
+
+        {
+            tv_end.setText(R.string.infor_null);
+        }
+
+        if (!position.equals(""))
+
+        {
             spn_position.setSelection(adapter_position.getPosition(position));
         }
-        if (!maritalStatus.equals("")) {
+        if (!maritalStatus.equals(""))
+
+        {
             spn_maritalStatus.setSelection(profile.getMaritalStatusDTO().getMaritalStatus() - 1);
         }
-        if (!type.equals("")) {
+        if (!type.equals(""))
+
+        {
             spn_type.setSelection(profile.getEmployeeType().getIdEmployeeType() - 1);
         }
         progressBar.setVisibility(View.GONE);
@@ -371,9 +488,6 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
 
     @Override
     public void getTeamsFailed() {
-//        teamListData = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.team_arr)));
-//        mSelectedTeams = new boolean[teamListData.size()];
-//        mSelectedTeamsBackup = new boolean[teamListData.size()];
     }
 
     private void showError() {

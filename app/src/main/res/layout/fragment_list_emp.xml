@@ -5,11 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <TextView
-        android:id="@+id/fra_tv_nothingToShow"
-        android:text="@string/fra_list_emp_nothingToShow"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_message_nothing"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
+        android:padding="@dimen/text_padding"
+        android:textSize="@dimen/text_size_medium"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:visibility="gone"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_listEmp"

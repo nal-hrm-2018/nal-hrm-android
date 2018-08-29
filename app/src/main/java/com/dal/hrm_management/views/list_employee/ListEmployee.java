@@ -33,10 +33,9 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
     ListEmployeePresenter listEmployeePresenter;
     private RecyclerView rv_listEmp;
     private ProgressBar list_emp_pb_loadEmp;
-    private TextView fra_tv_nothingToShow;
+    private TextView tv_message_nothing;
     private List<Employee> listEmployees = new ArrayList<Employee>(); //Chứa danh sách nhân viên lưu vào trong bộ nhớ local
     private SearchView searchView;
-    //current page
     private int current_page =1;
     private int pageSize = 15;
     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -75,7 +74,7 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
         View view = inflater.inflate(R.layout.fragment_list_emp, container, false);
         rv_listEmp = view.findViewById(R.id.rv_listEmp);
         rv_listEmp.setVisibility(View.GONE);
-        fra_tv_nothingToShow = view.findViewById(R.id.fra_tv_nothingToShow);
+        tv_message_nothing = view.findViewById(R.id.tv_message_nothing);
         list_emp_pb_loadEmp = view.findViewById(R.id.list_emp_pb_loadEmp);
         list_emp_pb_loadEmp.setVisibility(View.VISIBLE);
         return view;
@@ -85,7 +84,6 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
     }
 
     private void mapMVP() {
@@ -96,22 +94,27 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
     @Override
     public void Success(List<Employee> listEmployee) {
         rv_listEmp.setVisibility(View.VISIBLE);
-        listEmployees.addAll(listEmployee);
-        if (adapter == null){
-            adapter = new ListEmployeeAdapter(getActivity(), listEmployees,this);
-        }else{
-            adapter.notifyDataSetChanged();
+        if(listEmployee.size()!=0){
+            listEmployees.addAll(listEmployee);
+            if (adapter == null){
+                adapter = new ListEmployeeAdapter(getActivity(), listEmployees,this);
+            }else{
+                adapter.notifyDataSetChanged();
+            }
+            list_emp_pb_loadEmp.setVisibility(View.GONE);
+            rv_listEmp.setLayoutManager(layoutManager);
+            rv_listEmp.setAdapter(adapter);
+            rv_listEmp.addOnScrollListener(recyclerViewOnScrollListener);
+        } else {
+            tv_message_nothing.setText("No Employee to show!");
+            tv_message_nothing.setVisibility(View.VISIBLE);
         }
-        list_emp_pb_loadEmp.setVisibility(View.GONE);
-        rv_listEmp.setLayoutManager(layoutManager);
-        rv_listEmp.setAdapter(adapter);
-        rv_listEmp.addOnScrollListener(recyclerViewOnScrollListener);
     }
 
     @Override
     public void getListEmployeeFailure() {
         Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();
-        fra_tv_nothingToShow.setVisibility(View.VISIBLE);
+        tv_message_nothing.setVisibility(View.VISIBLE);
         list_emp_pb_loadEmp.setVisibility(View.GONE);
     }
 

@@ -24,7 +24,7 @@
             android:layout_height="@dimen/avatar_size_small"
             android:contentDescription="@string/nav_header_desc"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/img_avatar" />
 
         <TextView
             android:id="@+id/tv_nameProfile"
