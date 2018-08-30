@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = edt_email.getText().toString();
         String pass = edt_password.getText().toString();
         //valid pass
+        
         if (TextUtils.isEmpty(pass)) {
             edt_password.setError(getString(R.string.catch_invalid_password_empty));
             focusView = edt_password;
