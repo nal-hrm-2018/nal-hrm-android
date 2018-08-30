@@ -1,25 +1,22 @@
-package com.dal.hrm_management.models.manageAbsence.hr;
+package com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ListAbsenceForHr {
+/**
+ * Created by Luu Ngoc Lan on 30-Aug-18.
+ */
 
+public class Absence {
     @SerializedName("idAbsences")
     @Expose
     private Integer idAbsences;
-    @SerializedName("idEmployee")
+    @SerializedName("employeeId")
     @Expose
-    private Integer idEmployee;
-    @SerializedName("nameEmployee")
+    private Integer employeeId;
+    @SerializedName("absenceTypeId")
     @Expose
-    private String nameEmployee;
-    @SerializedName("idProject")
-    @Expose
-    private Object idProject;
-    @SerializedName("nameProject")
-    @Expose
-    private Object nameProject;
+    private Integer absenceTypeId;
     @SerializedName("fromDate")
     @Expose
     private String fromDate;
@@ -32,6 +29,9 @@ public class ListAbsenceForHr {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("absenceTimeId")
+    @Expose
+    private Integer absenceTimeId;
     @SerializedName("absenceType")
     @Expose
     private AbsenceType absenceType;
@@ -43,34 +43,32 @@ public class ListAbsenceForHr {
      * No args constructor for use in serialization
      *
      */
-    public ListAbsenceForHr() {
+    public Absence() {
     }
 
     /**
      *
+     * @param employeeId
      * @param fromDate
      * @param reason
-     * @param nameEmployee
      * @param absenceTime
      * @param description
      * @param absenceType
+     * @param absenceTimeId
      * @param toDate
-     * @param idEmployee
-     * @param idProject
-     * @param nameProject
+     * @param absenceTypeId
      * @param idAbsences
      */
-    public ListAbsenceForHr(Integer idAbsences, Integer idEmployee, String nameEmployee, Object idProject, Object nameProject, String fromDate, String toDate, String reason, String description, AbsenceType absenceType, AbsenceTime absenceTime) {
+    public Absence(Integer idAbsences, Integer employeeId, Integer absenceTypeId, String fromDate, String toDate, String reason, String description, Integer absenceTimeId, AbsenceType absenceType, AbsenceTime absenceTime) {
         super();
         this.idAbsences = idAbsences;
-        this.idEmployee = idEmployee;
-        this.nameEmployee = nameEmployee;
-        this.idProject = idProject;
-        this.nameProject = nameProject;
+        this.employeeId = employeeId;
+        this.absenceTypeId = absenceTypeId;
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.reason = reason;
         this.description = description;
+        this.absenceTimeId = absenceTimeId;
         this.absenceType = absenceType;
         this.absenceTime = absenceTime;
     }
@@ -83,36 +81,20 @@ public class ListAbsenceForHr {
         this.idAbsences = idAbsences;
     }
 
-    public Integer getIdEmployee() {
-        return idEmployee;
+    public Integer getEmployeeId() {
+        return employeeId;
     }
 
-    public void setIdEmployee(Integer idEmployee) {
-        this.idEmployee = idEmployee;
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public String getNameEmployee() {
-        return nameEmployee;
+    public Integer getAbsenceTypeId() {
+        return absenceTypeId;
     }
 
-    public void setNameEmployee(String nameEmployee) {
-        this.nameEmployee = nameEmployee;
-    }
-
-    public Object getIdProject() {
-        return idProject;
-    }
-
-    public void setIdProject(Object idProject) {
-        this.idProject = idProject;
-    }
-
-    public Object getNameProject() {
-        return nameProject;
-    }
-
-    public void setNameProject(Object nameProject) {
-        this.nameProject = nameProject;
+    public void setAbsenceTypeId(Integer absenceTypeId) {
+        this.absenceTypeId = absenceTypeId;
     }
 
     public String getFromDate() {
@@ -145,6 +127,14 @@ public class ListAbsenceForHr {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getAbsenceTimeId() {
+        return absenceTimeId;
+    }
+
+    public void setAbsenceTimeId(Integer absenceTimeId) {
+        this.absenceTimeId = absenceTimeId;
     }
 
     public AbsenceType getAbsenceType() {

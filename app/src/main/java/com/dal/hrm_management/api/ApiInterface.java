@@ -7,6 +7,7 @@ import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
 import com.dal.hrm_management.models.login.LoginModel;
 import com.dal.hrm_management.models.manageAbsence.hr.ManageAbsenceResponse;
+import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.AbsenceEmployeeDetailResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
 import com.dal.hrm_management.models.profile.TeamsResponse;
@@ -72,5 +73,10 @@ public interface ApiInterface {
     Call<ManageAbsenceResponse> getListAbsenceForHr(@Query("page") int page,
                                                     @Query("pageSize") int pageSize,
                                                     @Header("Authorization") String token);
+    @GET("/api/manage/absence/employee")
+    Call<AbsenceEmployeeDetailResponse> getDetailAbsenceEmployee(@Query("id") int id,
+                                                                 @Query("page") int page,
+                                                                 @Query("pageSize") int pageSize,
+                                                                 @Header("Authorization") String token);
 
 }
