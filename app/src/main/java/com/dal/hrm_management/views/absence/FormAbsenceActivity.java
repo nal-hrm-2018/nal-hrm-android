@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.absence;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
-import com.dal.hrm_management.utils.ExtraUltils;
+import com.dal.hrm_management.utils.VariableUltils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,8 +54,8 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void getExtra() {
-        Absence absence = (Absence) getIntent().getSerializableExtra(ExtraUltils.KEY_PUT_ABSENCE_INTENT);
-        if (absence != null) {
+        Absence absence = (Absence) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_ABSENCE_INTENT);
+        if (absence !=null){
             setTitle(getResources().getString(R.string.text_title_edit_absence));
             edt_tuNgay.setText(absence.getFromDate());
             edt_denNgay.setText(absence.getToDate());
@@ -216,7 +217,9 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void Success() {
-        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+        setResult(Activity.RESULT_OK);
         finish();
     }
 

@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
-import com.dal.hrm_management.utils.ExtraUltils;
+import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.FormAbsenceActivity;
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -43,7 +44,8 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
             public void onClick(View view, int position, boolean isLongClick) {
                 Absence absence = absences.get(position);
                 Intent intent = new Intent(context, FormAbsenceActivity.class);
-                intent.putExtra(ExtraUltils.KEY_PUT_ABSENCE_INTENT,(Serializable) absence);
+                intent.putExtra(VariableUltils.KEY_PUT_ABSENCE_INTENT,(Serializable) absence);
+
                 context.startActivity(intent);
             }
         });
