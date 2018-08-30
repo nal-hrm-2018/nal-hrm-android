@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,9 +19,7 @@ import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.AbsenceListForHrAdapter;
-import com.dal.hrm_management.models.fakeData.Absence;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
-import com.dal.hrm_management.presenters.ListEmployee.ListEmployeePresenter;
 import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresenter;
 
 import java.util.ArrayList;
@@ -101,7 +98,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         for (int i = 2015, count = 0; i < year + 1; i++, count++) {
             year_arr[count] = i+"";
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, year_arr);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, year_arr);
         spn_year.setAdapter(adapter);
         ArrayAdapter<CharSequence> adapter_month = ArrayAdapter.createFromResource(getActivity(), R.array.month_arr, android.R.layout.simple_spinner_item);
         adapter_month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

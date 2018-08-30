@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
@@ -25,6 +24,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
     private List<ListAbsenceForHr> absenceList;
     private int rowLayout;
     private Context context;
+    private int id_employee;
 
     public AbsenceListForHrAdapter(List<ListAbsenceForHr> absenceList, int rowLayout, Context context) {
         this.absenceList = absenceList;
@@ -40,16 +40,20 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.tv_nameEmployee.setText(absenceList.get(position).getEmployeeId().toString());
+        holder.tv_nameEmployee.setText(absenceList.get(position).getNameEmployee());
         holder.tv_type.setText(absenceList.get(position).getAbsenceType().getNameAbsenceType().replace("_"," "));
         holder.tv_from.setText(absenceList.get(position).getFromDate());
         holder.tv_to.setText(absenceList.get(position).getToDate());
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                //TODO: get id employee to get detail employee absence
-                Toast.makeText(context.getApplicationContext(), "Position: "+position, Toast.LENGTH_SHORT).show();
+                /**
+                 * get id employee at position clicked and put intent to get infor detail absence of employee
+                 */
+                id_employee = absenceList.get(position).getIdEmployee();
                 Intent intent = new Intent(context.getApplicationContext(), DetailAbsenceEmployeeActivity.class);
+                intent.putExtra("id_employee",id_employee);
+                intent.putExtra("name_employee",absenceList.get(position).getNameEmployee());
                 context.startActivity(intent);
             }
         });

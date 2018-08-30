@@ -5,4 +5,7 @@ package com.dal.hrm_management.presenters.absenceEmployee;
  */
 
 public interface IDetailAbsenceEmployeePresenter {
+
+    public void getDetailAbsenceEmployee(int id, int curentPage, int pageSize);
+
 }

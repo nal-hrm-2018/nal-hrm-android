@@ -110,6 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void checkLogin() {
+
         edt_email.setError(null);
         edt_password.setError(null);
         boolean cancel = false;
