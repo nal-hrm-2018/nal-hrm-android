@@ -155,6 +155,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+
     }
 
     private void populateExpandableList(final Profile data) {

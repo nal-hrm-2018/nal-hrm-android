@@ -1,7 +1,7 @@
 package com.dal.hrm_management.views.absence;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,16 +21,12 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
-import com.dal.hrm_management.presenters.absence.IAbsencePresenter;
-import com.dal.hrm_management.utils.ExtraUltils;
+import com.dal.hrm_management.utils.VariableUltils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.RequestBody;
@@ -61,7 +56,7 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getExtra() {
-        Absence absence = (Absence) getIntent().getSerializableExtra(ExtraUltils.KEY_PUT_ABSENCE_INTENT);
+        Absence absence = (Absence) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_ABSENCE_INTENT);
         if (absence !=null){
             setTitle(getResources().getString(R.string.text_title_edit_absence));
             edt_tuNgay.setText(absence.getFromDate());
@@ -230,8 +225,8 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     @Override
     public void Success() {
         Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(),AbsenceViewFragment.class);
-        startActivity(intent);
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     @Override

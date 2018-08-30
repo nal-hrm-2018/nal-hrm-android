@@ -167,4 +167,12 @@
     <string name="menu_id_manage_absence">id_manage_absence</string>
     <string name="menu_id_manage_holiday">id_manage_holiday</string>
     <string name="menu_id_logout">id_logout</string>
+    <string name="da_nang_viet_nam">Da Nang, Viet Nam</string>
+    <string name="_0123456789">0123456789</string>
+    <string name="female">Female</string>
+    <string name="single">Single</string>
+    <string name="_16_12_1996">16/12/1996</string>
+    <string name="fulltime">Fulltime</string>
+    <string name="_22_9_2018">22/9/2018</string>
+    <string name="_22_09_2020">22/09/2020</string>
 </resources>
