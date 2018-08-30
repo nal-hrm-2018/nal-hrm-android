@@ -101,7 +101,6 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
 
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -110,7 +109,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         addAbsence.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(getActivity(), Form_absence.class);
+                Intent intent = new Intent(getActivity(), FormAbsenceActivity.class);
                 startActivityForResult(intent, VariableUltils.REQUEST_CODE);
                 return false;
             }
@@ -146,6 +145,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
                 adapter.notifyDataSetChanged();
             }
             progressBar.setVisibility(View.GONE);
+            tv_message_nothing.setVisibility(View.GONE);
             rv_absence.setLayoutManager(layoutManager);
             rv_absence.setAdapter(adapter);
             rv_absence.addOnScrollListener(recyOnScrollListener);

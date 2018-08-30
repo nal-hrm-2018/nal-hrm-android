@@ -158,6 +158,13 @@
     <string name="fra_list_emp_nothingToShow">Nothing to show</string>
     <string name="infor_null">--</string>
     <string name="error_field_is_not_empty">Field is not empty</string>
+    <string name="absence_from">From (*)</string>
+    <string name="absence_to">To (*)</string>
+    <string name="absence_hint_from">Từ ngày (*)</string>
+    <string name="absence_hint_to">Đến ngày (*)</string>
+    <string name="absence_time">Time (*)</string>
+    <string name="absence_reason">Reason</string>
+    <string name="absence_type">Type (*)</string>
     <string name="text_title_edit_absence">Edit Absence</string>
     <string name="text_title_view_absence">View Absence</string>
     <string name="menu_id_dashboard">id_dashboard</string>

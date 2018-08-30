@@ -1,17 +1,24 @@
-package com.dal.hrm_management.adapter;
+package com.dal.hrm_management.adapter.listOT;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.fakeData.Absence;
+import com.dal.hrm_management.utils.PermissionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +27,13 @@ import java.util.List;
  * Created by Luu Ngoc Lan on 02-Aug-18.
  */
 
-public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceManagerForPoAdapter.MyViewHolder> implements Filterable {
+public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAdapter.MyViewHolder> implements Filterable {
     private List<Absence> absenceList;
     private Context context;
     private List<Absence> absenceListFilter;
     private AbsenceAdapterListener listener;
 
-    public AbsenceManagerForPoAdapter(List<Absence> absenceList, Context context, AbsenceAdapterListener listener) {
+    public OTManagerForPoAdapter(List<Absence> absenceList, Context context, AbsenceAdapterListener listener) {
         this.absenceList = absenceList;
         this.context = context;
         this.absenceListFilter = absenceList;
@@ -47,8 +54,62 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         holder.tv_reason.setText(absence.getReason());
         holder.tv_from.setText(absence.getFrom());
         holder.tv_to.setText(absence.getTo());
+        if(!PermissionManager.isPermited(PermissionManager.listPermissions,"approve_absence")){
+            holder.imgBtn_accept.setVisibility(View.GONE);
+        }
+        if (!PermissionManager.isPermited(PermissionManager.listPermissions, "reject_absence")) {
+            holder.imgBtn_cancel.setVisibility(View.GONE);
+        }
+        if (absence.getStatus().equals(context.getString(R.string.absence_status_accepted))) {
+            holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
+            holder.tv_status.setVisibility(View.VISIBLE);
+            holder.ll_button.setVisibility(View.GONE);
+        }
+        if (absence.getStatus().equals(context.getString(R.string.absence_status_canceled))) {
+            holder.tv_status.setText(context.getString(R.string.absence_status_canceled));
+            holder.tv_status.setVisibility(View.VISIBLE);
+            holder.ll_button.setVisibility(View.GONE);
+        }
         holder.setIsRecyclable(false);
 
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                if (view.getId() == R.id.imgBtn_accept) {
+                    holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
+                    holder.tv_status.setVisibility(View.VISIBLE);
+                    holder.ll_button.setVisibility(View.GONE);
+                    absence.setStatus(context.getString(R.string.absence_status_accepted));
+                } else {
+                    showDialogReason();
+                }
+            }
+
+            private void showDialogReason() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                final EditText input = new EditText(context);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setHint("Write your reason here");
+                builder.setView(input);
+                builder.setTitle("Why you deny?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        holder.tv_status.setText(context.getString(R.string.absence_status_canceled));
+                        holder.tv_status.setVisibility(View.VISIBLE);
+                        holder.ll_button.setVisibility(View.GONE);
+                        absence.setStatus(context.getString(R.string.absence_status_canceled));
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                builder.create().show();
+            }
+        });
     }
 
 
@@ -94,7 +155,12 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         TextView tv_reason;
         TextView tv_from;
         TextView tv_to;
+        TextView tv_status;
+        LinearLayout ll_button;
+        ImageButton imgBtn_cancel;
+        ImageButton imgBtn_accept;
         ItemClickListener itemClickListener;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             absences_layout = (LinearLayout) itemView.findViewById(R.id.absences_layout);
@@ -103,6 +169,12 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
             tv_reason = (TextView) itemView.findViewById(R.id.tv_reason);
             tv_from = (TextView) itemView.findViewById(R.id.tv_from);
             tv_to = (TextView) itemView.findViewById(R.id.tv_to);
+            tv_status = (TextView) itemView.findViewById(R.id.tv_status);
+            ll_button = (LinearLayout) itemView.findViewById(R.id.ll_button);
+            imgBtn_accept = (ImageButton) itemView.findViewById(R.id.imgBtn_accept);
+            imgBtn_cancel = (ImageButton) itemView.findViewById(R.id.imgBtn_cancel);
+            imgBtn_accept.setOnClickListener(this);
+            imgBtn_cancel.setOnClickListener(this);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {

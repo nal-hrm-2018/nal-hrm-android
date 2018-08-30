@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.AbsenceListHRFragment">
-
     <TextView
         android:id="@+id/tvAbsenceFragHR_nothingToshow"
         android:layout_width="match_parent"
@@ -13,12 +12,10 @@
         android:text="@string/fra_list_emp_nothingToShow"
         android:textAlignment="center"
         android:visibility="gone"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,35 +24,30 @@
             android:padding="@dimen/activity_horizontal_margin"
             android:paddingTop="?attr/actionBarSize"
             android:weightSum="3">
-
             <Spinner
                 android:id="@+id/spn_year"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
-
             <Spinner
                 android:id="@+id/spn_month"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
-
             <Button
                 android:id="@+id/btn_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
+                android:textColor="@color/color_white"
                 android:background="@color/colorPrimary"
                 android:text="@string/absence_button_filter" />
-
         </LinearLayout>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
         <ProgressBar
             android:id="@+id/prgAbsenceFragHR_ShowMore"
             android:layout_width="wrap_content"
