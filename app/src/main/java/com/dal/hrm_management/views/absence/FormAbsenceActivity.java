@@ -1,10 +1,8 @@
 package com.dal.hrm_management.views.absence;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -13,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,47 +19,42 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
-import com.dal.hrm_management.presenters.absence.IAbsencePresenter;
 import com.dal.hrm_management.utils.ExtraUltils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.RequestBody;
 
-public class Form_absence extends AppCompatActivity implements View.OnClickListener,IAbsenceFormActivity{
-    private final String TAG = Form_absence.class.getSimpleName();
-    String[] THOIGIANNGHI = {"All day","Morning","Afternoon"};
-    Toolbar toolbar;
+public class FormAbsenceActivity extends AppCompatActivity implements View.OnClickListener, IAbsenceFormActivity {
+    private final String TAG = FormAbsenceActivity.class.getSimpleName();
+    String[] THOIGIANNGHI = {"All day", "Morning", "Afternoon"};
     Button btnSubmit;
-    TextView edt_tuNgay,edt_denNgay;
-    EditText edtReason,edtNote;
+    TextView edt_tuNgay, edt_denNgay;
+    EditText edtReason, edtNote;
     private int mYear, mMonth, mDay;
     AbsencePresenter absencePresenter;
-    Spinner loaiNghi,thoiGianNghi;
-    //time
+    Spinner loaiNghi, thoiGianNghi;
     Calendar c = Calendar.getInstance();
     //List type absence
     List<TypeAbsence> listAbsence;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_absence);
-        initView();
         mapMVP();
+        initView();
         initData();
         getExtra();
     }
 
     private void getExtra() {
         Absence absence = (Absence) getIntent().getSerializableExtra(ExtraUltils.KEY_PUT_ABSENCE_INTENT);
-        if (absence !=null){
+        if (absence != null) {
             setTitle(getResources().getString(R.string.text_title_edit_absence));
             edt_tuNgay.setText(absence.getFromDate());
             edt_denNgay.setText(absence.getToDate());
@@ -85,44 +77,40 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initData() {
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle(getString(R.string.absence_add));
         absencePresenter.getTypeAbsence();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.support_simple_spinner_dropdown_item, THOIGIANNGHI);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, THOIGIANNGHI);
         thoiGianNghi.setAdapter(adapter);
-        //init time
 
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
-        edt_tuNgay.setText(mYear+ "-"+ (mMonth + 1)  + "-" +mDay);
-        edt_denNgay.setText(mYear+ "-"+ (mMonth + 1)  + "-" +mDay);
+        edt_tuNgay.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
+        edt_denNgay.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
     }
 
     private void initView() {
-        toolbar =(Toolbar) findViewById(R.id.form_absence_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle(getString(R.string.absence_add));
         edt_tuNgay = findViewById(R.id.form_absence_edt_tuNgay);
         edt_tuNgay.setOnClickListener(this);
-        edt_denNgay =findViewById(R.id.form_absence_edt_denNgay);
+        edt_denNgay = findViewById(R.id.form_absence_edt_denNgay);
         edt_denNgay.setOnClickListener(this);
-        loaiNghi =(Spinner) findViewById(R.id.form_absence_spinner_loaiNghi);
-        thoiGianNghi =(Spinner) findViewById(R.id.form_absence_spinner_thoiGianNghi);
+        loaiNghi = (Spinner) findViewById(R.id.form_absence_spinner_loaiNghi);
+        thoiGianNghi = (Spinner) findViewById(R.id.form_absence_spinner_thoiGianNghi);
         btnSubmit = findViewById(R.id.form_absence_btn_submit);
         btnSubmit.setOnClickListener(this);
         edtReason = findViewById(R.id.form_absence_edt_lydo);
-        edtNote =findViewById(R.id.form_absence_edt_note);
-
-
+        edtNote = findViewById(R.id.form_absence_edt_note);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
@@ -132,13 +120,13 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Log.d(TAG, String.valueOf(view.getId()));
-        switch (view.getId()){
+        switch (view.getId()) {
 
             case R.id.form_absence_btn_submit:
                 View check = checkValidateForm();
-                if (check != null){
+                if (check != null) {
                     check.requestFocus();
-                }else {
+                } else {
                     String absenceType = loaiNghi.getSelectedItem().toString();
                     absenceType.replace(" ", "_");
                     int absenceTypeId = getAbsenceTypeId(absenceType);
@@ -160,39 +148,34 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    RequestBody body = RequestBody.create(
-                            okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+                    RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
                     absencePresenter.addAbsence(body);
                 }
                 break;
             case R.id.form_absence_edt_tuNgay:
-                DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                        new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                                edt_tuNgay.setText(year+ "-"+ (monthOfYear + 1)  + "-" +dayOfMonth);
+                        edt_tuNgay.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
 
-                            }
-                        }, mYear, mMonth, mDay);
+                    }
+                }, mYear, mMonth, mDay);
                 datePickerDialog.show();
                 break;
             case R.id.form_absence_edt_denNgay:
 
 
-                DatePickerDialog datePickerDialog1 = new DatePickerDialog(this,
-                        new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog1 = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                                edt_denNgay.setText(year+ "-"+ (monthOfYear + 1)  + "-" +dayOfMonth);
+                        edt_denNgay.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
 
-                            }
-                        }, mYear, mMonth, mDay);
+                    }
+                }, mYear, mMonth, mDay);
                 datePickerDialog1.show();
                 break;
         }
@@ -201,10 +184,10 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     private View checkValidateForm() {
         View focusView = null;
         //edt tu ngay
-        if (TextUtils.isEmpty(edt_tuNgay.getText().toString())){
+        if (TextUtils.isEmpty(edt_tuNgay.getText().toString())) {
             edt_tuNgay.setError(getResources().getString(R.string.error_field_is_not_empty));
             focusView = edt_tuNgay;
-        } else if (TextUtils.isEmpty(edt_denNgay.getText().toString())){
+        } else if (TextUtils.isEmpty(edt_denNgay.getText().toString())) {
             edt_denNgay.setError(getResources().getString(R.string.error_field_is_not_empty));
             focusView = edt_denNgay;
         }
@@ -213,42 +196,45 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     }
 
     private int getAbsenceTimeId(String absenceTime) {
-        switch (absenceTime){
-            case "All day": return 1;
-            case "Morning": return 2;
-            default: return 3;
+        switch (absenceTime) {
+            case "All day":
+                return 1;
+            case "Morning":
+                return 2;
+            default:
+                return 3;
         }
     }
 
     private int getAbsenceTypeId(String absenceType) {
-        for (TypeAbsence type:listAbsence) {
-            if (type.getNameAbsenceType().equalsIgnoreCase(absenceType))return type.getIdAbsenceType();
+        for (TypeAbsence type : listAbsence) {
+            if (type.getNameAbsenceType().equalsIgnoreCase(absenceType))
+                return type.getIdAbsenceType();
         }
         return 1;
     }
 
     @Override
     public void Success() {
-        Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(),AbsenceViewFragment.class);
-        startActivity(intent);
+        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
     public void Failure() {
-        Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loadTypeAbsenceSuccess(List list) {
         listAbsence = list;
-        ArrayAdapter<TypeAbsence> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,listAbsence);
+        ArrayAdapter<TypeAbsence> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, listAbsence);
         loaiNghi.setAdapter(adapter);
     }
 
     @Override
     public void loadTypeAbsenceFailure() {
-        Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
         finish();
     }
 }

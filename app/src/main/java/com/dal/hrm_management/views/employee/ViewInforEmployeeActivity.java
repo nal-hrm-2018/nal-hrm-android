@@ -39,7 +39,7 @@ public class ViewInforEmployeeActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
+        tabLayout.setTabTextColors(getResources().getColor(R.color.color_white),getResources().getColor(R.color.colorAccent));
     }
 
     private void setupViewPager(ViewPager viewPager) {

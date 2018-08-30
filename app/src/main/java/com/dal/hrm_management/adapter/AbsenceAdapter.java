@@ -3,17 +3,15 @@ package com.dal.hrm_management.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.utils.ExtraUltils;
-import com.dal.hrm_management.views.absence.Form_absence;
+import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -44,7 +42,7 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 Absence absence = absences.get(position);
-                Intent intent = new Intent(context, Form_absence.class);
+                Intent intent = new Intent(context, FormAbsenceActivity.class);
                 intent.putExtra(ExtraUltils.KEY_PUT_ABSENCE_INTENT,(Serializable) absence);
                 context.startActivity(intent);
             }
