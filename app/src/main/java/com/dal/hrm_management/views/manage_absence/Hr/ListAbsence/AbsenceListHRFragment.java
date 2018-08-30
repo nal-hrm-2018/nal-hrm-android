@@ -39,15 +39,14 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private AbsenceListForHrAdapter adapter;
     private RecyclerView recyclerView;
     private Spinner spn_year, spn_month;
-    private TextView tv_time;
     private TextView tvNothingToShow;
     private ProgressBar progressBar;
-    private Button btn_filter;
     private ManageAbsenceHrPresenter manageAbsenceHrPresenter;
     private int page =1;
     private final int pageSize = 20;
     private int totalAbsence=0;
-    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+    LinearLayoutManager layoutManager;
+
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -82,8 +81,6 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         mapMVP();
         initData();
         setEvent(view);
-//        fakeData();
-//        setDataIntoView();
         return view;
     }
 
@@ -95,6 +92,8 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         //get api
         absenceList = new ArrayList<>();
         manageAbsenceHrPresenter.getListAbsence(page,pageSize);
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         //set adapter filter
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -110,23 +109,17 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     }
 
 
-//    private void setDataIntoView() {
-//        adapter = new AbsenceListForHrAdapter(absenceList, R.layout.item_list_absence_of_hr, getActivity());
-//        recyclerView.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-//    }
-
 
     private void setEvent(View view) {
            }
     private void initUI(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         progressBar = view.findViewById(R.id.prgAbsenceFragHR_ShowMore);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
         spn_month = (Spinner) view.findViewById(R.id.spn_month);
         spn_year = (Spinner) view.findViewById(R.id.spn_year);
         tvNothingToShow = view.findViewById(R.id.tvAbsenceFragHR_nothingToshow);
-        tvNothingToShow.setVisibility(View.GONE);
+        layoutManager = new LinearLayoutManager(getActivity());
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -149,6 +142,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     public void getListAbsenceSuccess(int total, List<ListAbsenceForHr> list) {
         totalAbsence = total;
         recyclerView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
         if(list.size() !=0){
             absenceList.addAll(list);
             if (adapter == null){
@@ -156,8 +150,9 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
             }else{
                 adapter.notifyDataSetChanged();
             }
-            progressBar.setVisibility(View.GONE);
+            recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
+
             recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
         }else{
             tvNothingToShow.setVisibility(View.VISIBLE);
