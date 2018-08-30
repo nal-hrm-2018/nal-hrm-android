@@ -163,7 +163,7 @@
     <string name="absence_hint_from">Từ ngày (*)</string>
     <string name="absence_hint_to">Đến ngày (*)</string>
     <string name="absence_time">Time (*)</string>
-    <string name="absence_reason">Reason</string>
+    <string name="absence_reason">Reason (*)</string>
     <string name="absence_type">Type (*)</string>
     <string name="text_title_edit_absence">Edit Absence</string>
     <string name="text_title_view_absence">View Absence</string>

@@ -129,7 +129,8 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                     check.requestFocus();
                 } else {
                     String absenceType = loaiNghi.getSelectedItem().toString();
-                    absenceType.replace(" ", "_");
+                    absenceType = absenceType.replace(" ", "_");
+
                     int absenceTypeId = getAbsenceTypeId(absenceType);
                     Log.d(TAG + " absenceTypeId: ", String.valueOf(absenceTypeId));
                     String absenceTime = thoiGianNghi.getSelectedItem().toString();
@@ -191,6 +192,9 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         } else if (TextUtils.isEmpty(edt_denNgay.getText().toString())) {
             edt_denNgay.setError(getResources().getString(R.string.error_field_is_not_empty));
             focusView = edt_denNgay;
+        }else if (TextUtils.isEmpty(edtReason.getText().toString().trim())){
+            edtReason.setError(getResources().getString(R.string.error_field_is_not_empty));
+            focusView = edtReason;
         }
         //Đang thiếu validate
         return focusView;
