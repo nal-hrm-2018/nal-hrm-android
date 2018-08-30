@@ -34,12 +34,7 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_absence_employee);
-        //mapMVP();
         initUi();
-        setEvent();
-    }
-
-    private void setEvent() {
     }
 
     @Override
@@ -49,11 +44,6 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void mapMVP() {
-        detailAbsenceEmployeePresenter = new DetailAbsenceEmployeePresenter(this);
-        detailAbsenceEmployeePresenter.initData();
     }
 
     private void initUi() {

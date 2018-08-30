@@ -11,9 +11,9 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.fakeData.Absence;
+import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
+import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
 
 import java.util.List;
 
@@ -22,11 +22,11 @@ import java.util.List;
  */
 
 public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListForHrAdapter.MyViewHolder> implements Filterable {
-    private List<Absence> absenceList;
+    private List<ListAbsenceForHr> absenceList;
     private int rowLayout;
     private Context context;
 
-    public AbsenceListForHrAdapter(List<Absence> absenceList, int rowLayout, Context context) {
+    public AbsenceListForHrAdapter(List<ListAbsenceForHr> absenceList, int rowLayout, Context context) {
         this.absenceList = absenceList;
         this.rowLayout = rowLayout;
         this.context = context;
@@ -40,10 +40,10 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.tv_nameEmployee.setText(absenceList.get(position).getName());
-        holder.tv_type.setText(absenceList.get(position).getType());
-        holder.tv_from.setText(absenceList.get(position).getFrom());
-        holder.tv_to.setText(absenceList.get(position).getTo());
+        holder.tv_nameEmployee.setText(absenceList.get(position).getEmployeeId().toString());
+        holder.tv_type.setText(absenceList.get(position).getAbsenceType().getNameAbsenceType().replace("_"," "));
+        holder.tv_from.setText(absenceList.get(position).getFromDate());
+        holder.tv_to.setText(absenceList.get(position).getToDate());
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {

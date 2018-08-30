@@ -86,7 +86,7 @@
     <string name="menu_absence">Absence</string>
     <string name="menu_manage">Manage</string>
     <string name="menu_employee">Employee</string>
-    <string name="menu_absence_empl">Absence1</string>
+    <string name="menu_absence_empl">Absence</string>
     <string name="menu_logout">Logout</string>
     <string name="tv_allowAbsence">Số ngày phép có thể nghỉ :</string>
     <string name="tv_remainingAbsenceDays">Số ngày phép còn lại :</string>
@@ -165,4 +165,13 @@
     <string name="absence_time">Time (*)</string>
     <string name="absence_reason">Reason</string>
     <string name="absence_type">Type (*)</string>
+    <string name="text_title_edit_absence">Edit Absence</string>
+    <string name="text_title_view_absence">View Absence</string>
+    <string name="menu_id_dashboard">id_dashboard</string>
+    <string name="menu_id_absence">id_absence</string>
+    <string name="menu_id_manage">id_manage</string>
+    <string name="menu_id_manage_employee">id_manage_employee</string>
+    <string name="menu_id_manage_absence">id_manage_absence</string>
+    <string name="menu_id_manage_holiday">id_manage_holiday</string>
+    <string name="menu_id_logout">id_logout</string>
 </resources>

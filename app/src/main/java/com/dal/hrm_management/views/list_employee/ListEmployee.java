@@ -84,7 +84,6 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
     }
 
     private void mapMVP() {

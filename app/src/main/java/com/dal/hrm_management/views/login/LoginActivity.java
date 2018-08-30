@@ -161,7 +161,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);
         btn_login.setEnabled(true);
         progressDialog.dismiss();
-        finish();
     }
 
     @Override

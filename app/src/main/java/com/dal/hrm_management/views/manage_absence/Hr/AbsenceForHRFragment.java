@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views;
+package com.dal.hrm_management.views.manage_absence.Hr;
 
 
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.views.manage_absence.Hr.holiday.HolidayHRFragment;
+import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.AbsenceListHRFragment;
 
 import java.util.ArrayList;
 import java.util.List;
