@@ -36,6 +36,7 @@ import com.dal.hrm_management.views.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.views.absence.AbsenceViewFragment;
 import com.dal.hrm_management.views.list_employee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;
+import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.AbsenceListHRFragment;
 import com.dal.hrm_management.views.manage_absence.Hr.holiday.HolidayHRFragment;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
 
@@ -196,10 +197,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                     if (model.id.equals(getString(R.string.menu_id_manage_employee))) {
                         getSupportActionBar().setTitle(getString(R.string.menu_employee));
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployee()).commit();
-                    } else if ((model.id.equals(getString(R.string.menu_id_manage_employee)))) {
+                    } else if ((model.id.equals(getString(R.string.menu_id_manage_absence)))) {
                         getSupportActionBar().setTitle(getString(R.string.menu_absence_empl));
                         if (data.getRole().getNameRole().equals("HR")) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceForHRFragment()).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
                         } else if (data.getRole().getNameRole().equals("PO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
                         }
