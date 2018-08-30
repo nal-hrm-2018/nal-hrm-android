@@ -43,11 +43,11 @@ public class AbsenceListHRFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_absence_list_hr, container, false);
         setHasOptionsMenu(true);
+        initPresenter();
         initUI(view);
         initData();
         setEvent(view);
         fakeData();
-        getDataFromApi();
         setDataIntoView();
         return view;
     }
@@ -66,7 +66,7 @@ public class AbsenceListHRFragment extends Fragment {
         spn_month.setAdapter(adapter_month);
     }
 
-    private void getDataFromApi() {
+    private void initPresenter() {
     }
 
     private void setDataIntoView() {

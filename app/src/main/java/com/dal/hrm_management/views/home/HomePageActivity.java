@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -116,7 +118,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     private void loadNavHeader(Profile data) {
         tv_nameProfile.setText(data.getNameEmployee());
-        tv_emailProfile.setText(data.getRole().getNameRole());
+        tv_emailProfile.setText(data.getEmail());
         RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
         String auth = Credentials.basic("hrm_testing", "hrm_testing");
         Call<ResponseBody> call;
@@ -174,9 +176,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceViewFragment()).commit();
                             getSupportActionBar().setTitle(R.string.menu_absence);
                         } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
-                            PermissionManager.listPermissions.clear();
-                            Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
-                            startActivity(intent);
+                            showDialogLogout();
                         }
                         Log.e("GROUP", headerList.get(groupPosition).menuName);
                         onBackPressed();
@@ -214,34 +214,56 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         });
     }
 
+    private void showDialogLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to log out?");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                PermissionManager.listPermissions.clear();
+                Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.create().show();
+    }
+
     private void prepareMenuData(Profile data) {
 
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_dashboard), true, false, getDrawable(R.drawable.ic_dashboard));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_dashboard), true, false, getResources().getDrawable(R.drawable.ic_dashboard));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel(getString(R.string.menu_absence), true, false, getDrawable(R.drawable.ic_absence));
+        menuModel = new MenuModel(getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
         if (data.getRole().getNameRole().equals("HR") || data.getRole().getNameRole().equals("PO") || data.getRole().getNameRole().equals("SM")) {
-            menuModel = new MenuModel(getString(R.string.menu_manage), true, true, getDrawable(R.drawable.ic_manage));
+            menuModel = new MenuModel(getString(R.string.menu_manage), true, true, getResources().getDrawable(R.drawable.ic_manage));
             headerList.add(menuModel);
 
             List<MenuModel> childModelsList = new ArrayList<>();
             MenuModel chilModel;
             if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_list_employee")) {
-                chilModel = new MenuModel(getString(R.string.menu_employee), false, false, getDrawable(R.drawable.ic_employee));
+                chilModel = new MenuModel(getString(R.string.menu_employee), false, false, getResources().getDrawable(R.drawable.ic_employee));
                 childModelsList.add(chilModel);
             }
             if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_project_absence_history")) {
-                chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getDrawable(R.drawable.ic_absence));
+                chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getResources().getDrawable(R.drawable.ic_absence));
                 childModelsList.add(chilModel);
             }
             if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_absence_history")) {
-                chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getDrawable(R.drawable.ic_absence));
+                chilModel = new MenuModel(getString(R.string.menu_absence_empl), false, false, getResources().getDrawable(R.drawable.ic_absence));
                 childModelsList.add(chilModel);
             }
 
@@ -249,7 +271,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 childList.put(menuModel, childModelsList);
             }
         }
-        menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
+        menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getResources().getDrawable(R.drawable.ic_logout));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
@@ -323,7 +345,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
      * Khi đã vào home mà không nhận được dữ liệu profile thì chỉ cần hiển thị đăng xuất
      */
     private void prepareMenuData() {
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getDrawable(R.drawable.ic_logout));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_logout), true, false, getResources().getDrawable(R.drawable.ic_logout));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);

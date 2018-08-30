@@ -3,7 +3,6 @@ package com.dal.hrm_management.views.absence;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,36 +11,31 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
-import com.dal.hrm_management.presenters.absence.IAbsencePresenter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import okhttp3.RequestBody;
 
-public class Form_absence extends AppCompatActivity implements View.OnClickListener,IAbsenceFormActivity{
-    private final String TAG = Form_absence.class.getSimpleName();
+public class FormAbsenceActivity extends AppCompatActivity implements View.OnClickListener,IAbsenceFormActivity{
+    private final String TAG = FormAbsenceActivity.class.getSimpleName();
     String[] LOAINGHI = {"annual leave", "unpaid leave", "maternity leave","marriage leave","bereavement leave","subtract salary","insurance date"};
     String[] THOIGIANNGHI = {"All day","Morning","Afternoon"};
-    Toolbar toolbar;
     Button btnSubmit;
     TextView edt_tuNgay,edt_denNgay;
     EditText edtReason,edtNote;
     private int mYear, mMonth, mDay;
     AbsencePresenter absencePresenter;
     Spinner loaiNghi,thoiGianNghi;
-    //time
     Calendar c = Calendar.getInstance();
 
 
@@ -50,8 +44,8 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_absence);
-        initView();
         mapMVP();
+        initView();
         initData();
     }
 
@@ -60,10 +54,6 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initData() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle(getString(R.string.absence_add));
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.support_simple_spinner_dropdown_item, LOAINGHI);
         loaiNghi.setGravity(View.TEXT_ALIGNMENT_CENTER);
@@ -72,19 +62,19 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
                 R.layout.support_simple_spinner_dropdown_item, THOIGIANNGHI);
         thoiGianNghi.setGravity(View.TEXT_ALIGNMENT_CENTER);
         thoiGianNghi.setAdapter(adapter);
-        //init time
 
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-
 
         edt_tuNgay.setText(mYear+ "-"+ (mMonth + 1)  + "-" +mDay);
         edt_denNgay.setText(mYear+ "-"+ (mMonth + 1)  + "-" +mDay);
     }
 
     private void initView() {
-        toolbar =(Toolbar) findViewById(R.id.form_absence_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle(getString(R.string.absence_add));
         edt_tuNgay = findViewById(R.id.form_absence_edt_tuNgay);
         edt_tuNgay.setOnClickListener(this);
         edt_denNgay =findViewById(R.id.form_absence_edt_denNgay);
@@ -95,8 +85,6 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
         btnSubmit.setOnClickListener(this);
         edtReason = findViewById(R.id.form_absence_edt_lydo);
         edtNote =findViewById(R.id.form_absence_edt_note);
-
-
     }
 
     @Override
@@ -201,7 +189,7 @@ public class Form_absence extends AppCompatActivity implements View.OnClickListe
 
     private int getAbsenceTypeId(String absenceType) {
         switch (absenceType){
-            case "annual_leave": return 1;
+            case "annual_lep;ave": return 1;
             case "unpaid_leave": return 2;
             case "maternity_leave": return 3;
             case "marriage_leave": return 4;

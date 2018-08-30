@@ -49,6 +49,7 @@ public class AbsenceForHRFragment extends Fragment {
         setupViewPager(viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabTextColors(getResources().getColor(R.color.color_white),getResources().getColor(R.color.colorAccent));
     }
 
 
