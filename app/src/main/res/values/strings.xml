@@ -97,17 +97,17 @@
     <string name="textview.text.email">Email (*)</string>
     <string name="textview.nameEmployeeAbsence">Name</string>
     <string name="textview.text.symbol">-</string>
-    <string name="textview.reason">Nghỉ lễ</string>
+    <string name="textview.reason">Holiday leave</string>
     <string name="textview.project">EMC_201</string>
-    <string name="textview.text.from">From</string>
-    <string name="textview.text.to">To</string>
+    <string name="textview.text.from">From: </string>
+    <string name="textview.text.to">To: </string>
     <string name="textview.noteAbsence">Muốn đăng kí</string>
     <string name="absence_manage_for_po_fragment.title">List absences</string>
-    <string name="absence_status_accepted">Đã đồng ý</string>
-    <string name="absence_status_canceled">Đã từ chối</string>
+    <string name="absence_status_accepted">Accepted</string>
+    <string name="absence_status_canceled">Denied</string>
     <string name="form_absence_edt_tungay">From</string>
     <string name="form_absence_edt_denNgay">To</string>
-    <string name="form_absence_spinner_loaiNghi">Loại nghỉ</string>
+    <string name="form_absence_spinner_loaiNghi">Type absence</string>
     <string name="form_absence_edt_reason">Reason</string>
     <string name="form_absence_edt_note">Note</string>
     <string name="form_absence_cb_nghiBoSung">Absence additional</string>
@@ -182,5 +182,9 @@
     <string name="fulltime">Fulltime</string>
     <string name="_22_9_2018">22/9/2018</string>
     <string name="_22_09_2020">22/09/2020</string>
+    <string name="absence_button_select">Select</string>
+    <string name="absence_item_reason">Reason: </string>
+    <string name="absence_item_type_time">Time: </string>
+    <string name="textview.time">All day</string>
     <string name="error_from_not_greater_than_to">Field \'from\' can\'t greater than field \'to\'</string>
 </resources>

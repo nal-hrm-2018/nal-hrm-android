@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:weightSum="5">
 
         <TextView
@@ -48,63 +47,87 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="5">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.7"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_vertical_margin">
+            android:layout_weight="0.5"
+            android:text="@string/absence_item_reason"
+            android:textSize="@dimen/text_size_small" />
 
-            <TextView
-                android:id="@+id/tv_reason"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/textview.reason"
-                android:textSize="@dimen/text_size_small" />
+        <TextView
+            android:id="@+id/tv_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4.5"
+            android:textSize="@dimen/text_size_small" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+    </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
-                    android:text="@string/textview.text.from"
-                    android:textSize="@dimen/text_size_small" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
 
-                <TextView
-                    android:id="@+id/tv_from"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
-                    android:textSize="@dimen/text_size_small" />
-            </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/textview.text.from"
+            android:textSize="@dimen/text_size_small" />
 
-            <LinearLayout
-                android:id="@+id/ll_endDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4.5"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
-                    android:text="@string/textview.text.to"
-                    android:textSize="@dimen/text_size_small" />
+    <LinearLayout
+        android:id="@+id/ll_endDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
 
-                <TextView
-                    android:id="@+id/tv_to"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayEndProjectEmployee"
-                    android:textSize="@dimen/text_size_small" />
-            </LinearLayout>
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/textview.text.to"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/tv_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4.5"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:hint="@string/textview.dayStartProjectEmployee"
+            android:text="@string/absence_item_type_time"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4.5"
+            android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 
 
