@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
+import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
 import com.dal.hrm_management.utils.VariableUltils;
 
@@ -42,6 +43,9 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     Calendar c = Calendar.getInstance();
     //List type absence
     List<TypeAbsence> listAbsence;
+    public enum StatusAbsences{enum_Add,enum_Edit;};
+    StatusAbsences statusAbsences = StatusAbsences.enum_Add;
+    private Integer idAbsence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +54,19 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         mapMVP();
         initView();
         initData();
-        getExtra();
+
     }
 
     private void getExtra() {
+        //Nếu như add form absence thì absence khác null còn ko thì absence = null nếu null thì xét trường hợp khác
         Absence absence = (Absence) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_ABSENCE_INTENT);
         if (absence !=null){
             setTitle(getResources().getString(R.string.text_title_edit_absence));
             edt_tuNgay.setText(absence.getFromDate());
             edt_denNgay.setText(absence.getToDate());
-            loaiNghi.setSelection(absence.getAbsenceType().getIdAbsenceType());
-            thoiGianNghi.setSelection(absence.getAbsenceTime().getIdAbsenceTime());
+            loaiNghi.setSelection(absence.getAbsenceType().getIdAbsenceType()-1);
+            //array start with index = 0
+            thoiGianNghi.setSelection(absence.getAbsenceTime().getIdAbsenceTime()-1);
             edtReason.setText(absence.getReason());
             edtNote.setText(absence.getDescription());
             edt_tuNgay.setOnClickListener(null);
@@ -71,6 +77,23 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
             edtNote.setEnabled(false);
             btnSubmit.setVisibility(View.GONE);
         }
+
+        else{
+            ListAbsenceForHr absenceForHr = (ListAbsenceForHr) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE);
+            if (absenceForHr !=null){
+                setTitle(absenceForHr.getNameEmployee());
+                edt_tuNgay.setText(absenceForHr.getFromDate());
+                edt_denNgay.setText(absenceForHr.getToDate());
+                loaiNghi.setSelection(absenceForHr.getAbsenceType().getIdAbsenceType()-1);
+                //array start with index = 0
+                thoiGianNghi.setSelection(absenceForHr.getAbsenceTime().getIdAbsenceTime()-1);
+                edtReason.setText(absenceForHr.getReason());
+                edtNote.setText(absenceForHr.getDescription());
+                idAbsence = absenceForHr.getIdAbsences();
+                statusAbsences = StatusAbsences.enum_Edit;
+            }
+        }
+
     }
 
     private void mapMVP() {
@@ -96,7 +119,6 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     private void initView() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle(getString(R.string.absence_add));
         edt_tuNgay = findViewById(R.id.form_absence_edt_tuNgay);
         edt_tuNgay.setOnClickListener(this);
         edt_denNgay = findViewById(R.id.form_absence_edt_denNgay);
@@ -151,7 +173,9 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                         e.printStackTrace();
                     }
                     RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-                    absencePresenter.addAbsence(body);
+                    if (statusAbsences == StatusAbsences.enum_Add) {
+                        absencePresenter.addAbsence(body);
+                    }else absencePresenter.editAbsence(body,idAbsence);
                 }
                 break;
             case R.id.form_absence_edt_tuNgay:
@@ -237,11 +261,25 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         listAbsence = list;
         ArrayAdapter<TypeAbsence> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, listAbsence);
         loaiNghi.setAdapter(adapter);
+        getExtra();
+
     }
 
     @Override
     public void loadTypeAbsenceFailure() {
         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    @Override
+    public void EditAbsenceSuccess() {
+        Toast.makeText(getApplicationContext(),"Edit Success",Toast.LENGTH_SHORT).show();
+        setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void EditAbsenceFailure() {
+        Toast.makeText(getApplicationContext(),"Edit Failure",Toast.LENGTH_SHORT).show();
     }
 }

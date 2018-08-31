@@ -7,6 +7,7 @@ import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.absence.AbsencesResponse;
 import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
+import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.absence.IAbsenceFormActivity;
 import com.dal.hrm_management.views.absence.IAbsenceViewActivity;
@@ -101,6 +102,29 @@ public class AbsencePresenter implements IAbsencePresenter {
                 iAbsenceFormActivity.loadTypeAbsenceFailure();
             }
         });
+    }
+
+    @Override
+    public void editAbsence(RequestBody json, int idAbsence) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<EditAbsenceResponse> call = apiService.putEditAbsence(idAbsence,LoginPresenter.token,json);
+        call.enqueue(new Callback<EditAbsenceResponse>() {
+            @Override
+            public void onResponse(Call<EditAbsenceResponse> call, Response<EditAbsenceResponse> response) {
+                Log.d(TAG,"response code :" +response.code());
+                if (response.code() >=200 && response.code() < 300){
+                    iAbsenceFormActivity.EditAbsenceSuccess();
+                }else{
+                    iAbsenceFormActivity.EditAbsenceFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EditAbsenceResponse> call, Throwable t) {
+                iAbsenceFormActivity.EditAbsenceFailure();
+            }
+        });
+
     }
 
 
