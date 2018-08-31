@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.fakeData.Absence;
+import com.dal.hrm_management.models.manageAbsence.po.listAbsence.Absence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +42,11 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Absence absence = absenceListFilter.get(position);
-        holder.tv_nameEmployee.setText(absence.getName());
+        holder.tv_nameEmployee.setText(absence.getNameEmployee());
         holder.tv_nameProject.setText(absence.getNameProject());
         holder.tv_reason.setText(absence.getReason());
-        holder.tv_from.setText(absence.getFrom());
-        holder.tv_to.setText(absence.getTo());
+        holder.tv_from.setText(absence.getFromDate());
+        holder.tv_to.setText(absence.getToDate());
         holder.setIsRecyclable(false);
 
     }
@@ -68,7 +68,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
                 } else {
                     List<Absence> filteredList = new ArrayList<>();
                     for (Absence row : absenceList) {
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase())||row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
+                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase())||row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }

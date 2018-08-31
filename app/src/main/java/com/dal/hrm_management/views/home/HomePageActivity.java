@@ -33,7 +33,7 @@ import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.utils.PermissionManager;
-import com.dal.hrm_management.views.AbsenceManagerForPOFragment;
+import com.dal.hrm_management.views.manage_absence.po.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.views.absence.AbsenceViewFragment;
 import com.dal.hrm_management.views.list_employee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;

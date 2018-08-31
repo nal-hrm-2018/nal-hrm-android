@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragment{
+public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragment {
     private final String TAG = AbsenceListHRFragment.class.getSimpleName();
 
     private List<ListAbsenceForHr> absenceList;
@@ -39,9 +39,9 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private TextView tvNothingToShow;
     private ProgressBar progressBar;
     private ManageAbsenceHrPresenter manageAbsenceHrPresenter;
-    private int page =1;
+    private int page = 1;
     private final int pageSize = 20;
-    private int totalAbsence=0;
+    private int totalAbsence = 0;
     LinearLayoutManager layoutManager;
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -58,16 +58,15 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
             Log.d("totalItemCount", String.valueOf(totalItemCount));
             int firstitem = layoutManager.findFirstVisibleItemPosition();
             Log.d("firstitem", String.valueOf(firstitem));
-            if (firstitem+visibleItemCount >= totalItemCount && page*pageSize < totalAbsence){
+            if (firstitem + visibleItemCount >= totalItemCount && page * pageSize < totalAbsence) {
                 page++;
                 Log.d(TAG + "current page: ", String.valueOf(page));
                 progressBar.setVisibility(View.VISIBLE);
-                manageAbsenceHrPresenter.getListAbsence(page,pageSize);
+                manageAbsenceHrPresenter.getListAbsence(page, pageSize);
 
             }
         }
     };
-
 
 
     @Override
@@ -88,7 +87,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private void initData() {
         //get api
         absenceList = new ArrayList<>();
-        manageAbsenceHrPresenter.getListAbsence(page,pageSize);
+        manageAbsenceHrPresenter.getListAbsence(page, pageSize);
         progressBar.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         //set adapter filter
@@ -96,7 +95,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         final int year = calendar.get(Calendar.YEAR);
         String[] year_arr = new String[year - 2015 + 1];
         for (int i = 2015, count = 0; i < year + 1; i++, count++) {
-            year_arr[count] = i+"";
+            year_arr[count] = i + "";
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, year_arr);
         spn_year.setAdapter(adapter);
@@ -106,9 +105,9 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     }
 
 
-
     private void setEvent(View view) {
-           }
+    }
+
     private void initUI(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         progressBar = view.findViewById(R.id.prgAbsenceFragHR_ShowMore);
@@ -118,18 +117,20 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         tvNothingToShow = view.findViewById(R.id.tvAbsenceFragHR_nothingToshow);
         layoutManager = new LinearLayoutManager(getActivity());
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.absence_hr_menu,menu);
+        inflater.inflate(R.menu.absence_hr_menu, menu);
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_export:
-                Toast.makeText(getActivity(),"Exporting....!!!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Exporting....!!!", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -140,18 +141,18 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         totalAbsence = total;
         recyclerView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        if(list.size() !=0){
+        if (list.size() != 0) {
             absenceList.addAll(list);
-            if (adapter == null){
-                adapter = new AbsenceListForHrAdapter(absenceList,R.layout.item_list_absence_of_hr, getActivity());
-            }else{
+            if (adapter == null) {
+                adapter = new AbsenceListForHrAdapter(absenceList, R.layout.item_list_absence_of_hr, getActivity());
+            } else {
                 adapter.notifyDataSetChanged();
             }
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
 
             recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
-        }else{
+        } else {
             tvNothingToShow.setVisibility(View.VISIBLE);
         }
     }

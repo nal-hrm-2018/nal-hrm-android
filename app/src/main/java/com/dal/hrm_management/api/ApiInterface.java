@@ -8,6 +8,8 @@ import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendRe
 import com.dal.hrm_management.models.login.LoginModel;
 import com.dal.hrm_management.models.manageAbsence.hr.ManageAbsenceResponse;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.AbsenceEmployeeDetailResponse;
+import com.dal.hrm_management.models.manageAbsence.po.listAbsence.AbsenceInProjectOfPOResponse;
+import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.ProjectInProgressPOResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
 import com.dal.hrm_management.models.profile.TeamsResponse;
@@ -79,4 +81,12 @@ public interface ApiInterface {
                                                                  @Query("pageSize") int pageSize,
                                                                  @Header("Authorization") String token);
 
+    @GET("/api/manage/absence/po")
+    Call<ProjectInProgressPOResponse> getProjectInProgressOfPO(@Query("page") int page,
+                                                               @Query("pageSize") int pageSize,
+                                                               @Header("Authorization") String token);
+
+    @GET("/api/manage/absence/po/project")
+    Call<AbsenceInProjectOfPOResponse> getAllAbsenceInProject(@Query("id") String idProject,
+                                                              @Header("Authorization") String token);
 }
