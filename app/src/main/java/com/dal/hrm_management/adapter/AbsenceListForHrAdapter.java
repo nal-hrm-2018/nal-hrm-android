@@ -22,10 +22,10 @@ import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresent
 import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
-import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.IAbsenceHRFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,16 +36,17 @@ import java.util.List;
 
 public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListForHrAdapter.MyViewHolder> implements Filterable{
     private List<ListAbsenceForHr> absenceList;
+    private List<ListAbsenceForHr> absenceListFiltered;
     private int rowLayout;
     private Context context;
     private int id_employee;
     private ManageAbsenceHrPresenter manageAbsenceHrPresenter;
 
-
     public AbsenceListForHrAdapter
             (List<ListAbsenceForHr> absenceList, int rowLayout, Context context,
              ManageAbsenceHrPresenter manageAbsenceHrPresenter) {
         this.absenceList = absenceList;
+        this.absenceListFiltered = absenceList;
         this.rowLayout = rowLayout;
         this.context = context;
         this.manageAbsenceHrPresenter = manageAbsenceHrPresenter;
@@ -59,17 +60,21 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tv_nameEmployee.setText(absenceList.get(position).getNameEmployee());
-        holder.tv_type.setText(absenceList.get(position).getAbsenceType().getNameAbsenceType().replace("_"," "));
-        holder.tv_from.setText(absenceList.get(position).getFromDate());
-        holder.edt_Resaon.setText(absenceList.get(position).getReason());
-        holder.tv_TimeAbsence.setText(absenceList.get(position).getAbsenceTime().getDescription());
-        holder.tv_to.setText(absenceList.get(position).getToDate());
+        final ListAbsenceForHr absence = absenceListFiltered.get(position);
+        holder.tv_nameEmployee.setText(absence.getNameEmployee());
+        holder.tv_type.setText(absence.getAbsenceType().getNameAbsenceType().replace("_"," "));
+        holder.tv_from.setText(absence.getFromDate());
+        if(absence.getReason()!= null){
+            holder.edt_Resaon.setText(absence.getReason());
+        } else {
+            holder.edt_Resaon.setText(R.string.infor_null);
+        }
+        holder.tv_TimeAbsence.setText(absence.getAbsenceTime().getDescription());
+        holder.tv_to.setText(absence.getToDate());
         holder.imvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("position", String.valueOf(position));
-                ListAbsenceForHr absence = absenceList.get(position);
                 Intent intent = new Intent(context, FormAbsenceActivity.class);
                 intent.putExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE,absence);
                 ((Activity)context).startActivityForResult(intent,VariableUltils.REQUEST_CODE);
@@ -80,14 +85,14 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Warning");
-                builder.setMessage("Delete absence of " + absenceList.get(position).getNameEmployee()+" ?");
+                builder.setMessage("Delete absence of " + absence.getNameEmployee()+" ?");
                 builder.setCancelable(false);
 
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Call api delete
-                        manageAbsenceHrPresenter.deleteAbsence(absenceList.get(position).getIdAbsences());
+                        manageAbsenceHrPresenter.deleteAbsence(absence.getIdAbsences());
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -107,10 +112,10 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                 /**
                  * get id employee at position clicked and put intent to get infor detail absence of employee
                  */
-                id_employee = absenceList.get(position).getIdEmployee();
+                id_employee = absence.getIdEmployee();
                 Intent intent = new Intent(context.getApplicationContext(), DetailAbsenceEmployeeActivity.class);
                 intent.putExtra("id_employee",id_employee);
-                intent.putExtra("name_employee",absenceList.get(position).getNameEmployee());
+                intent.putExtra("name_employee",absence.getNameEmployee());
                 context.startActivity(intent);
             }
         });
@@ -136,12 +141,39 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
 
     @Override
     public int getItemCount() {
-        return absenceList.size();
+        return absenceListFiltered.size();
     }
 
     @Override
     public Filter getFilter() {
-        return null;
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    absenceListFiltered = absenceList;
+                } else {
+                    List<ListAbsenceForHr> filteredList = new ArrayList<>();
+                    for (ListAbsenceForHr row : absenceList) {
+                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    absenceListFiltered = filteredList;
+                }
+                ;
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = absenceListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                absenceListFiltered = (ArrayList<ListAbsenceForHr>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
