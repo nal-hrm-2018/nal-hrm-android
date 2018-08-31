@@ -39,16 +39,6 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
         holder.tv_endAt.setText(absences.get(position).getToDate());
         holder.item_absence_tv_reason.setText(absences.get(position).getReason());
         holder.tv_thoigianNghi.setText(absences.get(position).getAbsenceTime().getDescription());
-        holder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position, boolean isLongClick) {
-                Absence absence = absences.get(position);
-                Intent intent = new Intent(context, FormAbsenceActivity.class);
-                intent.putExtra(VariableUltils.KEY_PUT_ABSENCE_INTENT,(Serializable) absence);
-
-                context.startActivity(intent);
-            }
-        });
 
     }
 
@@ -67,14 +57,13 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
     /**
      * Profile ViewHolder class.
      */
-    public static class DataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class DataViewHolder extends RecyclerView.ViewHolder{
 
         private TextView tv_type;
         private TextView tv_startAt;
         private TextView tv_endAt;
         private TextView tv_thoigianNghi;
         private TextView item_absence_tv_reason;
-        ItemClickListener itemClickListener;
 
         public DataViewHolder(View itemView) {
             super(itemView);
@@ -83,16 +72,6 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
             tv_endAt = itemView.findViewById(R.id.tv_endAt);
             tv_thoigianNghi = itemView.findViewById(R.id.tv_thoigianNghi);
             item_absence_tv_reason = itemView.findViewById(R.id.item_absence_tv_reason);
-            itemView.setOnClickListener(this);
-
-        }
-        public void setItemClickListener(ItemClickListener itemClickListener) {
-            this.itemClickListener = itemClickListener;
-
-        }
-        @Override
-        public void onClick(View view) {
-                itemClickListener.onClick(view, getAdapterPosition(), false);
         }
     }
 }

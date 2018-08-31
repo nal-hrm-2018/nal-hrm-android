@@ -39,7 +39,7 @@
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
 
-                <TextView
+                <EditText
                     android:id="@+id/form_absence_edt_tuNgay"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -48,6 +48,7 @@
                     android:drawableEnd="@drawable/ic_date"
                     android:hint="@string/absence_hint_from"
                     android:padding="@dimen/text_padding"
+                    android:cursorVisible="false"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium" />
             </LinearLayout>
@@ -69,7 +70,7 @@
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
 
-                <TextView
+                <EditText
                     android:id="@+id/form_absence_edt_denNgay"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -78,6 +79,7 @@
                     android:drawableEnd="@drawable/ic_date"
                     android:hint="@string/absence_hint_to"
                     android:padding="@dimen/text_padding"
+                    android:cursorVisible="false"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium" />
             </LinearLayout>

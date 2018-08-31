@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -26,7 +27,10 @@ import com.dal.hrm_management.utils.VariableUltils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.RequestBody;
@@ -35,11 +39,12 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     private final String TAG = FormAbsenceActivity.class.getSimpleName();
     String[] THOIGIANNGHI = {"All day", "Morning", "Afternoon"};
     Button btnSubmit;
-    TextView edt_tuNgay, edt_denNgay;
+    EditText edt_denNgay,edt_tuNgay;
     EditText edtReason, edtNote;
     private int mYear, mMonth, mDay;
     AbsencePresenter absencePresenter;
     Spinner loaiNghi, thoiGianNghi;
+    private CheckBox cb_nghiBoSung;
     Calendar c = Calendar.getInstance();
     //List type absence
     List<TypeAbsence> listAbsence;
@@ -129,6 +134,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         btnSubmit.setOnClickListener(this);
         edtReason = findViewById(R.id.form_absence_edt_lydo);
         edtNote = findViewById(R.id.form_absence_edt_note);
+        cb_nghiBoSung = findViewById(R.id.form_absence_cb_nghiBoSung);
     }
 
     @Override
@@ -209,6 +215,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
 
     private View checkValidateForm() {
         View focusView = null;
+
         //edt tu ngay
         if (TextUtils.isEmpty(edt_tuNgay.getText().toString())) {
             edt_tuNgay.setError(getResources().getString(R.string.error_field_is_not_empty));
@@ -219,6 +226,21 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         }else if (TextUtils.isEmpty(edtReason.getText().toString().trim())){
             edtReason.setError(getResources().getString(R.string.error_field_is_not_empty));
             focusView = edtReason;
+        }
+        //từ ngày không lớn hơn đến ngày
+        else{
+            try {
+                Date tuNgay = new SimpleDateFormat("yyyy-MM-dd").parse(edt_tuNgay.getText().toString());
+                Date denNgay = new SimpleDateFormat("yyyy-MM-dd").parse(edt_denNgay.getText().toString());
+                if (tuNgay.compareTo(denNgay) > 0){
+                    edt_denNgay.setError(getResources().getString(R.string.error_from_not_greater_than_to));
+                    focusView = edt_denNgay;
+                    Toast.makeText(this,getResources().getString(R.string.error_from_not_greater_than_to),Toast.LENGTH_SHORT).show();
+
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         //Đang thiếu validate
         return focusView;
