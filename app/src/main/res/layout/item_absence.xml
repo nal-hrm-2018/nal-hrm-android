@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:text="Lý do: "
+                android:text="@string/absence_item_reason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView

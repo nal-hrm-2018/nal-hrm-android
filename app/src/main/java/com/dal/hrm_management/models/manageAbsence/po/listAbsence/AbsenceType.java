@@ -25,12 +25,6 @@ public class AbsenceType {
     public AbsenceType() {
     }
 
-    /**
-     *
-     * @param description
-     * @param idAbsenceType
-     * @param nameAbsenceType
-     */
     public AbsenceType(Integer idAbsenceType, String nameAbsenceType, String description) {
         super();
         this.idAbsenceType = idAbsenceType;

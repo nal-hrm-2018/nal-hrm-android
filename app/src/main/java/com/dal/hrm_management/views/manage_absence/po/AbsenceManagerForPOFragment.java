@@ -14,8 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,7 +41,6 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     private RecyclerView recyclerView;
     private AbsenceManagerForPoAdapter adapter;
     private SearchView searchView;
-    private Button btnSelect;
     private Spinner spnProjects;
     private TextView tv_message_nothing;
     private ProgressBar progressBar;
@@ -85,20 +84,27 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         getActivity().setTitle(getString(R.string.absence_manage_for_po_fragment_title));
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        btnSelect = (Button) view.findViewById(R.id.btnSelect);
         spnProjects = (Spinner) view.findViewById(R.id.spnProjects);
         tv_message_nothing = (TextView) view.findViewById(R.id.tv_message_nothing);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
     }
 
     private void setEvent(View view) {
-        btnSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //get id_project selected in spinner
+        spnProjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 idProject = spnProjects.getSelectedItem().toString();
                 //call presenter to get list absence of project
                 manageAbsencePOPresenter.getListAbsence(idProject);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                idProject = spnProjects.getSelectedItem().toString();
+                if (idProject.equals("- No Project -")) {
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    //call presenter to get list absence of project
+                    manageAbsencePOPresenter.getListAbsence(idProject);
+                }
             }
         });
     }
@@ -156,7 +162,6 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
             }
         } else {
             nameProjects.add("- No Project -");
-            btnSelect.setEnabled(false);
             tv_message_nothing.setText("Haven't no absence!");
             tv_message_nothing.setVisibility(View.VISIBLE);
         }
@@ -188,5 +193,4 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     public void getListAbsenceInProjectFailed() {
         progressBar.setVisibility(View.VISIBLE);
     }
-
 }

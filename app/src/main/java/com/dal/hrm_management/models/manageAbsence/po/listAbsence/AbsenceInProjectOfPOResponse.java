@@ -25,12 +25,6 @@ public class AbsenceInProjectOfPOResponse {
     public AbsenceInProjectOfPOResponse() {
     }
 
-    /**
-     *
-     * @param data
-     * @param resultCode
-     * @param resultMessage
-     */
     public AbsenceInProjectOfPOResponse(Integer resultCode, String resultMessage, DataAbsence data) {
         super();
         this.resultCode = resultCode;

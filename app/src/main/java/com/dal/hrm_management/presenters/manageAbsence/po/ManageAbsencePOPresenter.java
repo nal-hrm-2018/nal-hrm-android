@@ -13,10 +13,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by Luu Ngoc Lan on 31-Aug-18.
- */
-
 public class ManageAbsencePOPresenter implements IManageAbsencePOPresenter {
 
     private final String TAG = ManageAbsencePOPresenter.class.getSimpleName();

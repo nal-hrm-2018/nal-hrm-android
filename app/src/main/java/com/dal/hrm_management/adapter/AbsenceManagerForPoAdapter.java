@@ -44,11 +44,20 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         final Absence absence = absenceListFilter.get(position);
         holder.tv_nameEmployee.setText(absence.getNameEmployee());
         holder.tv_nameProject.setText(absence.getNameProject());
-        holder.tv_reason.setText(absence.getReason());
+        if (absence.getReason() != null){
+            holder.tv_reason.setText(absence.getReason());
+        } else {
+            holder.tv_reason.setText(context.getResources().getString(R.string.infor_null));
+        }
         holder.tv_from.setText(absence.getFromDate());
         holder.tv_to.setText(absence.getToDate());
-        holder.setIsRecyclable(false);
+        if(absence.getAbsenceTime().getDescription()!=null){
+            holder.tv_time.setText(absence.getAbsenceTime().getDescription());
+        } else {
+            holder.tv_time.setText(context.getResources().getString(R.string.infor_null));
+        }
 
+        holder.setIsRecyclable(false);
     }
 
 
@@ -68,12 +77,13 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
                 } else {
                     List<Absence> filteredList = new ArrayList<>();
                     for (Absence row : absenceList) {
-                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase())||row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
+                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase()) || row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
                     absenceListFilter = filteredList;
-                };
+                }
+                ;
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = absenceListFilter;
                 return filterResults;
@@ -94,7 +104,9 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         TextView tv_reason;
         TextView tv_from;
         TextView tv_to;
+        TextView tv_time;
         ItemClickListener itemClickListener;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             absences_layout = (LinearLayout) itemView.findViewById(R.id.absences_layout);
@@ -103,6 +115,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
             tv_reason = (TextView) itemView.findViewById(R.id.tv_reason);
             tv_from = (TextView) itemView.findViewById(R.id.tv_from);
             tv_to = (TextView) itemView.findViewById(R.id.tv_to);
+            tv_time = (TextView) itemView.findViewById(R.id.tv_time);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {

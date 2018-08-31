@@ -6,56 +6,42 @@
     android:orientation="vertical"
     tools:context="com.dal.hrm_management.views.manage_absence.po.AbsenceManagerForPOFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_white"
-        android:orientation="horizontal"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:weightSum="5">
+        android:padding="@dimen/text_padding">
 
         <Spinner
             android:id="@+id/spnProjects"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_weight="4"
+            android:layout_centerHorizontal="true"
             android:padding="@dimen/text_padding" />
-
-        <Button
-            android:id="@+id/btnSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="@string/absence_button_select"
-            android:textColor="@color/color_white" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_message_nothing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:padding="@dimen/activity_horizontal_margin"
         android:textAlignment="center"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:textSize="@dimen/text_size_medium" />
+        android:textSize="@dimen/text_size_medium"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:visibility="gone" />
 
 </LinearLayout>
 

@@ -3,10 +3,6 @@ package com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Luu Ngoc Lan on 31-Aug-18.
- */
-
 public class Status {
     @SerializedName("idStatus")
     @Expose

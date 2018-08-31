@@ -26,11 +26,7 @@ public class DataAbsence {
     public DataAbsence() {
     }
 
-    /**
-     *
-     * @param total
-     * @param absence
-     */
+
     public DataAbsence(Integer total, List<Absence> absence) {
         super();
         this.total = total;

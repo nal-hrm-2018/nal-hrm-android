@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by Luu Ngoc Lan on 31-Aug-18.
- */
 
 public class DataProject {
     @SerializedName("total")

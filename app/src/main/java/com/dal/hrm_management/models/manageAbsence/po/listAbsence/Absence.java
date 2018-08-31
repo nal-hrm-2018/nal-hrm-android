@@ -49,20 +49,6 @@ public class Absence {
     public Absence() {
     }
 
-    /**
-     *
-     * @param fromDate
-     * @param reason
-     * @param nameEmployee
-     * @param absenceTime
-     * @param description
-     * @param absenceType
-     * @param toDate
-     * @param idEmployee
-     * @param idProject
-     * @param nameProject
-     * @param idAbsences
-     */
     public Absence(Integer idAbsences, Integer idEmployee, String nameEmployee, String idProject, String nameProject, String fromDate, String toDate, String reason, String description, AbsenceType absenceType, AbsenceTime absenceTime) {
         super();
         this.idAbsences = idAbsences;

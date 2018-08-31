@@ -25,12 +25,6 @@ public class AbsenceTime {
     public AbsenceTime() {
     }
 
-    /**
-     *
-     * @param idAbsenceTime
-     * @param description
-     * @param nameAbsenceTime
-     */
     public AbsenceTime(Integer idAbsenceTime, String nameAbsenceTime, String description) {
         super();
         this.idAbsenceTime = idAbsenceTime;
