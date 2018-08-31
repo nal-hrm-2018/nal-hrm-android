@@ -26,6 +26,10 @@ import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
 import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.IAbsenceHRFragment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -78,7 +82,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Warning");
-                builder.setMessage("Delete absence of" + absenceList.get(position).getNameEmployee()+" ?");
+                builder.setMessage("Delete absence of " + absenceList.get(position).getNameEmployee()+" ?");
                 builder.setCancelable(false);
 
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -112,6 +116,23 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                 context.startActivity(intent);
             }
         });
+        //Xét điều kiện nếu như form đó đã quá 1 tháng
+        try {
+            Calendar c = Calendar.getInstance();
+            Date dTuNgay = new SimpleDateFormat("yyyy-MM-dd").parse(absenceList.get(position).getFromDate());
+            c.setTime(dTuNgay);
+            c.add(Calendar.DATE,30);
+            dTuNgay = c.getTime();
+
+            Date dHienTai = new Date();
+            if (dTuNgay.compareTo(dHienTai) < 0){
+                //Tu ngay + 30 > dHienTai
+                holder.imvEdit.setVisibility(View.GONE);
+                holder.imvDelete.setVisibility(View.GONE);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -156,8 +177,5 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         public void onClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), false);
         }
-    }
-    public interface AbsenceAdapterListener {
-        void onItemClick(View view, int position);
     }
 }

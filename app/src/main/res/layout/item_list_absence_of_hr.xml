@@ -139,14 +139,16 @@
             android:id="@+id/imvItemListAbsenceHr_Edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit"
+            android:src="@drawable/ic_edit"
+            android:tint="@color/colorAccent"
             android:layout_centerVertical="true"/>
         <ImageView
             android:id="@+id/imvItemListAbsenceHr_Delete"
             android:layout_toRightOf="@+id/imvItemListAbsenceHr_Edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_delete"
+            android:src="@drawable/ic_delete"
+            android:layout_marginLeft="@dimen/text_padding"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
