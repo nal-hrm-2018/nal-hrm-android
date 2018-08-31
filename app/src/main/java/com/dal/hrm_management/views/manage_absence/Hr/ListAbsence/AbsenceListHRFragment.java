@@ -143,10 +143,13 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            page =1;
-            absenceList.clear();
-            manageAbsenceHrPresenter.getListAbsence(page,pageSize);
+            reloadPage();
         }
+    }
+    private void reloadPage(){
+        page =1;
+        absenceList.clear();
+        manageAbsenceHrPresenter.getListAbsence(page,pageSize);
     }
 
     @Override
@@ -157,7 +160,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         if(list.size() !=0){
             absenceList.addAll(list);
             if (adapter == null){
-                adapter = new AbsenceListForHrAdapter(absenceList,R.layout.item_list_absence_of_hr, getActivity());
+                adapter = new AbsenceListForHrAdapter(absenceList,R.layout.item_list_absence_of_hr, getActivity(),manageAbsenceHrPresenter);
             }else{
                 adapter.notifyDataSetChanged();
             }
@@ -174,6 +177,17 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     public void getListAbsenceFailure() {
         recyclerView.setVisibility(View.GONE);
         tvNothingToShow.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void deleteAbsenceSuccess() {
+        Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+        reloadPage();
+    }
+
+    @Override
+    public void deleteAbsenceFailure() {
+        Toast.makeText(getActivity(), "Failure", Toast.LENGTH_SHORT).show();
     }
 }
 

@@ -7,4 +7,6 @@ import java.util.List;
 public interface IAbsenceHRFragment {
     public void getListAbsenceSuccess(int total, List<ListAbsenceForHr> list);
     public void getListAbsenceFailure();
+    public void deleteAbsenceSuccess();
+    public void deleteAbsenceFailure();
 }

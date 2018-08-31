@@ -20,9 +20,11 @@ import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
+import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresenter;
 import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
+import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.IAbsenceHRFragment;
 
 import java.util.List;
 
@@ -30,16 +32,21 @@ import java.util.List;
  * Created by Luu Ngoc Lan on 06-Aug-18.
  */
 
-public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListForHrAdapter.MyViewHolder> implements Filterable {
+public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListForHrAdapter.MyViewHolder> implements Filterable{
     private List<ListAbsenceForHr> absenceList;
     private int rowLayout;
     private Context context;
     private int id_employee;
+    private ManageAbsenceHrPresenter manageAbsenceHrPresenter;
 
-    public AbsenceListForHrAdapter(List<ListAbsenceForHr> absenceList, int rowLayout, Context context) {
+
+    public AbsenceListForHrAdapter
+            (List<ListAbsenceForHr> absenceList, int rowLayout, Context context,
+             ManageAbsenceHrPresenter manageAbsenceHrPresenter) {
         this.absenceList = absenceList;
         this.rowLayout = rowLayout;
         this.context = context;
+        this.manageAbsenceHrPresenter = manageAbsenceHrPresenter;
     }
 
     @Override
@@ -73,16 +80,19 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                 builder.setTitle("Warning");
                 builder.setMessage("Delete absence of" + absenceList.get(position).getNameEmployee()+" ?");
                 builder.setCancelable(false);
+
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Call api delete
+                        manageAbsenceHrPresenter.deleteAbsence(absenceList.get(position).getIdAbsences());
                     }
                 });
-                builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        
+
+
                     }
                 });
                 AlertDialog alertDialog = builder.create();

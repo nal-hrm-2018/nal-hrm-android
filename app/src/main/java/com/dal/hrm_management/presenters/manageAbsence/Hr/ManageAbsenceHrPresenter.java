@@ -7,6 +7,7 @@ import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.models.manageAbsence.hr.ManageAbsenceResponse;
+import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.IAbsenceHRFragment;
 
@@ -46,6 +47,27 @@ public class ManageAbsenceHrPresenter implements IManageAbsenceHrPresenter{
             public void onFailure(Call<ManageAbsenceResponse> call, Throwable t) {
                 Log.d(TAG,"Failure get API");
                 iAbsenceHRFragment.getListAbsenceFailure();
+            }
+        });
+    }
+
+    @Override
+    public void deleteAbsence(int id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<EditAbsenceResponse> call = apiService.deleteAbsence(id,LoginPresenter.token);
+        call.enqueue(new Callback<EditAbsenceResponse>() {
+            @Override
+            public void onResponse(Call<EditAbsenceResponse> call, Response<EditAbsenceResponse> response) {
+                if (response.code() >=200 && response.code() < 300){
+                    iAbsenceHRFragment.deleteAbsenceSuccess();
+                }else{
+                    iAbsenceHRFragment.deleteAbsenceFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EditAbsenceResponse> call, Throwable t) {
+                iAbsenceHRFragment.deleteAbsenceFailure();
             }
         });
     }
