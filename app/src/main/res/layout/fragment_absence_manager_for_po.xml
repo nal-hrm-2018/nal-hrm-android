@@ -1,13 +1,47 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dal.hrm_management.views.AbsenceManagerForPOFragment">
+    android:background="@color/color_gray"
+    android:orientation="vertical"
+    tools:context="com.dal.hrm_management.views.manage_absence.po.AbsenceManagerForPOFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        android:padding="@dimen/text_padding">
+
+        <Spinner
+            android:id="@+id/spnProjects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/text_padding" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_message_nothing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_size_medium"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content" />
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:visibility="gone" />
+
+</LinearLayout>
 
