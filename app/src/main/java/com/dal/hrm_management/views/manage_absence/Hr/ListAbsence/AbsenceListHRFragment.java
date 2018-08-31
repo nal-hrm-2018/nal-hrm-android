@@ -1,5 +1,7 @@
 package com.dal.hrm_management.views.manage_absence.Hr.ListAbsence;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,6 +24,7 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.AbsenceListForHrAdapter;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresenter;
+import com.dal.hrm_management.utils.VariableUltils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +45,8 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private ManageAbsenceHrPresenter manageAbsenceHrPresenter;
     private int page = 1;
     private final int pageSize = 20;
-    private int totalAbsence = 0;
+    private int totalAbsence=0;
+
     LinearLayoutManager layoutManager;
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -63,7 +68,6 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
                 Log.d(TAG + "current page: ", String.valueOf(page));
                 progressBar.setVisibility(View.VISIBLE);
                 manageAbsenceHrPresenter.getListAbsence(page, pageSize);
-
             }
         }
     };
@@ -134,6 +138,16 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            page =1;
+            absenceList.clear();
+            manageAbsenceHrPresenter.getListAbsence(page,pageSize);
+        }
     }
 
     @Override

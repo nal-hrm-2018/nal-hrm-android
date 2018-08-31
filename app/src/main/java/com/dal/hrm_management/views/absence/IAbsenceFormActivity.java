@@ -7,4 +7,7 @@ public interface IAbsenceFormActivity {
     public void Failure();
     public void loadTypeAbsenceSuccess(List list);
     public void loadTypeAbsenceFailure();
+
+    public void EditAbsenceSuccess();
+    public void EditAbsenceFailure();
 }

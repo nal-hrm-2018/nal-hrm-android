@@ -9,4 +9,5 @@ public interface IAbsencePresenter {
     public void getDataAbsence(int currentPage, int pageSize);
     public void addAbsence(RequestBody json);
     public void getTypeAbsence();
+    public void editAbsence(RequestBody json,int idAbsence);
 }

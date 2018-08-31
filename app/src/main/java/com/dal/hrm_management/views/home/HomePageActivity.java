@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.home;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -34,6 +35,7 @@ import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.views.manage_absence.po.AbsenceManagerForPOFragment;
+import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.AbsenceViewFragment;
 import com.dal.hrm_management.views.list_employee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;
@@ -291,6 +293,15 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Edit absence success
+        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
+        }
     }
 
     @Override

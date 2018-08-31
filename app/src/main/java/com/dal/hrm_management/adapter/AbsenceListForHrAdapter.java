@@ -1,17 +1,25 @@
 package com.dal.hrm_management.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
+import com.dal.hrm_management.utils.VariableUltils;
+import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
 
 import java.util.List;
@@ -39,11 +47,46 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.tv_nameEmployee.setText(absenceList.get(position).getNameEmployee());
         holder.tv_type.setText(absenceList.get(position).getAbsenceType().getNameAbsenceType().replace("_"," "));
         holder.tv_from.setText(absenceList.get(position).getFromDate());
+        holder.edt_Resaon.setText(absenceList.get(position).getReason());
+        holder.tv_TimeAbsence.setText(absenceList.get(position).getAbsenceTime().getDescription());
         holder.tv_to.setText(absenceList.get(position).getToDate());
+        holder.imvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("position", String.valueOf(position));
+                ListAbsenceForHr absence = absenceList.get(position);
+                Intent intent = new Intent(context, FormAbsenceActivity.class);
+                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE,absence);
+                ((Activity)context).startActivityForResult(intent,VariableUltils.REQUEST_CODE);
+            }
+        });
+        holder.imvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Warning");
+                builder.setMessage("Delete absence of" + absenceList.get(position).getNameEmployee()+" ?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Call api delete
+                    }
+                });
+                builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
@@ -57,6 +100,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                 context.startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -74,6 +118,10 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         TextView tv_type;
         TextView tv_from;
         TextView tv_to;
+        EditText edt_Resaon;
+        TextView tv_TimeAbsence;
+        private ImageView imvEdit;
+        private ImageView imvDelete;
         ItemClickListener itemClickListener;
 
         public MyViewHolder(View itemView) {
@@ -82,6 +130,10 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
             tv_type = (TextView) itemView.findViewById(R.id.tv_type);
             tv_from = (TextView) itemView.findViewById(R.id.tv_from);
             tv_to = (TextView) itemView.findViewById(R.id.tv_to);
+            imvEdit = itemView.findViewById(R.id.imvItemListAbsenceHr_Edit);
+            imvDelete = itemView.findViewById(R.id.imvItemListAbsenceHr_Delete);
+            edt_Resaon = itemView.findViewById(R.id.edtItemListAbsenceHr_Reason);
+            tv_TimeAbsence = itemView.findViewById(R.id.tvItemListAbsenceHr_TimeAbsence);
             itemView.setOnClickListener(this);
         }
 

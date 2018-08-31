@@ -10,6 +10,7 @@ import com.dal.hrm_management.models.manageAbsence.hr.ManageAbsenceResponse;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.AbsenceEmployeeDetailResponse;
 import com.dal.hrm_management.models.manageAbsence.po.listAbsence.AbsenceInProjectOfPOResponse;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.ProjectInProgressPOResponse;
+import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
 import com.dal.hrm_management.models.profile.TeamsResponse;
@@ -17,12 +18,15 @@ import com.dal.hrm_management.models.profile.TeamsResponse;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -89,4 +93,27 @@ public interface ApiInterface {
     @GET("/api/manage/absence/po/project")
     Call<AbsenceInProjectOfPOResponse> getAllAbsenceInProject(@Query("id") String idProject,
                                                               @Header("Authorization") String token);
+    /**
+     * Edit absence with idAbsence
+     * @param idAbsence
+     * @param token
+     * @param json
+     * @return
+     */
+
+    @PUT("/api/manage/absence/edit/{absence_id}")
+    Call<EditAbsenceResponse> putEditAbsence(@Path(value = "absence_id", encoded = true) int idAbsence,
+                                             @Header("Authorization") String token,
+                                             @Body RequestBody json);
+
+    /**
+     * Delete absence with idAbsence
+     * @param idAbsence
+     * @param token
+     * @return
+     */
+    @DELETE("/api/manage/absence/delete/{absence_id}")
+    Call<EditAbsenceResponse> deleteAbsence(@Path(value = "absence_id",encoded = true) int idAbsence,
+                                            @Header("Authorization") String token);
+
 }
