@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +26,6 @@ import java.util.List;
 public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements IDetailAbsenceEmployeeActivity, View.OnClickListener {
 
     private RecyclerView rv_absence;
-    private ImageButton imBtn_show;
     private DetailAbsenceEmployeePresenter detailAbsenceEmployeePresenter;
     private Data dataAbsence;
     private List<Absence> absenceList;
@@ -78,11 +76,9 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
         setTitle(name_employee);
         absenceList = new ArrayList<>();
         tv_message_nothing = (TextView) findViewById(R.id.tv_message_nothing);
-        imBtn_show = (ImageButton) findViewById(R.id.btn_add);
         rv_absence = (RecyclerView) findViewById(R.id.rv_absence);
         rv_absence.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rv_absence.setAdapter(new AbsenceDetailEmployeeAdapter(absenceList, this));
-        imBtn_show.setOnClickListener(this);
     }
 
     private void showDialogInforAbsence() {
