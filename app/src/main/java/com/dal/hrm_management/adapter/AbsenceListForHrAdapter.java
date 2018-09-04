@@ -62,6 +62,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final ListAbsenceForHr absence = absenceListFiltered.get(position);
         holder.tv_nameEmployee.setText(absence.getNameEmployee());
+        holder.setIsRecyclable(true);
         holder.tv_type.setText(absence.getAbsenceType().getNameAbsenceType().replace("_"," "));
         holder.tv_from.setText(absence.getFromDate());
         if(absence.getReason()!= null){
@@ -181,7 +182,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         TextView tv_type;
         TextView tv_from;
         TextView tv_to;
-        EditText edt_Resaon;
+        TextView edt_Resaon;
         TextView tv_TimeAbsence;
         private ImageView imvEdit;
         private ImageView imvDelete;
