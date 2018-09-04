@@ -41,4 +41,5 @@
     <dimen name="dialog_title_checkbox_title_size">24dp</dimen>
     <dimen name="icon_size_lager">56dp</dimen>
     <dimen name="item_padding">4dp</dimen>
+    <dimen name="text_size_big">68sp</dimen>
 </resources>
