@@ -136,12 +136,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.d("DATA", response.body().toString());
                         Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                         imv_avatar.setImageBitmap(bitmap);
-                    } else {
                     }
-                } else {
                 }
             }
 

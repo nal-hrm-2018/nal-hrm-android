@@ -96,9 +96,7 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
                     if (response.body() != null) {
                         Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                         holder.imv_avaEmp.setImageBitmap(bitmap);
-                    } else {
                     }
-                } else {
                 }
             }
 

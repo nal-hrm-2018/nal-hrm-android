@@ -11,124 +11,109 @@
     android:padding="@dimen/activity_horizontal_margin">
     <LinearLayout
         android:layout_width="0dp"
-        android:orientation="vertical"
         android:layout_weight="8"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_nameEmployee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/textview.nameEmployeeAbsence"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:weightSum="5">
-
+            android:orientation="horizontal">
             <TextView
-                android:id="@+id/tv_nameEmployee"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/text_space_item_absence"
                 android:layout_height="wrap_content"
-                android:hint="@string/textview.nameEmployeeAbsence"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingRight="@dimen/text_padding"
-                android:text="@string/textview.text.symbol"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
-
+                android:text="@string/profile_view_type"
+                android:textSize="@dimen/text_size_small"/>
             <TextView
                 android:id="@+id/tv_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/absence_text_type"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold" />
+                android:text="@string/textview.project"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/text_space_item_absence"
+                android:layout_height="wrap_content"
+                android:text="@string/textview.text.from"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/tv_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview.dayStartProjectEmployee"
+                android:textSize="@dimen/text_size_small" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="@dimen/text_space_item_absence"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_vertical_margin">
+                android:text="@string/textview.text.to"
+                android:textSize="@dimen/text_size_small" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textview.dayStartProjectEmployee"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/textview.dayStartProjectEmployee"
-                        android:text="@string/textview.text.from"
-                        android:textSize="@dimen/text_size_small" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_from"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/textview.dayStartProjectEmployee"
-                        android:textSize="@dimen/text_size_small" />
-                </LinearLayout>
+            <TextView
+                android:layout_width="@dimen/text_space_item_absence"
+                android:layout_height="wrap_content"
+                android:text="@string/absence_type_time"
+                android:textSize="@dimen/text_size_small" />
 
-                <LinearLayout
-                    android:id="@+id/ll_endDay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tvItemListAbsenceHr_TimeAbsence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cả ngày"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/textview.dayStartProjectEmployee"
-                        android:text="@string/textview.text.to"
-                        android:textSize="@dimen/text_size_small" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_to"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/textview.dayEndProjectEmployee"
-                        android:textSize="@dimen/text_size_small" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:text="Type: "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:id="@+id/tvItemListAbsenceHr_TimeAbsence"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Reason : "/>
-                    <EditText
-                        android:id="@+id/edtItemListAbsenceHr_Reason"
-                        android:enabled="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
+            <TextView
+                android:layout_width="@dimen/text_space_item_absence"
+                android:layout_height="wrap_content"
+                android:text="@string/absence_item_reason"
+                android:textSize="@dimen/text_size_small" />
 
+
+            <TextView
+                android:id="@+id/edtItemListAbsenceHr_Reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:textSize="@dimen/text_size_small" />
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
@@ -148,10 +133,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete"
+            android:tint="@color/color_red"
             android:layout_marginLeft="@dimen/text_padding"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
-
-
-
 </LinearLayout>

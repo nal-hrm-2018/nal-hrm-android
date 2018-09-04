@@ -9,11 +9,13 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
@@ -28,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private SharedPreferences sharedPreferences;
     private CheckBox cb_remeber;
     private int PASSWORD_LENGTH = 6;
+    private TextView tvSomethingWrong;
     private ProgressDialog progressDialog;
     LoginPresenter loginPresenter;
 
@@ -66,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edt_email.setOnClickListener(this);
         edt_password.setOnClickListener(this);
         btn_login = findViewById(R.id.btn_login);
+        tvSomethingWrong = findViewById(R.id.tvLogin_SomethingWrong);
         cb_remeber = findViewById(R.id.cb_remember);
         sharedPreferences = getSharedPreferences("remeberMe", MODE_PRIVATE);
         initProgressProcess();
@@ -153,11 +157,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@") && email.contains(".");
+        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
     @Override
     public void loginSucess(String token) {
+        tvSomethingWrong.setVisibility(View.INVISIBLE);
         Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
         intent.putExtra("token", token);
         startActivity(intent);
@@ -167,8 +172,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void loginFailure() {
-        edt_password.setError(getString(R.string.error_incorrect_password));
-        edt_password.requestFocus();
+        tvSomethingWrong.setVisibility(View.VISIBLE);
         btn_login.setEnabled(true);
         progressDialog.dismiss();
     }

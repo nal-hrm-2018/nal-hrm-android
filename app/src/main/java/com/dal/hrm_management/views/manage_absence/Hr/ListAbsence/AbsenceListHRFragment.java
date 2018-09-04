@@ -53,6 +53,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private Button btn_filter;
     LinearLayoutManager layoutManager;
 
+
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -195,6 +196,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         recyclerView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         if (list.size() != 0) {
+            absenceList.clear();
             absenceList.addAll(list);
             if (adapter == null) {
                 adapter = new AbsenceListForHrAdapter(absenceList, R.layout.item_list_absence_of_hr, getActivity(), manageAbsenceHrPresenter);
@@ -206,6 +208,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
 
             recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
         } else {
+            absenceList.clear();
             tvNothingToShow.setVisibility(View.VISIBLE);
         }
     }

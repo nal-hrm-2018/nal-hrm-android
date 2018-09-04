@@ -146,9 +146,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
                         Log.d("DATA", response.body().toString());
                         Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                         imv_avatar.setImageBitmap(bitmap);
-                    } else {
                     }
-                } else {
                 }
             }
 

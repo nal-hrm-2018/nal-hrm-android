@@ -95,7 +95,7 @@
     <string name="textview.text.name">Name (*)</string>
     <string name="textview.text.position">Position (*)</string>
     <string name="textview.text.email">Email (*)</string>
-    <string name="textview.nameEmployeeAbsence">Name</string>
+    <string name="textview.nameEmployeeAbsence">Name Employee</string>
     <string name="textview.text.symbol">-</string>
     <string name="textview.reason">Holiday leave</string>
     <string name="textview.project">EMC_201</string>

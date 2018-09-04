@@ -177,20 +177,23 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     public void getListAbsenceInProjectSuccess(DataAbsence dataAbsence) {
         this.totalAbsenceInProject = dataAbsence.getTotal();
         if (totalAbsenceInProject != 0) {
+            this.absenceList.clear();
             this.absenceList = dataAbsence.getAbsence();
             adapter = new AbsenceManagerForPoAdapter(absenceList, getActivity(), this);
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             tv_message_nothing.setVisibility(View.GONE);
         } else {
+            this.absenceList.clear();
             tv_message_nothing.setText("No absence in this project!");
             tv_message_nothing.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
         }
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void getListAbsenceInProjectFailed() {
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 }

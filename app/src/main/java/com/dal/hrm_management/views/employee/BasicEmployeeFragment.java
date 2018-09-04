@@ -111,9 +111,7 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
                     if (response.body() != null) {
                         Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                         imv_avatar.setImageBitmap(bitmap);
-                    } else {
                     }
-                } else {
                 }
             }
 
