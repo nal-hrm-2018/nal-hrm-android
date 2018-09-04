@@ -331,9 +331,7 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
                     if (response.body() != null) {
                         Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                         imv_avatar.setImageBitmap(bitmap);
-                    } else {
                     }
-                } else {
                 }
             }
 

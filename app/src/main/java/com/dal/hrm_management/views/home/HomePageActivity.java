@@ -34,6 +34,7 @@ import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.utils.PermissionManager;
+import com.dal.hrm_management.views.dashboard.DashboardFragment;
 import com.dal.hrm_management.views.manage_absence.po.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.AbsenceViewFragment;
@@ -135,12 +136,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        Log.d("DATA", response.body().toString());
                         Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                         imv_avatar.setImageBitmap(bitmap);
-                    } else {
                     }
-                } else {
                 }
             }
 
@@ -171,6 +169,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
                         if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_dashboard))) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
                             getSupportActionBar().setTitle(R.string.menu_dashboard);
                         } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_project))) {
                             getSupportActionBar().setTitle(R.string.menu_project);

@@ -22,6 +22,7 @@ import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.profile.ProfilePresenter;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.List;
 
@@ -145,9 +146,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
                         Log.d("DATA", response.body().toString());
                         Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                         imv_avatar.setImageBitmap(bitmap);
-                    } else {
                     }
-                } else {
                 }
             }
 
@@ -177,7 +176,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
             tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
         } else tv_maritalStatus.setText(R.string.infor_null);
         if (profile.getBirthday() != null) {
-            tv_birthday.setText(profile.getBirthday());
+            tv_birthday.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getBirthday()));
         } else tv_birthday.setText(R.string.infor_null);
         if (profile.getEmployeeType().getNameEmployeeType() != null) {
             String type = profile.getEmployeeType().getNameEmployeeType();
@@ -202,10 +201,10 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
             tv_team.setText(R.string.infor_null);
         }
         if (profile.getStartWorkDate() != null) {
-            tv_start.setText(profile.getStartWorkDate());
+            tv_start.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getStartWorkDate()));
         } else tv_start.setText(R.string.infor_null);
         if (profile.getEndWorkDate() != null) {
-            tv_end.setText(profile.getEndWorkDate());
+            tv_end.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getEndWorkDate()));
         } else tv_end.setText(R.string.infor_null);
         progressBar.setVisibility(View.GONE);
     }

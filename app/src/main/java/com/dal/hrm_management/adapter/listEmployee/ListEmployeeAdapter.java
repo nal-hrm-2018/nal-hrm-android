@@ -96,9 +96,7 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
                     if (response.body() != null) {
                         Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                         holder.imv_avaEmp.setImageBitmap(bitmap);
-                    } else {
                     }
-                } else {
                 }
             }
 
@@ -185,7 +183,9 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
                 } else {
                     List<Employee> filteredList = new ArrayList<>();
                     for (Employee employee : arr) {
-                        if (employee.getNameEmployee().toLowerCase().contains(charString.toLowerCase())) {
+                        if (employee.getNameEmployee().toLowerCase().contains(charString.toLowerCase())
+                                ||employee.getRole().getNameRole().toLowerCase().contains(charString.toLowerCase())
+                                ||employee.getEmail().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(employee);
                         }
                     }

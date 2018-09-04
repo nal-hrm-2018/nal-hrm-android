@@ -102,15 +102,18 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         //set adapter filter
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
         String[] year_arr = new String[year - 2015 + 1];
         for (int i = 2015, count = 0; i < year + 1; i++, count++) {
             year_arr[count] = i + "";
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, year_arr);
         spn_year.setAdapter(adapter);
+        spn_year.setSelection(adapter.getPosition(year+""));
         ArrayAdapter<CharSequence> adapter_month = ArrayAdapter.createFromResource(getActivity(), R.array.month_arr, android.R.layout.simple_spinner_item);
         adapter_month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_month.setAdapter(adapter_month);
+        spn_month.setSelection(month+1);
     }
 
 
@@ -193,6 +196,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         recyclerView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         if (list.size() != 0) {
+            absenceList.clear();
             absenceList.addAll(list);
             if (adapter == null) {
                 adapter = new AbsenceListForHrAdapter(absenceList, R.layout.item_list_absence_of_hr, getActivity(), manageAbsenceHrPresenter);
@@ -204,6 +208,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
 
             recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
         } else {
+            absenceList.clear();
             tvNothingToShow.setVisibility(View.VISIBLE);
         }
     }
