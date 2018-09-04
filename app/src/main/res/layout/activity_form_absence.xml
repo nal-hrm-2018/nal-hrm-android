@@ -175,7 +175,8 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:padding="@dimen/text_padding"
-                android:text="@string/form_absence_cb_nghiBoSung" />
+                android:text="@string/form_absence_cb_nghiBoSung"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/form_absence_btn_submit"
