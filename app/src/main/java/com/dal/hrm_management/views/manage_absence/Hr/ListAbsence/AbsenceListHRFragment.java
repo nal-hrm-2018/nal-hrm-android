@@ -53,6 +53,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private Button btn_filter;
     LinearLayoutManager layoutManager;
 
+
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
