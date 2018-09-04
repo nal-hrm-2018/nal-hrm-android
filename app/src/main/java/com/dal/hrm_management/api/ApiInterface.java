@@ -79,6 +79,14 @@ public interface ApiInterface {
     Call<ManageAbsenceResponse> getListAbsenceForHr(@Query("page") int page,
                                                     @Query("pageSize") int pageSize,
                                                     @Header("Authorization") String token);
+
+    @GET("/api/manage/absence/search")
+    Call<ManageAbsenceResponse> searchAbsenceInMonth(@Query("month") int month,
+                                              @Query("year") int year,
+                                              @Query("page") int page,
+                                              @Query("pageSize") int pageSize,
+                                              @Header("Authorization") String token);
+
     @GET("/api/manage/absence/employee")
     Call<AbsenceEmployeeDetailResponse> getDetailAbsenceEmployee(@Query("id") int id,
                                                                  @Query("page") int page,

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content" />
 
     <ImageButton
-        android:id="@+id/imBtn_show"
+        android:id="@+id/btn_add"
         android:layout_width="@dimen/icon_size_lager"
         android:layout_height="@dimen/icon_size_lager"
         android:layout_alignParentBottom="true"
