@@ -185,12 +185,13 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         } else {
             tv_message_nothing.setText("No absence in this project!");
             tv_message_nothing.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
         }
         progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void getListAbsenceInProjectFailed() {
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 }

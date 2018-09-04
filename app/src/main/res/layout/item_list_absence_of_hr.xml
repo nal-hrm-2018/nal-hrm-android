@@ -107,6 +107,7 @@
                 android:text="@string/absence_item_reason"
                 android:textSize="@dimen/text_size_small" />
 
+
             <TextView
                 android:id="@+id/edtItemListAbsenceHr_Reason"
                 android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package com.dal.hrm_management.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -58,6 +59,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         return new AbsenceListForHrAdapter.MyViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final ListAbsenceForHr absence = absenceListFiltered.get(position);
@@ -94,6 +96,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Call api delete
                         manageAbsenceHrPresenter.deleteAbsence(absence.getIdAbsences());
+
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -120,14 +123,13 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                 context.startActivity(intent);
             }
         });
-        //Xét điều kiện nếu như form đó đã quá 1 tháng
+        //Xét điều kiện nếu như form đó đã quá 1 tháng - chưa check đúng đâu
         try {
             Calendar c = Calendar.getInstance();
             Date dTuNgay = new SimpleDateFormat("yyyy-MM-dd").parse(absenceList.get(position).getFromDate());
             c.setTime(dTuNgay);
             c.add(Calendar.DATE,30);
             dTuNgay = c.getTime();
-
             Date dHienTai = new Date();
             if (dTuNgay.compareTo(dHienTai) < 0){
                 //Tu ngay + 30 > dHienTai
