@@ -11,7 +11,6 @@ import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceRes
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.IAbsenceHRFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -71,4 +70,30 @@ public class ManageAbsenceHrPresenter implements IManageAbsenceHrPresenter{
             }
         });
     }
+
+    @Override
+    public void searchAbsenceWithMonth(int month, int year, int page, int pageSize) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<ManageAbsenceResponse> call = apiService.searchAbsenceInMonth(month, year, page,pageSize, LoginPresenter.token);
+        call.enqueue(new Callback<ManageAbsenceResponse>() {
+            @Override
+            public void onResponse(Call<ManageAbsenceResponse> call, Response<ManageAbsenceResponse> response) {
+                Log.d(TAG + "-response code: ", String.valueOf(response.code()));
+                if (response.code() >=200 && response.code() < 300){
+                    int total = response.body().getData().getTotal();
+                    List<ListAbsenceForHr> list = response.body().getData().getList();
+                    iAbsenceHRFragment.searchAbsenceSuccess(total,list);
+                }else{
+                    iAbsenceHRFragment.searchAbsenceFailed();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ManageAbsenceResponse> call, Throwable t) {
+                Log.d(TAG,"Failure get API");
+                iAbsenceHRFragment.searchAbsenceFailed();
+            }
+        });
+    }
+
 }

@@ -147,16 +147,16 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
         if (profile.getMobile() != null) {
             tv_phone.setText(profile.getMobile());
         } else tv_phone.setText(R.string.infor_null);
-        if (profile.getGenderDTO().getNameGender() != null) {
+        if (profile.getGenderDTO() != null) {
             tv_gender.setText(profile.getGenderDTO().getNameGender());
         } else tv_gender.setText(R.string.infor_null);
-        if (profile.getMaritalStatusDTO().getTypeMaritalStatus() != null) {
+        if (profile.getMaritalStatusDTO() != null) {
             tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
         } else tv_maritalStatus.setText(R.string.infor_null);
         if (profile.getBirthday() != null) {
             tv_birthday.setText(profile.getBirthday());
         } else tv_birthday.setText(R.string.infor_null);
-        if (profile.getEmployeeType().getNameEmployeeType() != null) {
+        if (profile.getEmployeeType() != null) {
             tv_position.setText(profile.getEmployeeType().getNameEmployeeType());
         } else tv_position.setText(R.string.infor_null);
         List<Team> teamList = profile.getTeams();

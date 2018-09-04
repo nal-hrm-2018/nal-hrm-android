@@ -9,4 +9,6 @@ public interface IAbsenceHRFragment {
     public void getListAbsenceFailure();
     public void deleteAbsenceSuccess();
     public void deleteAbsenceFailure();
+    public void searchAbsenceSuccess(int total, List<ListAbsenceForHr> list);
+    public void searchAbsenceFailed();
 }

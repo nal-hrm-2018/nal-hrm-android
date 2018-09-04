@@ -111,7 +111,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         navigation_menu.setNavigationItemSelectedListener(this);
         navHeader = navigation_menu.getHeaderView(0);
         imv_avatar = (ImageView) navHeader.findViewById(R.id.imv_avatar);
-
+        navigation_menu.setSelected(true);
         tv_nameProfile = (TextView) navHeader.findViewById(R.id.tv_nameProfile);
         tv_emailProfile = (TextView) navHeader.findViewById(R.id.tv_emailProfile);
         toolbar = findViewById(R.id.toolbar);

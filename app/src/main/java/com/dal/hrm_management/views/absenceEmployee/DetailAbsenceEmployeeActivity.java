@@ -78,7 +78,7 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
         setTitle(name_employee);
         absenceList = new ArrayList<>();
         tv_message_nothing = (TextView) findViewById(R.id.tv_message_nothing);
-        imBtn_show = (ImageButton) findViewById(R.id.imBtn_show);
+        imBtn_show = (ImageButton) findViewById(R.id.btn_add);
         rv_absence = (RecyclerView) findViewById(R.id.rv_absence);
         rv_absence.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rv_absence.setAdapter(new AbsenceDetailEmployeeAdapter(absenceList, this));

@@ -1,20 +1,14 @@
 package com.dal.hrm_management.views.absence;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +39,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     private int total = 0;
     private LinearLayoutManager layoutManager;
     private AbsenceAdapter adapter;
-    private ImageButton imBtn_show;
+    private ImageButton btn_add;
     private TextView tv_message_nothing;
     private ProgressBar progressBar;
     private TextView tv_allowAbsence, tv_remainingAbsenceDays, tv_unpaidLeave, tv_annualLeave, tv_marriageLeave, tv_maternityLeave, tv_bereavementLeave;
@@ -70,7 +64,6 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
                 Log.d(TAG + "current page: ", String.valueOf(current_page));
                 progressBar.setVisibility(View.VISIBLE);
                 absencePresenter.getDataAbsence(current_page, pageSize);
-
             }
         }
     };
@@ -96,24 +89,8 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         progressBar = root.findViewById(R.id.prgAbsenceFrag_ShowMore);
         rv_absence.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         tv_message_nothing = (TextView) root.findViewById(R.id.tv_message_nothing);
-        imBtn_show = (ImageButton) root.findViewById(R.id.imBtn_show);
-        imBtn_show.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.app_bar_menu_absence, menu);
-        addAbsence = menu.findItem(R.id.action_add_absence);
-        addAbsence.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(getActivity(), FormAbsenceActivity.class);
-                startActivityForResult(intent, VariableUltils.REQUEST_CODE);
-                return false;
-            }
-        });
+        btn_add = (ImageButton) root.findViewById(R.id.btn_add);
+        btn_add.setOnClickListener(this);
 
     }
 
@@ -164,19 +141,6 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         tv_message_nothing.setVisibility(View.VISIBLE);
     }
 
-    private void showDialogInforAbsence(DataAbsence dataAbsence) {
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View inforAbsence = inflater.inflate(R.layout.dialog_infor_absence, null, false);
-        initViewDialog(inforAbsence);
-        loadData(dataAbsence);
-        new AlertDialog.Builder(getActivity()).setView(inforAbsence).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).show();
-    }
-
     private void loadData(DataAbsence dataAbsence) {
         tv_allowAbsence.setText(dataAbsence.getAllowAbsence() + "");
         tv_remainingAbsenceDays.setText(dataAbsence.getRemainingAbsenceDays() + "");
@@ -200,8 +164,9 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imBtn_show:
-                showDialogInforAbsence(dataAbsence);
+            case R.id.btn_add:
+                Intent intent = new Intent(getActivity(), FormAbsenceActivity.class);
+                startActivityForResult(intent, VariableUltils.REQUEST_CODE);
         }
     }
 }
