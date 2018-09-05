@@ -2,7 +2,6 @@ package com.dal.hrm_management.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -20,6 +18,7 @@ import android.widget.TextView;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresenter;
+import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
@@ -67,14 +66,14 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         holder.tv_nameEmployee.setText(absence.getNameEmployee());
         holder.setIsRecyclable(true);
         holder.tv_type.setText(absence.getAbsenceType().getNameAbsenceType().replace("_"," "));
-        holder.tv_from.setText(absence.getFromDate());
+        holder.tv_from.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getFromDate()));
         if(absence.getReason()!= null){
             holder.edt_Resaon.setText(absence.getReason());
         } else {
             holder.edt_Resaon.setText(R.string.infor_null);
         }
         holder.tv_TimeAbsence.setText(absence.getAbsenceTime().getDescription());
-        holder.tv_to.setText(absence.getToDate());
+        holder.tv_to.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getToDate()));
         holder.imvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,8 +118,8 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                  */
                 id_employee = absence.getIdEmployee();
                 Intent intent = new Intent(context.getApplicationContext(), DetailAbsenceEmployeeActivity.class);
-                intent.putExtra("id_employee",id_employee);
-                intent.putExtra("name_employee",absence.getNameEmployee());
+                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_ID_EMPLOYEE,id_employee);
+                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_NAME_EMPLOYEE,absence.getNameEmployee());
                 context.startActivity(intent);
             }
         });

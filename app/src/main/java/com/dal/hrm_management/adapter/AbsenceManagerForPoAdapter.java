@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageAbsence.po.listAbsence.Absence;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +50,8 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         } else {
             holder.tv_reason.setText(context.getResources().getString(R.string.infor_null));
         }
-        holder.tv_from.setText(absence.getFromDate());
-        holder.tv_to.setText(absence.getToDate());
+        holder.tv_from.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getFromDate()));
+        holder.tv_to.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getToDate()));
         if(absence.getAbsenceTime().getDescription()!=null){
             holder.tv_time.setText(absence.getAbsenceTime().getDescription());
         } else {

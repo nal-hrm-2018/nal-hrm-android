@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.List;
 
@@ -30,8 +31,8 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
     @Override
     public void onBindViewHolder(AbsenceDetailEmployeeAdapter.DataViewHolder holder, int position) {
         holder.tv_type.setText(absences.get(position).getAbsenceType().getDescription());
-        holder.tv_startAt.setText(absences.get(position).getFromDate());
-        holder.tv_endAt.setText(absences.get(position).getToDate());
+        holder.tv_startAt.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absences.get(position).getFromDate()));
+        holder.tv_endAt.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absences.get(position).getToDate()));
         holder.item_absence_tv_reason.setText(absences.get(position).getReason());
         holder.tv_thoigianNghi.setText(absences.get(position).getAbsenceTime().getDescription());
         holder.setItemClickListener(new ItemClickListener() {

@@ -34,6 +34,7 @@ import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.employee.EditProfileEmployeePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -340,115 +341,72 @@ public class EditProfileEmployeeActivity extends AppCompatActivity implements Vi
             }
         });
 
-        if (profile.getNameEmployee() != null)
-
-        {
+        if (profile.getNameEmployee() != null) {
             edt_name.setText(profile.getNameEmployee());
-        } else
-
-        {
+        } else {
             edt_name.setText(R.string.infor_null);
         }
 
-        if (profile.getEmail() != null)
-
-        {
+        if (profile.getEmail() != null) {
             edt_email.setText(profile.getEmail());
-        } else
-
-        {
+        } else {
             edt_email.setText(R.string.infor_null);
         }
 
-        if (profile.getAddress() != null)
-
-        {
+        if (profile.getAddress() != null) {
             edt_address.setText(profile.getAddress());
-        } else
-
-        {
+        } else {
             edt_address.setText(R.string.infor_null);
         }
 
-        if (profile.getMobile() != null)
-
-        {
+        if (profile.getMobile() != null) {
             edt_phone.setText(profile.getMobile());
-        } else
-
-        {
+        } else {
             edt_phone.setText(R.string.infor_null);
         }
 
-        if (profile.getGenderDTO().
-
-                getGender() == 1)
-
-        {
+        if (profile.getGenderDTO().getGender() == 1) {
             rb_female.setChecked(true);
-        } else
-
-        {
+        } else {
             rb_male.setChecked(true);
         }
 
         List<Team> teamList = profile.getTeams();
-        if (teamList.size() != 0)
-
-        {
+        if (teamList.size() != 0) {
             for (int i = 0; i < teamList.size() - 1; i++) {
                 tv_team.setText(tv_team.getText() + teamList.get(i).getNameTeam() + ", ");
             }
             tv_team.setText(tv_team.getText() + teamList.get(teamList.size() - 1).getNameTeam());
-        } else
-
-        {
+        } else {
             tv_team.setText(R.string.infor_null);
         }
 
-        if (profile.getBirthday() != null)
-
-        {
-            tv_birthday.setText(profile.getBirthday());
-        } else
-
-        {
+        if (profile.getBirthday() != null) {
+            tv_birthday.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getBirthday()));
+        } else {
             tv_birthday.setText(R.string.infor_null);
         }
 
-        if (profile.getStartWorkDate() != null)
-
-        {
-            tv_start.setText(profile.getStartWorkDate());
-        } else
-
-        {
+        if (profile.getStartWorkDate() != null) {
+            tv_start.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getStartWorkDate()));
+        } else {
             tv_start.setText(R.string.infor_null);
         }
 
-        if (profile.getEndWorkDate() != null)
-
-        {
-            tv_end.setText(profile.getEndWorkDate());
-        } else
-
-        {
+        if (profile.getEndWorkDate() != null) {
+            tv_end.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getEndWorkDate()));
+        } else {
             tv_end.setText(R.string.infor_null);
         }
 
-        if (!position.equals(""))
-
-        {
+        if (!position.equals("")) {
             spn_position.setSelection(adapter_position.getPosition(position));
         }
-        if (!maritalStatus.equals(""))
 
-        {
+        if (!maritalStatus.equals("")) {
             spn_maritalStatus.setSelection(profile.getMaritalStatusDTO().getMaritalStatus() - 1);
         }
-        if (!type.equals(""))
-
-        {
+        if (!type.equals("")) {
             spn_type.setSelection(profile.getEmployeeType().getIdEmployeeType() - 1);
         }
         progressBar.setVisibility(View.GONE);
