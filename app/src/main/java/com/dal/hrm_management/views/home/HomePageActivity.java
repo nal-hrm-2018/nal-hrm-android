@@ -79,6 +79,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         getDataFromJson();
         initNavigationMenu();
         addEvent();
+        //Chuyển fragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceViewFragment()).commit();
+        getSupportActionBar().setTitle(R.string.menu_absence);
 
     }
 
@@ -155,6 +158,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+        //không gọi tới super.onBackPressed() để disable nút back về login activity
 
     }
 
@@ -236,13 +240,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void prepareMenuData(Profile data) {
-
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_dashboard), getString(R.string.menu_dashboard), true, false, getResources().getDrawable(R.drawable.ic_dashboard));
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-        menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
+//        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_dashboard), getString(R.string.menu_dashboard), true, false, getResources().getDrawable(R.drawable.ic_dashboard));
+//        headerList.add(menuModel);
+//        if (!menuModel.hasChildren) {
+//            childList.put(menuModel, null);
+//        }
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
@@ -309,11 +312,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
 
     @Override
-    public void Success(Profile data) {
-        loadNavHeader(data);
-        getPermission(data);
-        prepareMenuData(data);
-        populateExpandableList(data);
+    public void Success() {
+        loadNavHeader(HomePresenter.profile);
+        getPermission(HomePresenter.profile);
+        prepareMenuData(HomePresenter.profile);
+        populateExpandableList(HomePresenter.profile);
         Log.d("Home", "thanh cong");
     }
 

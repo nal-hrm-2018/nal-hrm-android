@@ -79,13 +79,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Signing");
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                btn_login.setEnabled(false);
                 if (isConnected()) {
                     progressDialog.show();
                     if (cb_remeber.isChecked()) {
@@ -104,10 +104,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                     toast.show();
                 }
-                break;
-            case R.id.edt_email:
-            case R.id.edt_password:
-                progressDialog.dismiss();
                 break;
         }
 
@@ -147,7 +143,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-            btn_login.setEnabled(true);
             progressDialog.dismiss();
         } else {
             //success
@@ -164,16 +159,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void loginSucess(String token) {
         tvSomethingWrong.setVisibility(View.INVISIBLE);
         Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-        intent.putExtra("token", token);
         startActivity(intent);
-        btn_login.setEnabled(true);
         progressDialog.dismiss();
     }
 
     @Override
     public void loginFailure() {
         tvSomethingWrong.setVisibility(View.VISIBLE);
-        btn_login.setEnabled(true);
         progressDialog.dismiss();
     }
 
@@ -184,7 +176,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 "Server Error", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
-        btn_login.setEnabled(true);
     }
 
     /**
