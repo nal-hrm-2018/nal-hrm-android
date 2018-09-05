@@ -178,7 +178,7 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
         if (profile.getBirthday() != null) {
             tv_birthday.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getBirthday()));
         } else tv_birthday.setText(R.string.infor_null);
-        if (profile.getEmployeeType().getNameEmployeeType() != null) {
+        if (profile.getEmployeeType() != null) {
             String type = profile.getEmployeeType().getNameEmployeeType();
             if (type.toLowerCase().equals("hr")) {
                 tv_position.setBackgroundColor(getResources().getColor(R.color.color_red));

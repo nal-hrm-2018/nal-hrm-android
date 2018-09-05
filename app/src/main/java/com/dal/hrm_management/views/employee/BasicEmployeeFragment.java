@@ -18,6 +18,7 @@ import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.employee.BasicEmployeePresenter;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.List;
 
@@ -123,7 +124,7 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
         if (profile.getNameEmployee() != null) {
             tv_name.setText(profile.getNameEmployee());
         } else tv_name.setText(R.string.infor_null);
-        if (profile.getRole().getNameRole() != null) {
+        if (profile.getRole()!= null) {
             String role = profile.getRole().getNameRole();
             if (role.toLowerCase().equals("hr")) {
                 tv_role.setBackgroundColor(getResources().getColor(R.color.color_red));
@@ -152,7 +153,7 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
             tv_maritalStatus.setText(profile.getMaritalStatusDTO().getTypeMaritalStatus());
         } else tv_maritalStatus.setText(R.string.infor_null);
         if (profile.getBirthday() != null) {
-            tv_birthday.setText(profile.getBirthday());
+            tv_birthday.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getBirthday()));
         } else tv_birthday.setText(R.string.infor_null);
         if (profile.getEmployeeType() != null) {
             tv_position.setText(profile.getEmployeeType().getNameEmployeeType());
@@ -167,10 +168,10 @@ public class BasicEmployeeFragment extends Fragment implements IBasicEmployeeFra
             tv_team.setText(R.string.infor_null);
         }
         if (profile.getStartWorkDate() != null) {
-            tv_start.setText(profile.getStartWorkDate());
+            tv_start.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getStartWorkDate()));
         } else tv_start.setText(R.string.infor_null);
         if (profile.getEndWorkDate() != null) {
-            tv_end.setText(profile.getEndWorkDate());
+            tv_end.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getEndWorkDate()));
         } else tv_end.setText(R.string.infor_null);
     }
 
