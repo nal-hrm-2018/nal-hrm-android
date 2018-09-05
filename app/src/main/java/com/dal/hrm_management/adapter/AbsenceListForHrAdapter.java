@@ -131,7 +131,12 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
             c.add(Calendar.DATE,30);
             dTuNgay = c.getTime();
             Date dHienTai = new Date();
-            if (dTuNgay.compareTo(dHienTai) < 0){
+
+            Date dNgayTao = new SimpleDateFormat("yyyy-MM-dd").parse(absenceList.get(position).getCreatedAt());
+            c.setTime(dNgayTao);
+            c.add(Calendar.DATE,30);
+            dNgayTao = c.getTime();
+            if (dTuNgay.compareTo(dHienTai) < 0 && dNgayTao.compareTo(dHienTai) < 0){
                 //Tu ngay + 30 > dHienTai
                 holder.imvEdit.setVisibility(View.GONE);
                 holder.imvDelete.setVisibility(View.GONE);

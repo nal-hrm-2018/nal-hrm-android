@@ -81,7 +81,8 @@
     <string name="textview.text.dayStart">Start at:</string>
     <string name="textview.text.dayEnd">End at:</string>
 
-    <string name="menu.dashboard">Dashboard</string>
+    <string name="menu_overtime">Overtime</string>
+    <string name="menu_dashboard">Dashboard</string>
     <string name="menu_project">Project</string>
     <string name="menu_absence">Absence</string>
     <string name="menu_manage">Manage</string>
@@ -96,7 +97,7 @@
     <string name="textview.text.position">Position (*)</string>
     <string name="textview.text.email">Email (*)</string>
     <string name="textview.nameEmployeeAbsence">Name Employee</string>
-    <string name="textview.text.symbol">-</string>
+    <string name="textview.text.symbol"> - </string>
     <string name="textview.reason">Holiday leave</string>
     <string name="textview.project">EMC_201</string>
     <string name="textview.text.from">From: </string>
@@ -167,6 +168,7 @@
     <string name="absence_type">Type (*)</string>
     <string name="text_title_edit_absence">Edit Absence</string>
     <string name="text_title_view_absence">View Absence</string>
+    <string name="menu_id_overtime">id_overtime</string>
     <string name="menu_id_dashboard">id_dashboard</string>
     <string name="menu_id_absence">id_absence</string>
     <string name="menu_id_manage">id_manage</string>
@@ -188,4 +190,15 @@
     <string name="textview.time">All day</string>
     <string name="error_from_not_greater_than_to">Field \'from\' can\'t greater than field \'to\'</string>
     <string name="absence_type_time">Time:</string>
+    <string name="text_overtime_normal_day">Normal day</string>
+    <string name="text_number">12</string>
+    <string name="text_overtime_day_off">Day off</string>
+    <string name="text_overtime_holiday">Holiday</string>
+    <string name="text_hour">12:30</string>
+    <string name="text_type_absence">Cả ngày</string>
+    <string name="text_total">Total:</string>
+    <string name="text_date">Date:</string>
+    <string name="status">STATUS</string>
+    <string name="description_edit">Edit</string>
+    <string name="decription_delete">Delete</string>
 </resources>
