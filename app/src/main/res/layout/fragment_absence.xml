@@ -32,8 +32,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Total"
                         android:gravity="center"
+                        android:text="Total"
                         android:textColor="@color/color_white"
                         android:textStyle="bold" />
 
@@ -41,8 +41,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Remain"
                         android:gravity="center"
+                        android:text="Remain"
                         android:textColor="@color/color_white"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -57,8 +57,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="12"
                         android:gravity="center"
+                        android:text="12"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/text_size_big" />
 
@@ -66,8 +66,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="8"
                         android:gravity="center"
+                        android:text="8"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/text_size_big" />
                 </LinearLayout>
@@ -249,10 +249,9 @@
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_add"
         android:layout_gravity="bottom|right"
-        app:fabSize="normal"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_add"
+        app:fabSize="normal" />
 </android.support.design.widget.CoordinatorLayout>

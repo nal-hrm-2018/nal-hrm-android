@@ -7,10 +7,14 @@ package com.dal.hrm_management.utils;
 public class StringUtils {
     /**
      * convert string date with format yyyy-mm-dd to dd-mm-yyyy
+     *
      * @param st
      * @return
      */
     public static String yyyy_mm_ddTodd_mm_yyyy(String st) {
-        return st.split("-")[2] + "-" + st.split("-")[1] + "-" + st.split("-")[0];
+
+        return st.split("[-/]")[0].length() == 4
+                ? st.split("[-/]")[2] + "-" + st.split("[-/]")[1] + "-" + st.split("[-/]")[0]
+                : st;
     }
 }
