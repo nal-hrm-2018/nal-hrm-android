@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
+import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.home.iHomeActivity;
@@ -17,6 +18,7 @@ public class HomePresenter implements IHomePresenter{
     private static  final String TAG = HomePresenter.class.getSimpleName();
     private iHomeActivity ihomeActivity;
     public static int idEmployee;
+    public static Profile profile;
     public HomePresenter(iHomeActivity iHomeActivity) {
         this.ihomeActivity = iHomeActivity;
     }
@@ -34,7 +36,8 @@ public class HomePresenter implements IHomePresenter{
                 }else if (response.code() >=200){
                     LoginPresenter.position = response.body().getProfile().getRole().getNameRole();
                     idEmployee = response.body().getProfile().getIdEmployee();
-                    ihomeActivity.Success(response.body().getProfile());
+                    profile = response.body().getProfile();
+                    ihomeActivity.Success();
                 }else{
                     ihomeActivity.Failure();
                 }
@@ -43,7 +46,8 @@ public class HomePresenter implements IHomePresenter{
 
             @Override
             public void onFailure(Call<ProfileResponse> call, Throwable t) {
-
+                ihomeActivity.Failure();
+                Log.d(TAG,"get profile failure"+ t.getMessage());
             }
         });
 
