@@ -34,48 +34,15 @@ public class ListAbsenceForHr implements Serializable {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
     @SerializedName("absenceType")
     @Expose
     private AbsenceType absenceType;
     @SerializedName("absenceTime")
     @Expose
     private AbsenceTime absenceTime;
-
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public ListAbsenceForHr() {
-    }
-
-    /**
-     *
-     * @param fromDate
-     * @param reason
-     * @param nameEmployee
-     * @param absenceTime
-     * @param description
-     * @param absenceType
-     * @param toDate
-     * @param idEmployee
-     * @param idProject
-     * @param nameProject
-     * @param idAbsences
-     */
-    public ListAbsenceForHr(Integer idAbsences, Integer idEmployee, String nameEmployee, Object idProject, Object nameProject, String fromDate, String toDate, String reason, String description, AbsenceType absenceType, AbsenceTime absenceTime) {
-        super();
-        this.idAbsences = idAbsences;
-        this.idEmployee = idEmployee;
-        this.nameEmployee = nameEmployee;
-        this.idProject = idProject;
-        this.nameProject = nameProject;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.reason = reason;
-        this.description = description;
-        this.absenceType = absenceType;
-        this.absenceTime = absenceTime;
-    }
 
     public Integer getIdAbsences() {
         return idAbsences;
@@ -149,6 +116,14 @@ public class ListAbsenceForHr implements Serializable {
         this.description = description;
     }
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public AbsenceType getAbsenceType() {
         return absenceType;
     }
@@ -164,4 +139,5 @@ public class ListAbsenceForHr implements Serializable {
     public void setAbsenceTime(AbsenceTime absenceTime) {
         this.absenceTime = absenceTime;
     }
+
 }

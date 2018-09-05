@@ -42,6 +42,7 @@ import com.dal.hrm_management.views.list_employee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.AbsenceListHRFragment;
 import com.dal.hrm_management.views.manage_absence.Hr.holiday.HolidayHRFragment;
+import com.dal.hrm_management.views.overtime.OverTimeList;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
 
 import java.util.ArrayList;
@@ -172,7 +173,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
-                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_dashboard))) {
+                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_overtime))){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new OverTimeList()).commit();
+                            getSupportActionBar().setTitle(R.string.menu_overtime);
+                        }else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_dashboard))) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
                             getSupportActionBar().setTitle(R.string.menu_dashboard);
                         } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_project))) {
@@ -245,7 +249,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 //        if (!menuModel.hasChildren) {
 //            childList.put(menuModel, null);
 //        }
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_overtime), getString(R.string.menu_overtime), true, false, getResources().getDrawable(R.drawable.ic_overtime));
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+        menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
