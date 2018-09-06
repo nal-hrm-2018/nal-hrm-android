@@ -48,61 +48,100 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:paddingLeft="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:id="@+id/tv_reason"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/textview.reason"
-                android:textSize="@dimen/text_size_small" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
+                    android:layout_weight="2"
+                    android:text="@string/overtime_date" />
+
+                <TextView
+                    android:id="@+id/tv_dateOT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/overtime_date_hint"
+                    android:textSize="@dimen/text_size_small" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:text="@string/textview.text.from"
                     android:textSize="@dimen/text_size_small" />
 
                 <TextView
                     android:id="@+id/tv_from"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
+                    android:layout_weight="1"
+                    android:hint="@string/overtime_timeStart"
                     android:textSize="@dimen/text_size_small" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_endDay"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
+                    android:layout_weight="2"
                     android:text="@string/textview.text.to"
                     android:textSize="@dimen/text_size_small" />
 
                 <TextView
                     android:id="@+id/tv_to"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayEndProjectEmployee"
+                    android:layout_weight="1"
+                    android:hint="@string/overtime_timeEnd"
                     android:textSize="@dimen/text_size_small" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/overtime_reason" />
+
+                <TextView
+                    android:id="@+id/tv_reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/textview.reason"
+                    android:textSize="@dimen/text_size_small" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -110,33 +149,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical">
+
             <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:textSize="@dimen/text_size_small"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:text="@string/absence_status_accepted"
-                android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                android:textSize="@dimen/text_size_small"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/ll_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/activity_horizontal_margin">
+
                 <ImageButton
                     android:id="@+id/imgBtn_accept"
+                    android:layout_width="@dimen/icon_size_button"
+                    android:layout_height="@dimen/icon_size_button"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/text_padding"
-                    android:layout_width="@dimen/icon_size_button"
-                    android:layout_height="@dimen/icon_size_button"
                     android:background="@drawable/ic_accept"
                     android:tint="@color/color_green" />
+
                 <ImageButton
                     android:id="@+id/imgBtn_cancel"
-                    android:layout_marginLeft="@dimen/text_padding"
                     android:layout_width="@dimen/icon_size_button"
                     android:layout_height="@dimen/icon_size_button"
+                    android:layout_marginLeft="@dimen/text_padding"
                     android:background="@drawable/ic_cancel"
                     android:tint="@color/color_green" />
             </LinearLayout>

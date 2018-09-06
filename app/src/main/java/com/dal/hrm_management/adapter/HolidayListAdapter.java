@@ -92,5 +92,7 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
         public void onClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), false);
         }
+
     }
+
 }

@@ -7,7 +7,7 @@ import com.dal.hrm_management.models.manageAbsence.po.listAbsence.DataAbsence;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.DataProject;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.ProjectInProgressPOResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
-import com.dal.hrm_management.views.manage_absence.po.IAbsenceManagerForPOFragment;
+import com.dal.hrm_management.views.manageAbsence.po.IAbsenceManagerForPOFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;

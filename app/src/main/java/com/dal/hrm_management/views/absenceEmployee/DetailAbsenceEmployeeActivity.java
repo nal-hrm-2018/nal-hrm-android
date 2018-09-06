@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.adapter.AbsenceDetailEmployeeAdapter;
+import com.dal.hrm_management.adapter.listAbsence.AbsenceDetailEmployeeAdapter;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Data;
 import com.dal.hrm_management.presenters.absenceEmployee.DetailAbsenceEmployeePresenter;

@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views.manage_absence.po;
+package com.dal.hrm_management.views.manageAbsence.po;
 
 
 import android.app.SearchManager;
@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.adapter.AbsenceManagerForPoAdapter;
+import com.dal.hrm_management.adapter.listAbsence.AbsenceManagerForPoAdapter;
 import com.dal.hrm_management.models.manageAbsence.po.listAbsence.Absence;
 import com.dal.hrm_management.models.manageAbsence.po.listAbsence.DataAbsence;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.DataProject;

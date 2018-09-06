@@ -1,8 +1,7 @@
-package com.dal.hrm_management.adapter;
+package com.dal.hrm_management.adapter.listAbsence;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,13 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresenter;
 import com.dal.hrm_management.utils.VariableUltils;

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dal.hrm_management.views.manage_absence.Hr.AbsenceForHRFragment">
+    tools:context="com.dal.hrm_management.views.manageAbsence.Hr.AbsenceForHRFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

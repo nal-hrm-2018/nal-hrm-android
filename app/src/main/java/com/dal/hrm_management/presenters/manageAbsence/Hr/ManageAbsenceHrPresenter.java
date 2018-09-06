@@ -9,7 +9,7 @@ import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.models.manageAbsence.hr.ManageAbsenceResponse;
 import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
-import com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.IAbsenceHRFragment;
+import com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence.IAbsenceHRFragment;
 
 import java.util.List;
 

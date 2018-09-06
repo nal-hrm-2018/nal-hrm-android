@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views.manage_absence.Hr.ListAbsence;
+package com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence;
 
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 

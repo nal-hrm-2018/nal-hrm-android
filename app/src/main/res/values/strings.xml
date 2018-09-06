@@ -103,7 +103,7 @@
     <string name="textview.text.to">To: </string>
     <string name="textview.noteAbsence">Muốn đăng kí</string>
     <string name="absence_manage_for_po_fragment.title">List absences</string>
-    <string name="absence_status_accepted">Accepted</string>
+    <string name="absence_status">Status</string>
     <string name="absence_status_canceled">Denied</string>
     <string name="form_absence_edt_tungay">From</string>
     <string name="form_absence_edt_denNgay">To</string>
@@ -188,4 +188,9 @@
     <string name="textview.time">All day</string>
     <string name="error_from_not_greater_than_to">Field \'from\' can\'t greater than field \'to\'</string>
     <string name="absence_type_time">Time:</string>
+    <string name="overtime_reason">Reason:</string>
+    <string name="overtime_date">Date:</string>
+    <string name="overtime_date_hint">6-9-2018</string>
+    <string name="overtime_timeStart">08:20 PM</string>
+    <string name="overtime_timeEnd">09:55 PM</string>
 </resources>
