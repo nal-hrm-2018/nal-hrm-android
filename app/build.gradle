@@ -60,4 +60,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
+    implementation 'com.szagurskii:patternedtextwatcher:0.5.0'
+    implementation 'ru.egslava:MaskedEditText:1.0.5'
 }
