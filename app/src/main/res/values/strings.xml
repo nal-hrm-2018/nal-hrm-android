@@ -212,4 +212,19 @@
     <string name="overtime_status_accepted">Accepted</string>
     <string name="overtime_status_rejected">Rejected</string>
     <string name="overtime_typeDate">Normal day</string>
+
+    <string name="text_tv_project">Project</string>
+    <string name="text_tv_date">Date</string>
+    <string name="text_tv_from_time">From Time</string>
+    <string name="text_tv_to_time">To Time</string>
+    <string name="text_tv_total_time">Total Time</string>
+    <string name="text_tv_reason">Reason</string>
+    <string name="des_picker_time">PickerTime</string>
+    <string name="des_picker_date">picker Date</string>
+    <string name="hint_format_date">ddMMyyyy</string>
+    <string name="hint_format_time">HHmm</string>
+    <string name="hint_actual_overtime">Actual time your overtime</string>
+    <string name="hint_input_value_here">Input value here</string>
+    <string name="error_invalid_date">invalid date</string>
+    <string name="error_invalid_time">invalid time</string>
 </resources>
