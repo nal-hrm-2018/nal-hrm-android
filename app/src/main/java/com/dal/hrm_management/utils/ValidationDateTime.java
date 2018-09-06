@@ -35,4 +35,31 @@ public class ValidationDateTime {
     public static boolean checkTime(int hour,int minute){
         return hour>=0 && hour <24 && minute>=0 && minute<60;
     }
+
+    /**
+     * Date1 >= date2 : return true;
+     * @param day1
+     * @param month1
+     * @param year1
+     * @param day2
+     * @param month1
+     * @param year2
+     * @return
+     */
+    public static boolean compareDate(int day1,int month1,int year1,int day2,int month2,int year2){
+        if (year1 > year2){
+            return true;
+        }else if (year1 == year2){
+            if (month1 > month2){
+                return true;
+            }else if (month1 == month2){
+                if (day1 >= day2){
+                    return true;
+                }
+                return false;
+            }else return false;
+        }else{
+            return false;
+        }
+    }
 }

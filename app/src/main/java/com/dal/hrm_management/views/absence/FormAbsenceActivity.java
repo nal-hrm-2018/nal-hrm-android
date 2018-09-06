@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
@@ -22,6 +22,7 @@ import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
+import com.dal.hrm_management.utils.ValidationDateTime;
 import com.dal.hrm_management.utils.VariableUltils;
 
 import org.json.JSONException;
@@ -38,12 +39,13 @@ import okhttp3.RequestBody;
 public class FormAbsenceActivity extends AppCompatActivity implements View.OnClickListener, IAbsenceFormActivity {
     private final String TAG = FormAbsenceActivity.class.getSimpleName();
     String[] THOIGIANNGHI = {"All day", "Morning", "Afternoon"};
+    private ImageButton imbFrom,imbTo;
     Button btnSubmit;
     EditText edt_denNgay,edt_tuNgay;
     EditText edtReason, edtNote;
     private int mYear, mMonth, mDay;
     AbsencePresenter absencePresenter;
-    Spinner loaiNghi, thoiGianNghi;
+    Spinner spnloaiNghi, spnthoiGianNghi;
     private CheckBox cb_nghiBoSung;
     Calendar c = Calendar.getInstance();
     //List type absence
@@ -69,15 +71,15 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
             setTitle(getResources().getString(R.string.text_title_edit_absence));
             edt_tuNgay.setText(absence.getFromDate());
             edt_denNgay.setText(absence.getToDate());
-            loaiNghi.setSelection(absence.getAbsenceType().getIdAbsenceType()-1);
+            spnloaiNghi.setSelection(absence.getAbsenceType().getIdAbsenceType()-1);
             //array start with index = 0
-            thoiGianNghi.setSelection(absence.getAbsenceTime().getIdAbsenceTime()-1);
+            spnthoiGianNghi.setSelection(absence.getAbsenceTime().getIdAbsenceTime()-1);
             edtReason.setText(absence.getReason());
             edtNote.setText(absence.getDescription());
             edt_tuNgay.setOnClickListener(null);
             edt_denNgay.setOnClickListener(null);
-            loaiNghi.setEnabled(false);
-            thoiGianNghi.setEnabled(false);
+            spnloaiNghi.setEnabled(false);
+            spnthoiGianNghi.setEnabled(false);
             edtReason.setEnabled(false);
             edtNote.setEnabled(false);
             btnSubmit.setVisibility(View.GONE);
@@ -89,9 +91,9 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                 setTitle(absenceForHr.getNameEmployee());
                 edt_tuNgay.setText(absenceForHr.getFromDate());
                 edt_denNgay.setText(absenceForHr.getToDate());
-                loaiNghi.setSelection(absenceForHr.getAbsenceType().getIdAbsenceType()-1);
+                spnloaiNghi.setSelection(absenceForHr.getAbsenceType().getIdAbsenceType()-1);
                 //array start with index = 0
-                thoiGianNghi.setSelection(absenceForHr.getAbsenceTime().getIdAbsenceTime()-1);
+                spnthoiGianNghi.setSelection(absenceForHr.getAbsenceTime().getIdAbsenceTime()-1);
                 edtReason.setText(absenceForHr.getReason());
                 edtNote.setText(absenceForHr.getDescription());
                 idAbsence = absenceForHr.getIdAbsences();
@@ -111,32 +113,43 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         setTitle(getString(R.string.absence_add));
         absencePresenter.getTypeAbsence();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, THOIGIANNGHI);
-        thoiGianNghi.setAdapter(adapter);
+        spnthoiGianNghi.setAdapter(adapter);
+        getSetCurrentDay();
 
+    }
+
+    private void getSetCurrentDay() {
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-
-        edt_tuNgay.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
-        edt_denNgay.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
+        String syear="",smonth="",sday="";
+        syear = String.valueOf(mYear);
+        if (mMonth < 9) smonth="0";
+        smonth += String.valueOf(mMonth+1);
+        if (mDay < 9) sday="0";
+        sday += String.valueOf(mDay);
+        edt_tuNgay.setText(sday+smonth+syear);
+        edt_denNgay.setText(sday+smonth+syear);
     }
 
     private void initView() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        imbFrom = findViewById(R.id.imbFormAbsenceAct_From);
+        imbTo = findViewById(R.id.imbFormAbsenceAct_To);
+        imbFrom.setOnClickListener(this);
+        imbTo.setOnClickListener(this);
         edt_tuNgay = findViewById(R.id.form_absence_edt_tuNgay);
-        edt_tuNgay.setOnClickListener(this);
+
         edt_denNgay = findViewById(R.id.form_absence_edt_denNgay);
-        edt_denNgay.setOnClickListener(this);
-        loaiNghi = (Spinner) findViewById(R.id.form_absence_spinner_loaiNghi);
-        thoiGianNghi = (Spinner) findViewById(R.id.form_absence_spinner_thoiGianNghi);
+        spnloaiNghi = (Spinner) findViewById(R.id.form_absence_spinner_loaiNghi);
+        spnthoiGianNghi = (Spinner) findViewById(R.id.form_absence_spinner_thoiGianNghi);
         btnSubmit = findViewById(R.id.form_absence_btn_submit);
         btnSubmit.setOnClickListener(this);
         edtReason = findViewById(R.id.form_absence_edt_lydo);
         edtNote = findViewById(R.id.form_absence_edt_note);
         cb_nghiBoSung = findViewById(R.id.form_absence_cb_nghiBoSung);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -150,18 +163,17 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         Log.d(TAG, String.valueOf(view.getId()));
         switch (view.getId()) {
-
             case R.id.form_absence_btn_submit:
                 View check = checkValidateForm();
                 if (check != null) {
                     check.requestFocus();
                 } else {
-                    String absenceType = loaiNghi.getSelectedItem().toString();
+                    String absenceType = spnloaiNghi.getSelectedItem().toString();
                     absenceType = absenceType.replace(" ", "_");
 
                     int absenceTypeId = getAbsenceTypeId(absenceType);
                     Log.d(TAG + " absenceTypeId: ", String.valueOf(absenceTypeId));
-                    String absenceTime = thoiGianNghi.getSelectedItem().toString();
+                    String absenceTime = spnthoiGianNghi.getSelectedItem().toString();
                     int absenceTimeId = getAbsenceTimeId(absenceTime);
                     Log.d(TAG + " absenceTimeId: ", String.valueOf(absenceTimeId));
                     Log.d(TAG + " startDate: ", edt_tuNgay.getText().toString());
@@ -184,26 +196,34 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                     }else absencePresenter.editAbsence(body,idAbsence);
                 }
                 break;
-            case R.id.form_absence_edt_tuNgay:
+            case R.id.imbFormAbsenceAct_From:
                 DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        edt_tuNgay.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        String syear="",smonth="",sday="";
+                        syear = String.valueOf(year);
+                        if (monthOfYear < 9) smonth="0";
+                        smonth += String.valueOf(monthOfYear+1);
+                        if (dayOfMonth < 9) sday="0";
+                        sday += String.valueOf(dayOfMonth);
+                        edt_tuNgay.setText(sday+smonth+syear);
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
                 break;
-            case R.id.form_absence_edt_denNgay:
-
-
+            case R.id.imbFormAbsenceAct_To:
                 DatePickerDialog datePickerDialog1 = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        edt_denNgay.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        String syear="",smonth="",sday="";
+                        syear = String.valueOf(year);
+                        if (monthOfYear < 9) smonth="0";
+                        smonth += String.valueOf(monthOfYear+1);
+                        if (dayOfMonth < 9) sday="0";
+                        sday += String.valueOf(dayOfMonth);
+                        edt_denNgay.setText(sday+smonth+syear);
 
                     }
                 }, mYear, mMonth, mDay);
@@ -213,36 +233,65 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     }
 
     private View checkValidateForm() {
+        edt_tuNgay.setError(null);
+        edt_denNgay.setError(null);
+        edtReason.setError(null);
+        edtReason.setError(null);
         View focusView = null;
-
-        //edt tu ngay
-        if (TextUtils.isEmpty(edt_tuNgay.getText().toString())) {
-            edt_tuNgay.setError(getResources().getString(R.string.error_field_is_not_empty));
-            focusView = edt_tuNgay;
-        } else if (TextUtils.isEmpty(edt_denNgay.getText().toString())) {
-            edt_denNgay.setError(getResources().getString(R.string.error_field_is_not_empty));
-            focusView = edt_denNgay;
-        }else if (TextUtils.isEmpty(edtReason.getText().toString().trim())){
-            edtReason.setError(getResources().getString(R.string.error_field_is_not_empty));
-            focusView = edtReason;
-        }
-        //từ ngày không lớn hơn đến ngày
-        else{
-            try {
-                Date tuNgay = new SimpleDateFormat("yyyy-MM-dd").parse(edt_tuNgay.getText().toString());
-                Date denNgay = new SimpleDateFormat("yyyy-MM-dd").parse(edt_denNgay.getText().toString());
-                if (tuNgay.compareTo(denNgay) > 0){
-                    edt_denNgay.setError(getResources().getString(R.string.error_from_not_greater_than_to));
-                    focusView = edt_denNgay;
-                    Toast.makeText(this,getResources().getString(R.string.error_from_not_greater_than_to),Toast.LENGTH_SHORT).show();
-
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
+        //Valid từ ngày
+        try {
+            String[] split = edt_tuNgay.getText().toString().split("-");
+            int day = Integer.parseInt(split[0]);
+            int month = Integer.parseInt(split[1]);
+            int year = Integer.parseInt(split[2]);
+            if (!ValidationDateTime.checkDay(day, month, year)) {
+                edt_tuNgay.setError(getString(R.string.error_invalid_date));
+                return edt_tuNgay;
             }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            edt_tuNgay.setError(getString(R.string.error_invalid_date));
+            return edt_tuNgay;
         }
-        //Đang thiếu validate
-        return focusView;
+        //Valid đến ngày
+        try {
+            String[] split = edt_denNgay.getText().toString().split("-");
+            int day = Integer.parseInt(split[0]);
+            int month = Integer.parseInt(split[1]);
+            int year = Integer.parseInt(split[2]);
+            if (!ValidationDateTime.checkDay(day, month, year)) {
+                edt_denNgay.setError(getString(R.string.error_invalid_date));
+                return edt_denNgay;
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            edt_denNgay.setError(getString(R.string.error_invalid_date));
+            return edt_denNgay;
+        }
+        //Từ ngày không được lớn hơn đến ngày
+        try {
+            String[] split = edt_tuNgay.getText().toString().split("-");
+            int day = Integer.parseInt(split[0]);
+            int month = Integer.parseInt(split[1]);
+            int year = Integer.parseInt(split[2]);
+            String[] split1 = edt_denNgay.getText().toString().split("-");
+            int day1 = Integer.parseInt(split1[0]);
+            int month1 = Integer.parseInt(split1[1]);
+            int year1 = Integer.parseInt(split1[2]);
+            if (!ValidationDateTime.compareDate(day1,month1,year1,day,month,year)) {
+                edt_denNgay.setError(getResources().getString(R.string.error_from_not_greater_than_to));
+                Toast.makeText(this,getResources().getString(R.string.error_from_not_greater_than_to),Toast.LENGTH_SHORT).show();
+                return edt_denNgay;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //Reason ko được bỏ trống
+        if (edtReason.getText().toString().trim().length() <=0){
+            edtReason.setError(getString(R.string.error_field_is_not_empty));
+            return edtReason;
+        }
+        return null;
     }
 
     private int getAbsenceTimeId(String absenceTime) {
@@ -281,7 +330,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     public void loadTypeAbsenceSuccess(List list) {
         listAbsence = list;
         ArrayAdapter<TypeAbsence> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, listAbsence);
-        loaiNghi.setAdapter(adapter);
+        spnloaiNghi.setAdapter(adapter);
         getExtra();
 
     }

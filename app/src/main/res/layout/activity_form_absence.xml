@@ -1,144 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:mask="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_gray"
-    tools:context=".views.absence.FormAbsenceActivity">
-    <ScrollView
+    tools:context=".views.absence.FormAbsenceActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/form_absence_toolbar"
-        android:layout_margin="@dimen/text_padding"
-        tools:ignore="UnknownId">
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_horizontal_margin">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_padding"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp"
-                android:weightSum="10">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="@string/absence_from"
-                    android:padding="@dimen/text_padding"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/form_absence_edt_tuNgay"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:background="@drawable/boder_edittext"
-                    android:drawableEnd="@drawable/ic_date"
-                    android:hint="@string/absence_hint_from"
-                    android:padding="@dimen/text_padding"
-                    android:cursorVisible="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_medium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_padding"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:padding="@dimen/text_padding"
-                    android:text="@string/absence_to"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/form_absence_edt_denNgay"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:background="@drawable/boder_edittext"
-                    android:drawableEnd="@drawable/ic_date"
-                    android:hint="@string/absence_hint_to"
-                    android:padding="@dimen/text_padding"
-                    android:cursorVisible="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_medium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:padding="@dimen/text_padding"
-                    android:text="@string/absence_type"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/form_absence_spinner_loaiNghi"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:padding="@dimen/text_padding"
-                    android:textSize="@dimen/text_size_medium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:padding="@dimen/text_padding"
-                    android:text="@string/absence_time"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/form_absence_spinner_thoiGianNghi"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:padding="@dimen/text_padding"
-                    android:textSize="@dimen/text_size_medium" />
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:weightSum="12"
+            android:padding="@dimen/text_padding"
+            >
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"
+                android:layout_weight="3"
+                android:text="@string/absence_from"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
+            <br.com.sapereaude.maskedEditText.MaskedEditText
+                android:id="@+id/form_absence_edt_tuNgay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:hint="@string/hint_format_date"
+                android:inputType="date"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:typeface="monospace"
+                app:keep_hint="true"
+                mask:allowed_chars="1234567890"
+                mask:mask="##-##-####" />
+
+            <ImageButton
+                android:id="@+id/imbFormAbsenceAct_From"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:contentDescription="@string/des_picker_date"
+                android:src="@drawable/ic_date" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="12"
+            android:padding="@dimen/text_padding"
+            >
+            <TextView
+                android:text="@string/text_tv_date"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"/>
+
+            <br.com.sapereaude.maskedEditText.MaskedEditText
+                android:id="@+id/form_absence_edt_denNgay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:hint="@string/hint_format_date"
+                android:inputType="date"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:typeface="monospace"
+                app:keep_hint="true"
+                mask:allowed_chars="1234567890"
+                mask:mask="##-##-####" />
+
+            <ImageButton
+                android:id="@+id/imbFormAbsenceAct_To"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:contentDescription="@string/des_picker_date"
+                android:src="@drawable/ic_date" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="12"
+            android:padding="@dimen/text_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/absence_type"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/form_absence_spinner_loaiNghi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="12"
+            android:padding="@dimen/text_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/absence_time"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/form_absence_spinner_thoiGianNghi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="12"
+            android:padding="@dimen/text_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="@string/absence_reason"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_medium"
@@ -146,16 +160,27 @@
 
             <EditText
                 android:id="@+id/form_absence_edt_lydo"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:inputType="textMultiLine" />
+                android:layout_weight="9"
+                android:hint="@string/hint_actual_overtime"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="12"
+            android:padding="@dimen/text_padding">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/text_padding"
-                android:paddingTop="@dimen/text_padding"
+                android:layout_weight="3"
                 android:text="@string/form_absence_edt_note"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_medium"
@@ -163,32 +188,31 @@
 
             <EditText
                 android:id="@+id/form_absence_edt_note"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:inputType="text" />
-
-            <CheckBox
-                android:id="@+id/form_absence_cb_nghiBoSung"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:padding="@dimen/text_padding"
-                android:text="@string/form_absence_cb_nghiBoSung"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/form_absence_btn_submit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:background="@drawable/shape_button_changepassword"
-                android:text="@string/form_absence_btn_submit" />
+                android:layout_weight="9"
+                android:hint="@string/hint_input_value_here"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_medium" />
         </LinearLayout>
-
-
-    </ScrollView>
-
-</RelativeLayout>
+        <CheckBox
+            android:id="@+id/form_absence_cb_nghiBoSung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/text_padding"
+            android:text="@string/form_absence_cb_nghiBoSung"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/form_absence_btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:background="@drawable/shape_button_changepassword"
+            android:text="@string/form_absence_btn_submit" />
+    </LinearLayout>
+</ScrollView>
