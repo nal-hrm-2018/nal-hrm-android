@@ -127,13 +127,20 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         //Xét điều kiện nếu như form đó đã quá 1 tháng - chưa check đúng đâu
         try {
             Calendar c = Calendar.getInstance();
-            Date dTuNgay = new SimpleDateFormat("yyyy-MM-dd").parse(absenceList.get(position).getFromDate());
+            String[] split =absenceList.get(position).getFromDate().split("-");
+            int from_day = Integer.parseInt(split[2]);
+            int from_month = Integer.parseInt(split[1]);
+            int from_year = Integer.parseInt(split[0]);
+            Date dTuNgay = new Date(from_day,from_month,from_year);
             c.setTime(dTuNgay);
             c.add(Calendar.DATE,30);
             dTuNgay = c.getTime();
             Date dHienTai = new Date();
-
-            Date dNgayTao = new SimpleDateFormat("yyyy-MM-dd").parse(absenceList.get(position).getCreatedAt());
+            split =absenceList.get(position).getCreatedAt().split("-");
+            int to_day = Integer.parseInt(split[2]);
+            int to_month = Integer.parseInt(split[1]);
+            int to_year = Integer.parseInt(split[0]);
+            Date dNgayTao = new Date(to_day,to_month,to_year);
             c.setTime(dNgayTao);
             c.add(Calendar.DATE,30);
             dNgayTao = c.getTime();
@@ -142,7 +149,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                 holder.imvEdit.setVisibility(View.GONE);
                 holder.imvDelete.setVisibility(View.GONE);
             }
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
