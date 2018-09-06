@@ -196,7 +196,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         recyclerView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         if (list.size() != 0) {
-            absenceList.clear();
+//            absenceList.clear();
             absenceList.addAll(list);
             if (adapter == null) {
                 adapter = new AbsenceListForHrAdapter(absenceList, R.layout.item_list_absence_of_hr, getActivity(), manageAbsenceHrPresenter);

@@ -89,8 +89,15 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
             ListAbsenceForHr absenceForHr = (ListAbsenceForHr) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE);
             if (absenceForHr !=null){
                 setTitle(absenceForHr.getNameEmployee());
-                edt_tuNgay.setText(absenceForHr.getFromDate());
-                edt_denNgay.setText(absenceForHr.getToDate());
+                String[] split = absenceForHr.getFromDate().split("-");
+                String ngay = split[2] + split[1]+split[0];
+                Log.d(TAG,"-------------------------------------");
+                Log.d(TAG,"ngay" +absenceForHr.getFromDate());
+                Log.d(TAG,"ngay" +ngay);
+                edt_tuNgay.setText(ngay);
+                split = absenceForHr.getToDate().split("-");
+                ngay = split[2] + split[1]+split[0];
+                edt_denNgay.setText(ngay);
                 spnloaiNghi.setSelection(absenceForHr.getAbsenceType().getIdAbsenceType()-1);
                 //array start with index = 0
                 spnthoiGianNghi.setSelection(absenceForHr.getAbsenceTime().getIdAbsenceTime()-1);
@@ -172,24 +179,24 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                     absenceType = absenceType.replace(" ", "_");
 
                     int absenceTypeId = getAbsenceTypeId(absenceType);
-                    Log.d(TAG + " absenceTypeId: ", String.valueOf(absenceTypeId));
                     String absenceTime = spnthoiGianNghi.getSelectedItem().toString();
                     int absenceTimeId = getAbsenceTimeId(absenceTime);
-                    Log.d(TAG + " absenceTimeId: ", String.valueOf(absenceTimeId));
-                    Log.d(TAG + " startDate: ", edt_tuNgay.getText().toString());
-                    Log.d(TAG + " EndDate: ", edt_denNgay.getText().toString());
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put("absenceTypeId", absenceTypeId);
-                        jsonObject.put("fromDate", edt_tuNgay.getText().toString());
-                        jsonObject.put("toDate", edt_denNgay.getText().toString());
+                        String[] split = edt_tuNgay.getText().toString().split("-");
+                        String tungay = split[2]+"-"+split[1]+"-"+split[0];
+                        jsonObject.put("fromDate", tungay);
+                        split = edt_denNgay.getText().toString().split("-");
+                        String denngay = split[2]+"-"+split[1]+"-"+split[0];
+                        jsonObject.put("toDate", denngay);
                         jsonObject.put("reason", edtReason.getText().toString());
                         jsonObject.put("description", edtNote.getText().toString());
                         jsonObject.put("absenceTimeId", absenceTimeId);
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    Log.d(TAG,"Json Object body " + jsonObject.toString());
                     RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
                     if (statusAbsences == StatusAbsences.enum_Add) {
                         absencePresenter.addAbsence(body);
