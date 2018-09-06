@@ -1,4 +1,4 @@
-package com.dal.hrm_management.adapter;
+package com.dal.hrm_management.adapter.listAbsence;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresenter;
 import com.dal.hrm_management.utils.StringUtils;

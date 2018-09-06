@@ -81,7 +81,7 @@
     <string name="textview.text.dayStart">Start at:</string>
     <string name="textview.text.dayEnd">End at:</string>
 
-    <string name="menu_overtime">Overtime</string>
+    <string name="menu_overtime">My Overtime</string>
     <string name="menu_dashboard">Dashboard</string>
     <string name="menu_project">Project</string>
     <string name="menu_absence">Absence</string>
@@ -104,8 +104,7 @@
     <string name="textview.text.to">To: </string>
     <string name="textview.noteAbsence">Muốn đăng kí</string>
     <string name="absence_manage_for_po_fragment.title">List absences</string>
-    <string name="absence_status_accepted">Accepted</string>
-    <string name="absence_status_canceled">Denied</string>
+    <string name="overtime_status">Status</string>
     <string name="form_absence_edt_tungay">From</string>
     <string name="form_absence_edt_denNgay">To</string>
     <string name="form_absence_spinner_loaiNghi">Type absence</string>
@@ -175,6 +174,7 @@
     <string name="menu_id_manage_employee">id_manage_employee</string>
     <string name="menu_id_manage_absence">id_manage_absence</string>
     <string name="menu_id_manage_holiday">id_manage_holiday</string>
+    <string name="menu_id_manage_overtime">id_manage_overtime</string>
     <string name="menu_id_logout">id_logout</string>
     <string name="da_nang_viet_nam">Da Nang, Viet Nam</string>
     <string name="_0123456789">0123456789</string>
@@ -190,6 +190,11 @@
     <string name="textview.time">All day</string>
     <string name="error_from_not_greater_than_to">Field \'from\' can\'t greater than field \'to\'</string>
     <string name="absence_type_time">Time:</string>
+    <string name="overtime_reason">Reason:</string>
+    <string name="overtime_date">Date:</string>
+    <string name="overtime_date_hint">6-9-2018</string>
+    <string name="overtime_timeStart">08:20 PM</string>
+    <string name="overtime_timeEnd">09:55 PM</string>
     <string name="text_overtime_normal_day">Normal day</string>
     <string name="text_number">12</string>
     <string name="text_overtime_day_off">Day off</string>
@@ -201,6 +206,13 @@
     <string name="status">STATUS</string>
     <string name="description_edit">Edit</string>
     <string name="decription_delete">Delete</string>
+    <string name="overtime_numberTime">Number time</string>
+    <string name="overtime_time">Time:</string>
+    <string name="overtime_numberAcceptTime">AcceptTime</string>
+    <string name="overtime_status_accepted">Accepted</string>
+    <string name="overtime_status_rejected">Rejected</string>
+    <string name="overtime_typeDate">Normal day</string>
+
     <string name="text_tv_project">Project</string>
     <string name="text_tv_date">Date</string>
     <string name="text_tv_from_time">From Time</string>

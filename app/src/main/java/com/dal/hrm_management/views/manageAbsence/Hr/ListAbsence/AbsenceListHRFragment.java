@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views.manage_absence.Hr.ListAbsence;
+package com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.adapter.AbsenceListForHrAdapter;
+import com.dal.hrm_management.adapter.listAbsence.AbsenceListForHrAdapter;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresenter;
 import com.dal.hrm_management.utils.VariableUltils;

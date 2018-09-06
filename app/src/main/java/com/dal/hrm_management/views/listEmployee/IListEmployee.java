@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views.list_employee;
+package com.dal.hrm_management.views.listEmployee;
 
 import com.dal.hrm_management.models.listEmployee.Employee;
 

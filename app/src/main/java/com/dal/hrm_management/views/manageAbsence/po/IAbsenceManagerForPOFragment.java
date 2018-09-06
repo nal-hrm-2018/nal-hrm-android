@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views.manage_absence.po;
+package com.dal.hrm_management.views.manageAbsence.po;
 
 import com.dal.hrm_management.models.manageAbsence.po.listAbsence.DataAbsence;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.DataProject;

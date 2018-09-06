@@ -25,7 +25,7 @@ import com.dal.hrm_management.models.listEmployee.Employee;
 import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.views.employee.EditProfileEmployeeActivity;
 import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
-import com.dal.hrm_management.views.list_employee.ListEmployee;
+import com.dal.hrm_management.views.listEmployee.ListEmployee;
 
 import java.util.ArrayList;
 import java.util.List;

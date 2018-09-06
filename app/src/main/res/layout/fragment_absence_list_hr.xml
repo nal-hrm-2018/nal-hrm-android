@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.dal.hrm_management.views.manage_absence.Hr.ListAbsence.AbsenceListHRFragment">
+    tools:context="com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence.AbsenceListHRFragment">
     <TextView
         android:id="@+id/tvAbsenceFragHR_nothingToshow"
         android:layout_width="match_parent"

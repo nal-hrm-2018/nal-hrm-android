@@ -1,4 +1,4 @@
-package com.dal.hrm_management.adapter;
+package com.dal.hrm_management.adapter.listAbsence;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.utils.StringUtils;
-
 import java.util.List;
 
 public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataViewHolder> {
