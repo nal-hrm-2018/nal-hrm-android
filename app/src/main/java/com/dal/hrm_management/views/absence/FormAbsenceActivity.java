@@ -191,7 +191,6 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
                         edt_tuNgay.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();

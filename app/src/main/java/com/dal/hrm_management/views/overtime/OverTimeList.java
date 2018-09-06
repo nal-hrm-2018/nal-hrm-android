@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.overtime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class OverTimeList extends Fragment{
+public class OverTimeList extends Fragment implements View.OnClickListener {
     //In layout
     private TextView tvNomarlDay,tvDayOff,tvHoliday,tvNothingToShow;
     private ProgressBar prgShowMore;
@@ -70,5 +71,18 @@ public class OverTimeList extends Fragment{
         prgShowMore = view.findViewById(R.id.prgOvertimeListFra_ShowMore);
 
         layoutManager = new LinearLayoutManager(getActivity());
+
+        fabAdd.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fabOvertimeListFra_add:
+                Intent intent = new Intent(getActivity(),FormOvertime.class);
+                startActivity(intent);
+                break;
+                default: break;
+        }
     }
 }
