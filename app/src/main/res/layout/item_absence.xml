@@ -4,10 +4,10 @@
     android:id="@+id/absences_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:layout_margin="@dimen/item_padding"
     android:background="@android:color/white"
-    android:padding="@dimen/activity_horizontal_margin"
-    android:orientation="vertical">
+    android:padding="@dimen/activity_horizontal_margin">
 
     <TextView
         android:id="@+id/tv_type"
@@ -71,7 +71,7 @@
             android:id="@+id/tv_thoigianNghi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cả ngày"
+            android:text="@string/text_type_absence"
             android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 

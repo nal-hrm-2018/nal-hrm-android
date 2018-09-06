@@ -42,6 +42,8 @@ import com.dal.hrm_management.views.listEmployee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence.AbsenceListHRFragment;
 import com.dal.hrm_management.views.manageAbsence.Hr.holiday.HolidayHRFragment;
+import com.dal.hrm_management.views.manageOvertime.po.OTManageOfPOFragment;
+import com.dal.hrm_management.views.overtime.OverTimeList;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
 
 import java.util.ArrayList;
@@ -172,7 +174,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
-                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_dashboard))) {
+                        if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_overtime))) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeList()).commit();
+                            getSupportActionBar().setTitle(R.string.menu_overtime);
+                        } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_dashboard))) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
                             getSupportActionBar().setTitle(R.string.menu_dashboard);
                         } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_project))) {
@@ -182,10 +187,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                             getSupportActionBar().setTitle(R.string.menu_absence);
                         } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
                             showDialogLogout();
-                        } Log.e("GROUP", headerList.get(groupPosition).menuName);
+                        }
+                        Log.e("GROUP", headerList.get(groupPosition).menuName);
                         onBackPressed();
                     }
-                } return false;
+                }
+                return false;
             }
         });
 
@@ -209,6 +216,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                     } else if (model.id.equals(getString(R.string.menu_id_manage_holiday))) {
                         getSupportActionBar().setTitle("Holiday");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HolidayHRFragment()).commit();
+                    } else if (model.id.equals(getString(R.string.menu_id_manage_overtime))) {
+                        getSupportActionBar().setTitle("Overtime");
+                        if (data.getRole().getNameRole().equals("PO")) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OTManageOfPOFragment()).commit();
+                        }
                     }
                     Log.e("GROUP", model.menuName);
                     onBackPressed();
@@ -245,7 +257,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 //        if (!menuModel.hasChildren) {
 //            childList.put(menuModel, null);
 //        }
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_overtime), getString(R.string.menu_overtime), true, false, getResources().getDrawable(R.drawable.ic_overtime));
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+        menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
@@ -266,6 +283,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             }
             if (data.getRole().getNameRole().equals("HR")) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
+                childModelsList.add(chilModel);
+            }
+            if (data.getRole().getNameRole().equals("PO")) {
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
                 childModelsList.add(chilModel);
             }
 
@@ -301,7 +322,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Edit absence success
-        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
         }
     }
@@ -356,7 +377,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
      * Khi đã vào home mà không nhận được dữ liệu profile thì chỉ cần hiển thị đăng xuất
      */
     private void prepareMenuData() {
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_logout), getString(R.string.menu_logout), false,false, getResources().getDrawable(R.drawable.ic_logout));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_logout), getString(R.string.menu_logout), false, false, getResources().getDrawable(R.drawable.ic_logout));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);

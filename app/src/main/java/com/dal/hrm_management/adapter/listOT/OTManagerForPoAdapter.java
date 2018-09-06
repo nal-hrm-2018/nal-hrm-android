@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,56 +16,53 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
-import com.dal.hrm_management.models.fakeData.Absence;
-import com.dal.hrm_management.utils.PermissionManager;
+import com.dal.hrm_management.models.fakeData.OverTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Luu Ngoc Lan on 02-Aug-18.
- */
 
 public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAdapter.MyViewHolder> implements Filterable {
-    private List<Absence> absenceList;
+    private List<OverTime> overtimeList;
     private Context context;
-    private List<Absence> absenceListFilter;
-    private AbsenceAdapterListener listener;
+    private List<OverTime> overtimeListFiltered;
 
-    public OTManagerForPoAdapter(List<Absence> absenceList, Context context, AbsenceAdapterListener listener) {
-        this.absenceList = absenceList;
+    public OTManagerForPoAdapter(List<OverTime> absenceList, Context context) {
+        this.overtimeList = absenceList;
         this.context = context;
-        this.absenceListFilter = absenceList;
-        this.listener = listener;
+        this.overtimeListFiltered = absenceList;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_absence_manager_of_po, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_ot_manager_of_po, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final Absence absence = absenceListFilter.get(position);
-        holder.tv_nameEmployee.setText(absence.getName());
-        holder.tv_nameProject.setText(absence.getNameProject());
-        holder.tv_reason.setText(absence.getReason());
-        holder.tv_from.setText(absence.getFrom());
-        holder.tv_to.setText(absence.getTo());
-        if(!PermissionManager.isPermited(PermissionManager.listPermissions,"approve_absence")){
-            holder.imgBtn_accept.setVisibility(View.GONE);
+        final OverTime overTime = overtimeListFiltered.get(position);
+        holder.tv_nameEmployee.setText(overTime.getNameEmployee());
+        holder.tv_nameProject.setText(overTime.getNameProject());
+        holder.tv_reason.setText(overTime.getReason());
+        holder.tv_from.setText(overTime.getFrom());
+        holder.tv_to.setText(overTime.getTo());
+        String typeDate = overTime.getTypeDate();
+        if (typeDate.toLowerCase().equals("holiday")) {
+            holder.tv_typeDate.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
+        } else if (typeDate.toLowerCase().equals("day off")) {
+            holder.tv_typeDate.setBackgroundColor(context.getResources().getColor(R.color.color_violet_1));
         }
-        if (!PermissionManager.isPermited(PermissionManager.listPermissions, "reject_absence")) {
-            holder.imgBtn_cancel.setVisibility(View.GONE);
-        }
-        if (absence.getStatus().equals(context.getString(R.string.absence_status_accepted))) {
-            holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
+        holder.tv_typeDate.setText(typeDate);
+        if (overTime.getStatus().equals(context.getString(R.string.overtime_status_accepted))) {
+            holder.tv_status.setText(context.getString(R.string.overtime_status_accepted));
+            holder.tv_status.setTextColor(context.getResources().getColor(R.color.color_green));
             holder.tv_status.setVisibility(View.VISIBLE);
             holder.ll_button.setVisibility(View.GONE);
         }
-        if (absence.getStatus().equals(context.getString(R.string.absence_status_canceled))) {
-            holder.tv_status.setText(context.getString(R.string.absence_status_canceled));
+        if (overTime.getStatus().equals(context.getString(R.string.overtime_status_rejected))) {
+            holder.tv_status.setText(context.getString(R.string.overtime_status_rejected));
+            holder.tv_status.setTextColor(context.getResources().getColor(R.color.color_red));
             holder.tv_status.setVisibility(View.VISIBLE);
             holder.ll_button.setVisibility(View.GONE);
         }
@@ -76,10 +72,11 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if (view.getId() == R.id.imgBtn_accept) {
-                    holder.tv_status.setText(context.getString(R.string.absence_status_accepted));
+                    holder.tv_status.setText(context.getString(R.string.overtime_status_accepted));
+                    holder.tv_status.setTextColor(context.getResources().getColor(R.color.color_green));
                     holder.tv_status.setVisibility(View.VISIBLE);
                     holder.ll_button.setVisibility(View.GONE);
-                    absence.setStatus(context.getString(R.string.absence_status_accepted));
+                    overTime.setStatus(context.getString(R.string.overtime_status_accepted));
                 } else {
                     showDialogReason();
                 }
@@ -87,19 +84,25 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
 
             private void showDialogReason() {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                final EditText input = new EditText(context);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                input.setHint("Write your reason here");
-                builder.setView(input);
-                builder.setTitle("Why you deny?");
+                View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
+                final EditText edt_acceptTime = (EditText) view.findViewById(R.id.edt_acceptTime);
+                builder.setView(view);
+                builder.setTitle("Do you want to reject this form?");
                 builder.setCancelable(false);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Reject request", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        holder.tv_status.setText(context.getString(R.string.absence_status_canceled));
+                        holder.tv_status.setText(context.getString(R.string.overtime_status_rejected));
+                        holder.tv_status.setTextColor(context.getResources().getColor(R.color.color_red));
                         holder.tv_status.setVisibility(View.VISIBLE);
                         holder.ll_button.setVisibility(View.GONE);
-                        absence.setStatus(context.getString(R.string.absence_status_canceled));
+                        overTime.setStatus(context.getString(R.string.overtime_status_rejected));
+                        if (edt_acceptTime.getText() == null) {
+                            holder.tv_acceptTime.setText("-");
+                        } else {
+                            holder.tv_acceptTime.setText(edt_acceptTime.getText());
+                            overTime.setAcceptTime(edt_acceptTime.getText()+"");
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -107,7 +110,8 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 });
-                builder.create().show();
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
@@ -115,7 +119,7 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
 
     @Override
     public int getItemCount() {
-        return absenceListFilter.size();
+        return overtimeListFiltered.size();
     }
 
     @Override
@@ -125,24 +129,25 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
-                    absenceListFilter = absenceList;
+                    overtimeListFiltered = overtimeList;
                 } else {
-                    List<Absence> filteredList = new ArrayList<>();
-                    for (Absence row : absenceList) {
-                        if (row.getName().toLowerCase().contains(charString.toLowerCase())||row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
+                    List<OverTime> filteredList = new ArrayList<>();
+                    for (OverTime row : overtimeList) {
+                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase()) || row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
-                    absenceListFilter = filteredList;
-                };
+                    overtimeListFiltered = filteredList;
+                }
+                ;
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = absenceListFilter;
+                filterResults.values = overtimeListFiltered;
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults results) {
-                absenceListFilter = (ArrayList<Absence>) results.values;
+                overtimeListFiltered = (ArrayList<OverTime>) results.values;
                 notifyDataSetChanged();
             }
         };
@@ -156,8 +161,11 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
         TextView tv_from;
         TextView tv_to;
         TextView tv_status;
+        TextView tv_numberTime;
+        TextView tv_acceptTime;
+        TextView tv_typeDate;
         LinearLayout ll_button;
-        ImageButton imgBtn_cancel;
+        ImageButton imgBtn_reject;
         ImageButton imgBtn_accept;
         ItemClickListener itemClickListener;
 
@@ -169,12 +177,15 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
             tv_reason = (TextView) itemView.findViewById(R.id.tv_reason);
             tv_from = (TextView) itemView.findViewById(R.id.tv_from);
             tv_to = (TextView) itemView.findViewById(R.id.tv_to);
+            tv_numberTime = (TextView) itemView.findViewById(R.id.tv_numberTime);
+            tv_acceptTime = (TextView) itemView.findViewById(R.id.tv_acceptTime);
+            tv_typeDate = (TextView) itemView.findViewById(R.id.tv_typeDay);
             tv_status = (TextView) itemView.findViewById(R.id.tv_status);
             ll_button = (LinearLayout) itemView.findViewById(R.id.ll_button);
             imgBtn_accept = (ImageButton) itemView.findViewById(R.id.imgBtn_accept);
-            imgBtn_cancel = (ImageButton) itemView.findViewById(R.id.imgBtn_cancel);
+            imgBtn_reject = (ImageButton) itemView.findViewById(R.id.imgBtn_cancel);
             imgBtn_accept.setOnClickListener(this);
-            imgBtn_cancel.setOnClickListener(this);
+            imgBtn_reject.setOnClickListener(this);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -185,9 +196,5 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
         public void onClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), false);
         }
-    }
-
-    public interface AbsenceAdapterListener {
-        void onAbsenceSelected(Absence absence);
     }
 }

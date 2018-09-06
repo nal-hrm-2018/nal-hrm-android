@@ -16,6 +16,9 @@ public class Absence implements Serializable {
     @SerializedName("employeeId")
     @Expose
     private Integer employeeId;
+    @SerializedName("absenceTypeId")
+    @Expose
+    private Integer absenceTypeId;
     @SerializedName("fromDate")
     @Expose
     private String fromDate;
@@ -28,40 +31,18 @@ public class Absence implements Serializable {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("absenceTimeId")
+    @Expose
+    private Integer absenceTimeId;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
     @SerializedName("absenceType")
     @Expose
     private AbsenceType absenceType;
     @SerializedName("absenceTime")
     @Expose
     private AbsenceTime absenceTime;
-
-    /**
-     * No args constructor for use in serialization
-     */
-    public Absence() {
-    }
-
-    /**
-     * @param employeeId
-     * @param fromDate
-     * @param reason
-     * @param absenceTime
-     * @param description
-     * @param absenceType
-     * @param toDate
-     * @param idAbsences
-     */
-    public Absence(Integer idAbsences, Integer employeeId, String fromDate, String toDate, String reason, String description, AbsenceType absenceType, AbsenceTime absenceTime) {
-        super();
-        this.idAbsences = idAbsences;
-        this.employeeId = employeeId;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.reason = reason;
-        this.description = description;
-        this.absenceType = absenceType;
-        this.absenceTime = absenceTime;
-    }
 
     public Integer getIdAbsences() {
         return idAbsences;
@@ -77,6 +58,14 @@ public class Absence implements Serializable {
 
     public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public Integer getAbsenceTypeId() {
+        return absenceTypeId;
+    }
+
+    public void setAbsenceTypeId(Integer absenceTypeId) {
+        this.absenceTypeId = absenceTypeId;
     }
 
     public String getFromDate() {
@@ -109,6 +98,22 @@ public class Absence implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getAbsenceTimeId() {
+        return absenceTimeId;
+    }
+
+    public void setAbsenceTimeId(Integer absenceTimeId) {
+        this.absenceTimeId = absenceTimeId;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public AbsenceType getAbsenceType() {

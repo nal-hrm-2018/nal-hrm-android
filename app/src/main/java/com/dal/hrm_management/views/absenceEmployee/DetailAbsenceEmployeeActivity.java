@@ -1,14 +1,10 @@
 package com.dal.hrm_management.views.absenceEmployee;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -23,7 +19,7 @@ import com.dal.hrm_management.presenters.absenceEmployee.DetailAbsenceEmployeePr
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements IDetailAbsenceEmployeeActivity, View.OnClickListener {
+public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements IDetailAbsenceEmployeeActivity {
 
     private RecyclerView rv_absence;
     private DetailAbsenceEmployeePresenter detailAbsenceEmployeePresenter;
@@ -79,34 +75,6 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
         rv_absence = (RecyclerView) findViewById(R.id.rv_absence);
         rv_absence.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rv_absence.setAdapter(new AbsenceDetailEmployeeAdapter(absenceList, this));
-    }
-
-    private void showDialogInforAbsence() {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View inforAbsence = inflater.inflate(R.layout.dialog_infor_absence, null, false);
-        initViewDialog(inforAbsence);
-        loadData(dataAbsence);
-        new AlertDialog.Builder(this).setView(inforAbsence).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).show();
-    }
-
-    private void initViewDialog(View inforAbsence) {
-        tv_allowAbsence = (TextView) inforAbsence.findViewById(R.id.tv_allowAbsence);
-        tv_remainingAbsenceDays = (TextView) inforAbsence.findViewById(R.id.tv_remainingAbsenceDays);
-        tv_unpaidLeave = (TextView) inforAbsence.findViewById(R.id.tv_unpaidLeave);
-        tv_annualLeave = (TextView) inforAbsence.findViewById(R.id.tv_annualLeave);
-        tv_marriageLeave = (TextView) inforAbsence.findViewById(R.id.tv_marriageLeave);
-        tv_maternityLeave = (TextView) inforAbsence.findViewById(R.id.tv_maternityLeave);
-        tv_bereavementLeave = (TextView) inforAbsence.findViewById(R.id.tv_bereavementLeave);
-    }
-
-    @Override
-    public void onClick(View v) {
-        showDialogInforAbsence();
     }
 
     @Override

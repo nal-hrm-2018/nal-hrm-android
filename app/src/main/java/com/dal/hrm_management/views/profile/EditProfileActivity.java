@@ -33,6 +33,7 @@ import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.models.profile.Team;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.profile.ProfileEditPresenter;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -283,9 +284,21 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     }
 
     private void loadDataToView(Profile profile) {
-        position = profile.getRole().getNameRole();
-        maritalStatus = profile.getMaritalStatusDTO().getTypeMaritalStatus();
-        type = profile.getEmployeeType().getNameEmployeeType();
+        if (profile.getRole() != null) {
+            position = profile.getRole().getNameRole();
+        } else {
+            position = "";
+        }
+        if (profile.getMaritalStatusDTO() != null) {
+            maritalStatus = profile.getMaritalStatusDTO().getTypeMaritalStatus();
+        } else {
+            maritalStatus = "";
+        }
+        if (profile.getEmployeeType() != null) {
+            type = profile.getEmployeeType().getNameEmployeeType();
+        } else {
+            type = "";
+        }
         RetrofitImageAPI retrofitImageAPI = ApiImageClient.getImageClient().create(RetrofitImageAPI.class);
         String auth = Credentials.basic("hrm_testing", "hrm_testing");
         Call<ResponseBody> call;
@@ -349,19 +362,19 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
         }
 
         if (profile.getBirthday() != null) {
-            tv_birthday.setText(profile.getBirthday());
+            tv_birthday.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getBirthday()));
         } else {
             tv_birthday.setText(R.string.infor_null);
         }
 
         if (profile.getStartWorkDate() != null) {
-            tv_start.setText(profile.getStartWorkDate());
+            tv_start.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getStartWorkDate()));
         } else {
             tv_start.setText(R.string.infor_null);
         }
 
         if (profile.getEndWorkDate() != null) {
-            tv_end.setText(profile.getEndWorkDate());
+            tv_end.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(profile.getEndWorkDate()));
         } else {
             tv_end.setText(R.string.infor_null);
         }

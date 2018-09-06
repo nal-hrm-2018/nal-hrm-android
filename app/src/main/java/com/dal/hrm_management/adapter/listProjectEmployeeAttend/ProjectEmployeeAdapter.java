@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.listProjectEmpAttend.ProjectAndProcess;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.ArrayList;
 
@@ -38,8 +39,8 @@ public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployee
     public void onBindViewHolder(ProjectEmployeeViewHolder holder, int position) {
         holder.tv_nameProject.setText(projects.get(position).getProject().getNameProject());
         holder.tv_role.setText(projects.get(position).getProcesses().getRole().getNameRole());
-        holder.tv_dayStart.setText(projects.get(position).getProcesses().getStartDate());
-        holder.tv_dayEnd.setText(projects.get(position).getProcesses().getEndDate());
+        holder.tv_dayStart.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(projects.get(position).getProcesses().getStartDate()));
+        holder.tv_dayEnd.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(projects.get(position).getProcesses().getEndDate()));
         String status = projects.get(position).getProject().getStatus().getNameStatus();
         if(status.toLowerCase().equals("kick off")){
             holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_green));

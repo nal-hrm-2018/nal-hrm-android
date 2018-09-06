@@ -52,14 +52,14 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            Log.d(TAG,"Scroll OK");
+            Log.d(TAG, "Scroll OK");
             int visibleItemCount = layoutManager.getChildCount();
             Log.d("visibleItemCount", String.valueOf(visibleItemCount));
             int totalItemCount = layoutManager.getItemCount();
             Log.d("totalItemCount", String.valueOf(totalItemCount));
             int firstitem = layoutManager.findFirstVisibleItemPosition();
             Log.d("firstitem", String.valueOf(firstitem));
-            if (firstitem+visibleItemCount >= totalItemCount && current_page*pageSize < total){
+            if (firstitem + visibleItemCount >= totalItemCount && current_page * pageSize < total) {
                 current_page++;
                 Log.d(TAG + "current page: ", String.valueOf(current_page));
                 progressBar.setVisibility(View.VISIBLE);
@@ -67,6 +67,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
             }
         }
     };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -97,8 +98,8 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            current_page =1;
+        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            current_page = 1;
             absenceList.clear();
             absencePresenter.getDataAbsence(current_page, pageSize);
         }
@@ -114,11 +115,11 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         this.dataAbsence = dataAbsence;
         total = dataAbsence.getListAbsence().getTotal(); //get total record absence
         List<Absence> list = dataAbsence.getListAbsence().getAbsence(); //get list record absence in model
-        if (list.size() !=0){
+        if (list.size() != 0) {
             absenceList.addAll(dataAbsence.getListAbsence().getAbsence()); //add all list record in array
-            if (adapter == null){
+            if (adapter == null) {
                 adapter = new AbsenceAdapter(absenceList, getActivity());
-            }else{
+            } else {
                 adapter.notifyDataSetChanged();
             }
             progressBar.setVisibility(View.GONE);
@@ -127,7 +128,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
             rv_absence.setAdapter(adapter);
             rv_absence.addOnScrollListener(recyOnScrollListener);
 
-        }else{
+        } else {
             tv_message_nothing.setText("No absence to show!");
             tv_message_nothing.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
@@ -136,7 +137,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
 
     @Override
     public void getAbsencePersonalFailed() {
-        Toast.makeText(getActivity(),"Error",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
         tv_message_nothing.setText("No absence to show!");
         tv_message_nothing.setVisibility(View.VISIBLE);
     }
@@ -149,16 +150,6 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         tv_marriageLeave.setText(dataAbsence.getMarriageLeave() + "");
         tv_bereavementLeave.setText(dataAbsence.getBereavementLeave() + "");
         tv_maternityLeave.setText(dataAbsence.getMaternityLeave() + "");
-    }
-
-    private void initViewDialog(View inforAbsence) {
-        tv_allowAbsence = (TextView) inforAbsence.findViewById(R.id.tv_allowAbsence);
-        tv_remainingAbsenceDays = (TextView) inforAbsence.findViewById(R.id.tv_remainingAbsenceDays);
-        tv_unpaidLeave = (TextView) inforAbsence.findViewById(R.id.tv_unpaidLeave);
-        tv_annualLeave = (TextView) inforAbsence.findViewById(R.id.tv_annualLeave);
-        tv_marriageLeave = (TextView) inforAbsence.findViewById(R.id.tv_marriageLeave);
-        tv_maternityLeave = (TextView) inforAbsence.findViewById(R.id.tv_maternityLeave);
-        tv_bereavementLeave = (TextView) inforAbsence.findViewById(R.id.tv_bereavementLeave);
     }
 
     @Override
