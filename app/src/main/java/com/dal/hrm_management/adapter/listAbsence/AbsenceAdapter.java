@@ -29,11 +29,11 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
 
     @Override
     public void onBindViewHolder(AbsenceAdapter.DataViewHolder holder, int position) {
-        holder.tv_type.setText(absences.get(position).getAbsenceType().getDescription());
+        holder.tv_type.setText(StringUtils.toUpperCaseFirstChar(absences.get(position).getAbsenceType().getDescription()));
         holder.tv_startAt.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absences.get(position).getFromDate()));
         holder.tv_endAt.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absences.get(position).getToDate()));
         holder.item_absence_tv_reason.setText(absences.get(position).getReason());
-        holder.tv_thoigianNghi.setText(absences.get(position).getAbsenceTime().getDescription());
+        holder.tv_thoigianNghi.setText(StringUtils.toUpperCaseFirstChar(absences.get(position).getAbsenceTime().getDescription()));
 
     }
 

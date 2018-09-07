@@ -17,4 +17,8 @@ public class StringUtils {
                 ? st.split("[-/]")[2] + "-" + st.split("[-/]")[1] + "-" + st.split("[-/]")[0]
                 : st;
     }
+
+    public static String toUpperCaseFirstChar(String str){
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
 }
