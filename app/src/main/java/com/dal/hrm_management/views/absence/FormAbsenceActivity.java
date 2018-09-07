@@ -215,6 +215,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                         if (dayOfMonth < 9) sday="0";
                         sday += String.valueOf(dayOfMonth);
                         edt_tuNgay.setText(sday+smonth+syear);
+                        edt_tuNgay.requestFocus();
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog.show();
@@ -231,7 +232,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                         if (dayOfMonth < 9) sday="0";
                         sday += String.valueOf(dayOfMonth);
                         edt_denNgay.setText(sday+smonth+syear);
-
+                        edt_denNgay.requestFocus();
                     }
                 }, mYear, mMonth, mDay);
                 datePickerDialog1.show();

@@ -224,7 +224,8 @@
     <string name="hint_format_date">ddMMyyyy</string>
     <string name="hint_format_time">HHmm</string>
     <string name="hint_actual_overtime">Actual time your overtime</string>
-    <string name="hint_input_value_here">Input value here</string>
+    <string name="hint_input_value_here">Input text here</string>
     <string name="error_invalid_date">invalid date</string>
     <string name="error_invalid_time">invalid time</string>
+    <string name="hint_reason">leave a reason</string>
 </resources>

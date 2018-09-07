@@ -106,6 +106,7 @@ public class FormOvertime extends AppCompatActivity implements View.OnClickListe
                         day += String.valueOf(i2);
                         edtDate.setText(day+month+year);
                         Log.d(TAG,"edtDate: " + edtDate.getText().toString());
+                        edtDate.requestFocus();
                     }
                 },mYear,mMonth,mDay);
                 datePickerDialog.show();
@@ -120,6 +121,7 @@ public class FormOvertime extends AppCompatActivity implements View.OnClickListe
                         if (selectedMinute <=9) sm="0";
                         sm +=String.valueOf(selectedMinute);
                         edtFromTime.setText( sh + sm);
+                        edtFromTime.requestFocus();
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 timePickerDialog.setTitle("Select Time");
@@ -135,6 +137,7 @@ public class FormOvertime extends AppCompatActivity implements View.OnClickListe
                         if (selectedMinute <=9) sm="0";
                         sm +=String.valueOf(selectedMinute);
                         edtToTime.setText( sh + sm);
+                        edtToTime.requestFocus();
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 timePickerDialog.setTitle("Select Time");
