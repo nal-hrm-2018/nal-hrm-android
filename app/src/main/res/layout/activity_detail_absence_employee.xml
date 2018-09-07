@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/header"
+            android:id="@+id/layoutDetailAbsenceEmpAct_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary">
@@ -54,20 +54,22 @@
                     android:weightSum="2">
 
                     <TextView
+                        android:id="@+id/tvDetailAbsenceEmpAct_Total"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="12"
                         android:gravity="center"
+                        android:text="12"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/text_size_big" />
 
                     <TextView
+                        android:id="@+id/tvDetailAbsenceEmpAct_Remain"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="8"
                         android:gravity="center"
+                        android:text="8"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/text_size_big" />
                 </LinearLayout>
@@ -97,7 +99,7 @@
                                 android:textSize="@dimen/text_size_small" />
 
                             <TextView
-                                android:id="@+id/tv_annualLeave"
+                                android:id="@+id/tvDetailAbsenceEmpAct_Annual"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_annualTitle"
@@ -123,7 +125,7 @@
                                 android:textSize="@dimen/text_size_small" />
 
                             <TextView
-                                android:id="@+id/tv_noSalaryLeave"
+                                android:id="@+id/tvDetailAbsenceEmpAct_NoSalary"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_nosalaryTitle"
@@ -148,7 +150,7 @@
                                 android:textSize="@dimen/text_size_small" />
 
                             <TextView
-                                android:id="@+id/tv_maternityLeave"
+                                android:id="@+id/tvDetailAbsenceEmpAct_Maternity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_maternityTitle"
@@ -173,7 +175,7 @@
                                 android:textSize="@dimen/text_size_small" />
 
                             <TextView
-                                android:id="@+id/tv_marriageLeave"
+                                android:id="@+id/tvDetailAbsenceEmpAct_Marriage"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_marriageTitle"
@@ -198,7 +200,7 @@
                                 android:textSize="@dimen/text_size_small" />
 
                             <TextView
-                                android:id="@+id/tv_bereavementLeave"
+                                android:id="@+id/tvDetailAbsenceEmpAct_Bereave"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_bereavementTitle"

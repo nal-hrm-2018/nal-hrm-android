@@ -10,113 +10,94 @@ public class DataAbsence {
 
     @SerializedName("allowAbsence")
     @Expose
-    private int allowAbsence;
+    private Integer allowAbsence;
     @SerializedName("remainingAbsenceDays")
     @Expose
-    private int remainingAbsenceDays;
+    private Integer remainingAbsenceDays;
     @SerializedName("annualLeave")
     @Expose
-    private int annualLeave;
+    private Integer annualLeave;
     @SerializedName("unpaidLeave")
     @Expose
-    private int unpaidLeave;
+    private Integer unpaidLeave;
     @SerializedName("marriageLeave")
     @Expose
-    private int marriageLeave;
+    private Integer marriageLeave;
     @SerializedName("bereavementLeave")
     @Expose
-    private int bereavementLeave;
+    private Integer bereavementLeave;
     @SerializedName("maternityLeave")
     @Expose
-    private int maternityLeave;
+    private Integer maternityLeave;
+    @SerializedName("sickLeave")
+    @Expose
+    private Integer sickLeave;
     @SerializedName("listAbsence")
     @Expose
     private ListAbsence listAbsence;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public DataAbsence() {
-    }
-
-    /**
-     *
-     * @param annualLeave
-     * @param remainingAbsenceDays
-     * @param bereavementLeave
-     * @param marriageLeave
-     * @param maternityLeave
-     * @param unpaidLeave
-     * @param listAbsence
-     * @param allowAbsence
-     */
-    public DataAbsence(int allowAbsence, int remainingAbsenceDays, int annualLeave, int unpaidLeave, int marriageLeave, int bereavementLeave, int maternityLeave, ListAbsence listAbsence) {
-        super();
-        this.allowAbsence = allowAbsence;
-        this.remainingAbsenceDays = remainingAbsenceDays;
-        this.annualLeave = annualLeave;
-        this.unpaidLeave = unpaidLeave;
-        this.marriageLeave = marriageLeave;
-        this.bereavementLeave = bereavementLeave;
-        this.maternityLeave = maternityLeave;
-        this.listAbsence = listAbsence;
-    }
-
-    public int getAllowAbsence() {
+    public Integer getAllowAbsence() {
         return allowAbsence;
     }
 
-    public void setAllowAbsence(int allowAbsence) {
+    public void setAllowAbsence(Integer allowAbsence) {
         this.allowAbsence = allowAbsence;
     }
 
-    public int getRemainingAbsenceDays() {
+    public Integer getRemainingAbsenceDays() {
         return remainingAbsenceDays;
     }
 
-    public void setRemainingAbsenceDays(int remainingAbsenceDays) {
+    public void setRemainingAbsenceDays(Integer remainingAbsenceDays) {
         this.remainingAbsenceDays = remainingAbsenceDays;
     }
 
-    public int getAnnualLeave() {
+    public Integer getAnnualLeave() {
         return annualLeave;
     }
 
-    public void setAnnualLeave(int annualLeave) {
+    public void setAnnualLeave(Integer annualLeave) {
         this.annualLeave = annualLeave;
     }
 
-    public int getUnpaidLeave() {
+    public Integer getUnpaidLeave() {
         return unpaidLeave;
     }
 
-    public void setUnpaidLeave(int unpaidLeave) {
+    public void setUnpaidLeave(Integer unpaidLeave) {
         this.unpaidLeave = unpaidLeave;
     }
 
-    public int getMarriageLeave() {
+    public Integer getMarriageLeave() {
         return marriageLeave;
     }
 
-    public void setMarriageLeave(int marriageLeave) {
+    public void setMarriageLeave(Integer marriageLeave) {
         this.marriageLeave = marriageLeave;
     }
 
-    public int getBereavementLeave() {
+    public Integer getBereavementLeave() {
         return bereavementLeave;
     }
 
-    public void setBereavementLeave(int bereavementLeave) {
+    public void setBereavementLeave(Integer bereavementLeave) {
         this.bereavementLeave = bereavementLeave;
     }
 
-    public int getMaternityLeave() {
+    public Integer getMaternityLeave() {
         return maternityLeave;
     }
 
-    public void setMaternityLeave(int maternityLeave) {
+    public void setMaternityLeave(Integer maternityLeave) {
         this.maternityLeave = maternityLeave;
+    }
+
+    public Integer getSickLeave() {
+        return sickLeave;
+    }
+
+    public void setSickLeave(Integer sickLeave) {
+        this.sickLeave = sickLeave;
     }
 
     public ListAbsence getListAbsence() {
@@ -126,5 +107,4 @@ public class DataAbsence {
     public void setListAbsence(ListAbsence listAbsence) {
         this.listAbsence = listAbsence;
     }
-
 }

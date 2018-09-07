@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +32,8 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
     private String name_employee;
     private CollapsingToolbarLayout collapsingtoolbar;
     private TextView tv_message_nothing;
-    private TextView tv_allowAbsence, tv_remainingAbsenceDays, tv_unpaidLeave, tv_annualLeave, tv_marriageLeave, tv_maternityLeave, tv_bereavementLeave;
-
+    private RelativeLayout layout;
+    private TextView tvTotal,tvRemain,tvAnnual,tvNoSalary,tvMaternity,tvMarriage,tvBereavement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,21 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
         rv_absence = (RecyclerView) findViewById(R.id.rv_absence);
         rv_absence.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rv_absence.setAdapter(new AbsenceDetailEmployeeAdapter(absenceList, this));
+
+        layout = findViewById(R.id.layoutDetailAbsenceEmpAct_header);
+        layout.setVisibility(View.GONE);
+
+
+        tvTotal = findViewById(R.id.tvDetailAbsenceEmpAct_Total);
+        tvRemain = findViewById(R.id.tvDetailAbsenceEmpAct_Remain);
+        tvAnnual = findViewById(R.id.tvDetailAbsenceEmpAct_Annual);
+        tvNoSalary = findViewById(R.id.tvDetailAbsenceEmpAct_NoSalary);
+        tvMaternity = findViewById(R.id.tvDetailAbsenceEmpAct_Maternity);
+        tvMarriage = findViewById(R.id.tvDetailAbsenceEmpAct_Marriage);
+        tvBereavement = findViewById(R.id.tvDetailAbsenceEmpAct_Bereave);
+
     }
+
 
     @Override
     public void getDetailAbsenceEmployeeSuccess(Data dataAbsence) {
@@ -85,6 +100,8 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
             if(absenceList.size()!=0){
                 rv_absence.setAdapter(new AbsenceDetailEmployeeAdapter(absenceList, this));
                 tv_message_nothing.setVisibility(View.GONE);
+                layout.setVisibility(View.VISIBLE);
+                loadData(dataAbsence);
             } else {
                 tv_message_nothing.setText("No absence to show!");
                 tv_message_nothing.setVisibility(View.VISIBLE);
@@ -97,12 +114,12 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
 
     }
     private void loadData(Data dataAbsence) {
-        tv_allowAbsence.setText(dataAbsence.getAllowAbsence() + "");
-        tv_remainingAbsenceDays.setText(dataAbsence.getRemainingAbsenceDays() + "");
-        tv_unpaidLeave.setText(dataAbsence.getUnpaidLeave() + "");
-        tv_annualLeave.setText(dataAbsence.getAnnualLeave() + "");
-        tv_marriageLeave.setText(dataAbsence.getMarriageLeave() + "");
-        tv_bereavementLeave.setText(dataAbsence.getBereavementLeave() + "");
-        tv_maternityLeave.setText(dataAbsence.getMaternityLeave() + "");
+        tvTotal.setText(dataAbsence.getAllowAbsence() + "");
+        tvRemain.setText(dataAbsence.getRemainingAbsenceDays() + "");
+        tvNoSalary.setText(dataAbsence.getUnpaidLeave() + "");
+        tvAnnual.setText(dataAbsence.getAnnualLeave() + "");
+        tvMarriage.setText(dataAbsence.getMarriageLeave() + "");
+        tvBereavement.setText(dataAbsence.getBereavementLeave() + "");
+        tvMaternity.setText(dataAbsence.getMaternityLeave() + "");
     }
 }
