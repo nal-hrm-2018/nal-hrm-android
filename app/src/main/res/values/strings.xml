@@ -208,7 +208,7 @@
     <string name="decription_delete">Delete</string>
     <string name="overtime_numberTime">Number time</string>
     <string name="overtime_time">Time:</string>
-    <string name="overtime_numberAcceptTime">AcceptTime</string>
+    <string name="overtime_numberAcceptTime">Accepted time</string>
     <string name="overtime_status_accepted">Accepted</string>
     <string name="overtime_status_rejected">Rejected</string>
     <string name="overtime_typeDate">Normal day</string>
@@ -228,4 +228,5 @@
     <string name="error_invalid_date">invalid date</string>
     <string name="error_invalid_time">invalid time</string>
     <string name="hint_reason">leave a reason</string>
+    <string name="absence_project_name">Project:</string>
 </resources>

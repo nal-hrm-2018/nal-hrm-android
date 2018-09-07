@@ -7,8 +7,8 @@
     android:layout_margin="@dimen/item_padding"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_horizontal_margin">
 
     <RelativeLayout
@@ -29,9 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:paddingRight="@dimen/text_padding"
-            android:paddingLeft="@dimen/text_padding"
             android:background="@color/color_violet"
+            android:paddingLeft="@dimen/text_padding"
+            android:paddingRight="@dimen/text_padding"
             android:text="@string/overtime_typeDate"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_small"
@@ -50,8 +50,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="@dimen/text_padding"
+        android:orientation="horizontal"
         android:weightSum="3">
 
         <LinearLayout
@@ -138,8 +138,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/item_padding"
+                android:orientation="horizontal"
                 android:weightSum="2">
 
                 <RelativeLayout
