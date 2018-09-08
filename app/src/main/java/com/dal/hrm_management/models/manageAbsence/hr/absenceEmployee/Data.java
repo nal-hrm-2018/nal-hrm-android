@@ -29,39 +29,12 @@ public class Data {
     @SerializedName("maternityLeave")
     @Expose
     private Integer maternityLeave;
+    @SerializedName("sickLeave")
+    @Expose
+    private Integer sickLeave;
     @SerializedName("listAbsence")
     @Expose
     private ListAbsence listAbsence;
-
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Data() {
-    }
-
-    /**
-     *
-     * @param annualLeave
-     * @param remainingAbsenceDays
-     * @param bereavementLeave
-     * @param marriageLeave
-     * @param maternityLeave
-     * @param unpaidLeave
-     * @param listAbsence
-     * @param allowAbsence
-     */
-    public Data(Integer allowAbsence, Integer remainingAbsenceDays, Integer annualLeave, Integer unpaidLeave, Integer marriageLeave, Integer bereavementLeave, Integer maternityLeave, ListAbsence listAbsence) {
-        super();
-        this.allowAbsence = allowAbsence;
-        this.remainingAbsenceDays = remainingAbsenceDays;
-        this.annualLeave = annualLeave;
-        this.unpaidLeave = unpaidLeave;
-        this.marriageLeave = marriageLeave;
-        this.bereavementLeave = bereavementLeave;
-        this.maternityLeave = maternityLeave;
-        this.listAbsence = listAbsence;
-    }
 
     public Integer getAllowAbsence() {
         return allowAbsence;
@@ -117,6 +90,14 @@ public class Data {
 
     public void setMaternityLeave(Integer maternityLeave) {
         this.maternityLeave = maternityLeave;
+    }
+
+    public Integer getSickLeave() {
+        return sickLeave;
+    }
+
+    public void setSickLeave(Integer sickLeave) {
+        this.sickLeave = sickLeave;
     }
 
     public ListAbsence getListAbsence() {
