@@ -24,8 +24,6 @@ import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 import com.dal.hrm_management.views.absenceEmployee.DetailAbsenceEmployeeActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,14 +64,18 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         holder.setIsRecyclable(false);
         holder.tv_nameEmployee.setText(absence.getNameEmployee());
         holder.setIsRecyclable(true);
-        holder.tv_type.setText(absence.getAbsenceType().getNameAbsenceType().replace("_"," "));
+        holder.tv_type.setText(StringUtils.toUpperCaseFirstChar(absence.getAbsenceType().getNameAbsenceType().replace("_"," ")));
         holder.tv_from.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getFromDate()));
         if(absence.getReason()!= null){
             holder.edt_Resaon.setText(absence.getReason());
         } else {
             holder.edt_Resaon.setText(R.string.infor_null);
         }
-        holder.tv_TimeAbsence.setText(absence.getAbsenceTime().getDescription());
+        /**
+         *  Delete "absence" pre-fix and upper case the first leter result
+         *  example: absence morning --> Morning
+         */
+        holder.tv_TimeAbsence.setText(StringUtils.toUpperCaseFirstChar(absence.getAbsenceTime().getDescription().substring(7)));
         holder.tv_to.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getToDate()));
         holder.imvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
