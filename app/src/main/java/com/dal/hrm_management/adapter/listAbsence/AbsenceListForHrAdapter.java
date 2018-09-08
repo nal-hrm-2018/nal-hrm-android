@@ -29,11 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Luu Ngoc Lan on 06-Aug-18.
- */
-
-public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListForHrAdapter.MyViewHolder> implements Filterable{
+public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListForHrAdapter.MyViewHolder> implements Filterable {
     private List<ListAbsenceForHr> absenceList;
     private List<ListAbsenceForHr> absenceListFiltered;
     private int rowLayout;
@@ -41,9 +37,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
     private int id_employee;
     private ManageAbsenceHrPresenter manageAbsenceHrPresenter;
 
-    public AbsenceListForHrAdapter
-            (List<ListAbsenceForHr> absenceList, int rowLayout, Context context,
-             ManageAbsenceHrPresenter manageAbsenceHrPresenter) {
+    public AbsenceListForHrAdapter(List<ListAbsenceForHr> absenceList, int rowLayout, Context context, ManageAbsenceHrPresenter manageAbsenceHrPresenter) {
         this.absenceList = absenceList;
         this.absenceListFiltered = absenceList;
         this.rowLayout = rowLayout;
@@ -64,9 +58,9 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         holder.setIsRecyclable(false);
         holder.tv_nameEmployee.setText(absence.getNameEmployee());
         holder.setIsRecyclable(true);
-        holder.tv_type.setText(StringUtils.toUpperCaseFirstChar(absence.getAbsenceType().getNameAbsenceType().replace("_"," ")));
+        holder.tv_type.setText(StringUtils.toUpperCaseFirstChar(absence.getAbsenceType().getNameAbsenceType().replace("_", " ")));
         holder.tv_from.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getFromDate()));
-        if(absence.getReason()!= null){
+        if (absence.getReason() != null) {
             holder.edt_Resaon.setText(absence.getReason());
         } else {
             holder.edt_Resaon.setText(R.string.infor_null);
@@ -75,15 +69,23 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
          *  Delete "absence" pre-fix and upper case the first leter result
          *  example: absence morning --> Morning
          */
-        holder.tv_TimeAbsence.setText(StringUtils.toUpperCaseFirstChar(absence.getAbsenceTime().getDescription().substring(7)));
+        String timeAbsence = StringUtils.toUpperCaseFirstChar(absence.getAbsenceTime().getDescription().substring(7));
+        if (timeAbsence.equals("All day")) {
+            holder.tv_TimeAbsence.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
+        } else if (timeAbsence.equals("Morning")) {
+            holder.tv_TimeAbsence.setBackgroundColor(context.getResources().getColor(R.color.color_violet));
+        } else {
+            holder.tv_TimeAbsence.setBackgroundColor(context.getResources().getColor(R.color.color_violet_1));
+        }
+        holder.tv_TimeAbsence.setText(timeAbsence);
         holder.tv_to.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getToDate()));
         holder.imvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("position", String.valueOf(position));
                 Intent intent = new Intent(context, FormAbsenceActivity.class);
-                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE,absence);
-                ((Activity)context).startActivityForResult(intent,VariableUltils.REQUEST_CODE);
+                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE, absence);
+                ((Activity) context).startActivityForResult(intent, VariableUltils.REQUEST_CODE);
             }
         });
         holder.imvDelete.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +93,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
             public void onClick(View view) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Warning");
-                builder.setMessage("Delete absence of " + absence.getNameEmployee()+" ?");
+                builder.setMessage("Delete absence of " + absence.getNameEmployee() + " ?");
                 builder.setCancelable(false);
 
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -121,32 +123,32 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                  */
                 id_employee = absence.getIdEmployee();
                 Intent intent = new Intent(context.getApplicationContext(), DetailAbsenceEmployeeActivity.class);
-                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_ID_EMPLOYEE,id_employee);
-                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_NAME_EMPLOYEE,absence.getNameEmployee());
+                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_ID_EMPLOYEE, id_employee);
+                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_NAME_EMPLOYEE, absence.getNameEmployee());
                 context.startActivity(intent);
             }
         });
         //Xét điều kiện nếu như form đó đã quá 1 tháng - chưa check đúng đâu
         try {
             Calendar c = Calendar.getInstance();
-            String[] split =absenceList.get(position).getFromDate().split("-");
+            String[] split = absenceList.get(position).getFromDate().split("-");
             int from_day = Integer.parseInt(split[2]);
             int from_month = Integer.parseInt(split[1]);
             int from_year = Integer.parseInt(split[0]);
-            Date dTuNgay = new Date(from_day,from_month,from_year);
+            Date dTuNgay = new Date(from_day, from_month, from_year);
             c.setTime(dTuNgay);
-            c.add(Calendar.DATE,30);
+            c.add(Calendar.DATE, 30);
             dTuNgay = c.getTime();
             Date dHienTai = new Date();
-            split =absenceList.get(position).getCreatedAt().split("-");
+            split = absenceList.get(position).getCreatedAt().split("-");
             int to_day = Integer.parseInt(split[2]);
             int to_month = Integer.parseInt(split[1]);
             int to_year = Integer.parseInt(split[0]);
-            Date dNgayTao = new Date(to_day,to_month,to_year);
+            Date dNgayTao = new Date(to_day, to_month, to_year);
             c.setTime(dNgayTao);
-            c.add(Calendar.DATE,30);
+            c.add(Calendar.DATE, 30);
             dNgayTao = c.getTime();
-            if (dTuNgay.compareTo(dHienTai) < 0 && dNgayTao.compareTo(dHienTai) < 0){
+            if (dTuNgay.compareTo(dHienTai) < 0 && dNgayTao.compareTo(dHienTai) < 0) {
                 //Tu ngay + 30 > dHienTai
                 holder.imvEdit.setVisibility(View.GONE);
                 holder.imvDelete.setVisibility(View.GONE);
@@ -173,7 +175,9 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                 } else {
                     List<ListAbsenceForHr> filteredList = new ArrayList<>();
                     for (ListAbsenceForHr row : absenceList) {
-                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase())) {
+                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase())
+                                || row.getFromDate().toLowerCase().contains(charString.toLowerCase())
+                                || row.getToDate().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
@@ -194,7 +198,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
 
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_nameEmployee;
         TextView tv_type;
         TextView tv_from;
@@ -221,6 +225,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         public void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
         }
+
         @Override
         public void onClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), false);

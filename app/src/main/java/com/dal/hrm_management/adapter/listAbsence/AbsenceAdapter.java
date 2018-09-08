@@ -37,7 +37,15 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
          *  Delete "absence" pre-fix and upper case the first leter result
          *  example: absence morning --> Morning
          */
-        holder.tv_thoigianNghi.setText(StringUtils.toUpperCaseFirstChar(absences.get(position).getAbsenceTime().getDescription().substring(7)));
+        String timeAbsence = StringUtils.toUpperCaseFirstChar(absences.get(position).getAbsenceTime().getDescription().substring(7));
+        if(timeAbsence.equals("All day")){
+            holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
+        } else if(timeAbsence.equals("Morning")){
+            holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet));
+        } else {
+            holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet_1));
+        }
+        holder.tv_thoigianNghi.setText(timeAbsence);
 
     }
 
