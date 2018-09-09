@@ -11,5 +11,8 @@ public interface IDetailAbsenceEmployeeActivity {
 
     public void getDetailAbsenceEmployeeFailed();
 
+    public void deleteAbsenceSuccess();
 
+    public void deleteAbsenceFailure();
 }
+

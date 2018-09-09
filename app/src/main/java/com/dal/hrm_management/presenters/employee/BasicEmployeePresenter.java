@@ -13,12 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.ContentValues.TAG;
 import static com.dal.hrm_management.presenters.login.LoginPresenter.token;
-
-/**
- * Created by Luu Ngoc Lan on 16-Aug-18.
- */
 
 public class BasicEmployeePresenter implements IBasicEmployeePresenter {
 

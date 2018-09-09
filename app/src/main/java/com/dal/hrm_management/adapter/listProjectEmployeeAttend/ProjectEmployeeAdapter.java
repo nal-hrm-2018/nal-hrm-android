@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by Luu Ngoc Lan on 27-Jul-18.
  */
 
-public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployeeAdapter.ProjectEmployeeViewHolder>  {
+public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployeeAdapter.ProjectEmployeeViewHolder> {
     private ArrayList<ProjectAndProcess> projects;
     private int rowLayout;
     private Context context;
@@ -38,16 +38,38 @@ public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployee
     @Override
     public void onBindViewHolder(ProjectEmployeeViewHolder holder, int position) {
         holder.tv_nameProject.setText(projects.get(position).getProject().getNameProject());
-        holder.tv_role.setText(projects.get(position).getProcesses().getRole().getNameRole());
-        holder.tv_dayStart.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(projects.get(position).getProcesses().getStartDate()));
-        holder.tv_dayEnd.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(projects.get(position).getProcesses().getEndDate()));
-        String status = projects.get(position).getProject().getStatus().getNameStatus();
-        if(status.toLowerCase().equals("kick off")){
-            holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_green));
+        if (projects.get(position).getProcesses().getRole() != null) {
+            String role = projects.get(position).getProcesses().getRole().getNameRole();
+            if (role.toLowerCase().equals("hr")) {
+                holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_red));
+            } else if (role.toLowerCase().equals("po")) {
+                holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_orange));
+            } else if (role.toLowerCase().equals("dev")) {
+                holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_green));
+            } else if (role.toLowerCase().equals("accountant")) {
+                holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_gray));
+            }
+            holder.tv_role.setText(role);
+        } else holder.tv_role.setText(R.string.infor_null);
+        if (projects.get(position).getProcesses().getStartDate() != null) {
+            holder.tv_dayStart.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(projects.get(position).getProcesses().getStartDate()));
         } else {
-            holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_orange));
+            holder.tv_dayStart.setText(R.string.infor_null);
         }
-        holder.tv_status.setText(status);
+        if (projects.get(position).getProcesses().getEndDate() != null) {
+            holder.tv_dayEnd.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(projects.get(position).getProcesses().getEndDate()));
+        } else {
+            holder.tv_dayEnd.setText(R.string.infor_null);
+        }
+        String status = projects.get(position).getProject().getStatus().getNameStatus();
+        if (status.toLowerCase().equals("kick off")) {
+            holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_green));
+        } else if (status.toLowerCase().equals("in-progress")) {
+            holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_violet));
+        } else {
+            holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
+        }
+        holder.tv_status.setText(StringUtils.toUpperCaseFirstChar(status));
     }
 
     @Override

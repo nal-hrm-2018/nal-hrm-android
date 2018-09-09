@@ -5,6 +5,7 @@ import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.fakeData.AbsenceModel;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.AbsenceEmployeeDetailResponse;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Data;
+import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.absenceEmployee.IDetailAbsenceEmployeeActivity;
 
@@ -53,4 +54,26 @@ public class DetailAbsenceEmployeePresenter implements IDetailAbsenceEmployeePre
             }
         });
     }
+
+    @Override
+    public void deleteAbsence(final int id) {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<EditAbsenceResponse> call = apiService.deleteAbsence(id,LoginPresenter.token);
+        call.enqueue(new Callback<EditAbsenceResponse>() {
+            @Override
+            public void onResponse(Call<EditAbsenceResponse> call, Response<EditAbsenceResponse> response) {
+                if (response.code() >=200 && response.code() < 300){
+                    iDetailAbsenceEmployeeActivity.deleteAbsenceSuccess();
+                }else{
+                    iDetailAbsenceEmployeeActivity.deleteAbsenceFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EditAbsenceResponse> call, Throwable t) {
+                iDetailAbsenceEmployeeActivity.deleteAbsenceFailure();
+            }
+        });
+    }
+
 }

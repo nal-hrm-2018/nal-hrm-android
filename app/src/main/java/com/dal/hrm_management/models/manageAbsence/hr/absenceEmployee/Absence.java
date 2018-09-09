@@ -3,11 +3,9 @@ package com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Luu Ngoc Lan on 30-Aug-18.
- */
+import java.io.Serializable;
 
-public class Absence {
+public class Absence implements Serializable {
     @SerializedName("idAbsences")
     @Expose
     private Integer idAbsences;
@@ -26,6 +24,9 @@ public class Absence {
     @SerializedName("reason")
     @Expose
     private String reason;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
     @SerializedName("description")
     @Expose
     private String description;
@@ -39,34 +40,14 @@ public class Absence {
     @Expose
     private AbsenceTime absenceTime;
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public Absence() {
-    }
-
-    /**
-     *
-     * @param employeeId
-     * @param fromDate
-     * @param reason
-     * @param absenceTime
-     * @param description
-     * @param absenceType
-     * @param absenceTimeId
-     * @param toDate
-     * @param absenceTypeId
-     * @param idAbsences
-     */
-    public Absence(Integer idAbsences, Integer employeeId, Integer absenceTypeId, String fromDate, String toDate, String reason, String description, Integer absenceTimeId, AbsenceType absenceType, AbsenceTime absenceTime) {
-        super();
+    public Absence(Integer idAbsences, Integer employeeId, Integer absenceTypeId, String fromDate, String toDate, String reason, String createdAt, String description, Integer absenceTimeId, AbsenceType absenceType, AbsenceTime absenceTime) {
         this.idAbsences = idAbsences;
         this.employeeId = employeeId;
         this.absenceTypeId = absenceTypeId;
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.reason = reason;
+        this.createdAt = createdAt;
         this.description = description;
         this.absenceTimeId = absenceTimeId;
         this.absenceType = absenceType;
@@ -119,6 +100,14 @@ public class Absence {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getDescription() {

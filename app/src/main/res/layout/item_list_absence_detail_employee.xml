@@ -17,10 +17,9 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_nameEmployee"
+            android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/textview.nameEmployeeAbsence"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold" />
@@ -51,23 +50,6 @@
             android:layout_weight="8"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="@dimen/text_space_item_absence"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_view_type"
-                    android:textSize="@dimen/text_size_small" />
-
-                <TextView
-                    android:id="@+id/tv_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_small" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

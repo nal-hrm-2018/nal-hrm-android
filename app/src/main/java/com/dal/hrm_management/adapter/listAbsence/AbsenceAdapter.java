@@ -33,7 +33,19 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
         holder.tv_startAt.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absences.get(position).getFromDate()));
         holder.tv_endAt.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absences.get(position).getToDate()));
         holder.item_absence_tv_reason.setText(absences.get(position).getReason());
-        holder.tv_thoigianNghi.setText(StringUtils.toUpperCaseFirstChar(absences.get(position).getAbsenceTime().getDescription()));
+        /**
+         *  Delete "absence" pre-fix and upper case the first leter result
+         *  example: absence morning --> Morning
+         */
+        String timeAbsence = StringUtils.toUpperCaseFirstChar(absences.get(position).getAbsenceTime().getDescription().substring(7));
+        if(timeAbsence.equals("All day")){
+            holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
+        } else if(timeAbsence.equals("Morning")){
+            holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet));
+        } else {
+            holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet_1));
+        }
+        holder.tv_thoigianNghi.setText(timeAbsence);
 
     }
 

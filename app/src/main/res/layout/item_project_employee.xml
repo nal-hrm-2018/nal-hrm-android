@@ -4,16 +4,18 @@
     android:id="@+id/projects_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/item_padding"
+    android:layout_margin="@dimen/item_padding"
     android:background="@android:color/white"
     android:orientation="horizontal"
-    android:padding="@dimen/activity_horizontal_margin"
-    android:weightSum="2">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:weightSum="10">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.7"
+        android:layout_weight="3"
         android:orientation="vertical"
         android:paddingLeft="@dimen/activity_vertical_margin">
 
@@ -23,15 +25,18 @@
             android:layout_height="wrap_content"
             android:hint="@string/textview.nameProjectEmployee"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/text_size_large"
+            android:textSize="@dimen/text_size_medium"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_roleEmployee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/textview.roleProjectEmployee"
-            android:textSize="@dimen/text_size_medium" />
+            android:paddingLeft="@dimen/text_padding"
+            android:paddingRight="@dimen/text_padding"
+            android:textAllCaps="true"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/text_size_small" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -75,22 +80,21 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_weight="7">
 
         <TextView
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/textview.statusOfProject"
-            android:paddingRight="@dimen/text_padding"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/text_padding"
-            android:textColor="@color/color_white"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
-    </LinearLayout>
+            android:paddingRight="@dimen/text_padding"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/color_white" />
+    </RelativeLayout>
 
 
 </LinearLayout>

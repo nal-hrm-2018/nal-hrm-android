@@ -8,4 +8,6 @@ public interface IDetailAbsenceEmployeePresenter {
 
     public void getDetailAbsenceEmployee(int id, int curentPage, int pageSize);
 
+    public void deleteAbsence(int id);
+
 }

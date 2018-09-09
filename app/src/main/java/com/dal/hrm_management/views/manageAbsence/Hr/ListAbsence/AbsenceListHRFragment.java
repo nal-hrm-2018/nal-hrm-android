@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private Spinner spn_year, spn_month;
     private TextView tvNothingToShow;
     private ProgressBar progressBar;
+    private LinearLayout ll_filter;
     private ManageAbsenceHrPresenter manageAbsenceHrPresenter;
     private int page = 1;
     private final int pageSize = 20;
@@ -52,7 +54,6 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private SearchView searchView;
     private Button btn_filter;
     LinearLayoutManager layoutManager;
-
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -109,11 +110,11 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, year_arr);
         spn_year.setAdapter(adapter);
-        spn_year.setSelection(adapter.getPosition(year+""));
+        spn_year.setSelection(adapter.getPosition(year + ""));
         ArrayAdapter<CharSequence> adapter_month = ArrayAdapter.createFromResource(getActivity(), R.array.month_arr, android.R.layout.simple_spinner_item);
         adapter_month.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_month.setAdapter(adapter_month);
-        spn_month.setSelection(month+1);
+        spn_month.setSelection(month + 1);
     }
 
 
@@ -132,7 +133,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private void initUI(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         progressBar = view.findViewById(R.id.prgAbsenceFragHR_ShowMore);
-
+        ll_filter = (LinearLayout) view.findViewById(R.id.ll_filter);
         spn_month = (Spinner) view.findViewById(R.id.spn_month);
         spn_year = (Spinner) view.findViewById(R.id.spn_year);
         tvNothingToShow = view.findViewById(R.id.tvAbsenceFragHR_nothingToshow);
@@ -245,8 +246,8 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
             }
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
-
             recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
+            tvNothingToShow.setVisibility(View.GONE);
         } else {
             absenceList.clear();
             adapter.notifyDataSetChanged();

@@ -54,7 +54,19 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         holder.tv_from.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getFromDate()));
         holder.tv_to.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getToDate()));
         if(absence.getAbsenceTime().getDescription()!=null){
-            holder.tv_time.setText(absence.getAbsenceTime().getDescription());
+            /**
+             *  Delete "absence" pre-fix and upper case the first leter result
+             *  example: absence morning --> Morning
+             */
+            String timeAbsence = StringUtils.toUpperCaseFirstChar(absence.getAbsenceTime().getDescription().substring(7));
+            if(timeAbsence.equals("All day")){
+                holder.tv_time.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
+            } else if(timeAbsence.equals("Morning")){
+                holder.tv_time.setBackgroundColor(context.getResources().getColor(R.color.color_violet));
+            } else {
+                holder.tv_time.setBackgroundColor(context.getResources().getColor(R.color.color_violet_1));
+            }
+            holder.tv_time.setText(timeAbsence);
         } else {
             holder.tv_time.setText(context.getResources().getString(R.string.infor_null));
         }
