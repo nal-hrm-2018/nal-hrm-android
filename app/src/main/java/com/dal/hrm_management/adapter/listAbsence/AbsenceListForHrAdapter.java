@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FormAbsenceActivity.class);
                     intent.putExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE, absence);
-                    ((Activity) context).startActivityForResult(intent, VariableUltils.REQUEST_CODE);
+                    ((Activity) context).startActivityForResult(intent, VariableUltils.REQUEST_CODE_ADD_ABSENCE);
                 }
             });
         }
@@ -146,29 +147,41 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         });
         //Xét điều kiện nếu như form đó đã quá 1 tháng - chưa check đúng đâu
         try {
+            Date ngayHienTai = new Date();
             Calendar c = Calendar.getInstance();
+            //Xét khoảng từ ngày
             String[] split = absenceList.get(position).getFromDate().split("-");
             int from_day = Integer.parseInt(split[2]);
             int from_month = Integer.parseInt(split[1]);
             int from_year = Integer.parseInt(split[0]);
-            Date dTuNgay = new Date(from_day, from_month, from_year);
-            c.setTime(dTuNgay);
+            c.set(Calendar.YEAR,from_year);
+            c.set(Calendar.MONTH,from_month-1);
+            c.set(Calendar.DATE,from_day);
+
+            Date dTuNgay = c.getTime();
             c.add(Calendar.DATE, 30);
-            dTuNgay = c.getTime();
-            Date dHienTai = new Date();
-            split = absenceList.get(position).getCreatedAt().split("-");
+            Date dTuNgayAdd30 = c.getTime();
+            //Xet khoảng create At
+            String[] createAt = absenceList.get(position).getCreatedAt().split(" ");
+            split = createAt[0].split("-");
             int to_day = Integer.parseInt(split[2]);
             int to_month = Integer.parseInt(split[1]);
             int to_year = Integer.parseInt(split[0]);
-            Date dNgayTao = new Date(to_day, to_month, to_year);
-            c.setTime(dNgayTao);
+            c.set(Calendar.YEAR,to_year);
+            c.set(Calendar.MONTH,to_month-1);
+            c.set(Calendar.DATE,to_day);
+
+            Date dNgayTao = c.getTime();
+
             c.add(Calendar.DATE, 30);
-            dNgayTao = c.getTime();
-            if (dTuNgay.compareTo(dHienTai) < 0 && dNgayTao.compareTo(dHienTai) < 0) {
-                //Tu ngay + 30 > dHienTai
+            Date dNgayTaoAdd30 = c.getTime();
+
+            if ((dTuNgay.compareTo(ngayHienTai) > 0 && dTuNgayAdd30.compareTo(ngayHienTai) <0)
+                    || (dNgayTao.compareTo(ngayHienTai) >0) && (dNgayTaoAdd30.compareTo(ngayHienTai) <0)){
                 holder.imvEdit.setVisibility(View.GONE);
                 holder.imvDelete.setVisibility(View.GONE);
             }
+            Log.d("hihi","hihi");
         } catch (Exception e) {
             e.printStackTrace();
         }

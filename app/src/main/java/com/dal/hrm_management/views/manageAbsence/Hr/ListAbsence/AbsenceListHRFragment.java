@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -58,7 +59,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private Button btn_filter;
     LinearLayoutManager layoutManager;
     public boolean isShowFilter = true;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -81,6 +82,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
             }
         }
     };
+
 
 
     @Override
@@ -144,6 +146,15 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         tvNothingToShow = view.findViewById(R.id.tvAbsenceFragHR_nothingToshow);
         layoutManager = new LinearLayoutManager(getActivity());
         btn_filter = (Button) view.findViewById(R.id.btn_filter);
+
+        swipeRefreshLayout = view.findViewById(R.id.srlAbsenceListHrFra_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                reloadPage();
+            }
+        });
     }
 
     @Override
@@ -200,7 +211,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == VariableUltils.REQUEST_CODE_ADD_ABSENCE && resultCode == Activity.RESULT_OK) {
             reloadPage();
         }
     }
@@ -213,6 +224,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
 
     @Override
     public void getListAbsenceSuccess(int total, List<ListAbsenceForHr> list) {
+
         this.absenceListBackup = list;
         totalAbsence = total;
         recyclerView.setVisibility(View.VISIBLE);
@@ -223,7 +235,6 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
 
     public void loadDataListToRecyclerView(List<ListAbsenceForHr> list) {
         if (list.size() != 0) {
-//            absenceList.clear();
             absenceList.addAll(list);
             if (adapter == null) {
                 adapter = new AbsenceListForHrAdapter(absenceList, R.layout.item_list_absence_of_hr, getActivity(), manageAbsenceHrPresenter);
@@ -232,7 +243,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
             }
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
-
+            if (page == 1) swipeRefreshLayout.setRefreshing(false);
             recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
         } else {
             absenceList.clear();

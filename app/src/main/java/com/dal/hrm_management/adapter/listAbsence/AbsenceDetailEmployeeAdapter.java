@@ -90,7 +90,7 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FormAbsenceActivity.class);
                     intent.putExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE_IN_DETAIL, absence);
-                    ((Activity) context).startActivityForResult(intent, VariableUltils.REQUEST_CODE);
+                    ((Activity) context).startActivityForResult(intent, VariableUltils.REQUEST_CODE_ADD_ABSENCE);
                 }
             });
         }
