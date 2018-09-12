@@ -107,12 +107,14 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         tvMarriage = root.findViewById(R.id.tvAbsenceFra_Marriage);
         tvBereavement = root.findViewById(R.id.tvAbsenceFra_breave);
         tvSick = root.findViewById(R.id.tvAbsenceFra_SickSalary);
+
+        rv_absence.refreshDrawableState();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == VariableUltils.REQUEST_CODE_ADD_ABSENCE && resultCode == Activity.RESULT_OK) {
             current_page = 1;
             absenceList.clear();
             absencePresenter.getDataAbsence(current_page, pageSize);
@@ -183,7 +185,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         switch (v.getId()) {
             case R.id.btn_add:
                 Intent intent = new Intent(getActivity(), FormAbsenceActivity.class);
-                startActivityForResult(intent, VariableUltils.REQUEST_CODE);
+                startActivityForResult(intent, VariableUltils.REQUEST_CODE_ADD_ABSENCE);
         }
     }
 }

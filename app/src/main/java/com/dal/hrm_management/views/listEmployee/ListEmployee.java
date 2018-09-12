@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -64,6 +65,9 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
         }
     };
 
+    //swift
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,6 +81,16 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
         tv_message_nothing = view.findViewById(R.id.tv_message_nothing);
         list_emp_pb_loadEmp = view.findViewById(R.id.list_emp_pb_loadEmp);
         list_emp_pb_loadEmp.setVisibility(View.VISIBLE);
+
+
+        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getContext(),"refresh Data",Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 

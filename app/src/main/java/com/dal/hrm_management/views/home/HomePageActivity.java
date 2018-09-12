@@ -328,7 +328,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Edit absence success
-        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == VariableUltils.REQUEST_CODE_ADD_ABSENCE && resultCode == Activity.RESULT_OK) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
         }
     }

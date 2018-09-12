@@ -2,6 +2,7 @@ package com.dal.hrm_management.views.absence;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -45,12 +47,11 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     Spinner spnloaiNghi, spnthoiGianNghi;
     private CheckBox cb_nghiBoSung;
     Calendar c = Calendar.getInstance();
+    ProgressDialog progressDialog;
     //List type absence
     List<TypeAbsence> listAbsence;
 
     public enum StatusAbsences {enum_Add, enum_Edit;}
-
-    ;
     StatusAbsences statusAbsences = StatusAbsences.enum_Add;
     private Integer idAbsence;
 
@@ -65,25 +66,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void getExtra() {
-        //Nếu như add form absence thì absence khác null còn ko thì absence = null nếu null thì xét trường hợp khác
-        Absence absence = (Absence) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_ABSENCE_INTENT);
-        if (absence != null) {
-            setTitle(getResources().getString(R.string.text_title_edit_absence));
-            edt_tuNgay.setText(absence.getFromDate());
-            edt_denNgay.setText(absence.getToDate());
-            spnloaiNghi.setSelection(absence.getAbsenceType().getIdAbsenceType() - 1);
-            //array start with index = 0
-            spnthoiGianNghi.setSelection(absence.getAbsenceTime().getIdAbsenceTime() - 1);
-            edtReason.setText(absence.getReason());
-            edtNote.setText(absence.getDescription());
-            edt_tuNgay.setOnClickListener(null);
-            edt_denNgay.setOnClickListener(null);
-            spnloaiNghi.setEnabled(false);
-            spnthoiGianNghi.setEnabled(false);
-            edtReason.setEnabled(false);
-            edtNote.setEnabled(false);
-            btnSubmit.setVisibility(View.GONE);
-        } else {
+//        //Nếu như add form absence thì absence khác null còn ko thì absence = null nếu null thì xét trường hợp khác
             ListAbsenceForHr absenceForHr = (ListAbsenceForHr) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE);
             if (absenceForHr != null) {
                 setTitle(absenceForHr.getNameEmployee());
@@ -103,8 +86,30 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                 edtNote.setText(absenceForHr.getDescription());
                 idAbsence = absenceForHr.getIdAbsences();
                 statusAbsences = StatusAbsences.enum_Edit;
+            } else {
+                com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence absenceInDetail =
+                        (com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence)
+                                getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE_IN_DETAIL);
+                if (absenceInDetail != null) {
+                    setTitle(getResources().getString(R.string.text_title_edit_absence));
+                    String[] split = absenceInDetail.getFromDate().split("-");
+                    String ngay = split[2] + split[1] + split[0];
+                    Log.d(TAG, "-------------------------------------");
+                    Log.d(TAG, "ngay" + absenceInDetail.getFromDate());
+                    Log.d(TAG, "ngay" + ngay);
+                    edt_tuNgay.setText(ngay);
+                    split = absenceInDetail.getToDate().split("-");
+                    ngay = split[2] + split[1] + split[0];
+                    edt_denNgay.setText(ngay);
+                    spnloaiNghi.setSelection(absenceInDetail.getAbsenceType().getIdAbsenceType() - 1);
+                    //array start with index = 0
+                    spnthoiGianNghi.setSelection(absenceInDetail.getAbsenceTime().getIdAbsenceTime() - 1);
+                    edtReason.setText(absenceInDetail.getReason());
+                    edtNote.setText(absenceInDetail.getDescription());
+                    idAbsence = absenceInDetail.getIdAbsences();
+                    statusAbsences = StatusAbsences.enum_Edit;
+                }
             }
-        }
 
     }
 
@@ -154,6 +159,14 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         edtReason = findViewById(R.id.form_absence_edt_lydo);
         edtNote = findViewById(R.id.form_absence_edt_note);
         cb_nghiBoSung = findViewById(R.id.form_absence_cb_nghiBoSung);
+        initProcessDialog();
+    }
+
+    private void initProcessDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Processing");
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -170,9 +183,10 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         Log.d(TAG, String.valueOf(view.getId()));
         switch (view.getId()) {
             case R.id.form_absence_btn_submit:
-                btnSubmit.setEnabled(false);
+                progressDialog.show();
                 View check = checkValidateForm();
                 if (check != null) {
+                    progressDialog.dismiss();
                     check.requestFocus();
                 } else {
                     String absenceType = spnloaiNghi.getSelectedItem().toString();
@@ -331,6 +345,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void Failure() {
+        progressDialog.dismiss();
         Toast.makeText(getApplicationContext(), "Add new absence failure!", Toast.LENGTH_SHORT).show();
         btnSubmit.setEnabled(true);
     }

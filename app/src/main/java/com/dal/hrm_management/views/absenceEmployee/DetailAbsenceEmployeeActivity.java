@@ -109,6 +109,7 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
                 layout.setVisibility(View.VISIBLE);
                 loadData(dataAbsence);
             } else {
+                rv_absence.setVisibility(View.GONE);
                 tv_message_nothing.setText("No absence to show!");
                 tv_message_nothing.setVisibility(View.VISIBLE);
             }
@@ -153,6 +154,7 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
 
     private void reloadPage() {
         current_page = 1;
+
         absenceList.clear();
         detailAbsenceEmployeePresenter.getDetailAbsenceEmployee(id_employee, current_page, pageSize);
     }
@@ -160,7 +162,7 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == VariableUltils.REQUEST_CODE_ADD_ABSENCE && resultCode == Activity.RESULT_OK) {
             reloadPage();
         }
     }
