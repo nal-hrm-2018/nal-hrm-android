@@ -26,7 +26,8 @@ public class AbsencePresenter implements IAbsencePresenter {
     public AbsencePresenter(IAbsenceViewActivity iAbsenceViewActivity) {
         this.iAbsenceViewActivity = iAbsenceViewActivity;
     }
-    public AbsencePresenter(IAbsenceFormActivity iAbsenceFormActivity){
+
+    public AbsencePresenter(IAbsenceFormActivity iAbsenceFormActivity) {
         this.iAbsenceFormActivity = iAbsenceFormActivity;
     }
 
@@ -58,18 +59,18 @@ public class AbsencePresenter implements IAbsencePresenter {
 
     @Override
     public void addAbsence(RequestBody json) {
-        Log.d(TAG,json.toString());
+        Log.d(TAG, json.toString());
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<AddAbsenceResponse> call = apiService.addAbsence(LoginPresenter.token,json);
+        Call<AddAbsenceResponse> call = apiService.addAbsence(LoginPresenter.token, json);
         call.enqueue(new Callback<AddAbsenceResponse>() {
             @Override
             public void onResponse(Call<AddAbsenceResponse> call, Response<AddAbsenceResponse> response) {
                 Log.d(TAG, String.valueOf(response.code()));
-                if (response.code() >= 300){
+                if (response.code() >= 300) {
                     iAbsenceFormActivity.Failure();
-                }else if (response.code() >=200){
+                } else if (response.code() == 200) {
                     iAbsenceFormActivity.Success();
-                }else{
+                } else {
                     iAbsenceFormActivity.Failure();
                 }
             }
@@ -88,11 +89,10 @@ public class AbsencePresenter implements IAbsencePresenter {
         call.enqueue(new Callback<TypeAbsenceResponse>() {
             @Override
             public void onResponse(Call<TypeAbsenceResponse> call, Response<TypeAbsenceResponse> response) {
-                if (response.code()>=200 || response.code() < 300)
-                {
+                if (response.code() >= 200 || response.code() < 300) {
                     iAbsenceFormActivity.loadTypeAbsenceSuccess(response.body().getData());
 
-                }else{
+                } else {
                     iAbsenceFormActivity.loadTypeAbsenceFailure();
                 }
             }
@@ -107,14 +107,14 @@ public class AbsencePresenter implements IAbsencePresenter {
     @Override
     public void editAbsence(RequestBody json, int idAbsence) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<EditAbsenceResponse> call = apiService.putEditAbsence(idAbsence,LoginPresenter.token,json);
+        Call<EditAbsenceResponse> call = apiService.putEditAbsence(idAbsence, LoginPresenter.token, json);
         call.enqueue(new Callback<EditAbsenceResponse>() {
             @Override
             public void onResponse(Call<EditAbsenceResponse> call, Response<EditAbsenceResponse> response) {
-                Log.d(TAG,"response code :" +response.code());
-                if (response.code() >=200 && response.code() < 300){
+                Log.d(TAG, "response code :" + response.code());
+                if (response.code() >= 200 && response.code() < 300) {
                     iAbsenceFormActivity.EditAbsenceSuccess();
-                }else{
+                } else {
                     iAbsenceFormActivity.EditAbsenceFailure();
                 }
             }

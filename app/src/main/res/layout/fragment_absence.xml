@@ -7,8 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/color_gray">
+        android:background="@color/color_gray"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/layoutAbsenceFra_header"
@@ -27,14 +27,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="3">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Total"
+                        android:text="@string/absence_this_year"
                         android:textColor="@color/color_white"
                         android:textStyle="bold" />
 
@@ -43,7 +43,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Remain"
+                        android:text="@string/absence__last_year"
+                        android:textColor="@color/color_white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/absence_total_remaining"
                         android:textColor="@color/color_white"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -52,25 +61,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="3">
 
                     <TextView
-                        android:id="@+id/tvAbsenceFra_Total"
+                        android:id="@+id/tvAbsenceEmpAct_Thisyear"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="12"
+                        android:text="@string/absence_default"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/text_size_big" />
 
                     <TextView
-                        android:id="@+id/tvAbsenceFra_Remain"
+                        android:id="@+id/tvAbsenceEmpAct_lastYear"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="8"
+                        android:text="@string/absence_default"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/text_size_big" />
+
+                    <TextView
+                        android:id="@+id/tvAbsenceEmpAct_RemainTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/absence_default"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/text_size_big" />
                 </LinearLayout>
@@ -95,7 +114,7 @@
                                 android:id="@+id/tv_annualTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Annual"
+                                android:text="@string/absence_annual"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_small" />
 
@@ -104,9 +123,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_annualTitle"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:gravity="center"
-                                android:text="4"
+                                android:text="@string/absence_default"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_medium" />
                         </RelativeLayout>
@@ -121,7 +140,7 @@
                                 android:id="@+id/tv_nosalaryTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="No salary"
+                                android:text="@string/absence_unpaid"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_small" />
 
@@ -130,9 +149,35 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_nosalaryTitle"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:gravity="center"
-                                android:text="0"
+                                android:text="@string/absence_default"
+                                android:textColor="@color/color_white"
+                                android:textSize="@dimen/text_size_medium" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+
+                            <TextView
+                                android:id="@+id/tv_sickTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/absence_sick"
+                                android:textColor="@color/color_white"
+                                android:textSize="@dimen/text_size_small" />
+
+                            <TextView
+                                android:id="@+id/tvAbsenceFra_SickSalary"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_sickTitle"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                                android:text="@string/absence_default"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_medium" />
                         </RelativeLayout>
@@ -146,7 +191,7 @@
                                 android:id="@+id/tv_maternityTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Maternity"
+                                android:text="@string/absence_maternity"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_small" />
 
@@ -155,9 +200,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_maternityTitle"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:gravity="center"
-                                android:text="0"
+                                android:text="@string/absence_default"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_medium" />
                         </RelativeLayout>
@@ -171,7 +216,10 @@
                                 android:id="@+id/tv_marriageTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Marriage"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginEnd="16dp"
+                                android:text="@string/absence_marriage"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_small" />
 
@@ -180,9 +228,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_marriageTitle"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:gravity="center"
-                                android:text="0"
+                                android:text="@string/absence_default"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_medium" />
                         </RelativeLayout>
@@ -196,7 +244,7 @@
                                 android:id="@+id/tv_bereavementTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Bereavement"
+                                android:text="@string/absence_bereavement"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_small" />
 
@@ -205,9 +253,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/tv_bereavementTitle"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:gravity="center"
-                                android:text="0"
+                                android:text="@string/absence_default"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/text_size_medium" />
                         </RelativeLayout>
@@ -256,5 +304,6 @@
         android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:src="@drawable/ic_add"
+        android:tint="@color/color_white"
         app:fabSize="normal" />
 </android.support.design.widget.CoordinatorLayout>

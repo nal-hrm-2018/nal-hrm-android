@@ -2,6 +2,8 @@ package com.dal.hrm_management.views.manageAbsence.Hr.holiday;
 
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,6 +68,10 @@ public class HolidayHRFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.holiday_menu, menu);
+        //set white color for icon_add
+        Drawable icon_add = menu.getItem(1).getIcon();
+        icon_add.mutate();
+        icon_add.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
     }
 
     @Override

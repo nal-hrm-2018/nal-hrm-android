@@ -21,6 +21,7 @@ import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
+import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.ValidationDateTime;
 import com.dal.hrm_management.utils.VariableUltils;
 
@@ -169,6 +170,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         Log.d(TAG, String.valueOf(view.getId()));
         switch (view.getId()) {
             case R.id.form_absence_btn_submit:
+                btnSubmit.setEnabled(false);
                 View check = checkValidateForm();
                 if (check != null) {
                     check.requestFocus();
@@ -188,8 +190,8 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                         split = edt_denNgay.getText().toString().split("-");
                         String denngay = split[2] + "-" + split[1] + "-" + split[0];
                         jsonObject.put("toDate", denngay);
-                        jsonObject.put("reason", edtReason.getText().toString());
-                        jsonObject.put("description", edtNote.getText().toString());
+                        jsonObject.put("reason", StringUtils.deleteUnnecessarySpace(edtReason.getText().toString()));
+                        jsonObject.put("description", StringUtils.deleteUnnecessarySpace(edtNote.getText().toString()));
                         jsonObject.put("absenceTimeId", absenceTimeId);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -322,14 +324,15 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void Success() {
 
-        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Add new absence success", Toast.LENGTH_SHORT).show();
         setResult(Activity.RESULT_OK);
         finish();
     }
 
     @Override
     public void Failure() {
-        Toast.makeText(getApplicationContext(), "Failure", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Add new absence failure!", Toast.LENGTH_SHORT).show();
+        btnSubmit.setEnabled(true);
     }
 
     @Override

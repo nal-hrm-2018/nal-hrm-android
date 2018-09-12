@@ -46,22 +46,27 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         final Absence absence = absenceListFilter.get(position);
         holder.tv_nameEmployee.setText(absence.getNameEmployee());
         holder.tv_nameProject.setText(absence.getNameProject());
-        if (absence.getReason() != null){
+        if (absence.getReason() != null) {
             holder.tv_reason.setText(absence.getReason());
         } else {
             holder.tv_reason.setText(context.getResources().getString(R.string.infor_null));
         }
+        if (absence.getDescription() == null || absence.getDescription().trim().length() == 0) {
+            holder.tv_note.setText(R.string.infor_null);
+        } else {
+            holder.tv_note.setText(absence.getDescription());
+        }
         holder.tv_from.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getFromDate()));
         holder.tv_to.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getToDate()));
-        if(absence.getAbsenceTime().getDescription()!=null){
+        if (absence.getAbsenceTime().getDescription() != null) {
             /**
              *  Delete "absence" pre-fix and upper case the first leter result
              *  example: absence morning --> Morning
              */
             String timeAbsence = StringUtils.toUpperCaseFirstChar(absence.getAbsenceTime().getDescription().substring(7));
-            if(timeAbsence.equals("All day")){
+            if (timeAbsence.equals("All day")) {
                 holder.tv_time.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
-            } else if(timeAbsence.equals("Morning")){
+            } else if (timeAbsence.equals("Morning")) {
                 holder.tv_time.setBackgroundColor(context.getResources().getColor(R.color.color_violet));
             } else {
                 holder.tv_time.setBackgroundColor(context.getResources().getColor(R.color.color_violet_1));
@@ -91,7 +96,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
                 } else {
                     List<Absence> filteredList = new ArrayList<>();
                     for (Absence row : absenceList) {
-                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase()) || row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
+                        if (StringUtils.createSlug(row.getNameEmployee()).contains(StringUtils.createSlug(charString)) || row.getFromDate().toLowerCase().contains(charString.toLowerCase()) || row.getToDate().toLowerCase().contains(charString.toLowerCase()) || row.getAbsenceType().getDescription().toLowerCase().contains(charString.toLowerCase()) || row.getAbsenceTime().getDescription().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
@@ -119,6 +124,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
         TextView tv_from;
         TextView tv_to;
         TextView tv_time;
+        TextView tv_note;
         ItemClickListener itemClickListener;
 
         public MyViewHolder(View itemView) {
@@ -130,6 +136,7 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
             tv_from = (TextView) itemView.findViewById(R.id.tv_from);
             tv_to = (TextView) itemView.findViewById(R.id.tv_to);
             tv_time = (TextView) itemView.findViewById(R.id.tv_time);
+            tv_note = (TextView) itemView.findViewById(R.id.tv_note);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {

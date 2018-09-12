@@ -51,8 +51,8 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
             tvTotalTime = itemView.findViewById(R.id.tvItemOvertimeList_TotalTime);
             tvReason = itemView.findViewById(R.id.tvItemOvertimeList_Reason);
             tvStatus = itemView.findViewById(R.id.tvItemOvertimeList_Status);
-            imvEdit = itemView.findViewById(R.id.imvItemListAbsenceHr_Edit);
-            imvDelete = itemView.findViewById(R.id.imvItemListAbsenceHr_Delete);
+            imvEdit = itemView.findViewById(R.id.imv_edit);
+            imvDelete = itemView.findViewById(R.id.imv_delete);
         }
     }
 }

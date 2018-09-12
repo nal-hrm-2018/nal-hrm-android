@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -110,7 +112,10 @@ public class ViewProfileActivity extends AppCompatActivity implements IProfileAc
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.profile_menu, menu);
-
+        //set white color for icon_edit
+        Drawable icon_edit = menu.getItem(0).getIcon();
+        icon_edit.mutate();
+        icon_edit.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
         return true;
     }
 
