@@ -3,11 +3,13 @@ package com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Luu Ngoc Lan on 30-Aug-18.
  */
 
-public class AbsenceType {
+public class AbsenceType implements Serializable{
     @SerializedName("idAbsenceType")
     @Expose
     private Integer idAbsenceType;

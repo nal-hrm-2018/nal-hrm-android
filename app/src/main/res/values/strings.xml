@@ -229,4 +229,15 @@
     <string name="error_invalid_time">invalid time</string>
     <string name="hint_reason">leave a reason</string>
     <string name="absence_project_name">Project:</string>
+    <string name="absence_item_note">Note:</string>
+    <string name="absence_this_year">This year</string>
+    <string name="absence__last_year">Last year</string>
+    <string name="absence_total_remaining">Total remaining</string>
+    <string name="absence_default">0</string>
+    <string name="absence_annual">Annual</string>
+    <string name="absence_unpaid">Unpaid</string>
+    <string name="absence_sick">Sick</string>
+    <string name="absence_maternity">Maternity</string>
+    <string name="absence_marriage">Marriage</string>
+    <string name="absence_bereavement">Bereavement</string>
 </resources>

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -156,7 +158,13 @@ public class EditProfileActivity extends AppCompatActivity implements IProfileEd
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_profile_menu, menu);
-
+        //set white color for icon
+        Drawable icon_save = menu.getItem(0).getIcon();
+        icon_save.mutate();
+        icon_save.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
+        Drawable icon_reset = menu.getItem(1).getIcon();
+        icon_reset.mutate();
+        icon_reset.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
         return true;
     }
 

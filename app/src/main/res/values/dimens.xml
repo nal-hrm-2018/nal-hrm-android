@@ -37,10 +37,12 @@
     <dimen name="bolder_width">2dp</dimen>
     <dimen name="icon_size">24dp</dimen>
     <dimen name="icon_size_button">20dp</dimen>
+    <dimen name="icon_size_button_click">40dp</dimen>
     <dimen name="dialog_title_padding">24dp</dimen>
     <dimen name="dialog_title_checkbox_title_size">24dp</dimen>
     <dimen name="icon_size_lager">56dp</dimen>
     <dimen name="item_padding">6dp</dimen>
     <dimen name="text_size_big">68sp</dimen>
     <dimen name="text_space_item_absence">60dp</dimen>
+    <dimen name="icon_padding">10dp</dimen>
 </resources>

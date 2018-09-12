@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.utils.StringUtils;
+
 import java.util.List;
 
 public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataViewHolder> {
@@ -38,15 +39,19 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
          *  example: absence morning --> Morning
          */
         String timeAbsence = StringUtils.toUpperCaseFirstChar(absences.get(position).getAbsenceTime().getDescription().substring(7));
-        if(timeAbsence.equals("All day")){
+        if (timeAbsence.equals("All day")) {
             holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
-        } else if(timeAbsence.equals("Morning")){
+        } else if (timeAbsence.equals("Morning")) {
             holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet));
         } else {
             holder.tv_thoigianNghi.setBackgroundColor(context.getResources().getColor(R.color.color_violet_1));
         }
         holder.tv_thoigianNghi.setText(timeAbsence);
-
+        if (absences.get(position).getDescription() == null || absences.get(position).getDescription().trim().length()==0){
+            holder.item_absence_tv_note.setText(R.string.infor_null);
+        }else{
+            holder.item_absence_tv_note.setText(absences.get(position).getDescription());
+        }
     }
 
 
@@ -61,16 +66,14 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
     }
 
 
-    /**
-     * Profile ViewHolder class.
-     */
-    public static class DataViewHolder extends RecyclerView.ViewHolder{
+    public static class DataViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_type;
         private TextView tv_startAt;
         private TextView tv_endAt;
         private TextView tv_thoigianNghi;
         private TextView item_absence_tv_reason;
+        private TextView item_absence_tv_note;
 
         public DataViewHolder(View itemView) {
             super(itemView);
@@ -79,6 +82,7 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
             tv_endAt = itemView.findViewById(R.id.tv_endAt);
             tv_thoigianNghi = itemView.findViewById(R.id.tv_thoigianNghi);
             item_absence_tv_reason = itemView.findViewById(R.id.item_absence_tv_reason);
+            item_absence_tv_note = itemView.findViewById(R.id.item_absence_tv_note);
         }
     }
 }

@@ -26,7 +26,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvItemListAbsenceHr_TimeAbsence"
+            android:id="@+id/tv_timeAbsence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -120,7 +120,27 @@
 
 
                 <TextView
-                    android:id="@+id/edtItemListAbsenceHr_Reason"
+                    android:id="@+id/tv_reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:textSize="@dimen/text_size_small" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/text_space_item_absence"
+                    android:layout_height="wrap_content"
+                    android:text="@string/absence_item_note"
+                    android:textSize="@dimen/text_size_small" />
+
+
+                <TextView
+                    android:id="@+id/tv_note"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="false"
@@ -134,7 +154,7 @@
             android:layout_weight="2">
 
             <ImageView
-                android:id="@+id/imvItemListAbsenceHr_Edit"
+                android:id="@+id/imv_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -142,12 +162,12 @@
                 android:tint="@color/colorAccent" />
 
             <ImageView
-                android:id="@+id/imvItemListAbsenceHr_Delete"
+                android:id="@+id/imv_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/text_padding"
-                android:layout_toRightOf="@+id/imvItemListAbsenceHr_Edit"
+                android:layout_toRightOf="@+id/imv_edit"
                 android:src="@drawable/ic_delete"
                 android:tint="@color/color_red" />
         </RelativeLayout>

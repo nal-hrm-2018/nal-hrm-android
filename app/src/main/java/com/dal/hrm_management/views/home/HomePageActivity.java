@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -34,14 +36,14 @@ import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.utils.PermissionManager;
-import com.dal.hrm_management.views.dashboard.DashboardFragment;
-import com.dal.hrm_management.views.manageAbsence.po.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.AbsenceViewFragment;
+import com.dal.hrm_management.views.dashboard.DashboardFragment;
 import com.dal.hrm_management.views.listEmployee.ListEmployee;
 import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence.AbsenceListHRFragment;
 import com.dal.hrm_management.views.manageAbsence.Hr.holiday.HolidayHRFragment;
+import com.dal.hrm_management.views.manageAbsence.po.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.views.manageOvertime.po.OTManageOfPOFragment;
 import com.dal.hrm_management.views.overtime.OverTimeList;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
@@ -99,6 +101,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.app_bar_menu, menu);
+        //set white color for icon_notification
+        Drawable icon_notification = menu.getItem(0).getIcon();
+        icon_notification.mutate();
+        icon_notification.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
         return true;
     }
 

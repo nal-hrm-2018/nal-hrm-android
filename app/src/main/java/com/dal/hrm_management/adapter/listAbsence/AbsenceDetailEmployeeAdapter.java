@@ -1,8 +1,10 @@
 package com.dal.hrm_management.adapter.listAbsence;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,10 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence;
 import com.dal.hrm_management.presenters.absenceEmployee.DetailAbsenceEmployeePresenter;
+import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.utils.StringUtils;
+import com.dal.hrm_management.utils.VariableUltils;
+import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,9 +54,14 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
         holder.tv_type.setText(StringUtils.toUpperCaseFirstChar(absence.getAbsenceType().getNameAbsenceType().replace("_", " ")));
         holder.tv_from.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getFromDate()));
         if (absence.getReason() != null) {
-            holder.edt_Resaon.setText(absence.getReason());
+            holder.tv_reason.setText(absence.getReason());
         } else {
-            holder.edt_Resaon.setText(R.string.infor_null);
+            holder.tv_reason.setText(context.getResources().getString(R.string.infor_null));
+        }
+        if (absence.getDescription() == null || absence.getDescription().trim().length()==0){
+            holder.tv_note.setText(R.string.infor_null);
+        }else{
+            holder.tv_note.setText(absence.getDescription());
         }
         /**
          *  Delete "absence" pre-fix and upper case the first leter result
@@ -67,42 +77,57 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
         }
         holder.tv_TimeAbsence.setText(timeAbsence);
         holder.tv_to.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getToDate()));
-//        holder.imvEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d("position", String.valueOf(position));
-//                Intent intent = new Intent(context, FormAbsenceActivity.class);
-//                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE_IN_DETAIL, absence);
-//                context.startActivity(intent);
-//            }
-//        });
-        holder.imvDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Warning");
-                builder.setMessage("Are you sure to delete this absence?");
-                builder.setCancelable(false);
 
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //Call api delete
-                        detailAbsenceEmployeePresenter.deleteAbsence(absence.getIdAbsences());
+//        //TAM THOI GONE 2 nut edit va del trong detail absence employee
+//        holder.imvEdit.setVisibility(View.GONE);
+//        holder.imvDelete.setVisibility(View.GONE);
+        //Check permission edit of HR
+        if (!PermissionManager.isPermited(PermissionManager.listPermissions, "edit_absence_employee")) {
+            holder.imvEdit.setVisibility(View.GONE);
+        } else {
+            holder.imvEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, FormAbsenceActivity.class);
+                    intent.putExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE_IN_DETAIL, absence);
+                    ((Activity) context).startActivityForResult(intent, VariableUltils.REQUEST_CODE);
+                }
+            });
+        }
 
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+        //Check permission del of HR
+        if (!PermissionManager.isPermited(PermissionManager.listPermissions, "cancel_emplyee_absence_history")) {
+            holder.imvDelete.setVisibility(View.GONE);
+        } else {
+            holder.imvDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Warning");
+                    builder.setMessage("Are you sure to delete this absence?");
+                    builder.setCancelable(false);
+
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Call api delete
+                            detailAbsenceEmployeePresenter.deleteAbsence(absence.getIdAbsences());
+
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
 
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
+            });
+        }
+
         //Xét điều kiện nếu như form đó đã quá 1 tháng - chưa check đúng đâu
         try {
             Calendar c = Calendar.getInstance();
@@ -171,12 +196,13 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
 
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_type;
         TextView tv_from;
         TextView tv_to;
-        TextView edt_Resaon;
+        TextView tv_reason;
         TextView tv_TimeAbsence;
+        TextView tv_note;
         private ImageView imvEdit;
         private ImageView imvDelete;
         ItemClickListener itemClickListener;
@@ -186,20 +212,12 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
             tv_type = (TextView) itemView.findViewById(R.id.tv_type);
             tv_from = (TextView) itemView.findViewById(R.id.tv_from);
             tv_to = (TextView) itemView.findViewById(R.id.tv_to);
-            imvEdit = itemView.findViewById(R.id.imvItemListAbsenceHr_Edit);
-            imvDelete = itemView.findViewById(R.id.imvItemListAbsenceHr_Delete);
-            edt_Resaon = itemView.findViewById(R.id.edtItemListAbsenceHr_Reason);
-            tv_TimeAbsence = itemView.findViewById(R.id.tvItemListAbsenceHr_TimeAbsence);
-            itemView.setOnClickListener(this);
+            imvEdit = itemView.findViewById(R.id.imv_edit);
+            imvDelete = itemView.findViewById(R.id.imv_delete);
+            tv_reason = itemView.findViewById(R.id.tv_reason);
+            tv_TimeAbsence = itemView.findViewById(R.id.tv_timeAbsence);
+            tv_note = itemView.findViewById(R.id.tv_note);
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener) {
-            this.itemClickListener = itemClickListener;
-        }
-
-        @Override
-        public void onClick(View v) {
-            itemClickListener.onClick(v, getAdapterPosition(), false);
-        }
     }
 }

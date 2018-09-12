@@ -34,8 +34,6 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         holder.tv_nameHoliday.setText(arr.get(position).getNameHoliday());
         holder.tv_typeHoliday.setText(arr.get(position).getTypeHoliday());
-        holder.tv_from.setText(arr.get(position).getStart());
-        holder.tv_to.setText(arr.get(position).getEnd());
         holder.tv_note.setText(arr.get(position).getNote());
         holder.setItemClickListener(new ItemClickListener() {
             @Override
@@ -68,8 +66,8 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tv_nameHoliday;
         private TextView tv_typeHoliday;
-        private TextView tv_from;
-        private TextView tv_to;
+        private TextView tv_date;
+        private TextView tv_year;
         private TextView tv_note;
         private ItemClickListener itemClickListener;
 
@@ -78,8 +76,8 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
             super(itemView);
             tv_nameHoliday = itemView.findViewById(R.id.tv_nameHoliday);
             tv_typeHoliday = itemView.findViewById(R.id.tv_typeHoliday);
-            tv_from = itemView.findViewById(R.id.tv_from);
-            tv_to = itemView.findViewById(R.id.tv_to);
+            tv_date = itemView.findViewById(R.id.tv_date);
+            tv_year = itemView.findViewById(R.id.tv_year);
             tv_note = itemView.findViewById(R.id.tv_note);
             itemView.setOnClickListener(this);
         }

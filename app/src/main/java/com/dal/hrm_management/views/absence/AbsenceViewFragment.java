@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -23,6 +22,7 @@ import com.dal.hrm_management.adapter.listAbsence.AbsenceAdapter;
 import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.DataAbsence;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
+import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.VariableUltils;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     private ImageButton btn_add;
     private TextView tv_message_nothing;
     private ProgressBar progressBar;
-    private TextView tvTotal,tvRemain,tvAnnual,tvNoSalary,tvMaternity,tvMarriage,tvBereavement;
+    private TextView tvThisyear, tvLastYear, tvRemain, tvAnnual, tvUnpaid, tvMaternity, tvMarriage, tvBereavement, tvSick;
     private RelativeLayout layout;
     //set scroll recycler view
     private RecyclerView.OnScrollListener recyOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -98,14 +98,15 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         layout = root.findViewById(R.id.layoutAbsenceFra_header);
         layout.setVisibility(View.GONE);
 
-        tvTotal = root.findViewById(R.id.tvAbsenceFra_Total);
-        tvRemain = root.findViewById(R.id.tvAbsenceFra_Remain);
+        tvThisyear = root.findViewById(R.id.tvAbsenceEmpAct_Thisyear);
+        tvLastYear = root.findViewById(R.id.tvAbsenceEmpAct_lastYear);
+        tvRemain = root.findViewById(R.id.tvAbsenceEmpAct_RemainTotal);
         tvAnnual = root.findViewById(R.id.tvAbsenceFra_Annual);
-        tvNoSalary = root.findViewById(R.id.tvAbsenceFra_NoSalary);
+        tvUnpaid = root.findViewById(R.id.tvAbsenceFra_NoSalary);
         tvMaternity = root.findViewById(R.id.tvAbsenceFra_Maternity);
         tvMarriage = root.findViewById(R.id.tvAbsenceFra_Marriage);
         tvBereavement = root.findViewById(R.id.tvAbsenceFra_breave);
-
+        tvSick = root.findViewById(R.id.tvAbsenceFra_SickSalary);
     }
 
     @Override
@@ -126,6 +127,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     @Override
     public void getAbsencePersonalSuccess(DataAbsence dataAbsence) {
         layout.setVisibility(View.VISIBLE);
+        loadData(dataAbsence);
         this.dataAbsence = dataAbsence;
         total = dataAbsence.getListAbsence().getTotal(); //get total record absence
         List<Absence> list = dataAbsence.getListAbsence().getAbsence(); //get list record absence in model
@@ -133,7 +135,6 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
             absenceList.addAll(dataAbsence.getListAbsence().getAbsence()); //add all list record in array
             if (adapter == null) {
                 adapter = new AbsenceAdapter(absenceList, getActivity());
-                loadData(dataAbsence);
             } else {
                 adapter.notifyDataSetChanged();
             }
@@ -158,14 +159,24 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     }
 
     private void loadData(DataAbsence dataAbsence) {
-        tvTotal.setText(dataAbsence.getAllowAbsence() + "");
-        tvRemain.setText(dataAbsence.getRemainingAbsenceDays() + "");
-        tvNoSalary.setText(dataAbsence.getUnpaidLeave() + "");
-        tvAnnual.setText(dataAbsence.getAnnualLeave() + "");
-        tvMarriage.setText(dataAbsence.getMarriageLeave() + "");
-        tvBereavement.setText(dataAbsence.getBereavementLeave() + "");
-        tvMaternity.setText(dataAbsence.getMaternityLeave() + "");
+        double allowAbsenceThisyear = dataAbsence.getAllowAbsence(),
+                remainAbsence = dataAbsence.getRemainingAbsenceDays(),
+                annualAbsence = dataAbsence.getAnnualLeave(),
+                remainTotal = allowAbsenceThisyear+remainAbsence - annualAbsence >= 0 ? allowAbsenceThisyear+remainAbsence - annualAbsence : 0;
+        tvThisyear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getAllowAbsence() + ""));
+        tvLastYear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getRemainingAbsenceDays() + ""));
+        if((remainTotal+"").length()==4) {
+            tvRemain.setTextSize(48);
+        }
+        tvRemain.setText(StringUtils.formatDisplayNumberDouble(remainTotal + ""));
+        tvUnpaid.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getUnpaidLeave() + ""));
+        tvAnnual.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getAnnualLeave() + ""));
+        tvMarriage.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getMarriageLeave() + ""));
+        tvBereavement.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getBereavementLeave() + ""));
+        tvMaternity.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getMaternityLeave() + ""));
+        tvSick.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getSickLeave() + ""));
     }
+
 
     @Override
     public void onClick(View v) {

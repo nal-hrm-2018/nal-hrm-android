@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listAbsence.AbsenceManagerForPoAdapter;
@@ -141,7 +140,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         int id = item.getItemId();
         switch (id) {
             case R.id.action_export:
-                Toast.makeText(getActivity(), "Exporting....!!!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Exporting....!!!", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

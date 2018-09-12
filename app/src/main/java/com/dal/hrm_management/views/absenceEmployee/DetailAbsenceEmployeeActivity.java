@@ -18,6 +18,7 @@ import com.dal.hrm_management.adapter.listAbsence.AbsenceDetailEmployeeAdapter;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Data;
 import com.dal.hrm_management.presenters.absenceEmployee.DetailAbsenceEmployeePresenter;
+import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.VariableUltils;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
     private TextView tv_message_nothing;
     private RelativeLayout layout;
     private ProgressBar progressBar;
-    private TextView tvTotal, tvRemain, tvAnnual, tvNoSalary, tvMaternity, tvMarriage, tvBereavement;
+    private TextView tvThisyear, tvLastYear, tvRemainTotal, tvAnnual, tvUnpaid, tvSick, tvMaternity, tvMarriage, tvBereavement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +79,18 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
         tv_message_nothing = (TextView) findViewById(R.id.tv_message_nothing);
         rv_absence = (RecyclerView) findViewById(R.id.rv_absence);
         rv_absence.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        rv_absence.setAdapter(new AbsenceDetailEmployeeAdapter(absenceList, this,detailAbsenceEmployeePresenter));
+        rv_absence.setAdapter(new AbsenceDetailEmployeeAdapter(absenceList, this, detailAbsenceEmployeePresenter));
         layout = findViewById(R.id.layoutDetailAbsenceEmpAct_header);
         layout.setVisibility(View.GONE);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
 
-        tvTotal = findViewById(R.id.tvDetailAbsenceEmpAct_Total);
-        tvRemain = findViewById(R.id.tvDetailAbsenceEmpAct_Remain);
+        tvThisyear = findViewById(R.id.tvDetailAbsenceEmpAct_Thisyear);
+        tvRemainTotal = findViewById(R.id.tvDetailAbsenceEmpAct_RemainTotal);
+        tvLastYear = findViewById(R.id.tvDetailAbsenceEmpAct_lastYear);
         tvAnnual = findViewById(R.id.tvDetailAbsenceEmpAct_Annual);
-        tvNoSalary = findViewById(R.id.tvDetailAbsenceEmpAct_NoSalary);
+        tvSick = findViewById(R.id.tvAbsenceFra_SickSalary);
+        tvUnpaid = findViewById(R.id.tvDetailAbsenceEmpAct_NoSalary);
         tvMaternity = findViewById(R.id.tvDetailAbsenceEmpAct_Maternity);
         tvMarriage = findViewById(R.id.tvDetailAbsenceEmpAct_Marriage);
         tvBereavement = findViewById(R.id.tvDetailAbsenceEmpAct_Bereave);
@@ -131,25 +134,33 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
 
 
     private void loadData(Data dataAbsence) {
-        tvTotal.setText(dataAbsence.getAllowAbsence() + "");
-        tvRemain.setText(dataAbsence.getRemainingAbsenceDays() + "");
-        tvNoSalary.setText(dataAbsence.getUnpaidLeave() + "");
-        tvAnnual.setText(dataAbsence.getAnnualLeave() + "");
-        tvMarriage.setText(dataAbsence.getMarriageLeave() + "");
-        tvBereavement.setText(dataAbsence.getBereavementLeave() + "");
-        tvMaternity.setText(dataAbsence.getMaternityLeave() + "");
+        double hasTotalAbsence = dataAbsence.getAllowAbsence() + dataAbsence.getRemainingAbsenceDays();
+        double annualAbsence = dataAbsence.getAnnualLeave();
+        double remainTotal = hasTotalAbsence - annualAbsence >= 0 ? hasTotalAbsence - annualAbsence : 0;
+        if ((remainTotal+"").length()==4){
+            tvRemainTotal.setTextSize(48);
+        }
+        tvThisyear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getAllowAbsence() + ""));
+        tvLastYear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getRemainingAbsenceDays() + ""));
+        tvRemainTotal.setText(StringUtils.formatDisplayNumberDouble(remainTotal + ""));
+        tvUnpaid.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getUnpaidLeave() + ""));
+        tvAnnual.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getAnnualLeave() + ""));
+        tvMarriage.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getMarriageLeave() + ""));
+        tvBereavement.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getBereavementLeave() + ""));
+        tvMaternity.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getMaternityLeave() + ""));
+        tvSick.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getSickLeave() + ""));
     }
 
     private void reloadPage() {
         current_page = 1;
         absenceList.clear();
-        detailAbsenceEmployeePresenter.getDetailAbsenceEmployee(id_employee,current_page, pageSize);
+        detailAbsenceEmployeePresenter.getDetailAbsenceEmployee(id_employee, current_page, pageSize);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == VariableUltils.REQUEST_CODE_DETAIL && resultCode == Activity.RESULT_OK) {
+        if (requestCode == VariableUltils.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             reloadPage();
         }
     }

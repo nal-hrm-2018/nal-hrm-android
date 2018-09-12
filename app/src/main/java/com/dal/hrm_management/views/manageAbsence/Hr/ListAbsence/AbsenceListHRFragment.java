@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +43,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private final String TAG = AbsenceListHRFragment.class.getSimpleName();
 
     private List<ListAbsenceForHr> absenceList;
+    private List<ListAbsenceForHr> absenceListBackup;
     private AbsenceListForHrAdapter adapter;
     private RecyclerView recyclerView;
     private Spinner spn_year, spn_month;
@@ -54,6 +57,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private SearchView searchView;
     private Button btn_filter;
     LinearLayoutManager layoutManager;
+    public boolean isShowFilter = true;
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -134,6 +138,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         progressBar = view.findViewById(R.id.prgAbsenceFragHR_ShowMore);
         ll_filter = (LinearLayout) view.findViewById(R.id.ll_filter);
+        ll_filter.setVisibility(View.GONE);
         spn_month = (Spinner) view.findViewById(R.id.spn_month);
         spn_year = (Spinner) view.findViewById(R.id.spn_year);
         tvNothingToShow = view.findViewById(R.id.tvAbsenceFragHR_nothingToshow);
@@ -146,6 +151,10 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         menu.clear();
         inflater.inflate(R.menu.absence_hr_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        //set white color for icon_click
+        Drawable icon_click = menu.getItem(2).getIcon();
+        icon_click.mutate();
+        icon_click.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
@@ -171,7 +180,18 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         int id = item.getItemId();
         switch (id) {
             case R.id.action_export:
-                Toast.makeText(getActivity(), "Exporting....!!!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Exporting....!!!", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_click:
+                if (isShowFilter) {
+                    ll_filter.setVisibility(View.VISIBLE);
+                } else {
+                    ll_filter.setVisibility(View.GONE);
+                    //Show default list
+                    loadDataListToRecyclerView(absenceListBackup);
+
+                }
+                isShowFilter = !isShowFilter;
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -193,9 +213,15 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
 
     @Override
     public void getListAbsenceSuccess(int total, List<ListAbsenceForHr> list) {
+        this.absenceListBackup = list;
         totalAbsence = total;
         recyclerView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
+        loadDataListToRecyclerView(list);
+
+    }
+
+    public void loadDataListToRecyclerView(List<ListAbsenceForHr> list) {
         if (list.size() != 0) {
 //            absenceList.clear();
             absenceList.addAll(list);

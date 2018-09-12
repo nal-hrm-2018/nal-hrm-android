@@ -13,4 +13,11 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:icon="@drawable/ic_search"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_click"
+        android:title="Click"
+        android:icon="@drawable/ic_click"
+        android:iconTint="@color/color_white"
+        android:iconTintMode="screen"
+        app:showAsAction="always" />
 </menu>

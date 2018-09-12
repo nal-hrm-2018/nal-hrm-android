@@ -6,90 +6,90 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/item_padding"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:orientation="horizontal"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:weightSum="12"
+    android:layout_margin="@dimen/item_padding">
 
-    <TextView
-        android:id="@+id/tv_nameHoliday"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/holiday_name"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_medium"
-        android:textStyle="bold" />
+        android:layout_weight="8">
 
-    <TextView
-        android:id="@+id/tv_typeHoliday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/holiday_type"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_small" />
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="2-9"
+            android:textSize="32sp"
+            android:textColor="@color/color_orange"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_date"
+            android:layout_centerHorizontal="true"
+            android:text="2018"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/tv_nameHoliday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/holiday_name"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_typeHoliday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/holiday_type"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_small" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.7"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_vertical_margin">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="0.7"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_vertical_margin">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
-                    android:text="@string/textview.text.from"
-                    android:textSize="@dimen/text_size_small" />
-
-                <TextView
-                    android:id="@+id/tv_from"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
-                    android:textSize="@dimen/text_size_small" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_endDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayStartProjectEmployee"
-                    android:text="@string/textview.text.to"
-                    android:textSize="@dimen/text_size_small" />
-
-                <TextView
-                    android:id="@+id/tv_to"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/textview.dayEndProjectEmployee"
-                    android:textSize="@dimen/text_size_small" />
-            </LinearLayout>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/holiday_note"
+            android:textSize="@dimen/text_size_small" />
+
     </LinearLayout>
-    <TextView
-        android:id="@+id/tv_note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/holiday_note"
-        android:textSize="@dimen/text_size_small" />
-
-
 
 </LinearLayout>

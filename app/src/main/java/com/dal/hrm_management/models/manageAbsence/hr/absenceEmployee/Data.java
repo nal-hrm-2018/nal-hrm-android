@@ -10,93 +10,93 @@ import com.google.gson.annotations.SerializedName;
 public class Data {
     @SerializedName("allowAbsence")
     @Expose
-    private Integer allowAbsence;
+    private Double allowAbsence;
     @SerializedName("remainingAbsenceDays")
     @Expose
-    private Integer remainingAbsenceDays;
+    private Double remainingAbsenceDays;
     @SerializedName("annualLeave")
     @Expose
-    private Integer annualLeave;
+    private Double annualLeave;
     @SerializedName("unpaidLeave")
     @Expose
-    private Integer unpaidLeave;
+    private Double unpaidLeave;
     @SerializedName("marriageLeave")
     @Expose
-    private Integer marriageLeave;
+    private Double marriageLeave;
     @SerializedName("bereavementLeave")
     @Expose
-    private Integer bereavementLeave;
+    private Double bereavementLeave;
     @SerializedName("maternityLeave")
     @Expose
-    private Integer maternityLeave;
+    private Double maternityLeave;
     @SerializedName("sickLeave")
     @Expose
-    private Integer sickLeave;
+    private Double sickLeave;
     @SerializedName("listAbsence")
     @Expose
     private ListAbsence listAbsence;
 
-    public Integer getAllowAbsence() {
+    public Double getAllowAbsence() {
         return allowAbsence;
     }
 
-    public void setAllowAbsence(Integer allowAbsence) {
+    public void setAllowAbsence(Double allowAbsence) {
         this.allowAbsence = allowAbsence;
     }
 
-    public Integer getRemainingAbsenceDays() {
+    public Double getRemainingAbsenceDays() {
         return remainingAbsenceDays;
     }
 
-    public void setRemainingAbsenceDays(Integer remainingAbsenceDays) {
+    public void setRemainingAbsenceDays(Double remainingAbsenceDays) {
         this.remainingAbsenceDays = remainingAbsenceDays;
     }
 
-    public Integer getAnnualLeave() {
+    public Double getAnnualLeave() {
         return annualLeave;
     }
 
-    public void setAnnualLeave(Integer annualLeave) {
+    public void setAnnualLeave(Double annualLeave) {
         this.annualLeave = annualLeave;
     }
 
-    public Integer getUnpaidLeave() {
+    public Double getUnpaidLeave() {
         return unpaidLeave;
     }
 
-    public void setUnpaidLeave(Integer unpaidLeave) {
+    public void setUnpaidLeave(Double unpaidLeave) {
         this.unpaidLeave = unpaidLeave;
     }
 
-    public Integer getMarriageLeave() {
+    public Double getMarriageLeave() {
         return marriageLeave;
     }
 
-    public void setMarriageLeave(Integer marriageLeave) {
+    public void setMarriageLeave(Double marriageLeave) {
         this.marriageLeave = marriageLeave;
     }
 
-    public Integer getBereavementLeave() {
+    public Double getBereavementLeave() {
         return bereavementLeave;
     }
 
-    public void setBereavementLeave(Integer bereavementLeave) {
+    public void setBereavementLeave(Double bereavementLeave) {
         this.bereavementLeave = bereavementLeave;
     }
 
-    public Integer getMaternityLeave() {
+    public Double getMaternityLeave() {
         return maternityLeave;
     }
 
-    public void setMaternityLeave(Integer maternityLeave) {
+    public void setMaternityLeave(Double maternityLeave) {
         this.maternityLeave = maternityLeave;
     }
 
-    public Integer getSickLeave() {
+    public Double getSickLeave() {
         return sickLeave;
     }
 
-    public void setSickLeave(Integer sickLeave) {
+    public void setSickLeave(Double sickLeave) {
         this.sickLeave = sickLeave;
     }
 

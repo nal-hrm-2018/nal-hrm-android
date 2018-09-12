@@ -23,6 +23,7 @@ import com.dal.hrm_management.api.ApiImageClient;
 import com.dal.hrm_management.api.RetrofitImageAPI;
 import com.dal.hrm_management.models.listEmployee.Employee;
 import com.dal.hrm_management.utils.PermissionManager;
+import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.views.employee.EditProfileEmployeeActivity;
 import com.dal.hrm_management.views.employee.ViewInforEmployeeActivity;
 import com.dal.hrm_management.views.listEmployee.ListEmployee;
@@ -183,7 +184,7 @@ public class ListEmployeeAdapter extends RecyclerView.Adapter<ListEmployeeAdapte
                 } else {
                     List<Employee> filteredList = new ArrayList<>();
                     for (Employee employee : arr) {
-                        if (employee.getNameEmployee().toLowerCase().contains(charString.toLowerCase())
+                        if (StringUtils.createSlug(employee.getNameEmployee()).contains(StringUtils.createSlug(charString))
                                 ||employee.getRole().getNameRole().toLowerCase().contains(charString.toLowerCase())
                                 ||employee.getEmail().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(employee);
