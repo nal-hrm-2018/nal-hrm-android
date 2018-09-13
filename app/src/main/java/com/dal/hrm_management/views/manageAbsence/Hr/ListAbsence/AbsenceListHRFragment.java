@@ -220,6 +220,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     private void reloadPage() {
         page = 1;
         absenceList.clear();
+        recyclerView.setVisibility(View.INVISIBLE);
         manageAbsenceHrPresenter.getListAbsence(page, pageSize);
     }
 
