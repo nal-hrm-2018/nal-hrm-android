@@ -18,6 +18,7 @@
         android:layout_height="?attr/listPreferredItemHeightSmall"
         android:layout_toRightOf="@+id/imv_list_group"
         android:gravity="center_vertical"
+        android:textColor="@android:color/black"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:paddingRight="?attr/listPreferredItemPaddingRight"
         android:textSize="16sp" />

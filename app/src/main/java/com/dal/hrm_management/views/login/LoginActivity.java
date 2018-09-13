@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initProgressProcess() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Signing");
+        progressDialog.setMessage("Logging in");
         progressDialog.setCanceledOnTouchOutside(false);
     }
 

@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,6 +7,7 @@
     tools:context="com.dal.hrm_management.views.manageAbsence.po.AbsenceManagerForPOFragment">
 
     <RelativeLayout
+        android:id="@+id/rl_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_white"
@@ -20,28 +21,27 @@
             android:padding="@dimen/text_padding" />
     </RelativeLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_below="@id/rl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_message_nothing"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:padding="@dimen/activity_horizontal_margin"
         android:textAlignment="center"
         android:textSize="@dimen/text_size_medium"
         android:visibility="gone" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:visibility="gone" />
 
-</LinearLayout>
+</RelativeLayout>
 
