@@ -82,7 +82,7 @@ public class ProjectEmployeeFragment extends Fragment
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        return false;
+        return true;
     }
 
     @Override

@@ -124,13 +124,13 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
             @Override
             public boolean onQueryTextSubmit(String query) {
                 adapter.getFilter().filter(query);
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 adapter.getFilter().filter(query);
-                return false;
+                return true;
             }
         });
     }

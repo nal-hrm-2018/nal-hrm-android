@@ -156,13 +156,13 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
             @Override
             public boolean onQueryTextSubmit(String query) {
                 adapter.getFilter().filter(query);
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
                 adapter.getFilter().filter(query);
-                return false;
+                return true;
             }
         });
     }
