@@ -56,11 +56,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void loadSharedPreferences() {
         String email = sharedPreferences.getString("email", null);
         String pass = sharedPreferences.getString("password", null);
-        if (email != null) {
-            cb_remeber.setChecked(true);
-            edt_email.setText(email);
-            edt_password.setText(pass);
+        boolean isRemembered = sharedPreferences.getBoolean("remeber",false);
+        cb_remeber.setChecked(isRemembered);
+        if(isRemembered){
+            if (email != null) {
+                edt_email.setText(email);
+                edt_password.setText(pass);
+            }
+        } else {
+            edt_email.setText("");
+            edt_password.setText("");
         }
+
     }
 
     private void mapViewWithActivity() {
@@ -78,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initProgressProcess() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Logging in");
+        progressDialog.setMessage("Logging in...");
         progressDialog.setCanceledOnTouchOutside(false);
     }
 
@@ -88,25 +95,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
                 if (isConnected()) {
                     progressDialog.show();
-                    if (cb_remeber.isChecked()) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("remeber", true);
-                        editor.putString("email", edt_email.getText().toString());
-                        editor.putString("password", edt_password.getText().toString());
-                        editor.commit();
-                    } else {
-                        sharedPreferences.edit().clear().commit();
-                    }
+                    saveInforLoginInSharedPreference(false);
                     checkLogin();
                 } else {
-                    Toast toast= Toast.makeText(getApplicationContext(),
-                            "No internet", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "No internet", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                     toast.show();
                 }
                 break;
         }
 
+    }
+
+    /**
+     * save data:  into shared preference to reuse
+     *
+     * @param isLoggingIn
+     */
+    private void saveInforLoginInSharedPreference(boolean isLoggingIn) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLoggingIn", isLoggingIn);
+        if (cb_remeber.isChecked()) {
+            editor.putBoolean("remeber", true);
+        } else {
+            editor.putBoolean("remeber", false);
+        }
+        editor.putString("email", edt_email.getText().toString());
+        editor.putString("password", edt_password.getText().toString());
+        editor.commit();
     }
 
     private void checkLogin() {
@@ -118,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = edt_email.getText().toString();
         String pass = edt_password.getText().toString();
         //valid pass
-        
+
         if (TextUtils.isEmpty(pass)) {
             edt_password.setError(getString(R.string.catch_invalid_password_empty));
             focusView = edt_password;
@@ -158,6 +174,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void loginSucess(String token) {
         tvSomethingWrong.setVisibility(View.INVISIBLE);
+        saveInforLoginInSharedPreference(true);
         Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
         startActivity(intent);
         progressDialog.dismiss();
@@ -172,14 +189,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void errorInServer() {
         progressDialog.dismiss();
-        Toast toast= Toast.makeText(getApplicationContext(),
-                "Server Error", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
     }
 
     /**
      * Kiểm tra có kết nối internet hay không
+     *
      * @return trạng thái kết nối internet
      */
     public boolean isConnected() {

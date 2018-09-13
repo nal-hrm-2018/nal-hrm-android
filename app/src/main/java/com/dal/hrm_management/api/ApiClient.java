@@ -4,8 +4,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-//    public static final String BASE_URL = "https://hrm-testing.herokuapp.com/";
-    public static final String BASE_URL = "http://ec2-18-223-195-46.us-east-2.compute.amazonaws.com:8080/";
+    public static final String BASE_URL = "https://hrm-testing.herokuapp.com/";
+//    public static final String BASE_URL = "http://ec2-18-223-195-46.us-east-2.compute.amazonaws.com:8080/";
 
     private static Retrofit retrofit = null;
 

@@ -27,11 +27,7 @@
         <activity
             android:name=".views.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".views.profile.ViewProfileActivity"
@@ -48,11 +44,16 @@
             android:label="Absence" />
         <activity
             android:name=".views.manageAbsence.Hr.holiday.FormHolidayActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".views.absenceEmployee.DetailAbsenceEmployeeActivity"></activity>
-        <activity android:name=".views.overtime.FormOvertime">
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".views.absenceEmployee.DetailAbsenceEmployeeActivity" />
+        <activity android:name=".views.overtime.FormOvertime"></activity>
+        <activity android:name=".views.splash.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
