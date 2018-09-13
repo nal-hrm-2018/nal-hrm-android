@@ -6,9 +6,7 @@ import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.login.LoginModel;
 import com.dal.hrm_management.views.login.ILoginActivity;
-import com.dal.hrm_management.views.login.LoginActivity;
 
-import okhttp3.Credentials;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,7 +14,7 @@ import retrofit2.Response;
 public class LoginPresenter implements ILoginPresenter {
     private static  final String TAG = LoginPresenter.class.getSimpleName();
     public static String token;
-    public static String position;
+    public static String position;// HR/DEV/PO/BO/SM: position of member login
     private ILoginActivity iLoginActivity;
 
     public LoginPresenter(ILoginActivity iLoginActivity) {

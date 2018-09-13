@@ -3,6 +3,7 @@ package com.dal.hrm_management.views.home;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
@@ -244,6 +245,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 PermissionManager.listPermissions.clear();
+                updateLogoutKeyValueInSharedPreference();
                 Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -368,6 +370,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                     if (!headerList.get(groupPosition).hasChildren) {
                         if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
                             PermissionManager.listPermissions.clear();
+                            updateLogoutKeyValueInSharedPreference();
                             Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }
@@ -377,6 +380,15 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 return false;
             }
         });
+    }
+
+    /**
+     * Update key "islogout" -> true in file shared preference
+     */
+    private void updateLogoutKeyValueInSharedPreference() {
+        SharedPreferences.Editor editor = getSharedPreferences("remeberMe",MODE_PRIVATE).edit();
+        editor.putBoolean("isLoggingIn",false);
+        editor.commit();
     }
 
     /**
