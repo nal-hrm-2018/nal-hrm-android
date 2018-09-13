@@ -44,6 +44,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     private ProgressBar progressBar;
     private TextView tvThisyear, tvLastYear, tvRemain, tvAnnual, tvUnpaid, tvMaternity, tvMarriage, tvBereavement, tvSick;
     private RelativeLayout layout;
+    private double remainTotal;
     //set scroll recycler view
     private RecyclerView.OnScrollListener recyOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -163,7 +164,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     private void loadData(DataAbsence dataAbsence) {
         double allowAbsenceThisyear = dataAbsence.getAllowAbsence(),
                 remainAbsence = dataAbsence.getRemainingAbsenceDays(),
-                annualAbsence = dataAbsence.getAnnualLeave(),
+                annualAbsence = dataAbsence.getAnnualLeave();
                 remainTotal = allowAbsenceThisyear+remainAbsence - annualAbsence >= 0 ? allowAbsenceThisyear+remainAbsence - annualAbsence : 0;
         tvThisyear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getAllowAbsence() + ""));
         tvLastYear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getRemainingAbsenceDays() + ""));
@@ -185,6 +186,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         switch (v.getId()) {
             case R.id.btn_add:
                 Intent intent = new Intent(getActivity(), FormAbsenceActivity.class);
+                intent.putExtra(VariableUltils.KEY_PUT_EXTRA_REMAIN_ANNUAL,remainTotal);
                 startActivityForResult(intent, VariableUltils.REQUEST_CODE_ADD_ABSENCE);
         }
     }

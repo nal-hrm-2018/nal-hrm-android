@@ -33,6 +33,8 @@ import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresenter;
 import com.dal.hrm_management.utils.VariableUltils;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -83,6 +85,13 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         }
     };
 
+    /*
+    export file
+     */
+    String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+    String fileName = "AnalysisData.csv";
+    String filePath = baseDir + File.separator + fileName;
+    File f = new File(filePath );
 
 
     @Override
@@ -93,6 +102,7 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         mapMVP();
         initData();
         setEvent(view);
+       
         return view;
     }
 
@@ -298,6 +308,8 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
     public void searchAbsenceFailed() {
 
     }
+
+
 
 }
 
