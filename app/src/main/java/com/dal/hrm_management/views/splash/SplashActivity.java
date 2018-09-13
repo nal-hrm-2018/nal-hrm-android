@@ -7,17 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.presenters.home.HomePresenter;
-import com.dal.hrm_management.presenters.splash.SplashPresenter;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.home.HomePageActivity;
 import com.dal.hrm_management.views.home.iHomeActivity;
+import com.dal.hrm_management.views.login.ILoginActivity;
 import com.dal.hrm_management.views.login.LoginActivity;
 
-public class SplashActivity extends AppCompatActivity implements ISplashActivity, iHomeActivity {
+public class SplashActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private boolean isLoggingIn;
     private String emailSaved, passwordSaved;
-    private SplashPresenter splashPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,45 +29,13 @@ public class SplashActivity extends AppCompatActivity implements ISplashActivity
     }
 
     private void init() {
-        splashPresenter = new SplashPresenter(this);
         sharedPreferences = getSharedPreferences("remeberMe", MODE_PRIVATE);
         isLoggingIn = sharedPreferences.getBoolean("isLoggingIn", false);
         emailSaved = sharedPreferences.getString("email", "");
         passwordSaved = sharedPreferences.getString("password", "");
     }
 
-    @Override
-    public void loginSucess(String token) {
-        HomePresenter homePresenter = new HomePresenter(this);
-        homePresenter.getProfile(token);
-    }
-
-    @Override
-    public void loginFailure() {
-        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void errorInServer() {
-        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    //get data success
-    @Override
-    public void Success() {
-        Intent itent = new Intent(SplashActivity.this, HomePageActivity.class);
-        startActivity(itent);
-    }
-
-    //get data failure
-    @Override
-    public void Failure() {
-
-    }
-
-    public class CheckThread extends Thread {
+    public class CheckThread extends Thread implements ILoginActivity, iHomeActivity {
         @Override
         public void run() {
             super.run();
@@ -76,7 +44,8 @@ public class SplashActivity extends AppCompatActivity implements ISplashActivity
                 sleep(2000);
                 if (isLoginAlready()) {
                     if (!emailSaved.equals("") && !passwordSaved.equals("")) {
-                        splashPresenter.getToken(emailSaved, passwordSaved);
+                        LoginPresenter loginPresenter = new LoginPresenter(this);
+                        loginPresenter.getToken(emailSaved, passwordSaved);
                     }
                 } else {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
@@ -85,6 +54,35 @@ public class SplashActivity extends AppCompatActivity implements ISplashActivity
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        @Override
+        public void loginSucess(String token) {
+            HomePresenter homePresenter = new HomePresenter(this);
+            homePresenter.getProfile(token);
+        }
+
+        @Override
+        public void loginFailure() {
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void errorInServer() {
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void Success() {
+            Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void Failure() {
+
         }
     }
 
