@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.RequestBody;
@@ -54,6 +55,8 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     public enum StatusAbsences {enum_Add, enum_Edit;}
     StatusAbsences statusAbsences = StatusAbsences.enum_Add;
     private Integer idAbsence;
+    private double remainTotal =-1;
+    private double soNgayDangKiNghi =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +66,15 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         initView();
         initData();
 
+//        remainTotal = getIntent().getExtras().getDouble(VariableUltils.KEY_PUT_EXTRA_REMAIN_ANNUAL);
+
     }
 
     private void getExtra() {
+        remainTotal = getIntent().getExtras().getDouble(VariableUltils.KEY_PUT_EXTRA_REMAIN_ANNUAL);
+        if (remainTotal >=0){
+            Log.d(TAG,"remain: " +remainTotal);
+        }else {
 //        //Nếu như add form absence thì absence khác null còn ko thì absence = null nếu null thì xét trường hợp khác
             ListAbsenceForHr absenceForHr = (ListAbsenceForHr) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE);
             if (absenceForHr != null) {
@@ -110,7 +119,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                     statusAbsences = StatusAbsences.enum_Edit;
                 }
             }
-
+        }
     }
 
     private void mapMVP() {
@@ -191,22 +200,40 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                 } else {
                     String absenceType = spnloaiNghi.getSelectedItem().toString();
                     absenceType = absenceType.replace(" ", "_");
-
                     int absenceTypeId = getAbsenceTypeId(absenceType);
                     String absenceTime = spnthoiGianNghi.getSelectedItem().toString();
                     int absenceTimeId = getAbsenceTimeId(absenceTime);
                     JSONObject jsonObject = new JSONObject();
+
                     try {
+                        Calendar c = Calendar.getInstance();
                         jsonObject.put("absenceTypeId", absenceTypeId);
                         String[] split = edt_tuNgay.getText().toString().split("-");
                         String tungay = split[2] + "-" + split[1] + "-" + split[0];
+
+                        int day = Integer.parseInt(split[0]);
+                        int month = Integer.parseInt(split[1]);
+                        int year = Integer.parseInt(split[2]);
+                        c.set(Calendar.YEAR,year);
+                        c.set(Calendar.MONTH,month);
+                        c.set(Calendar.DAY_OF_MONTH,day);
+                        Date day1 = c.getTime();
                         jsonObject.put("fromDate", tungay);
                         split = edt_denNgay.getText().toString().split("-");
+                        day = Integer.parseInt(split[0]);
+                        month = Integer.parseInt(split[1]);
+                        year = Integer.parseInt(split[2]);
+                        c.set(Calendar.YEAR,year);
+                        c.set(Calendar.MONTH,month);
+                        c.set(Calendar.DAY_OF_MONTH,day);
+                        Date day2 = c.getTime();
+                        soNgayDangKiNghi = (day2.getTime()-day1.getTime())/(24*60*60*1000);
                         String denngay = split[2] + "-" + split[1] + "-" + split[0];
                         jsonObject.put("toDate", denngay);
                         jsonObject.put("reason", StringUtils.deleteUnnecessarySpace(edtReason.getText().toString()));
                         jsonObject.put("description", StringUtils.deleteUnnecessarySpace(edtNote.getText().toString()));
                         jsonObject.put("absenceTimeId", absenceTimeId);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -259,7 +286,6 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         edt_denNgay.setError(null);
         edtReason.setError(null);
         edtReason.setError(null);
-        View focusView = null;
         //Valid từ ngày
         try {
             String[] split = edt_tuNgay.getText().toString().split("-");
@@ -337,8 +363,11 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void Success() {
-
-        Toast.makeText(getApplicationContext(), "Add new absence success", Toast.LENGTH_SHORT).show();
+        String absenceType = spnloaiNghi.getSelectedItem().toString();
+        absenceType = absenceType.replace(" ", "_");
+        if (soNgayDangKiNghi > remainTotal && absenceType.equalsIgnoreCase("annual_leave"))
+            Toast.makeText(getApplicationContext(),"Transfer " + String.valueOf(soNgayDangKiNghi-remainTotal) +" day to unpaid leave",Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getApplicationContext(), "Add new absence success", Toast.LENGTH_SHORT).show();
         setResult(Activity.RESULT_OK);
         finish();
     }
@@ -347,7 +376,6 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     public void Failure() {
         progressDialog.dismiss();
         Toast.makeText(getApplicationContext(), "Add new absence failure!", Toast.LENGTH_SHORT).show();
-        btnSubmit.setEnabled(true);
     }
 
     @Override

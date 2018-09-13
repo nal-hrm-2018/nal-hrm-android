@@ -23,6 +23,7 @@ public class ValidationDateTime {
             case 9:
             case 11:
                 max_day =30;
+                break;
             case 2:
                 if (nhuan) max_day =29;
                 else max_day=28;

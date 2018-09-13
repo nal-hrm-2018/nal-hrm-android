@@ -7,4 +7,5 @@ public class VariableUltils {
     public static String KEY_PUT_EXTRA_ID_EMPLOYEE = "id_employee";
     public static String KEY_PUT_EXTRA_NAME_EMPLOYEE = "name_employee";
     public static String KEY_PUT_EXTRA_EDIT_ABSENCE_IN_DETAIL="edit_absence_in_detail";
+    public static String KEY_PUT_EXTRA_REMAIN_ANNUAL="remain_day";
 }
