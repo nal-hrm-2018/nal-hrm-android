@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -19,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
@@ -100,12 +97,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.app_bar_menu, menu);
-        //set white color for icon_notification
-        Drawable icon_notification = menu.getItem(0).getIcon();
-        icon_notification.mutate();
-        icon_notification.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.app_bar_menu, menu);
+//        //set white color for icon_notification
+//        Drawable icon_notification = menu.getItem(0).getIcon();
+//        icon_notification.mutate();
+//        icon_notification.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
         return true;
     }
 
@@ -265,12 +262,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 //        if (!menuModel.hasChildren) {
 //            childList.put(menuModel, null);
 //        }
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_overtime), getString(R.string.menu_overtime), true, false, getResources().getDrawable(R.drawable.ic_overtime));
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-        menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
+//        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_overtime), getString(R.string.menu_overtime), true, false, getResources().getDrawable(R.drawable.ic_overtime));
+//        headerList.add(menuModel);
+//        if (!menuModel.hasChildren) {
+//            childList.put(menuModel, null);
+//        }
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
@@ -281,22 +278,22 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
             List<MenuModel> childModelsList = new ArrayList<>();
             MenuModel chilModel;
-            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_list_employee")) {
-                chilModel = new MenuModel(getString(R.string.menu_id_manage_employee), getString(R.string.menu_employee), false, false, null);
-                childModelsList.add(chilModel);
-            }
+//            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_list_employee")) {
+//                chilModel = new MenuModel(getString(R.string.menu_id_manage_employee), getString(R.string.menu_employee), false, false, null);
+//                childModelsList.add(chilModel);
+//            }
             if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_absence_history") || PermissionManager.isPermited(PermissionManager.listPermissions, "view_project_absence_history")) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_absence), getString(R.string.menu_absence_empl), false, false, null);
                 childModelsList.add(chilModel);
             }
-            if (data.getRole().getNameRole().equals("HR")) {
-                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
-                childModelsList.add(chilModel);
-            }
-            if (data.getRole().getNameRole().equals("PO")) {
-                chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
-                childModelsList.add(chilModel);
-            }
+//            if (data.getRole().getNameRole().equals("HR")) {
+//                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
+//                childModelsList.add(chilModel);
+//            }
+//            if (data.getRole().getNameRole().equals("PO")) {
+//                chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
+//                childModelsList.add(chilModel);
+//            }
 
             if (menuModel.hasChildren) {
                 childList.put(menuModel, childModelsList);
@@ -370,7 +367,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                     if (!headerList.get(groupPosition).hasChildren) {
                         if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
                             PermissionManager.listPermissions.clear();
-                            updateLogoutKeyValueInSharedPreference();
                             Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }

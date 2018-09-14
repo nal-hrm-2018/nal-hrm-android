@@ -14,6 +14,9 @@ public class Data {
     @SerializedName("remainingAbsenceDays")
     @Expose
     private Double remainingAbsenceDays;
+    @SerializedName("totalRemain")
+    @Expose
+    private Double totalRemain;
     @SerializedName("annualLeave")
     @Expose
     private Double annualLeave;
@@ -51,7 +54,13 @@ public class Data {
     public void setRemainingAbsenceDays(Double remainingAbsenceDays) {
         this.remainingAbsenceDays = remainingAbsenceDays;
     }
+    public Double getTotalRemain() {
+        return totalRemain;
+    }
 
+    public void setTotalRemain(Double totalRemain) {
+        this.totalRemain = totalRemain;
+    }
     public Double getAnnualLeave() {
         return annualLeave;
     }

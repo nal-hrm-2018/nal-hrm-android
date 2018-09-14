@@ -34,7 +34,6 @@ import com.dal.hrm_management.presenters.manageAbsence.Hr.ManageAbsenceHrPresent
 import com.dal.hrm_management.utils.VariableUltils;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -172,6 +171,10 @@ public class AbsenceListHRFragment extends Fragment implements IAbsenceHRFragmen
         menu.clear();
         inflater.inflate(R.menu.absence_hr_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        //set item export no visible--> feature not done
+        MenuItem item = menu.findItem(R.id.action_export);
+        item.setVisible(false);
+
         //set white color for icon_click
         Drawable icon_click = menu.getItem(2).getIcon();
         icon_click.mutate();
