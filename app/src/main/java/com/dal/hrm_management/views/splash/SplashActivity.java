@@ -41,7 +41,7 @@ public class SplashActivity extends AppCompatActivity {
             super.run();
             try {
                 // NOTE: Sleep 2s to take slow down checkLogin for show Splash
-                sleep(2000);
+                sleep(1000);
                 if (isLoginAlready()) {
                     if (!emailSaved.equals("") && !passwordSaved.equals("")) {
                         LoginPresenter loginPresenter = new LoginPresenter(this);

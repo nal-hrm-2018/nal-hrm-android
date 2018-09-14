@@ -135,10 +135,8 @@ public class DetailAbsenceEmployeeActivity extends AppCompatActivity implements 
 
 
     private void loadData(Data dataAbsence) {
-        double hasTotalAbsence = dataAbsence.getAllowAbsence() + dataAbsence.getRemainingAbsenceDays();
-        double annualAbsence = dataAbsence.getAnnualLeave();
-        double remainTotal = hasTotalAbsence - annualAbsence >= 0 ? hasTotalAbsence - annualAbsence : 0;
-        if ((remainTotal+"").length()==4){
+        double remainTotal = dataAbsence.getTotalRemain();
+        if (StringUtils.formatDisplayNumberDouble(remainTotal+"").length()==4){
             tvRemainTotal.setTextSize(48);
         }
         tvThisyear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getAllowAbsence() + ""));
