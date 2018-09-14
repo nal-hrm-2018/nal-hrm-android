@@ -162,14 +162,10 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
     }
 
     private void loadData(DataAbsence dataAbsence) {
-        double allowAbsenceThisyear = dataAbsence.getAllowAbsence(),
-                remainAbsence = dataAbsence.getRemainingAbsenceDays(),
-                annualAbsence = dataAbsence.getAnnualLeave();
-//        remainTotal = dataAbsence.getTotalRemain();
-                remainTotal = allowAbsenceThisyear+remainAbsence - annualAbsence >= 0 ? allowAbsenceThisyear+remainAbsence - annualAbsence : 0;
+        remainTotal = dataAbsence.getTotalRemain();
         tvThisyear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getAllowAbsence() + ""));
         tvLastYear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getRemainingAbsenceDays() + ""));
-        if((remainTotal+"").length()==4) {
+        if(StringUtils.formatDisplayNumberDouble(remainTotal+"").length()==4) {
             tvRemain.setTextSize(48);
         }
         tvRemain.setText(StringUtils.formatDisplayNumberDouble(remainTotal + ""));

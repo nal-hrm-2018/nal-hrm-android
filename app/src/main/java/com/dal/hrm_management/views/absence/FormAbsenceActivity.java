@@ -55,7 +55,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     public enum StatusAbsences {enum_Add, enum_Edit;}
     StatusAbsences statusAbsences = StatusAbsences.enum_Add;
     private Integer idAbsence;
-    private double remainTotal =-1;
+    private double remainTotal =0;
     private double soNgayDangKiNghi =0;
 
     @Override
@@ -66,13 +66,11 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         initView();
         initData();
 
-//        remainTotal = getIntent().getExtras().getDouble(VariableUltils.KEY_PUT_EXTRA_REMAIN_ANNUAL);
-
     }
 
     private void getExtra() {
         remainTotal = getIntent().getExtras().getDouble(VariableUltils.KEY_PUT_EXTRA_REMAIN_ANNUAL);
-        if (remainTotal >=0){
+        if (remainTotal >0){
             Log.d(TAG,"remain: " +remainTotal);
         }else {
 //        //Nếu như add form absence thì absence khác null còn ko thì absence = null nếu null thì xét trường hợp khác
