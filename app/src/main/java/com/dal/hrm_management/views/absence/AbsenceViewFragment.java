@@ -165,6 +165,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         double allowAbsenceThisyear = dataAbsence.getAllowAbsence(),
                 remainAbsence = dataAbsence.getRemainingAbsenceDays(),
                 annualAbsence = dataAbsence.getAnnualLeave();
+//        remainTotal = dataAbsence.getTotalRemain();
                 remainTotal = allowAbsenceThisyear+remainAbsence - annualAbsence >= 0 ? allowAbsenceThisyear+remainAbsence - annualAbsence : 0;
         tvThisyear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getAllowAbsence() + ""));
         tvLastYear.setText(StringUtils.formatDisplayNumberDouble(dataAbsence.getRemainingAbsenceDays() + ""));

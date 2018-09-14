@@ -113,6 +113,11 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         menu.clear();
         inflater.inflate(R.menu.absence_po_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
+        //set item export no visible--> feature not done
+        MenuItem item = menu.findItem(R.id.action_export);
+        item.setVisible(false);
+
         if (!PermissionManager.isPermited(PermissionManager.listPermissions, "export_project_absence_history")) {
             menu.getItem(R.id.action_export).setVisible(false);
         }
