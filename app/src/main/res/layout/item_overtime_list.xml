@@ -1,162 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="12"
-    android:baselineAligned="false"
     android:layout_margin="@dimen/item_padding"
     android:background="@android:color/white"
-    android:padding="@dimen/activity_horizontal_margin">
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="9"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/item_padding"
-        android:paddingEnd="0dp">
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvItemOvertimeList_NameProject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/textview.nameProjectEmployee"
-            android:textColor="#000000"
-            android:textSize="@dimen/text_size_medium" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/text_space_item_absence"
-                android:layout_height="wrap_content"
-                android:text="@string/text_date" />
-
-            <TextView
-                android:id="@+id/tvItemOvertimeList_Date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/_22_9_2018" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/text_space_item_absence"
-                android:layout_height="wrap_content"
-                android:text="@string/absence_item_type_time" />
-
-            <TextView
-                android:id="@+id/tvItemOvertimeList_FromTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_hour" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/textview.text.symbol" />
-
-            <TextView
-                android:id="@+id/tvItemOvertimeList_ToTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_hour" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/text_space_item_absence"
-                android:layout_height="wrap_content"
-                android:text="@string/text_total" />
-
-            <TextView
-                android:id="@+id/tvItemOvertimeList_TotalTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/text_space_item_absence"
-                android:layout_height="wrap_content"
-                android:text="@string/absence_item_reason" />
-
-            <TextView
-                android:id="@+id/tvItemOvertimeList_Reason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_number" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvItemOvertimeList_Status"
+            android:id="@+id/tv_typeDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@color/color_gray"
-            android:layout_marginTop="16dp"
+            android:layout_alignParentEnd="true"
+            android:background="@color/color_violet"
             android:paddingLeft="@dimen/text_padding"
             android:paddingRight="@dimen/text_padding"
-            android:textColor="@color/color_white"
-            android:text="@string/status" />
+            android:text="@string/overtime_typeDate"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="12">
 
         <LinearLayout
-            android:id="@+id/layoutItemOvertimeList_Option"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvItemOvertimeList_Status"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/nav_header_vertical_spacing">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:orientation="vertical"
+            android:paddingEnd="0dp">
 
-            <ImageView
-                android:id="@+id/imgItemOvertimeList_edit"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/description_edit"
-                android:src="@drawable/ic_edit"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:tint="@color/colorAccent" />
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imgItemOvertimeList_delete"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="@dimen/text_space_item_absence"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_date" />
+
+                <TextView
+                    android:id="@+id/tvItemOvertimeList_Date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_22_9_2018" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/decription_delete"
-                android:src="@drawable/ic_delete"
-                android:tint="@color/color_red" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/text_space_item_absence"
+                    android:layout_height="wrap_content"
+                    android:text="@string/absence_item_type_time" />
+
+                <TextView
+                    android:id="@+id/tvItemOvertimeList_FromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_hour" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textview.text.symbol" />
+
+                <TextView
+                    android:id="@+id/tvItemOvertimeList_ToTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_hour" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/text_space_item_absence"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_total" />
+
+                <TextView
+                    android:id="@+id/tvItemOvertimeList_TotalTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_number" />
+
+                <TextView
+                    android:layout_width="@dimen/text_space_item_absence"
+                    android:layout_height="wrap_content"
+                    android:text="@string/overtime_label_hours" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/text_space_item_absence"
+                    android:layout_height="wrap_content"
+                    android:text="@string/absence_item_reason" />
+
+                <TextView
+                    android:id="@+id/tvItemOvertimeList_Reason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_number" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <TextView
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:layout_alignParentRight="true"
-            android:visibility="invisible"
-            android:id="@+id/tvItemOvertimeList_AcceptTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_number"
-            android:layout_below="@+id/tvItemOvertimeList_Status"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/tvItemOvertimeList_Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="16dp"
+                android:background="@color/color_gray"
+                android:paddingLeft="@dimen/text_padding"
+                android:paddingRight="@dimen/text_padding"
+                android:text="@string/status"
+                android:textColor="@color/color_white" />
+
+            <LinearLayout
+                android:id="@+id/layoutItemOvertimeList_Option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvItemOvertimeList_Status"
+                android:layout_marginTop="@dimen/nav_header_vertical_spacing">
+
+                <ImageView
+                    android:id="@+id/imgItemOvertimeList_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:contentDescription="@string/description_edit"
+                    android:src="@drawable/ic_edit"
+                    android:tint="@color/colorAccent" />
+
+                <ImageView
+                    android:id="@+id/imgItemOvertimeList_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/decription_delete"
+                    android:src="@drawable/ic_delete"
+                    android:tint="@color/color_red" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvItemOvertimeList_AcceptTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvItemOvertimeList_Status"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:text="@string/text_number"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </LinearLayout>
+
 </LinearLayout>
