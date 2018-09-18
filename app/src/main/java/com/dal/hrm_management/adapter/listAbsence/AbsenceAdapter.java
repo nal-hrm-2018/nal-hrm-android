@@ -34,6 +34,7 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
         holder.tv_startAt.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absences.get(position).getFromDate()));
         holder.tv_endAt.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absences.get(position).getToDate()));
         holder.item_absence_tv_reason.setText(absences.get(position).getReason());
+        holder.tv_numberDay.setText(absences.get(position).getNumberDayAbsence()+"");
         /**
          *  Delete "absence" pre-fix and upper case the first leter result
          *  example: absence morning --> Morning
@@ -74,6 +75,7 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
         private TextView tv_thoigianNghi;
         private TextView item_absence_tv_reason;
         private TextView item_absence_tv_note;
+        private TextView tv_numberDay;
 
         public DataViewHolder(View itemView) {
             super(itemView);
@@ -83,6 +85,7 @@ public class AbsenceAdapter extends RecyclerView.Adapter<AbsenceAdapter.DataView
             tv_thoigianNghi = itemView.findViewById(R.id.tv_thoigianNghi);
             item_absence_tv_reason = itemView.findViewById(R.id.item_absence_tv_reason);
             item_absence_tv_note = itemView.findViewById(R.id.item_absence_tv_note);
+            tv_numberDay = itemView.findViewById(R.id.tv_numberDay);
         }
     }
 }

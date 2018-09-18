@@ -39,6 +39,10 @@ public class Absence implements Serializable {
     @SerializedName("absenceTime")
     @Expose
     private AbsenceTime absenceTime;
+    @SerializedName("numberDayAbsence")
+    @Expose
+
+    private Double numberDayAbsence;
 
     public Absence(Integer idAbsences, Integer employeeId, Integer absenceTypeId, String fromDate, String toDate, String reason, String createdAt, String description, Integer absenceTimeId, AbsenceType absenceType, AbsenceTime absenceTime) {
         this.idAbsences = idAbsences;
@@ -141,4 +145,14 @@ public class Absence implements Serializable {
     public void setAbsenceTime(AbsenceTime absenceTime) {
         this.absenceTime = absenceTime;
     }
+
+    public Double getNumberDayAbsence() {
+        return numberDayAbsence;
+    }
+
+    public Absence setNumberDayAbsence(Double numberDayAbsence) {
+        this.numberDayAbsence = numberDayAbsence;
+        return this;
+    }
+
 }

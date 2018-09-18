@@ -42,6 +42,20 @@ public class Absence {
     @Expose
     private AbsenceTime absenceTime;
 
+    public Double getNumberDayAbsence() {
+        return numberDayAbsence;
+    }
+
+    public Absence setNumberDayAbsence(Double numberDayAbsence) {
+        this.numberDayAbsence = numberDayAbsence;
+        return this;
+    }
+
+    @SerializedName("numberDayAbsence")
+    @Expose
+    private Double numberDayAbsence;
+
+
     /**
      * No args constructor for use in serialization
      *

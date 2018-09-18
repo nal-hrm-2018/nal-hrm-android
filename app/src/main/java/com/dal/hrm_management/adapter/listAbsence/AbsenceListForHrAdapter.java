@@ -61,6 +61,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         holder.setIsRecyclable(true);
         holder.tv_type.setText(StringUtils.toUpperCaseFirstChar(absence.getAbsenceType().getNameAbsenceType().replace("_", " ")));
         holder.tv_from.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getFromDate()));
+        holder.tv_numberDay.setText(absence.getNumberDayAbsence()+"");
         if (absence.getReason() != null) {
             holder.tv_reason.setText(absence.getReason());
         } else {
@@ -237,6 +238,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         TextView tv_reason;
         TextView tv_TimeAbsence;
         TextView tv_note;
+        TextView tv_numberDay;
         private ImageView imvEdit;
         private ImageView imvDelete;
         ItemClickListener itemClickListener;
@@ -251,6 +253,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
             imvDelete = itemView.findViewById(R.id.imv_delete);
             tv_reason = itemView.findViewById(R.id.tv_reason);
             tv_note = itemView.findViewById(R.id.tv_note);
+            tv_numberDay = itemView.findViewById(R.id.tv_numberDay);
             tv_TimeAbsence = itemView.findViewById(R.id.tv_timeAbsence);
             itemView.setOnClickListener(this);
         }

@@ -240,4 +240,6 @@
     <string name="absence_maternity">Maternity</string>
     <string name="absence_marriage">Marriage</string>
     <string name="absence_bereavement">Bereavement</string>
+    <string name="textview.text.numberAbsence">Number actual:</string>
+    <string name="textview.text.labelDay">Days</string>
 </resources>
