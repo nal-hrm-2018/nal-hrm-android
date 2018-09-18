@@ -14,12 +14,10 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.absence.Absence;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
@@ -364,7 +362,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
         String absenceType = spnloaiNghi.getSelectedItem().toString();
         absenceType = absenceType.replace(" ", "_");
         if (soNgayDangKiNghi > remainTotal && absenceType.equalsIgnoreCase("annual_leave"))
-            Toast.makeText(getApplicationContext(),"Transfer " + String.valueOf(soNgayDangKiNghi-remainTotal) +" day to unpaid leave",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Transfer " + String.valueOf(soNgayDangKiNghi-remainTotal) +" day to unpaid leave",Toast.LENGTH_LONG).show();
         else Toast.makeText(getApplicationContext(), "Add new absence success", Toast.LENGTH_SHORT).show();
         setResult(Activity.RESULT_OK);
         finish();
