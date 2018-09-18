@@ -1,4 +1,4 @@
-package com.dal.hrm_management.views.absence;
+﻿package com.dal.hrm_management.views.absence;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -359,11 +359,8 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void Success() {
+        Toast.makeText(getApplicationContext(), "Add new absence success", Toast.LENGTH_SHORT).show();
         String absenceType = spnloaiNghi.getSelectedItem().toString();
-        absenceType = absenceType.replace(" ", "_");
-        if (soNgayDangKiNghi > remainTotal && absenceType.equalsIgnoreCase("annual_leave"))
-            Toast.makeText(getApplicationContext(),"Transfer " + String.valueOf(soNgayDangKiNghi-remainTotal) +" day to unpaid leave",Toast.LENGTH_LONG).show();
-        else Toast.makeText(getApplicationContext(), "Add new absence success", Toast.LENGTH_SHORT).show();
         setResult(Activity.RESULT_OK);
         finish();
     }
