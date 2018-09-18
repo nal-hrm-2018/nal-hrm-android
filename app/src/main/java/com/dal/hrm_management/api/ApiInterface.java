@@ -11,6 +11,7 @@ import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.AbsenceEmp
 import com.dal.hrm_management.models.manageAbsence.po.listAbsence.AbsenceInProjectOfPOResponse;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.ProjectInProgressPOResponse;
 import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceResponse;
+import com.dal.hrm_management.models.overtimePersonal.OvertimePersonalResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
 import com.dal.hrm_management.models.profile.TeamsResponse;
@@ -123,5 +124,11 @@ public interface ApiInterface {
     @DELETE("/api/manage/absence/delete/{absence_id}")
     Call<EditAbsenceResponse> deleteAbsence(@Path(value = "absence_id",encoded = true) int idAbsence,
                                             @Header("Authorization") String token);
+
+    @GET("/api/overtime")
+    Call<OvertimePersonalResponse> getOvertimePersonal(@Header("Authorization") String token,
+                                                       @Query("page") int page,
+                                                       @Query("pageSize") int pageSize);
+
 
 }
