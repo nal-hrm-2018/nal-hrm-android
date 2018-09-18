@@ -43,7 +43,7 @@ import com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence.AbsenceListHRFr
 import com.dal.hrm_management.views.manageAbsence.Hr.holiday.HolidayHRFragment;
 import com.dal.hrm_management.views.manageAbsence.po.AbsenceManagerForPOFragment;
 import com.dal.hrm_management.views.manageOvertime.po.OTManageOfPOFragment;
-import com.dal.hrm_management.views.overtime.OverTimeList;
+import com.dal.hrm_management.views.overtime.OverTimeListFragment;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
 
 import java.util.ArrayList;
@@ -179,7 +179,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
                         if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_overtime))) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeList()).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeListFragment()).commit();
                             getSupportActionBar().setTitle(R.string.menu_overtime);
                         } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_dashboard))) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
@@ -262,12 +262,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 //        if (!menuModel.hasChildren) {
 //            childList.put(menuModel, null);
 //        }
-//        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_overtime), getString(R.string.menu_overtime), true, false, getResources().getDrawable(R.drawable.ic_overtime));
-//        headerList.add(menuModel);
-//        if (!menuModel.hasChildren) {
-//            childList.put(menuModel, null);
-//        }
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_overtime), getString(R.string.menu_overtime), true, false, getResources().getDrawable(R.drawable.ic_overtime));
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+        menuModel = new MenuModel(getString(R.string.menu_id_absence), getString(R.string.menu_absence), true, false, getResources().getDrawable(R.drawable.ic_absence));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
@@ -278,10 +278,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
             List<MenuModel> childModelsList = new ArrayList<>();
             MenuModel chilModel;
-//            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_list_employee")) {
-//                chilModel = new MenuModel(getString(R.string.menu_id_manage_employee), getString(R.string.menu_employee), false, false, null);
-//                childModelsList.add(chilModel);
-//            }
+            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_list_employee")) {
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_employee), getString(R.string.menu_employee), false, false, null);
+                childModelsList.add(chilModel);
+            }
             if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_absence_history") || PermissionManager.isPermited(PermissionManager.listPermissions, "view_project_absence_history")) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_absence), getString(R.string.menu_absence_empl), false, false, null);
                 childModelsList.add(chilModel);
@@ -290,10 +290,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 //                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
 //                childModelsList.add(chilModel);
 //            }
-//            if (data.getRole().getNameRole().equals("PO")) {
-//                chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
-//                childModelsList.add(chilModel);
-//            }
+            if (data.getRole().getNameRole().equals("PO")) {
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
+                childModelsList.add(chilModel);
+            }
 
             if (menuModel.hasChildren) {
                 childList.put(menuModel, childModelsList);
@@ -382,8 +382,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
      * Update key "islogout" -> true in file shared preference
      */
     private void updateLogoutKeyValueInSharedPreference() {
-        SharedPreferences.Editor editor = getSharedPreferences("remeberMe",MODE_PRIVATE).edit();
-        editor.putBoolean("isLoggingIn",false);
+        SharedPreferences.Editor editor = getSharedPreferences("remeberMe", MODE_PRIVATE).edit();
+        editor.putBoolean("isLoggingIn", false);
         editor.commit();
     }
 

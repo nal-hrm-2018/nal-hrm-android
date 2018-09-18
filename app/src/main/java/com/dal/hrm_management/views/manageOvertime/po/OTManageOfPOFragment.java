@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.adapter.listOT.OTManagerForPoAdapter;
+import com.dal.hrm_management.adapter.listOvertime.OTManagerForPoAdapter;
 import com.dal.hrm_management.models.fakeData.OverTime;
 import com.dal.hrm_management.presenters.managerOvertime.po.OverTimeManageOfPoPresenter;
 

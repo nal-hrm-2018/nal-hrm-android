@@ -94,8 +94,7 @@
             android:id="@+id/rvOvertimeListFra_List"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layoutOvertimeListFra_Sumary"
-            android:visibility="gone" />
+            android:layout_below="@+id/layoutOvertimeListFra_Sumary" />
 
         <ProgressBar
             android:id="@+id/prgOvertimeListFra_ShowMore"
