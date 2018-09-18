@@ -4,13 +4,13 @@
     android:id="@+id/absences_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_horizontal_margin"
-    android:orientation="vertical"
     android:layout_margin="@dimen/item_padding"
     android:background="@android:color/white"
+    android:orientation="vertical"
+    android:outlineProvider="bounds"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:outlineProvider="bounds">
+    android:paddingTop="@dimen/activity_horizontal_margin">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -153,6 +153,40 @@
                 android:src="@drawable/ic_delete"
                 android:tint="@color/color_red" />
         </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/text_padding"
+            android:text="@string/textview.text.numberAbsence"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:id="@+id/tv_numberDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/color_green"
+            android:paddingLeft="@dimen/text_padding"
+            android:paddingRight="@dimen/text_padding"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/color_green"
+            android:paddingLeft="@dimen/text_padding"
+            android:paddingRight="@dimen/text_padding"
+            android:text="@string/textview.text.labelDay"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 
 </LinearLayout>

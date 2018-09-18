@@ -361,11 +361,8 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void Success() {
+        Toast.makeText(getApplicationContext(), "Add new absence success", Toast.LENGTH_SHORT).show();
         String absenceType = spnloaiNghi.getSelectedItem().toString();
-        absenceType = absenceType.replace(" ", "_");
-        if (soNgayDangKiNghi > remainTotal && absenceType.equalsIgnoreCase("annual_leave"))
-            Toast.makeText(getApplicationContext(),"Transfer " + String.valueOf(soNgayDangKiNghi-remainTotal) +" day to unpaid leave",Toast.LENGTH_SHORT).show();
-        else Toast.makeText(getApplicationContext(), "Add new absence success", Toast.LENGTH_SHORT).show();
         setResult(Activity.RESULT_OK);
         finish();
     }

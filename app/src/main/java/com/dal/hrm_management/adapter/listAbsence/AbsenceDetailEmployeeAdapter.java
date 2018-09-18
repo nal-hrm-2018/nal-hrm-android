@@ -77,10 +77,7 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
         }
         holder.tv_TimeAbsence.setText(timeAbsence);
         holder.tv_to.setText(StringUtils.yyyy_mm_ddTodd_mm_yyyy(absence.getToDate()));
-
-//        //TAM THOI GONE 2 nut edit va del trong detail absence employee
-//        holder.imvEdit.setVisibility(View.GONE);
-//        holder.imvDelete.setVisibility(View.GONE);
+        holder.tv_numberDay.setText(absence.getNumberDayAbsence()+"");
         //Check permission edit of HR
         if (!PermissionManager.isPermited(PermissionManager.listPermissions, "edit_absence_employee")) {
             holder.imvEdit.setVisibility(View.GONE);
@@ -203,6 +200,7 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
         TextView tv_reason;
         TextView tv_TimeAbsence;
         TextView tv_note;
+        TextView tv_numberDay;
         private ImageView imvEdit;
         private ImageView imvDelete;
         ItemClickListener itemClickListener;
@@ -217,6 +215,7 @@ public class AbsenceDetailEmployeeAdapter extends RecyclerView.Adapter<AbsenceDe
             tv_reason = itemView.findViewById(R.id.tv_reason);
             tv_TimeAbsence = itemView.findViewById(R.id.tv_timeAbsence);
             tv_note = itemView.findViewById(R.id.tv_note);
+            tv_numberDay = itemView.findViewById(R.id.tv_numberDay);
         }
 
     }
