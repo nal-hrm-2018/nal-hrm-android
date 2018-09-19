@@ -6,27 +6,49 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class DataOvertime {
-    @SerializedName("total")
+    @SerializedName("normal")
     @Expose
-    private Integer total;
-    @SerializedName("list")
+    private Integer normal;
+    @SerializedName("dayOff")
     @Expose
-    private List<Overtime> overtime = null;
+    private Integer dayOff;
+    @SerializedName("holiday")
+    @Expose
+    private Integer holiday;
+    @SerializedName("listDTO")
+    @Expose
+    private ListDTO listDTO;
 
-    public Integer getTotal() {
-        return total;
+    public Integer getNormal() {
+        return normal;
     }
 
-    public void setTotal(Integer total) {
-        this.total = total;
+    public void setNormal(Integer normal) {
+        this.normal = normal;
     }
 
-    public List<Overtime> getOvertime() {
-        return overtime;
+    public Integer getDayOff() {
+        return dayOff;
     }
 
-    public void setOvertime(List<Overtime> overtime) {
-        this.overtime = overtime;
+    public void setDayOff(Integer dayOff) {
+        this.dayOff = dayOff;
+    }
+
+    public Integer getHoliday() {
+        return holiday;
+    }
+
+    public void setHoliday(Integer holiday) {
+        this.holiday = holiday;
+    }
+
+    public ListDTO getListDTO() {
+        return listDTO;
+    }
+
+    public void setListDTO(ListDTO listDTO) {
+        this.listDTO = listDTO;
     }
 
 }
