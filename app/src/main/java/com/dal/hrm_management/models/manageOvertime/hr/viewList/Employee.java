@@ -11,7 +11,7 @@ public class Employee {
 
     @SerializedName("idEmployee")
     @Expose
-    private Long idEmployee;
+    private Integer idEmployee;
     @SerializedName("email")
     @Expose
     private String email;
@@ -43,11 +43,11 @@ public class Employee {
     @Expose
     private String avatar;
 
-    public Long getIdEmployee() {
+    public Integer getIdEmployee() {
         return idEmployee;
     }
 
-    public void setIdEmployee(Long idEmployee) {
+    public void setIdEmployee(Integer idEmployee) {
         this.idEmployee = idEmployee;
     }
 

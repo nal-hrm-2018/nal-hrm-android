@@ -10,7 +10,7 @@ public class Overtime {
 
     @SerializedName("id")
     @Expose
-    private Long id;
+    private Integer id;
     @SerializedName("reason")
     @Expose
     private String reason;
@@ -25,10 +25,10 @@ public class Overtime {
     private String endTime;
     @SerializedName("totalTime")
     @Expose
-    private Long totalTime;
+    private Double totalTime;
     @SerializedName("correctTotalTime")
     @Expose
-    private Object correctTotalTime;
+    private Double correctTotalTime;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
@@ -48,11 +48,11 @@ public class Overtime {
     @Expose
     private Project project;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -88,19 +88,19 @@ public class Overtime {
         this.endTime = endTime;
     }
 
-    public Long getTotalTime() {
+    public Double getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(Long totalTime) {
+    public void setTotalTime(Double totalTime) {
         this.totalTime = totalTime;
     }
 
-    public Object getCorrectTotalTime() {
+    public Double getCorrectTotalTime() {
         return correctTotalTime;
     }
 
-    public void setCorrectTotalTime(Object correctTotalTime) {
+    public void setCorrectTotalTime(Double correctTotalTime) {
         this.correctTotalTime = correctTotalTime;
     }
 

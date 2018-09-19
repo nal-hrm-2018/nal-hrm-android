@@ -11,16 +11,16 @@ public class OvertimeStatuses {
 
     @SerializedName("id")
     @Expose
-    private Long id;
+    private Integer id;
     @SerializedName("name")
     @Expose
     private String name;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

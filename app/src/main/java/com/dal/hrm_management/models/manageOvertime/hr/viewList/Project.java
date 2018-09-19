@@ -17,10 +17,10 @@ public class Project {
     private String nameProject;
     @SerializedName("income")
     @Expose
-    private Long income;
+    private Integer income;
     @SerializedName("realCost")
     @Expose
-    private Long realCost;
+    private Integer realCost;
     @SerializedName("description")
     @Expose
     private String description;
@@ -56,19 +56,19 @@ public class Project {
         this.nameProject = nameProject;
     }
 
-    public Long getIncome() {
+    public Integer getIncome() {
         return income;
     }
 
-    public void setIncome(Long income) {
+    public void setIncome(Integer income) {
         this.income = income;
     }
 
-    public Long getRealCost() {
+    public Integer getRealCost() {
         return realCost;
     }
 
-    public void setRealCost(Long realCost) {
+    public void setRealCost(Integer realCost) {
         this.realCost = realCost;
     }
 

@@ -11,16 +11,16 @@ public class Status {
 
     @SerializedName("idStatus")
     @Expose
-    private Long idStatus;
+    private Integer idStatus;
     @SerializedName("nameStatus")
     @Expose
     private String nameStatus;
 
-    public Long getIdStatus() {
+    public Integer getIdStatus() {
         return idStatus;
     }
 
-    public void setIdStatus(Long idStatus) {
+    public void setIdStatus(Integer idStatus) {
         this.idStatus = idStatus;
     }
 

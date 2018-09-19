@@ -12,7 +12,7 @@ public class ManageOvertimeHrResponse {
 
     @SerializedName("result_code")
     @Expose
-    private Long resultCode;
+    private Integer resultCode;
     @SerializedName("result_message")
     @Expose
     private String resultMessage;
@@ -20,11 +20,11 @@ public class ManageOvertimeHrResponse {
     @Expose
     private DataOvertime dataOvertime;
 
-    public Long getResultCode() {
+    public Integer getResultCode() {
         return resultCode;
     }
 
-    public void setResultCode(Long resultCode) {
+    public void setResultCode(Integer resultCode) {
         this.resultCode = resultCode;
     }
 

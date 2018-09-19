@@ -27,33 +27,47 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_overtime_list,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_overtime_list, parent, false);
 
         return new Holder(view);
     }
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        holder.tvNameProject.setText(listOvertime.get(position).getProject().getNameProject());
+        if (listOvertime.get(position).getProject() != null) {
+            holder.tvNameProject.setText(listOvertime.get(position).getProject().getNameProject());
+        } else {
+            holder.tvNameProject.setText(R.string.infor_null);
+        }
         holder.tvFromTime.setText(listOvertime.get(position).getStartTime());
         holder.tvToTime.setText(listOvertime.get(position).getEndTime());
         holder.tvDate.setText(listOvertime.get(position).getDate());
         holder.tvReason.setText(listOvertime.get(position).getReason());
-        holder.tvStatus.setText(listOvertime.get(position).getOvertimeStatuses().getName());
-        holder.tvTypeDay.setText(listOvertime.get(position).getOvertimeTypes().getName());
-        holder.tvTotalTime.setText(listOvertime.get(position).getTotalTime()+"");
+        if (listOvertime.get(position).getOvertimeStatuses() != null) {
+            holder.tvStatus.setText(listOvertime.get(position).getOvertimeStatuses().getName());
+        } else {
+            holder.tvStatus.setText(R.string.infor_null);
+        }
+        if (listOvertime.get(position).getOvertimeTypes() != null) {
+            holder.tvTypeDay.setText(listOvertime.get(position).getOvertimeTypes().getName());
+        }else {
+            holder.tvTypeDay.setText(R.string.infor_null);
+        }
+
+        holder.tvTotalTime.setText(listOvertime.get(position).getTotalTime() + "");
     }
 
 
     @Override
     public int getItemCount() {
-        return listOvertime == null ? 0:listOvertime.size();
+        return listOvertime == null ? 0 : listOvertime.size();
     }
 
-    public static class Holder extends RecyclerView.ViewHolder{
-        private TextView tvNameProject,tvDate,tvFromTime,tvToTime,tvTotalTime,tvReason,tvStatus,tvTypeDay;
-        private ImageView imvEdit,imvDelete;
+    public static class Holder extends RecyclerView.ViewHolder {
+        private TextView tvNameProject, tvDate, tvFromTime, tvToTime, tvTotalTime, tvReason, tvStatus, tvTypeDay;
+        private ImageView imvEdit, imvDelete;
         private LinearLayout llButton;
+
         public Holder(View itemView) {
             super(itemView);
             tvNameProject = itemView.findViewById(R.id.tvItemOvertimeList_NameProject);

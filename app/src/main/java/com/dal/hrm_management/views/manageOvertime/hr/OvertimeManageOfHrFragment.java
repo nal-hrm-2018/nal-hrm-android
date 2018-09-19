@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listOvertime.OvertimeManageForHrAdapter;
@@ -36,7 +35,7 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
     private TextView tvOvertimeNothingtoShow;
     private LinearLayoutManager layoutManager;
     private int currentPage = 1;
-    private int pageSize = 20;
+    private int pageSize = 5;
     private int totalOvertime = 0;
 
 
@@ -86,6 +85,7 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
         progressBar = view.findViewById(R.id.progressBar);
         tvOvertimeNothingtoShow = view.findViewById(R.id.tvOvertimeNothingToShow);
         rvOvertime = view.findViewById(R.id.rvOvertime);
+        layoutManager = new LinearLayoutManager(getContext());
         overtimeList = new ArrayList<>();
     }
 
@@ -116,6 +116,6 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
 
     @Override
     public void getOvertimeListFailure() {
-        Toast.makeText(getActivity(), "Get data failure!", Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.VISIBLE);
     }
 }
