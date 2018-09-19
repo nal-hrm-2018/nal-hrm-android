@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,10 +33,11 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
     private DataOvertime dataOvertime;
     private List<Overtime> overTimeList;
     private OvertimeListAdapter adapter;
+    private LinearLayout layoutSumary;
     private LinearLayoutManager layoutManager;
     private OvertimePersonalPresenter overtimePersonalPresenter;
     private int currentPage = 1;
-    private int pageSize = 20;
+    private int pageSize = 5;
     private int totalOvertime = 0;
     private View view;
 
@@ -83,6 +85,7 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
         fabAdd = view.findViewById(R.id.fabOvertimeListFra_add);
         rvOvertime = view.findViewById(R.id.rvOvertimeListFra_List);
         prgShowMore = view.findViewById(R.id.prgOvertimeListFra_ShowMore);
+        layoutSumary = view.findViewById(R.id.layoutOvertimeListFra_Sumary);
         layoutManager = new LinearLayoutManager(getActivity());
         fabAdd.setOnClickListener(this);
         overTimeList = new ArrayList<>();
@@ -101,13 +104,14 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void getOvertimeSuccess(DataOvertime dataOvertime) {
-        loadData(dataOvertime);
         this.dataOvertime = dataOvertime;
-        totalOvertime = dataOvertime.getTotal();
-        List<Overtime> list = dataOvertime.getOvertime(); //get list record overtime in model
+        loadData(dataOvertime);
+        totalOvertime = dataOvertime.getListDTO().getTotal();
+        List<Overtime> list = dataOvertime.getListDTO().getList(); //get list record overtime in model
         if (list.size() != 0) {
-            overTimeList.addAll(dataOvertime.getOvertime());
+            overTimeList.addAll(dataOvertime.getListDTO().getList());
             if (adapter == null) {
+                layoutSumary.setVisibility(View.VISIBLE);
                 adapter = new OvertimeListAdapter(getActivity(),overTimeList);
             } else {
                 adapter.notifyDataSetChanged();
@@ -132,7 +136,8 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
 
     private void loadData(DataOvertime dataOvertime) {
        //Set value for Dayoff, NormalDay, Holiday
+        tvNomarlDay.setText(String.valueOf(dataOvertime.getNormal()));
+        tvDayOff.setText(String.valueOf(dataOvertime.getDayOff()));
+        tvHoliday.setText(String.valueOf(dataOvertime.getHoliday()));
     }
-
-
 }
