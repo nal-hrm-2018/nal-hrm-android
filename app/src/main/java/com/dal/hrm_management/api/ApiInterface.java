@@ -11,6 +11,7 @@ import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.AbsenceEmp
 import com.dal.hrm_management.models.manageAbsence.po.listAbsence.AbsenceInProjectOfPOResponse;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.ProjectInProgressPOResponse;
 import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceResponse;
+import com.dal.hrm_management.models.manageOvertime.hr.viewList.ManageOvertimeHrResponse;
 import com.dal.hrm_management.models.overtimePersonal.OvertimePersonalResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
@@ -130,5 +131,9 @@ public interface ApiInterface {
                                                        @Query("page") int page,
                                                        @Query("pageSize") int pageSize);
 
+    @GET("/api/manage/overtime/hr/list")
+    Call<ManageOvertimeHrResponse> getOvertimeListOfHr(@Header("Authorization") String token,
+                                                       @Query("page") int page,
+                                                       @Query("pageSize") int pageSize);
 
 }

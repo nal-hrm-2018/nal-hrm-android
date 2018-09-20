@@ -42,6 +42,7 @@ import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence.AbsenceListHRFragment;
 import com.dal.hrm_management.views.manageAbsence.Hr.holiday.HolidayHRFragment;
 import com.dal.hrm_management.views.manageAbsence.po.AbsenceManagerForPOFragment;
+import com.dal.hrm_management.views.manageOvertime.hr.OvertimeManageOfHrFragment;
 import com.dal.hrm_management.views.manageOvertime.po.OTManageOfPOFragment;
 import com.dal.hrm_management.views.overtime.OverTimeListFragment;
 import com.dal.hrm_management.views.profile.ViewProfileActivity;
@@ -225,6 +226,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         if (data.getRole().getNameRole().equals("PO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OTManageOfPOFragment()).commit();
                         }
+                        if (data.getRole().getNameRole().equals("HR")) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).commit();
+                        }
                     }
                     Log.e("GROUP", model.menuName);
                     onBackPressed();
@@ -290,7 +294,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 //                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
 //                childModelsList.add(chilModel);
 //            }
-            if (data.getRole().getNameRole().equals("PO")) {
+            if (data.getRole().getNameRole().equals("PO")||data.getRole().getNameRole().equals("HR")) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
                 childModelsList.add(chilModel);
             }
