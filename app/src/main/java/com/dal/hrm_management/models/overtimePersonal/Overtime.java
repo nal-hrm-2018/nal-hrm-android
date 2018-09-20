@@ -3,7 +3,9 @@ package com.dal.hrm_management.models.overtimePersonal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Overtime {
+import java.io.Serializable;
+
+public class Overtime implements Serializable{
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -21,10 +23,10 @@ public class Overtime {
     private String endTime;
     @SerializedName("totalTime")
     @Expose
-    private Integer totalTime;
+    private Double totalTime;
     @SerializedName("correctTotalTime")
     @Expose
-    private Object correctTotalTime;
+    private Double correctTotalTime;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
@@ -84,11 +86,11 @@ public class Overtime {
         this.endTime = endTime;
     }
 
-    public Integer getTotalTime() {
+    public Double getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(Integer totalTime) {
+    public void setTotalTime(Double totalTime) {
         this.totalTime = totalTime;
     }
 
@@ -96,7 +98,7 @@ public class Overtime {
         return correctTotalTime;
     }
 
-    public void setCorrectTotalTime(Object correctTotalTime) {
+    public void setCorrectTotalTime(Double correctTotalTime) {
         this.correctTotalTime = correctTotalTime;
     }
 

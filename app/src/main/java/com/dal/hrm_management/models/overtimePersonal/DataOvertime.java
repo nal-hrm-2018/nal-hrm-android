@@ -8,38 +8,38 @@ import java.util.List;
 public class DataOvertime {
     @SerializedName("normal")
     @Expose
-    private Integer normal;
+    private Double normal;
     @SerializedName("dayOff")
     @Expose
-    private Integer dayOff;
+    private Double dayOff;
     @SerializedName("holiday")
     @Expose
-    private Integer holiday;
+    private Double holiday;
     @SerializedName("listDTO")
     @Expose
     private ListDTO listDTO;
 
-    public Integer getNormal() {
+    public Double getNormal() {
         return normal;
     }
 
-    public void setNormal(Integer normal) {
+    public void setNormal(Double normal) {
         this.normal = normal;
     }
 
-    public Integer getDayOff() {
+    public Double getDayOff() {
         return dayOff;
     }
 
-    public void setDayOff(Integer dayOff) {
+    public void setDayOff(Double dayOff) {
         this.dayOff = dayOff;
     }
 
-    public Integer getHoliday() {
+    public Double getHoliday() {
         return holiday;
     }
 
-    public void setHoliday(Integer holiday) {
+    public void setHoliday(Double holiday) {
         this.holiday = holiday;
     }
 

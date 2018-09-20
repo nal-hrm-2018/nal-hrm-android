@@ -15,9 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.models.overtimePersonal.Overtime;
 import com.dal.hrm_management.utils.ValidationDateTime;
+import com.dal.hrm_management.utils.VariableUltils;
 import com.szagurskii.patternedtextwatcher.PatternedTextWatcher;
 
 import java.text.NumberFormat;
@@ -37,11 +40,28 @@ public class FormOvertime extends AppCompatActivity implements View.OnClickListe
     private int mYear,mMonth,mDay,hour,minute;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
+    //Extra
+    private Overtime edit_overTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_overtime);
         init();
+        getExtra();
+    }
+
+    private void getExtra() {
+        if(getIntent().getExtras() != null){
+            edit_overTime = (Overtime) getIntent().getExtras().getSerializable(VariableUltils.KEY_PUT_EXTRA_EDIT_OVERTIME_PERSONAL);
+            if (edit_overTime !=null) {
+                Log.d(TAG,"Edit overtime personal");
+                //Apply Data
+                setTitle("Edit overtime");
+            }
+        }else{
+            Log.d(TAG,"Add overtime personal");
+        }
+
     }
 
     private void init() {
