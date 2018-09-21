@@ -25,28 +25,34 @@ public class Overtime {
     private String endTime;
     @SerializedName("totalTime")
     @Expose
-    private Double totalTime;
+    private Integer totalTime;
     @SerializedName("correctTotalTime")
     @Expose
-    private Double correctTotalTime;
+    private Object correctTotalTime;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
-    @SerializedName("overtimeTypes")
+    @SerializedName("dayTypes")
     @Expose
-    private OvertimeTypes overtimeTypes;
+    private DayTypes dayTypes;
     @SerializedName("overtimeStatuses")
     @Expose
     private OvertimeStatuses overtimeStatuses;
-    @SerializedName("employee")
+    @SerializedName("idEmployee")
     @Expose
-    private Employee employee;
-    @SerializedName("project")
+    private Integer idEmployee;
+    @SerializedName("nameEmployee")
     @Expose
-    private Project project;
+    private String nameEmployee;
+    @SerializedName("idProject")
+    @Expose
+    private String idProject;
+    @SerializedName("nameProject")
+    @Expose
+    private String nameProject;
 
     public Integer getId() {
         return id;
@@ -88,19 +94,19 @@ public class Overtime {
         this.endTime = endTime;
     }
 
-    public Double getTotalTime() {
+    public Integer getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(Double totalTime) {
+    public void setTotalTime(Integer totalTime) {
         this.totalTime = totalTime;
     }
 
-    public Double getCorrectTotalTime() {
+    public Object getCorrectTotalTime() {
         return correctTotalTime;
     }
 
-    public void setCorrectTotalTime(Double correctTotalTime) {
+    public void setCorrectTotalTime(Object correctTotalTime) {
         this.correctTotalTime = correctTotalTime;
     }
 
@@ -120,12 +126,12 @@ public class Overtime {
         this.createdAt = createdAt;
     }
 
-    public OvertimeTypes getOvertimeTypes() {
-        return overtimeTypes;
+    public DayTypes getDayTypes() {
+        return dayTypes;
     }
 
-    public void setOvertimeTypes(OvertimeTypes overtimeTypes) {
-        this.overtimeTypes = overtimeTypes;
+    public void setDayTypes(DayTypes dayTypes) {
+        this.dayTypes = dayTypes;
     }
 
     public OvertimeStatuses getOvertimeStatuses() {
@@ -136,20 +142,36 @@ public class Overtime {
         this.overtimeStatuses = overtimeStatuses;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Integer getIdEmployee() {
+        return idEmployee;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setIdEmployee(Integer idEmployee) {
+        this.idEmployee = idEmployee;
     }
 
-    public Project getProject() {
-        return project;
+    public String getNameEmployee() {
+        return nameEmployee;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setNameEmployee(String nameEmployee) {
+        this.nameEmployee = nameEmployee;
+    }
+
+    public String getIdProject() {
+        return idProject;
+    }
+
+    public void setIdProject(String idProject) {
+        this.idProject = idProject;
+    }
+
+    public String getNameProject() {
+        return nameProject;
+    }
+
+    public void setNameProject(String nameProject) {
+        this.nameProject = nameProject;
     }
 
 }

@@ -30,7 +30,7 @@ public class ManageOvertimeOfHRPresenter implements IManageOvertimeOfHRPresenter
             @Override
             public void onResponse(Call<ManageOvertimeHrResponse> call, Response<ManageOvertimeHrResponse> response) {
                 if (response.code() >=200 && response.code() < 300){
-                    DataOvertime dataOvertime = response.body().getDataOvertime();
+                    DataOvertime dataOvertime = response.body().getData();
                     iOvertimeManageOfHrFragment.getOvertimeListSuccess(dataOvertime);
                 }else{
                     iOvertimeManageOfHrFragment.getOvertimeListFailure();

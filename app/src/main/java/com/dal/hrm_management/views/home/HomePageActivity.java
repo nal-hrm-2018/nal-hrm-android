@@ -33,6 +33,7 @@ import com.dal.hrm_management.models.profile.Permission;
 import com.dal.hrm_management.models.profile.Profile;
 import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
+import com.dal.hrm_management.utils.Constant;
 import com.dal.hrm_management.utils.PermissionManager;
 import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.views.absence.AbsenceViewFragment;
@@ -223,6 +224,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HolidayHRFragment()).commit();
                     } else if (model.id.equals(getString(R.string.menu_id_manage_overtime))) {
                         getSupportActionBar().setTitle("Overtime");
+                        if (data.getEmail().equals(Constant.EMAIL_CEO)){
+                            getSupportFragmentManager().beginTransaction().
+                                    replace(R.id.fragment_container, new OTManageOfPOFragment()).
+                                    commit();
+                        }
                         if (data.getRole().getNameRole().equals("PO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OTManageOfPOFragment()).commit();
                         }

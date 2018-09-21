@@ -27,15 +27,16 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_overtime_list, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_overtime_list_hr, parent, false);
 
         return new Holder(view);
     }
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        if (listOvertime.get(position).getProject() != null) {
-            holder.tvNameProject.setText(listOvertime.get(position).getProject().getNameProject());
+        holder.tvNameEmp.setText(listOvertime.get(position).getNameEmployee());
+        if (listOvertime.get(position).getNameProject() != null) {
+            holder.tvNameProject.setText(listOvertime.get(position).getNameProject());
         } else {
             holder.tvNameProject.setText(R.string.infor_null);
         }
@@ -48,11 +49,7 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
         } else {
             holder.tvStatus.setText(R.string.infor_null);
         }
-        if (listOvertime.get(position).getOvertimeTypes() != null) {
-            holder.tvTypeDay.setText(listOvertime.get(position).getOvertimeTypes().getName());
-        }else {
-            holder.tvTypeDay.setText(R.string.infor_null);
-        }
+        holder.tvTypeDay.setText(listOvertime.get(position).getDayTypes().getNameDayType());
 
         holder.tvTotalTime.setText(listOvertime.get(position).getTotalTime() + "");
     }
@@ -64,22 +61,22 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
     }
 
     public static class Holder extends RecyclerView.ViewHolder {
-        private TextView tvNameProject, tvDate, tvFromTime, tvToTime, tvTotalTime, tvReason, tvStatus, tvTypeDay;
+        private TextView tvNameProject, tvDate, tvFromTime, tvToTime, tvTotalTime, tvReason, tvStatus, tvTypeDay,tvNameEmp;
         private ImageView imvEdit, imvDelete;
         private LinearLayout llButton;
-
         public Holder(View itemView) {
             super(itemView);
-            tvNameProject = itemView.findViewById(R.id.tvItemOvertimeList_NameProject);
-            tvDate = itemView.findViewById(R.id.tvItemOvertimeList_Date);
-            tvFromTime = itemView.findViewById(R.id.tvItemOvertimeList_FromTime);
-            tvToTime = itemView.findViewById(R.id.tvItemOvertimeList_ToTime);
-            tvTotalTime = itemView.findViewById(R.id.tvItemOvertimeList_TotalTime);
-            tvReason = itemView.findViewById(R.id.tvItemOvertimeList_Reason);
-            tvStatus = itemView.findViewById(R.id.tvItemOvertimeList_Status);
-            tvTypeDay = itemView.findViewById(R.id.tv_typeDay);
-            imvEdit = itemView.findViewById(R.id.imv_edit);
-            imvDelete = itemView.findViewById(R.id.imv_delete);
+            tvNameEmp = itemView.findViewById(R.id.tvItemOvertimeListHR_NameEmp);
+            tvNameProject = itemView.findViewById(R.id.tvItemOvertimeListHR_NameProject);
+            tvDate = itemView.findViewById(R.id.tvItemOvertimeListHR_Date);
+            tvFromTime = itemView.findViewById(R.id.tvItemOvertimeListHR_FromTime);
+            tvToTime = itemView.findViewById(R.id.tvItemOvertimeListHR_ToTime);
+            tvTotalTime = itemView.findViewById(R.id.tvItemOvertimeListHR_TotalTime);
+            tvReason = itemView.findViewById(R.id.tvItemOvertimeListHR_Reason);
+            tvStatus = itemView.findViewById(R.id.tvItemOvertimeListHR_Status);
+            tvTypeDay = itemView.findViewById(R.id.tvItemOvertimeListHR_Type);
+            imvEdit = itemView.findViewById(R.id.imgItemOvertimeListHR_edit);
+            imvDelete = itemView.findViewById(R.id.imgItemOvertimeListHR_delete);
             llButton = itemView.findViewById(R.id.llButton);
             llButton.setVisibility(View.GONE);
         }

@@ -3,7 +3,9 @@ package com.dal.hrm_management.models.overtimePersonal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Status {
+import java.io.Serializable;
+
+public class Status implements Serializable {
     @SerializedName("idStatus")
     @Expose
     private Integer idStatus;

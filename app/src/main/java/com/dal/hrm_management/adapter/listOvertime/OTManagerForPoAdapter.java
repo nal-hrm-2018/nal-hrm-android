@@ -17,21 +17,25 @@ import android.widget.TextView;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.fakeData.OverTime;
+import com.dal.hrm_management.models.manageOvertime.po.viewlist.ItemOverTimePO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAdapter.MyViewHolder> implements Filterable {
-    private List<OverTime> overtimeList;
+public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAdapter.MyViewHolder> {
+    private List<ItemOverTimePO> overtimeList;
     private Context context;
-    private List<OverTime> overtimeListFiltered;
+    private List<ItemOverTimePO> overtimeListFiltered;
 
-    public OTManagerForPoAdapter(List<OverTime> absenceList, Context context) {
-        this.overtimeList = absenceList;
+
+
+    public OTManagerForPoAdapter(List<ItemOverTimePO> listOvertime, Context context) {
+        this.overtimeList = listOvertime;
         this.context = context;
-        this.overtimeListFiltered = absenceList;
+        this.overtimeListFiltered = listOvertime;
     }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,160 +45,118 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final OverTime overTime = overtimeListFiltered.get(position);
-        holder.tv_nameEmployee.setText(overTime.getNameEmployee());
-        holder.tv_nameProject.setText(overTime.getNameProject());
-        holder.tv_reason.setText(overTime.getReason());
-        holder.tv_from.setText(overTime.getFrom());
-        holder.tv_to.setText(overTime.getTo());
-        String typeDate = overTime.getTypeDate();
-        if (typeDate.toLowerCase().equals("holiday")) {
-            holder.tv_typeDate.setBackgroundColor(context.getResources().getColor(R.color.color_violet_2));
-        } else if (typeDate.toLowerCase().equals("day off")) {
-            holder.tv_typeDate.setBackgroundColor(context.getResources().getColor(R.color.color_violet_1));
-        }
-        holder.tv_typeDate.setText(typeDate);
-        if (overTime.getStatus().equals(context.getString(R.string.overtime_status_accepted))) {
-            holder.tv_status.setText(context.getString(R.string.overtime_status_accepted));
-            holder.tv_status.setTextColor(context.getResources().getColor(R.color.color_green));
-            holder.tv_status.setVisibility(View.VISIBLE);
-            holder.ll_button.setVisibility(View.GONE);
-        }
-        if (overTime.getStatus().equals(context.getString(R.string.overtime_status_rejected))) {
-            holder.tv_status.setText(context.getString(R.string.overtime_status_rejected));
-            holder.tv_status.setTextColor(context.getResources().getColor(R.color.color_red));
-            holder.tv_status.setVisibility(View.VISIBLE);
-            holder.ll_button.setVisibility(View.GONE);
-        }
-        holder.setIsRecyclable(false);
-
-        holder.setItemClickListener(new ItemClickListener() {
+        holder.tvNameEmp.setText(overtimeList.get(position).getNameEmployee());
+        holder.tvNameProject.setText(overtimeList.get(position).getNameProject());
+        holder.tvTypeDate.setText(overtimeList.get(position).getDayTypes().getNameDayType());
+        holder.tvDate.setText(overtimeList.get(position).getDate());
+        holder.tvFrom.setText(overtimeList.get(position).getStartTime());
+        holder.tvTo.setText(overtimeList.get(position).getEndTime());
+        holder.tvReason.setText(overtimeList.get(position).getReason());
+        holder.tvNumberTime.setText(String.valueOf(overtimeList.get(position).getTotalTime()));
+        holder.tvAcceptTime.setText(String.valueOf(overtimeList.get(position).getCorrectTotalTime()));
+        holder.imbAccept.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, int position, boolean isLongClick) {
-                if (view.getId() == R.id.imgBtn_accept) {
-                    holder.tv_status.setText(context.getString(R.string.overtime_status_accepted));
-                    holder.tv_status.setTextColor(context.getResources().getColor(R.color.color_green));
-                    holder.tv_status.setVisibility(View.VISIBLE);
-                    holder.ll_button.setVisibility(View.GONE);
-                    overTime.setStatus(context.getString(R.string.overtime_status_accepted));
-                } else {
-                    showDialogReason();
-                }
-            }
-
-            private void showDialogReason() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
-                final EditText edt_acceptTime = (EditText) view.findViewById(R.id.edt_acceptTime);
-                builder.setView(view);
-                builder.setTitle("Do you want to reject this form?");
-                builder.setCancelable(false);
-                builder.setPositiveButton("Reject request", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        holder.tv_status.setText(context.getString(R.string.overtime_status_rejected));
-                        holder.tv_status.setTextColor(context.getResources().getColor(R.color.color_red));
-                        holder.tv_status.setVisibility(View.VISIBLE);
-                        holder.ll_button.setVisibility(View.GONE);
-                        overTime.setStatus(context.getString(R.string.overtime_status_rejected));
-                        if (edt_acceptTime.getText() == null) {
-                            holder.tv_acceptTime.setText("-");
-                        } else {
-                            holder.tv_acceptTime.setText(edt_acceptTime.getText());
-                            overTime.setAcceptTime(edt_acceptTime.getText()+"");
-                        }
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+            public void onClick(View view) {
+                holder.ll_button.setVisibility(View.GONE);
             }
         });
+        holder.imbReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogReason();
+                holder.ll_button.setVisibility(View.GONE);
+            }
+        });
+
+//        final OverTime overTime = overtimeListFiltered.get(position);
+
+
+
+
     }
 
+    public void showDialogReason() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
+        final EditText edt_acceptTime = (EditText) view.findViewById(R.id.edt_acceptTime);
+        builder.setView(view);
+        builder.setTitle("Do you want to reject this form?");
+        builder.setCancelable(false);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     @Override
     public int getItemCount() {
         return overtimeListFiltered.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    overtimeListFiltered = overtimeList;
-                } else {
-                    List<OverTime> filteredList = new ArrayList<>();
-                    for (OverTime row : overtimeList) {
-                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase()) || row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row);
-                        }
-                    }
-                    overtimeListFiltered = filteredList;
-                }
-                ;
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = overtimeListFiltered;
-                return filterResults;
-            }
+//    @Override
+//    public Filter getFilter() {
+//        return new Filter() {
+//            @Override
+//            protected FilterResults performFiltering(CharSequence charSequence) {
+//                String charString = charSequence.toString();
+//                if (charString.isEmpty()) {
+//                    overtimeListFiltered = overtimeList;
+//                } else {
+//                    List<OverTime> filteredList = new ArrayList<>();
+//                    for (OverTime row : overtimeList) {
+//                        if (row.getNameEmployee().toLowerCase().contains(charString.toLowerCase()) || row.getNameProject().toLowerCase().contains(charString.toLowerCase())) {
+//                            filteredList.add(row);
+//                        }
+//                    }
+//                    overtimeListFiltered = filteredList;
+//                }
+//                ;
+//                FilterResults filterResults = new FilterResults();
+//                filterResults.values = overtimeListFiltered;
+//                return filterResults;
+//            }
+//
+//            @Override
+//            protected void publishResults(CharSequence charSequence, FilterResults results) {
+//                overtimeListFiltered = (ArrayList<OverTime>) results.values;
+//                notifyDataSetChanged();
+//            }
+//        };
+//    }
 
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults results) {
-                overtimeListFiltered = (ArrayList<OverTime>) results.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout absences_layout;
-        TextView tv_nameEmployee;
-        TextView tv_nameProject;
-        TextView tv_reason;
-        TextView tv_from;
-        TextView tv_to;
-        TextView tv_status;
-        TextView tv_numberTime;
-        TextView tv_acceptTime;
-        TextView tv_typeDate;
+        TextView tvNameProject,tvNameEmp,tvTypeDate,tvDate,tvFrom,tvTo,tvReason,tvNumberTime,tvAcceptTime;
+        ImageButton imbAccept,imbReject;
         LinearLayout ll_button;
-        ImageButton imgBtn_reject;
-        ImageButton imgBtn_accept;
-        ItemClickListener itemClickListener;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             absences_layout = (LinearLayout) itemView.findViewById(R.id.absences_layout);
-            tv_nameEmployee = (TextView) itemView.findViewById(R.id.tv_nameEmployee);
-            tv_nameProject = (TextView) itemView.findViewById(R.id.tv_nameProject);
-            tv_reason = (TextView) itemView.findViewById(R.id.tv_reason);
-            tv_from = (TextView) itemView.findViewById(R.id.tv_from);
-            tv_to = (TextView) itemView.findViewById(R.id.tv_to);
-            tv_numberTime = (TextView) itemView.findViewById(R.id.tv_numberTime);
-            tv_acceptTime = (TextView) itemView.findViewById(R.id.tv_acceptTime);
-            tv_typeDate = (TextView) itemView.findViewById(R.id.tv_typeDay);
-            tv_status = (TextView) itemView.findViewById(R.id.tv_status);
+            tvNameProject = itemView.findViewById(R.id.tvItemListOTOfPO_NameProject);
+            tvNameEmp = itemView.findViewById(R.id.tvItemListOTOfPO_NameEmp);
+            tvTypeDate = itemView.findViewById(R.id.tvItemListOTOfPO_TypeDay);
+            tvDate = itemView.findViewById(R.id.tvItemListOTOfPO_DateOT);
+            tvFrom = itemView.findViewById(R.id.tvItemListOTOfPO_From);
+            tvTo = itemView.findViewById(R.id.tvItemListOTOfPO_To);
+            tvReason = itemView.findViewById(R.id.tvItemListOTOfPO_Reason);
+            tvNumberTime = itemView.findViewById(R.id.tvItemListOTOfPO_NumberTime);
+            tvAcceptTime = itemView.findViewById(R.id.tvItemListOTOfPO_AcceptTime);
+
             ll_button = (LinearLayout) itemView.findViewById(R.id.ll_button);
-            imgBtn_accept = (ImageButton) itemView.findViewById(R.id.imgBtn_accept);
-            imgBtn_reject = (ImageButton) itemView.findViewById(R.id.imgBtn_cancel);
-            imgBtn_accept.setOnClickListener(this);
-            imgBtn_reject.setOnClickListener(this);
-        }
+            imbAccept =  itemView.findViewById(R.id.imbItemListOTOfPO_Accept);
+            imbReject =  itemView.findViewById(R.id.imbItemListOTOfPO_Reject);
 
-        public void setItemClickListener(ItemClickListener itemClickListener) {
-            this.itemClickListener = itemClickListener;
-        }
-
-        @Override
-        public void onClick(View v) {
-            itemClickListener.onClick(v, getAdapterPosition(), false);
         }
     }
 }

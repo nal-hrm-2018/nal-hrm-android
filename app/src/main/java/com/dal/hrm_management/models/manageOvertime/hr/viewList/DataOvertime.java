@@ -3,12 +3,6 @@ package com.dal.hrm_management.models.manageOvertime.hr.viewList;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-/**
- * Created by Luu Ngoc Lan on 19-Sep-18.
- */
-
 public class DataOvertime {
 
     @SerializedName("total")
@@ -16,7 +10,7 @@ public class DataOvertime {
     private Integer total;
     @SerializedName("list")
     @Expose
-    private List<Overtime> overtime = null;
+    private java.util.List<com.dal.hrm_management.models.manageOvertime.hr.viewList.Overtime> list = null;
 
     public Integer getTotal() {
         return total;
@@ -26,12 +20,12 @@ public class DataOvertime {
         this.total = total;
     }
 
-    public List<Overtime> getOvertime() {
-        return overtime;
+    public java.util.List<com.dal.hrm_management.models.manageOvertime.hr.viewList.Overtime> getList() {
+        return list;
     }
 
-    public void setOvertime(List<Overtime> overtime) {
-        this.overtime = overtime;
+    public void setList(java.util.List<com.dal.hrm_management.models.manageOvertime.hr.viewList.Overtime> list) {
+        this.list = list;
     }
 
 }

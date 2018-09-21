@@ -1,13 +1,9 @@
-package com.dal.hrm_management.models.manageOvertime.hr.viewList;
+package com.dal.hrm_management.models.manageOvertime.po.viewlist;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Luu Ngoc Lan on 19-Sep-18.
- */
-
-public class OvertimeTypes {
+public class OvertimeStatuses {
 
     @SerializedName("id")
     @Expose

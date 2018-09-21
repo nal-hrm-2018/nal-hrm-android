@@ -93,9 +93,9 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
     public void getOvertimeListSuccess(DataOvertime dataOvertime) {
         this.dataOvertime = dataOvertime;
         totalOvertime = dataOvertime.getTotal();
-        List<Overtime> list = dataOvertime.getOvertime(); //get list record overtime in model
+        List<Overtime> list = dataOvertime.getList(); //get list record overtime in model
         if (list.size() != 0) {
-            overtimeList.addAll(dataOvertime.getOvertime());
+            overtimeList.addAll(list);
             if (adapter == null) {
                 adapter = new OvertimeManageForHrAdapter(getActivity(), overtimeList);
             } else {

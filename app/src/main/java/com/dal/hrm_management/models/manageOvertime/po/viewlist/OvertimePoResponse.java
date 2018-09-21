@@ -1,9 +1,9 @@
-package com.dal.hrm_management.models.manageOvertime.hr.viewList;
+package com.dal.hrm_management.models.manageOvertime.po.viewlist;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ManageOvertimeHrResponse {
+public class OvertimePoResponse {
 
     @SerializedName("result_code")
     @Expose
@@ -13,7 +13,7 @@ public class ManageOvertimeHrResponse {
     private String resultMessage;
     @SerializedName("data")
     @Expose
-    private DataOvertime data;
+    private Data data;
 
     public Integer getResultCode() {
         return resultCode;
@@ -31,11 +31,11 @@ public class ManageOvertimeHrResponse {
         this.resultMessage = resultMessage;
     }
 
-    public DataOvertime getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(DataOvertime data) {
+    public void setData(Data data) {
         this.data = data;
     }
 
