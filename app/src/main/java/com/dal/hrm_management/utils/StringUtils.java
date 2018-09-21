@@ -77,4 +77,24 @@ public class StringUtils {
         slug = slug.replaceAll("-+$", "");
         return slug;
     }
+
+    /**
+     * convert text with format (yyyy-MM-dd) to text with format ddMMyyyy
+     * @param text
+     * @return ddMMyyyy
+     */
+    public static String convertDateFromServerToEditText(String text){
+        String[] split = text.split("-");
+        return split[2]+split[1]+split[0];
+    }
+
+    /**
+     * convert text with format hh:mm:ss to text with format hhmm
+     * @param text
+     * @return hhmm
+     */
+    public static String convertTimeFromServerToEditText(String text){
+        String[] split = text.split(":");
+        return split[0]+split[1];
+    }
 }

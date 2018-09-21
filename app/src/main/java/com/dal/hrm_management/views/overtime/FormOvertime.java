@@ -14,11 +14,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.overtimePersonal.Overtime;
+import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.ValidationDateTime;
 import com.dal.hrm_management.utils.VariableUltils;
 import com.szagurskii.patternedtextwatcher.PatternedTextWatcher;
@@ -33,6 +35,7 @@ public class FormOvertime extends AppCompatActivity implements View.OnClickListe
     private final String TAG = FormOvertime.class.getSimpleName();
     private EditText edtDate,edtFromTime,edtToTime,edtTotalTime,edtReason;
     private ImageButton imbDate,imbFromTime,imbToTime;
+    private TextView tvProject;
     private Button btnSubmit;
     private Spinner spnProject;
 
@@ -57,6 +60,19 @@ public class FormOvertime extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG,"Edit overtime personal");
                 //Apply Data
                 setTitle("Edit overtime");
+                //Apply data
+                if (edit_overTime.getProject() == null){
+                    spnProject.setVisibility(View.GONE);
+                    tvProject.setVisibility(View.GONE);
+                }
+                String date = edit_overTime.getDate();
+                edtDate.setText(StringUtils.convertDateFromServerToEditText(date));
+                String fromTime = edit_overTime.getStartTime();
+                edtFromTime.setText(StringUtils.convertTimeFromServerToEditText(fromTime));
+                String toTime = edit_overTime.getEndTime();
+                edtToTime.setText(StringUtils.convertTimeFromServerToEditText(toTime));
+                edtTotalTime.setText(String.valueOf(edit_overTime.getTotalTime()));
+                edtReason.setText(String.valueOf(edit_overTime.getReason()));
             }
         }else{
             Log.d(TAG,"Add overtime personal");
@@ -77,7 +93,7 @@ public class FormOvertime extends AppCompatActivity implements View.OnClickListe
         imbDate = findViewById(R.id.imbFormOvertimeAct_Date);
         imbFromTime = findViewById(R.id.imbFormOvertimeAct_FromTime);
         imbToTime = findViewById(R.id.imbFormOvertimeAct_ToTime);
-
+        tvProject = findViewById(R.id.tvFormOvertimeAct_Project);
         imbDate.setOnClickListener(this);
         imbFromTime.setOnClickListener(this);
         imbToTime.setOnClickListener(this);

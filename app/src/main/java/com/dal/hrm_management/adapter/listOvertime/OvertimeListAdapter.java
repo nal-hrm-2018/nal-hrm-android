@@ -28,11 +28,12 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
     private Context context;
     private List<Overtime> listOvertime;
 
+
     public OvertimeListAdapter(Context context, List<Overtime> list) {
         this.context = context;
         this.listOvertime = list;
-    }
 
+    }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {

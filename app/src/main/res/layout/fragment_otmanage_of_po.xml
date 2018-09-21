@@ -1,13 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.dal.hrm_management.views.manageOvertime.po.OTManageOfPOFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_overtime"
+        android:id="@+id/rvOTManagePOFra_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/color_gray">
     </android.support.v7.widget.RecyclerView>
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/prgOTManagePOFra_showMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+    <TextView
+        android:id="@+id/tvOTManagePOFra_Nothing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fra_list_emp_nothingToShow"
+        android:visibility="gone" />
+</LinearLayout>
