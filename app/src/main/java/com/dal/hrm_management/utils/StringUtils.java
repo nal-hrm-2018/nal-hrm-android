@@ -97,4 +97,15 @@ public class StringUtils {
         String[] split = text.split(":");
         return split[0]+split[1];
     }
+
+    /**
+     * convert text with format hh:mm:ss to text with hh:mm
+     *
+     * @param text
+     * @return hh:mm
+     */
+    public static String formatTimehh_mm(String text) {
+        String[] split = text.split(":");
+        return split[0] +":"+ split[1];
+    }
 }

@@ -215,7 +215,7 @@
                 android:paddingLeft="@dimen/text_padding"
                 android:paddingRight="@dimen/text_padding"
                 android:text="@string/status"
-                android:textColor="@color/color_white"
+                android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -259,7 +259,7 @@
             android:text="@string/absence_item_reason_reject" />
 
         <TextView
-            android:id="@+id/tvPersonal_ReasonReject"
+            android:id="@+id/tvHr_ReasonReject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/text_padding" />
