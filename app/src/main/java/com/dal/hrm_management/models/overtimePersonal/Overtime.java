@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Overtime implements Serializable{
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("reason")
     @Expose
     private String reason;
@@ -27,30 +27,39 @@ public class Overtime implements Serializable{
     @SerializedName("correctTotalTime")
     @Expose
     private Double correctTotalTime;
+    @SerializedName("reasonReject")
+    @Expose
+    private String reasonReject;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
-    @SerializedName("overtimeTypes")
+    @SerializedName("dayTypes")
     @Expose
-    private OvertimeTypes overtimeTypes;
+    private DayTypes dayTypes;
     @SerializedName("overtimeStatuses")
     @Expose
     private OvertimeStatuses overtimeStatuses;
-    @SerializedName("employee")
+    @SerializedName("employeeId")
     @Expose
-    private Employee employee;
-    @SerializedName("project")
+    private Long employeeId;
+    @SerializedName("nameEmployee")
     @Expose
-    private Project project;
+    private String nameEmployee;
+    @SerializedName("idProject")
+    @Expose
+    private String idProject;
+    @SerializedName("nameProject")
+    @Expose
+    private String nameProject;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -94,12 +103,20 @@ public class Overtime implements Serializable{
         this.totalTime = totalTime;
     }
 
-    public Object getCorrectTotalTime() {
+    public Double getCorrectTotalTime() {
         return correctTotalTime;
     }
 
     public void setCorrectTotalTime(Double correctTotalTime) {
         this.correctTotalTime = correctTotalTime;
+    }
+
+    public String getReasonReject() {
+        return reasonReject;
+    }
+
+    public void setReasonReject(String reasonReject) {
+        this.reasonReject = reasonReject;
     }
 
     public String getUpdatedAt() {
@@ -118,12 +135,12 @@ public class Overtime implements Serializable{
         this.createdAt = createdAt;
     }
 
-    public OvertimeTypes getOvertimeTypes() {
-        return overtimeTypes;
+    public DayTypes getDayTypes() {
+        return dayTypes;
     }
 
-    public void setOvertimeTypes(OvertimeTypes overtimeTypes) {
-        this.overtimeTypes = overtimeTypes;
+    public void setDayTypes(DayTypes dayTypes) {
+        this.dayTypes = dayTypes;
     }
 
     public OvertimeStatuses getOvertimeStatuses() {
@@ -134,20 +151,35 @@ public class Overtime implements Serializable{
         this.overtimeStatuses = overtimeStatuses;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public Project getProject() {
-        return project;
+    public String getNameEmployee() {
+        return nameEmployee;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setNameEmployee(String nameEmployee) {
+        this.nameEmployee = nameEmployee;
     }
 
+    public String getIdProject() {
+        return idProject;
+    }
+
+    public void setIdProject(String idProject) {
+        this.idProject = idProject;
+    }
+
+    public String getNameProject() {
+        return nameProject;
+    }
+
+    public void setNameProject(String nameProject) {
+        this.nameProject = nameProject;
+    }
 }

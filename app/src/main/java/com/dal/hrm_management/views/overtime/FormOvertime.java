@@ -61,10 +61,11 @@ public class FormOvertime extends AppCompatActivity implements View.OnClickListe
                 //Apply Data
                 setTitle("Edit overtime");
                 //Apply data
-                if (edit_overTime.getProject() == null){
-                    spnProject.setVisibility(View.GONE);
-                    tvProject.setVisibility(View.GONE);
-                }
+                //todo: show list project
+//                if (edit_overTime.getNameProject() == null){
+//                    spnProject.setVisibility(View.GONE);
+//                    tvProject.setVisibility(View.GONE);
+//                }
                 String date = edit_overTime.getDate();
                 edtDate.setText(StringUtils.convertDateFromServerToEditText(date));
                 String fromTime = edit_overTime.getStartTime();

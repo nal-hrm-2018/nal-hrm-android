@@ -195,9 +195,9 @@
     <string name="overtime_date_hint">6-9-2018</string>
     <string name="overtime_timeStart">08:20 PM</string>
     <string name="overtime_timeEnd">09:55 PM</string>
-    <string name="text_overtime_normal_day">Normal day</string>
+    <string name="text_overtime_normal_day">Normal</string>
     <string name="text_number">12</string>
-    <string name="text_overtime_day_off">Day off</string>
+    <string name="text_overtime_day_off">Weekend</string>
     <string name="text_overtime_holiday">Holiday</string>
     <string name="text_hour">12:30</string>
     <string name="text_type_absence">Cả ngày</string>
@@ -243,4 +243,5 @@
     <string name="textview.text.numberAbsence">Number actual:</string>
     <string name="textview.text.labelDay">Days</string>
     <string name="overtime_label_hours">Hours</string>
+    <string name="absence_item_reason_reject">Reason reject:</string>
 </resources>
