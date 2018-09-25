@@ -52,12 +52,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/text_padding"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="10">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:orientation="vertical"
             android:paddingLeft="@dimen/activity_vertical_margin">
 
@@ -162,12 +162,23 @@
                         android:background="@color/color_green"
                         android:paddingLeft="@dimen/text_padding"
                         android:paddingRight="@dimen/text_padding"
-                        android:text="2"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/tvItemListOTOfPO_NumberTime"
+                        android:layout_toEndOf="@id/tvItemListOTOfPO_NumberTime"
+                        android:background="@color/color_green"
+                        android:paddingEnd="@dimen/text_padding"
+                        android:text="@string/overtime_label_hours"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/text_size_small" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_acceptTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
@@ -187,7 +198,17 @@
                         android:background="@color/color_orange"
                         android:paddingLeft="@dimen/text_padding"
                         android:paddingRight="@dimen/text_padding"
-                        android:text="2"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tvItemListOTOfPO_AcceptTime"
+                        android:layout_toEndOf="@+id/tvItemListOTOfPO_AcceptTime"
+                        android:background="@color/color_orange"
+                        android:paddingEnd="@dimen/text_padding"
+                        android:text="@string/overtime_label_hours"
                         android:textColor="@color/color_white"
                         android:textSize="@dimen/text_size_small" />
                 </RelativeLayout>
@@ -198,22 +219,23 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:layout_weight="7">
 
             <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="@string/overtime_status"
                 android:textSize="@dimen/text_size_small"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/ll_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/activity_horizontal_margin">
 
@@ -235,5 +257,27 @@
                     android:tint="@color/color_green" />
             </LinearLayout>
         </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_reasonReject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/item_padding"
+        android:paddingLeft="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/overtime_item_reason_reject" />
+
+        <TextView
+            android:id="@+id/tvPO_ReasonReject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:paddingStart="@dimen/text_padding" />
     </LinearLayout>
 </LinearLayout>
