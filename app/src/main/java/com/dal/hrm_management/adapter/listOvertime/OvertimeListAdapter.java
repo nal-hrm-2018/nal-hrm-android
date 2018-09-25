@@ -20,7 +20,7 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.overtimePersonal.Overtime;
 import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.ViewDataUtils;
-import com.dal.hrm_management.views.overtime.FormOvertime;
+import com.dal.hrm_management.views.overtime.formOvertime.FormOvertimeActivity;
 
 import java.util.List;
 
@@ -83,7 +83,7 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
                     @Override
                     public void onClick(View view) {
                         Log.d(TAG, "click edit");
-                        Intent intent = new Intent(context, FormOvertime.class);
+                        Intent intent = new Intent(context, FormOvertimeActivity.class);
                         intent.putExtra(KEY_PUT_EXTRA_EDIT_OVERTIME_PERSONAL, overtime);
                         ((Activity) context).startActivityForResult(intent, REQUEST_CODE_EDIT_OVERTIME_PERSONAL);
                     }
@@ -119,7 +119,9 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
     private void showDialogConfirmDelete(Overtime overtime) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Warning");
-        builder.setMessage("Delete overtime in " + overtime.getNameProject() + " at " + overtime.getDate());
+
+        builder.setMessage("Delete overtime in " +
+                overtime.getNameProject()==null?"":overtime.getNameEmployee() + " at " + overtime.getDate());
         builder.setCancelable(false);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override

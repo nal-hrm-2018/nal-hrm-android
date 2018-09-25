@@ -87,6 +87,15 @@ public class StringUtils {
         String[] split = text.split("-");
         return split[2]+split[1]+split[0];
     }
+    /**
+     * convert text with format (dd-MM-yyyy) to text with format yyyy-MM-dd
+     * @param text
+     * @return ddMMyyyy
+     */
+    public static String convertDateEditTextToServer(String text){
+        String[] split = text.split("-");
+        return split[2]+"-"+split[1]+"-"+split[0];
+    }
 
     /**
      * convert text with format hh:mm:ss to text with format hhmm
@@ -107,5 +116,15 @@ public class StringUtils {
     public static String formatTimehh_mm(String text) {
         String[] split = text.split(":");
         return split[0] +":"+ split[1];
+    }
+    /**
+     * convert text with format hh:mm to text with hh:mm:ss
+     *
+     * @param text
+     * @return hh:mm:ss
+     */
+    public static String convertTimehh_mmTohh_mm_ss(String text) {
+        String[] split = text.split(":");
+        return split[0] +":"+ split[1] +":00";
     }
 }

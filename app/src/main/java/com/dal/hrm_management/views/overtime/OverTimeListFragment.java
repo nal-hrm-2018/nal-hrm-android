@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.overtime;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,9 +21,12 @@ import com.dal.hrm_management.adapter.listOvertime.OvertimeListAdapter;
 import com.dal.hrm_management.models.overtimePersonal.DataOvertime;
 import com.dal.hrm_management.models.overtimePersonal.Overtime;
 import com.dal.hrm_management.presenters.overtimePersonal.OvertimePersonalPresenter;
+import com.dal.hrm_management.views.overtime.formOvertime.FormOvertimeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.dal.hrm_management.utils.VariableUltils.REQUEST_CODE_ADD_OVERTIME;
 
 public class OverTimeListFragment extends Fragment implements View.OnClickListener,IOvertimeListFragment {
     //In layout
@@ -72,6 +76,21 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_ADD_OVERTIME && resultCode== Activity.RESULT_OK){
+            reloadPage();
+        }
+
+    }
+
+    private void reloadPage() {
+        adapter = null;
+        currentPage = 1;
+        overtimePersonalPresenter.getOvertimePersonal(currentPage,pageSize);
+    }
+
     private void initPresenter() {
         overtimePersonalPresenter = new OvertimePersonalPresenter(this);
         overtimePersonalPresenter.getOvertimePersonal(currentPage,pageSize);
@@ -95,8 +114,8 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fabOvertimeListFra_add:
-                Intent intent = new Intent(getActivity(),FormOvertime.class);
-                startActivity(intent);
+                Intent intent = new Intent(getActivity(),FormOvertimeActivity.class);
+                startActivityForResult(intent,REQUEST_CODE_ADD_OVERTIME);
                 break;
                 default: break;
         }
