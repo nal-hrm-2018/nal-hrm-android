@@ -119,7 +119,9 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
     private void showDialogConfirmDelete(Overtime overtime) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Warning");
-        builder.setMessage("Delete overtime in " + overtime.getNameProject() + " at " + overtime.getDate());
+
+        builder.setMessage("Delete overtime in " +
+                overtime.getNameProject()==null?"":overtime.getNameEmployee() + " at " + overtime.getDate());
         builder.setCancelable(false);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override

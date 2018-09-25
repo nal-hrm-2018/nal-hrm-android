@@ -10,5 +10,6 @@ public class VariableUltils {
     public static String KEY_PUT_EXTRA_REMAIN_ANNUAL="totalremaining_day";
     public static String KEY_PUT_EXTRA_EDIT_OVERTIME_PERSONAL = "edit_overtime_personal";
     public static int REQUEST_CODE_EDIT_OVERTIME_PERSONAL = 1;
+    public static int REQUEST_CODE_ADD_OVERTIME = 123;
 
 }

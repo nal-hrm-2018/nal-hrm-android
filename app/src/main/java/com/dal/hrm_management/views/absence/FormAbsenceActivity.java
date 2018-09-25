@@ -50,6 +50,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     //List type absence
     List<TypeAbsence> listAbsence;
 
+
     public enum StatusAbsences {enum_Add, enum_Edit;}
     StatusAbsences statusAbsences = StatusAbsences.enum_Add;
     private Integer idAbsence;

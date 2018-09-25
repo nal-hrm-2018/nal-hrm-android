@@ -81,6 +81,7 @@ public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivit
         return root;
     }
 
+
     private void initPresenter() {
         absencePresenter = new AbsencePresenter(this);
         absencePresenter.getDataAbsence(current_page, pageSize);
