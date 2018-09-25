@@ -10,7 +10,7 @@ public class Overtime {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("reason")
     @Expose
     private String reason;
@@ -25,10 +25,13 @@ public class Overtime {
     private String endTime;
     @SerializedName("totalTime")
     @Expose
-    private Integer totalTime;
+    private Double totalTime;
     @SerializedName("correctTotalTime")
     @Expose
-    private Object correctTotalTime;
+    private Double correctTotalTime;
+    @SerializedName("reasonReject")
+    @Expose
+    private String reasonReject;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
@@ -41,9 +44,9 @@ public class Overtime {
     @SerializedName("overtimeStatuses")
     @Expose
     private OvertimeStatuses overtimeStatuses;
-    @SerializedName("idEmployee")
+    @SerializedName("employeeId")
     @Expose
-    private Integer idEmployee;
+    private Long employeeId;
     @SerializedName("nameEmployee")
     @Expose
     private String nameEmployee;
@@ -54,11 +57,11 @@ public class Overtime {
     @Expose
     private String nameProject;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -94,20 +97,28 @@ public class Overtime {
         this.endTime = endTime;
     }
 
-    public Integer getTotalTime() {
+    public Double getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(Integer totalTime) {
+    public void setTotalTime(Double totalTime) {
         this.totalTime = totalTime;
     }
 
-    public Object getCorrectTotalTime() {
+    public Double getCorrectTotalTime() {
         return correctTotalTime;
     }
 
-    public void setCorrectTotalTime(Object correctTotalTime) {
+    public void setCorrectTotalTime(Double correctTotalTime) {
         this.correctTotalTime = correctTotalTime;
+    }
+
+    public String getReasonReject() {
+        return reasonReject;
+    }
+
+    public void setReasonReject(String reasonReject) {
+        this.reasonReject = reasonReject;
     }
 
     public String getUpdatedAt() {
@@ -142,12 +153,12 @@ public class Overtime {
         this.overtimeStatuses = overtimeStatuses;
     }
 
-    public Integer getIdEmployee() {
-        return idEmployee;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setIdEmployee(Integer idEmployee) {
-        this.idEmployee = idEmployee;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getNameEmployee() {
@@ -173,5 +184,4 @@ public class Overtime {
     public void setNameProject(String nameProject) {
         this.nameProject = nameProject;
     }
-
 }

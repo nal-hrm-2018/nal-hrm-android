@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.overtimePersonal.Overtime;
 import com.dal.hrm_management.utils.StringUtils;
+import com.dal.hrm_management.utils.ViewDataUtils;
 import com.dal.hrm_management.views.overtime.FormOvertime;
 
 import java.util.List;
@@ -30,7 +31,6 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
     private final String TAG = OvertimeListAdapter.class.getSimpleName();
     private Context context;
     private List<Overtime> listOvertime;
-
 
     public OvertimeListAdapter(Context context, List<Overtime> list) {
         this.context = context;
@@ -47,52 +47,21 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
 
     @Override
     public void onBindViewHolder(final Holder holder, final int position) {
-        if (listOvertime.get(position).getNameProject() != null) {
-            holder.tvNameProject.setText(listOvertime.get(position).getNameProject());
-        } else {
-            holder.tvNameProject.setText(R.string.infor_null);
-        }
-        if (listOvertime.get(position).getStartTime() != null) {
-            holder.tvFromTime.setText(listOvertime.get(position).getStartTime());
-        } else {
-            holder.tvFromTime.setText(R.string.infor_null);
-        }
-        if (listOvertime.get(position).getEndTime() != null) {
-            holder.tvToTime.setText(listOvertime.get(position).getEndTime());
-        } else {
-            holder.tvToTime.setText(R.string.infor_null);
-        }
-        if (listOvertime.get(position).getEndTime() != null) {
-            holder.tvDate.setText(listOvertime.get(position).getDate());
-        } else {
-            holder.tvDate.setText(R.string.infor_null);
-        }
-        if (listOvertime.get(position).getReason() != null)
-
+        final Overtime overtime = listOvertime.get(position);
+        ViewDataUtils.setDataToView(holder.tvNameProject,overtime.getNameProject());
+        ViewDataUtils.setDataTimeWithHH_MM(holder.tvFromTime,overtime.getStartTime());
+        ViewDataUtils.setDataTimeWithHH_MM(holder.tvToTime,overtime.getEndTime());
+        ViewDataUtils.setDataDateToView(holder.tvDate,overtime.getDate());
+        ViewDataUtils.setDataToView(holder.tvReason,overtime.getReason());
+        if (overtime.getDayTypes() != null)
         {
-            holder.tvReason.setText(listOvertime.get(position).getReason());
-        } else
-
-        {
-            holder.tvReason.setText(R.string.infor_null);
-        }
-        if (listOvertime.get(position).getDayTypes() != null)
-        {
-            holder.tvTypeDay.setText(StringUtils.toUpperCaseFirstChar(listOvertime.get(position).getDayTypes().getNameDayType()));
-        } else
-
-        {
+            holder.tvTypeDay.setText(StringUtils.toUpperCaseFirstChar(overtime.getDayTypes().getNameDayType()));
+        } else {
             holder.tvTypeDay.setText(R.string.infor_null);
         }
-        if(listOvertime.get(position).getTotalTime()!=null) {
-            holder.tvTotalTime.setText(listOvertime.get(position).
-
-                    getTotalTime() + "");
-        } else {
-            holder.tvTotalTime.setText(R.string.infor_null);
-        }
+        ViewDataUtils.setDataToView(holder.tvTotalTime,overtime.getTotalTime());
         //get Status of overtime
-        String status = listOvertime.get(position).getOvertimeStatuses().getName();
+        String status = overtime.getOvertimeStatuses().getName();
         if(status!=null){
             if (status.equalsIgnoreCase("Not yet"))
             {
@@ -107,23 +76,7 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
                     @Override
                     public void onClick(View view) {
                         Log.d(TAG, "click delete");
-                        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle("Warning");
-                        builder.setMessage("Delete overtime in " + listOvertime.get(position).getNameProject() + "at " + listOvertime.get(position).getDate());
-                        builder.setCancelable(false);
-                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(context, "Click Yes", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(context, "Click no", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        builder.show();
+                        showDialogConfirmDelete(overtime);
                     }
                 });
                 holder.imvEdit.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +84,7 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
                     public void onClick(View view) {
                         Log.d(TAG, "click edit");
                         Intent intent = new Intent(context, FormOvertime.class);
-                        intent.putExtra(KEY_PUT_EXTRA_EDIT_OVERTIME_PERSONAL, listOvertime.get(position));
+                        intent.putExtra(KEY_PUT_EXTRA_EDIT_OVERTIME_PERSONAL, overtime);
                         ((Activity) context).startActivityForResult(intent, REQUEST_CODE_EDIT_OVERTIME_PERSONAL);
                     }
                 });
@@ -151,24 +104,36 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
                 }
                 if(status.equalsIgnoreCase("Rejected")){
                     holder.ll_reasonReject.setVisibility(View.VISIBLE);
-                    if(listOvertime.get(position).getReasonReject()!=null) {
-                        holder.tv_reasonReject.setText(listOvertime.get(position).getReasonReject());
-                    } else {
-                        holder.tv_reasonReject.setText(R.string.infor_null);
-                    }
+                    ViewDataUtils.setDataToView(holder.tv_reasonReject,overtime.getReasonReject());
                 } else {
                     holder.ll_reasonReject.setVisibility(View.GONE);
                 }
             }
             holder.tvStatus.setText(status);
-            if(listOvertime.get(position).getCorrectTotalTime()!=null){
-                holder.tvAcceptTime.setText(listOvertime.get(position).getCorrectTotalTime()+"");
-            } else {
-                holder.tvAcceptTime.setText(R.string.infor_null);
-            }
+            ViewDataUtils.setDataToView(holder.tvAcceptTime,overtime.getCorrectTotalTime());
         } else {
             holder.tvStatus.setText(R.string.infor_null);
         }
+    }
+
+    private void showDialogConfirmDelete(Overtime overtime) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Warning");
+        builder.setMessage("Delete overtime in " + overtime.getNameProject() + " at " + overtime.getDate());
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(context, "Click Yes", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(context, "Click no", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.show();
     }
 
 
@@ -199,7 +164,7 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
             imvDelete = itemView.findViewById(R.id.imgItemOvertimeList_delete);
             rl_acceptTime = itemView.findViewById(R.id.rl_acceptTime);
             ll_reasonReject = itemView.findViewById(R.id.ll_reasonReject);
-            tv_reasonReject = itemView.findViewById(R.id.tvPersonal_ReasonReject);
+            tv_reasonReject = itemView.findViewById(R.id.tvHr_ReasonReject);
         }
 
     }

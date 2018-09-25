@@ -2,15 +2,16 @@ package com.dal.hrm_management.adapter.listOvertime;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageOvertime.hr.viewList.Overtime;
+import com.dal.hrm_management.utils.ViewDataUtils;
 
 import java.util.List;
 
@@ -34,26 +35,30 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        holder.tvNameEmp.setText(listOvertime.get(position).getNameEmployee());
-        if (listOvertime.get(position).getNameProject() != null) {
-            holder.tvNameProject.setText(listOvertime.get(position).getNameProject());
-        } else {
-            holder.tvNameProject.setText(R.string.infor_null);
-        }
-        holder.tvFromTime.setText(listOvertime.get(position).getStartTime());
-        holder.tvToTime.setText(listOvertime.get(position).getEndTime());
-        holder.tvDate.setText(listOvertime.get(position).getDate());
-        holder.tvReason.setText(listOvertime.get(position).getReason());
-        if (listOvertime.get(position).getOvertimeStatuses() != null) {
-            holder.tvStatus.setText(listOvertime.get(position).getOvertimeStatuses().getName());
+        final Overtime overtime = listOvertime.get(position);
+        holder.tvNameEmp.setText(overtime.getNameEmployee());
+        ViewDataUtils.setDataToView(holder.tvNameProject,overtime.getNameProject());
+        ViewDataUtils.setDataTimeWithHH_MM(holder.tvFromTime,overtime.getStartTime());
+        ViewDataUtils.setDataTimeWithHH_MM(holder.tvToTime,overtime.getEndTime());
+        ViewDataUtils.setDataDateToView(holder.tvDate,overtime.getDate());
+        ViewDataUtils.setDataToView(holder.tvReason,overtime.getReason());
+        if (overtime.getOvertimeStatuses() != null) {
+            String status = overtime.getOvertimeStatuses().getName();
+            if(status.toLowerCase().equals("rejected")){
+                ViewDataUtils.setDataToView(holder.tvReasonReject,overtime.getReasonReject());
+            } else {
+                holder.ll_reasonReject.setVisibility(View.GONE);
+            }
+            holder.tvStatus.setText(status);
         } else {
             holder.tvStatus.setText(R.string.infor_null);
         }
-        holder.tvTypeDay.setText(listOvertime.get(position).getDayTypes().getNameDayType());
-
-        holder.tvTotalTime.setText(listOvertime.get(position).getTotalTime() + "");
+        if(overtime.getDayTypes()!=null){
+            ViewDataUtils.setDataToView(holder.tvTypeDay,overtime.getDayTypes().getNameDayType());
+        }
+        ViewDataUtils.setDataToView(holder.tvAcceptedTime,overtime.getCorrectTotalTime());
+        ViewDataUtils.setDataToView(holder.tvTotalTime,overtime.getTotalTime());
     }
-
 
     @Override
     public int getItemCount() {
@@ -61,9 +66,8 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
     }
 
     public static class Holder extends RecyclerView.ViewHolder {
-        private TextView tvNameProject, tvDate, tvFromTime, tvToTime, tvTotalTime, tvReason, tvStatus, tvTypeDay,tvNameEmp;
-        private ImageView imvEdit, imvDelete;
-        private LinearLayout llButton;
+        private TextView tvNameProject, tvDate, tvFromTime, tvToTime, tvTotalTime, tvAcceptedTime, tvReason, tvStatus, tvTypeDay,tvNameEmp, tvReasonReject;
+        private LinearLayout ll_reasonReject;
         public Holder(View itemView) {
             super(itemView);
             tvNameEmp = itemView.findViewById(R.id.tvItemOvertimeListHR_NameEmp);
@@ -71,14 +75,13 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
             tvDate = itemView.findViewById(R.id.tvItemOvertimeListHR_Date);
             tvFromTime = itemView.findViewById(R.id.tvItemOvertimeListHR_FromTime);
             tvToTime = itemView.findViewById(R.id.tvItemOvertimeListHR_ToTime);
-            tvTotalTime = itemView.findViewById(R.id.tvItemOvertimeListHR_TotalTime);
+            tvTotalTime = itemView.findViewById(R.id.tvHr_NumberTime);
             tvReason = itemView.findViewById(R.id.tvItemOvertimeListHR_Reason);
             tvStatus = itemView.findViewById(R.id.tvItemOvertimeListHR_Status);
             tvTypeDay = itemView.findViewById(R.id.tvItemOvertimeListHR_Type);
-            imvEdit = itemView.findViewById(R.id.imgItemOvertimeListHR_edit);
-            imvDelete = itemView.findViewById(R.id.imgItemOvertimeListHR_delete);
-            llButton = itemView.findViewById(R.id.llButton);
-            llButton.setVisibility(View.GONE);
+            tvAcceptedTime = itemView.findViewById(R.id.tvHr_AcceptTime);
+            ll_reasonReject = itemView.findViewById(R.id.ll_reasonReject);
+            tvReasonReject = itemView.findViewById(R.id.tvHr_ReasonReject);
         }
     }
 }
