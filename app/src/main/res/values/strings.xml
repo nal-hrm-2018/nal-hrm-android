@@ -243,5 +243,6 @@
     <string name="textview.text.numberAbsence">Number actual:</string>
     <string name="textview.text.labelDay">Days</string>
     <string name="overtime_label_hours">Hours</string>
-    <string name="absence_item_reason_reject">Reason reject:</string>
+    <string name="overtime_item_reason_reject">Reason reject:</string>
+    <string name="overtime_button_review">Review</string>
 </resources>
