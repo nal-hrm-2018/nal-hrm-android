@@ -5,6 +5,7 @@ import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
+import com.dal.hrm_management.models.listProjectEmpJoining.ListProjectJoiningResponse;
 import com.dal.hrm_management.models.login.LoginModel;
 import com.dal.hrm_management.models.manageAbsence.hr.ManageAbsenceResponse;
 import com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.AbsenceEmployeeDetailResponse;
@@ -150,5 +151,13 @@ public interface ApiInterface {
                                                   @Query("id") String idProject,
                                                   @Query("page") int page,
                                                   @Query("pageSize") int pageSize);
+
+    /**
+     * list project emp joining
+     * @param token
+     * @return
+     */
+    @GET("/api/list/project/joining")
+    Call<ListProjectJoiningResponse> getListProjectJoiningForOvertime(@Header("Authorization") String token);
 
 }

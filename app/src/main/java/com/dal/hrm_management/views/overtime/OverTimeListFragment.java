@@ -20,6 +20,7 @@ import com.dal.hrm_management.adapter.listOvertime.OvertimeListAdapter;
 import com.dal.hrm_management.models.overtimePersonal.DataOvertime;
 import com.dal.hrm_management.models.overtimePersonal.Overtime;
 import com.dal.hrm_management.presenters.overtimePersonal.OvertimePersonalPresenter;
+import com.dal.hrm_management.views.overtime.formOvertime.FormOvertimeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +96,7 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fabOvertimeListFra_add:
-                Intent intent = new Intent(getActivity(),FormOvertime.class);
+                Intent intent = new Intent(getActivity(),FormOvertimeActivity.class);
                 startActivity(intent);
                 break;
                 default: break;
