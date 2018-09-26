@@ -27,10 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.dal.hrm_management.utils.VariableUltils.REQUEST_CODE_ADD_OVERTIME;
+import static com.dal.hrm_management.utils.VariableUltils.REQUEST_CODE_EDIT_OVERTIME_PERSONAL;
 
-public class OverTimeListFragment extends Fragment implements View.OnClickListener,IOvertimeListFragment {
+public class OverTimeListFragment extends Fragment implements View.OnClickListener, IOvertimeListFragment {
     //In layout
-    private TextView tvNomarlDay,tvDayOff,tvHoliday,tvNothingToShow;
+    private TextView tvNomarlDay, tvDayOff, tvHoliday, tvNothingToShow;
     private ProgressBar prgShowMore;
     private FloatingActionButton fabAdd;
     private RecyclerView rvOvertime;
@@ -62,11 +63,12 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
             if (firstitem + visibleItemCount >= totalItemCount && currentPage * pageSize < totalOvertime) {
                 currentPage++;
                 prgShowMore.setVisibility(View.VISIBLE);
-                Log.d( "current page: ", String.valueOf(currentPage));
+                Log.d("current page: ", String.valueOf(currentPage));
                 overtimePersonalPresenter.getOvertimePersonal(currentPage, pageSize);
             }
         }
     };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,21 +81,22 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_ADD_OVERTIME && resultCode== Activity.RESULT_OK){
-            reloadPage();
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CODE_ADD_OVERTIME ) {
+                reloadPage();
+            }
         }
-
     }
 
     private void reloadPage() {
         adapter = null;
         currentPage = 1;
-        overtimePersonalPresenter.getOvertimePersonal(currentPage,pageSize);
+        overtimePersonalPresenter.getOvertimePersonal(currentPage, pageSize);
     }
 
     private void initPresenter() {
         overtimePersonalPresenter = new OvertimePersonalPresenter(this);
-        overtimePersonalPresenter.getOvertimePersonal(currentPage,pageSize);
+        overtimePersonalPresenter.getOvertimePersonal(currentPage, pageSize);
     }
 
     private void init() {
@@ -112,12 +115,13 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.fabOvertimeListFra_add:
-                Intent intent = new Intent(getActivity(),FormOvertimeActivity.class);
-                startActivityForResult(intent,REQUEST_CODE_ADD_OVERTIME);
+                Intent intent = new Intent(getActivity(), FormOvertimeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_ADD_OVERTIME);
                 break;
-                default: break;
+            default:
+                break;
         }
     }
 
@@ -131,7 +135,7 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
             overTimeList.addAll(dataOvertime.getListDTO().getList());
             if (adapter == null) {
                 layoutSumary.setVisibility(View.VISIBLE);
-                adapter = new OvertimeListAdapter(getActivity(),overTimeList);
+                adapter = new OvertimeListAdapter(getActivity(), overTimeList);
             } else {
                 adapter.notifyDataSetChanged();
             }
@@ -154,7 +158,7 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
     }
 
     private void loadData(DataOvertime dataOvertime) {
-       //Set value for Dayoff, NormalDay, Holiday
+        //Set value for Dayoff, NormalDay, Holiday
         tvNomarlDay.setText(String.valueOf(dataOvertime.getNormal()));
         tvDayOff.setText(String.valueOf(dataOvertime.getDayOff()));
         tvHoliday.setText(String.valueOf(dataOvertime.getHoliday()));
