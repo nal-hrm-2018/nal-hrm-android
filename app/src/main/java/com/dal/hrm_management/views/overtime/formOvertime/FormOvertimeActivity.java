@@ -36,10 +36,10 @@ import java.util.List;
 
 import okhttp3.RequestBody;
 
-public class FormOvertimeActivity extends AppCompatActivity implements View.OnClickListener,IFormOvertimeActivity {
+public class FormOvertimeActivity extends AppCompatActivity implements View.OnClickListener, IFormOvertimeActivity {
     private final String TAG = FormOvertimeActivity.class.getSimpleName();
-    private EditText edtDate,edtFromTime,edtToTime,edtTotalTime,edtReason;
-    private ImageButton imbDate,imbFromTime,imbToTime;
+    private EditText edtDate, edtFromTime, edtToTime, edtTotalTime, edtReason;
+    private ImageButton imbDate, imbFromTime, imbToTime;
     private TextView tvProject;
     private Button btnSubmit;
     private Spinner spnProject;
@@ -47,11 +47,12 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout layoutProject;
 
     private Calendar c = Calendar.getInstance();
-    private int mYear,mMonth,mDay,hour,minute;
+    private int mYear, mMonth, mDay, hour, minute;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     //Extra
     private Overtime edit_overTime;
+    private boolean isEditOvertime; // isEditOvertime = true --> Chuc nang edit nguoc lai: chuc nang add
     //api
     private FormOvertimePresenter formOvertimePresenter;
 
@@ -69,18 +70,20 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getExtra() {
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             edit_overTime = (Overtime) getIntent().getExtras().getSerializable(VariableUltils.KEY_PUT_EXTRA_EDIT_OVERTIME_PERSONAL);
-            if (edit_overTime !=null) {
-                Log.d(TAG,"Edit overtime personal");
+            if (edit_overTime != null) {
+                //dung chuc nang edit
+                isEditOvertime = true;
+                Log.d(TAG, "Edit overtime personal");
                 //Apply Data
+                btnSubmit.setText("Update");
                 setTitle("Edit overtime");
                 //Apply data
                 //todo: show list project
-//                if (edit_overTime.getNameProject() == null){
-//                    spnProject.setVisibility(View.GONE);
-//                    tvProject.setVisibility(View.GONE);
-//                }
+                if (edit_overTime.getNameProject() == null) {
+                    layoutProject.setVisibility(View.GONE);
+                }
                 String date = edit_overTime.getDate();
                 edtDate.setText(StringUtils.convertDateFromServerToEditText(date));
                 String fromTime = edit_overTime.getStartTime();
@@ -90,8 +93,9 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 edtTotalTime.setText(String.valueOf(edit_overTime.getTotalTime()));
                 edtReason.setText(String.valueOf(edit_overTime.getReason()));
             }
-        }else{
-            Log.d(TAG,"Add overtime personal");
+        } else {
+            isEditOvertime = false;
+            Log.d(TAG, "Add overtime personal");
         }
 
     }
@@ -145,30 +149,33 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btnFormOvertimeAct_Submit:
                 View v = checkValidate();
-                if (v ==null){
+                if (v == null) {
                     //create json body
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("reason",edtReason.getText().toString());
-                        jsonObject.put("date",StringUtils.convertDateEditTextToServer(edtDate.getText().toString()));
-                        jsonObject.put("startTime",StringUtils.convertTimehh_mmTohh_mm_ss(edtFromTime.getText().toString()));
-                        jsonObject.put("endTime",StringUtils.convertTimehh_mmTohh_mm_ss(edtToTime.getText().toString()));
-                        jsonObject.put("totalTime",Double.parseDouble(edtTotalTime.getText().toString()));
-                        if (layoutProject.getVisibility() != View.GONE){
-                            jsonObject.put("idProject",((Project)spnProject.getSelectedItem()).getIdProject());
+                        jsonObject.put("reason", edtReason.getText().toString());
+                        jsonObject.put("date", StringUtils.convertDateEditTextToServer(edtDate.getText().toString()));
+                        jsonObject.put("startTime", StringUtils.convertTimehh_mmTohh_mm_ss(edtFromTime.getText().toString()));
+                        jsonObject.put("endTime", StringUtils.convertTimehh_mmTohh_mm_ss(edtToTime.getText().toString()));
+                        jsonObject.put("totalTime", Double.parseDouble(edtTotalTime.getText().toString()));
+                        if (layoutProject.getVisibility() != View.GONE) {
+                            jsonObject.put("idProject", ((Project) spnProject.getSelectedItem()).getIdProject());
                         }
                         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-                        formOvertimePresenter.addOvertime(body);
+                        if (isEditOvertime) {
+                            formOvertimePresenter.editOvertime(body, edit_overTime.getId());
+                        } else {
+                            formOvertimePresenter.addOvertime(body);
+                        }
                         progressDialog.show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-
-                }else{
+                } else {
                     v.requestFocus();
                 }
                 break;
@@ -176,29 +183,29 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        String year="",month="",day="";
+                        String year = "", month = "", day = "";
                         year = String.valueOf(i);
-                        if (i1 < 9) month="0";
-                        month += String.valueOf(i1+1);
-                        if (i2 <= 9) day="0";
+                        if (i1 < 9) month = "0";
+                        month += String.valueOf(i1 + 1);
+                        if (i2 <= 9) day = "0";
                         day += String.valueOf(i2);
-                        edtDate.setText(day+month+year);
-                        Log.d(TAG,"edtDate: " + edtDate.getText().toString());
+                        edtDate.setText(day + month + year);
+                        Log.d(TAG, "edtDate: " + edtDate.getText().toString());
                         edtDate.requestFocus();
                     }
-                },mYear,mMonth,mDay);
+                }, mYear, mMonth, mDay);
                 datePickerDialog.show();
                 break;
             case R.id.imbFormOvertimeAct_FromTime:
                 timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        String sh="",sm="";
-                        if (selectedHour <= 9) sh="0";
-                        sh +=String.valueOf(selectedHour);
-                        if (selectedMinute <=9) sm="0";
-                        sm +=String.valueOf(selectedMinute);
-                        edtFromTime.setText( sh + sm);
+                        String sh = "", sm = "";
+                        if (selectedHour <= 9) sh = "0";
+                        sh += String.valueOf(selectedHour);
+                        if (selectedMinute <= 9) sm = "0";
+                        sm += String.valueOf(selectedMinute);
+                        edtFromTime.setText(sh + sm);
                         edtFromTime.requestFocus();
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -209,12 +216,12 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        String sh="",sm="";
-                        if (selectedHour <= 9) sh="0";
-                        sh +=String.valueOf(selectedHour);
-                        if (selectedMinute <=9) sm="0";
-                        sm +=String.valueOf(selectedMinute);
-                        edtToTime.setText( sh + sm);
+                        String sh = "", sm = "";
+                        if (selectedHour <= 9) sh = "0";
+                        sh += String.valueOf(selectedHour);
+                        if (selectedMinute <= 9) sm = "0";
+                        sm += String.valueOf(selectedMinute);
+                        edtToTime.setText(sh + sm);
                         edtToTime.requestFocus();
                     }
                 }, hour, minute, true);//Yes 24 hour time
@@ -222,7 +229,8 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 timePickerDialog.show();
                 break;
 
-                default:break;
+            default:
+                break;
         }
     }
 
@@ -241,7 +249,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 edtDate.setError(getString(R.string.error_invalid_date));
                 return edtDate;
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             edtDate.setError(getString(R.string.error_invalid_date));
             return edtDate;
@@ -251,11 +259,11 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             String[] split = edtFromTime.getText().toString().split(":");
             int hour = Integer.parseInt(split[0]);
             int minute = Integer.parseInt(split[1]);
-            if (!ValidationDateTime.checkTime(hour,minute)){
+            if (!ValidationDateTime.checkTime(hour, minute)) {
                 edtFromTime.setError(getString(R.string.error_invalid_time));
                 return edtFromTime;
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             edtFromTime.setError(getString(R.string.error_invalid_time));
             return edtFromTime;
@@ -270,7 +278,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 edtToTime.setError(getString(R.string.error_invalid_time));
                 return edtToTime;
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             edtToTime.setError(getString(R.string.error_invalid_time));
             return edtToTime;
@@ -282,7 +290,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 edtTotalTime.setError(getString(R.string.error_invalid_time));
                 return edtTotalTime;
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             edtTotalTime.setError(getString(R.string.error_invalid_time));
             return edtTotalTime;
@@ -292,10 +300,10 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void getListProjectSuccess(List<Project> data) {
-        if (data.size() > 0){
+        if (data.size() > 0) {
             ArrayAdapter<Project> adapter = new ArrayAdapter<Project>(this, R.layout.support_simple_spinner_dropdown_item, data);
             spnProject.setAdapter(adapter);
-        }else{
+        } else {
             //emp is not in any project
             layoutProject.setVisibility(View.GONE);
         }
@@ -304,14 +312,14 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void getListProjectFailure() {
         progressDialog.dismiss();
-        Toast.makeText(this,"failure to get project",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Failure to get project", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     @Override
     public void addOvertimeSuccess() {
         progressDialog.dismiss();
-        Toast.makeText(this,"add overtime success",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Add overtime success", Toast.LENGTH_SHORT).show();
         setResult(Activity.RESULT_OK);
         finish();
     }
@@ -319,13 +327,27 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void addOvertimeFailure() {
         progressDialog.dismiss();
-        Toast.makeText(this,"server error",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Server error", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void addOvertimeFailure(String message) {
         progressDialog.dismiss();
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void editOvertimeSuccess(String msg) {
+        progressDialog.dismiss();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void editOvertimeFailure() {
+        progressDialog.dismiss();
+        Toast.makeText(this, "Edit overtime failure!", Toast.LENGTH_SHORT).show();
     }
 }

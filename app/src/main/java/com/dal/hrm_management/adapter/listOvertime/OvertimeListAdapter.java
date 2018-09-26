@@ -116,6 +116,7 @@ public class OvertimeListAdapter extends RecyclerView.Adapter<OvertimeListAdapte
         }
     }
 
+
     private void showDialogConfirmDelete(Overtime overtime) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Warning");

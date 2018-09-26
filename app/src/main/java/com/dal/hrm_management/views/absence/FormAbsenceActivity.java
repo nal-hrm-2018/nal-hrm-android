@@ -76,6 +76,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
             ListAbsenceForHr absenceForHr = (ListAbsenceForHr) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE);
             if (absenceForHr != null) {
                 setTitle(absenceForHr.getNameEmployee());
+                btnSubmit.setText("Update");
                 String[] split = absenceForHr.getFromDate().split("-");
                 String ngay = split[2] + split[1] + split[0];
                 Log.d(TAG, "-------------------------------------");
@@ -238,7 +239,9 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                     RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
                     if (statusAbsences == StatusAbsences.enum_Add) {
                         absencePresenter.addAbsence(body);
-                    } else absencePresenter.editAbsence(body, idAbsence);
+                    } else {
+                        absencePresenter.editAbsence(body, idAbsence);
+                    }
                 }
                 break;
             case R.id.imbFormAbsenceAct_From:
