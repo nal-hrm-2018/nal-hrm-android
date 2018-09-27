@@ -136,13 +136,13 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
 
     @Override
     public void getListOTFailure() {
-        Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();
         prgShowMore.setVisibility(View.GONE);
         tvNothing.setVisibility(View.GONE);
     }
 
     @Override
     public void getlistOTError(Throwable t) {
-        Toast.makeText(getContext(),t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
     }
 }

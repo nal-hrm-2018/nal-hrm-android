@@ -226,7 +226,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         getSupportActionBar().setTitle("Overtime");
                         if (data.getEmail().equals(Constant.EMAIL_CEO)){
                             getSupportFragmentManager().beginTransaction().
-                                    replace(R.id.fragment_container, new OTManageOfPOFragment()).
+                                    replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).
                                     commit();
                         }
                         if (data.getRole().getNameRole().equals("PO")) {
@@ -267,12 +267,12 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     }
 
     private void prepareMenuData(Profile data) {
-//        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_dashboard), getString(R.string.menu_dashboard), true, false, getResources().getDrawable(R.drawable.ic_dashboard));
-//        headerList.add(menuModel);
-//        if (!menuModel.hasChildren) {
-//            childList.put(menuModel, null);
-//        }
-        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_overtime), getString(R.string.menu_overtime), true, false, getResources().getDrawable(R.drawable.ic_overtime));
+        MenuModel menuModel = new MenuModel(getString(R.string.menu_id_dashboard), getString(R.string.menu_dashboard), true, false, getResources().getDrawable(R.drawable.ic_dashboard));
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+        menuModel = new MenuModel(getString(R.string.menu_id_overtime), getString(R.string.menu_overtime), true, false, getResources().getDrawable(R.drawable.ic_overtime));
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
