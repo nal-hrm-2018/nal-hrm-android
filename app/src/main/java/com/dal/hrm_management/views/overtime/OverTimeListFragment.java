@@ -90,6 +90,7 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
 
     private void reloadPage() {
         adapter = null;
+        overTimeList =null;
         currentPage = 1;
         overtimePersonalPresenter.getOvertimePersonal(currentPage, pageSize);
     }

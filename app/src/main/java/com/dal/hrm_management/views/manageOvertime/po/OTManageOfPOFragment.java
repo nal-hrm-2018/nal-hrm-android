@@ -210,5 +210,6 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
     @Override
     public void getlistOTError(Throwable t) {
         Toast.makeText(getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
     }
 }
