@@ -15,6 +15,7 @@ import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceRes
 import com.dal.hrm_management.models.manageOvertime.hr.viewList.ManageOvertimeHrResponse;
 import com.dal.hrm_management.models.manageOvertime.po.viewlist.OvertimePoResponse;
 import com.dal.hrm_management.models.overtimePersonal.AddEditOvertime.AddOvertimeResponse;
+import com.dal.hrm_management.models.overtimePersonal.AddEditOvertime.EditOvertimeResponse;
 import com.dal.hrm_management.models.overtimePersonal.OvertimePersonalResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
@@ -166,4 +167,16 @@ public interface ApiInterface {
     Call<AddOvertimeResponse> addOvertime(@Header("Authorization") String token,
                                           @Body RequestBody json);
 
+    /**
+     * Edit overtime with idAbsence
+     * @param idOvertime
+     * @param token
+     * @param json
+     * @return
+     */
+
+    @PUT("api/overtime/edit/{overtime_id}")
+    Call<EditOvertimeResponse> putEditOvertime(@Path(value = "overtime_id", encoded = true) Long idOvertime,
+                                               @Header("Authorization") String token,
+                                               @Body RequestBody json);
 }

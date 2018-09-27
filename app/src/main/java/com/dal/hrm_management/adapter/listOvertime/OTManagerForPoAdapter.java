@@ -7,30 +7,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.adapter.ItemClickListener;
-import com.dal.hrm_management.models.fakeData.OverTime;
-import com.dal.hrm_management.models.manageOvertime.po.viewlist.ItemOverTimePO;
+import com.dal.hrm_management.models.manageOvertime.po.viewlist.OverTime;
+import com.dal.hrm_management.utils.StringUtils;
+import com.dal.hrm_management.utils.ViewDataUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAdapter.MyViewHolder> {
-    private List<ItemOverTimePO> overtimeList;
+    private List<OverTime> overtimeList;
     private Context context;
-    private List<ItemOverTimePO> overtimeListFiltered;
+    private List<OverTime> overtimeListFiltered;
 
 
-
-    public OTManagerForPoAdapter(List<ItemOverTimePO> listOvertime, Context context) {
+    public OTManagerForPoAdapter(List<OverTime> listOvertime, Context context) {
         this.overtimeList = listOvertime;
         this.context = context;
         this.overtimeListFiltered = listOvertime;
@@ -45,53 +43,99 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.tvNameEmp.setText(overtimeList.get(position).getNameEmployee());
-        holder.tvNameProject.setText(overtimeList.get(position).getNameProject());
-        holder.tvTypeDate.setText(overtimeList.get(position).getDayTypes().getNameDayType());
-        holder.tvDate.setText(overtimeList.get(position).getDate());
-        holder.tvFrom.setText(overtimeList.get(position).getStartTime());
-        holder.tvTo.setText(overtimeList.get(position).getEndTime());
-        holder.tvReason.setText(overtimeList.get(position).getReason());
-        holder.tvNumberTime.setText(String.valueOf(overtimeList.get(position).getTotalTime()));
-        holder.tvAcceptTime.setText(String.valueOf(overtimeList.get(position).getCorrectTotalTime()));
+        final OverTime overTime = overtimeList.get(position);
+        ViewDataUtils.setDataToView(holder.tvNameEmp, overTime.getNameEmployee());
+        ViewDataUtils.setDataToView(holder.tvNameProject, overTime.getNameProject());
+        ViewDataUtils.setDataDateToView(holder.tvDate, overTime.getDate());
+        if (overTime.getDayTypes() != null) {
+            ViewDataUtils.setDataDateToView(holder.tvTypeDate, StringUtils.toUpperCaseFirstChar(overTime.getDayTypes().getNameDayType()));
+        } else {
+            holder.tvTypeDate.setText(R.string.infor_null);
+        }
+        ViewDataUtils.setDataTimeWithHH_MM(holder.tvFrom, overTime.getStartTime());
+        ViewDataUtils.setDataTimeWithHH_MM(holder.tvTo, overTime.getEndTime());
+        ViewDataUtils.setDataToView(holder.tvReason, overTime.getReason());
+        ViewDataUtils.setDataToView(holder.tvNumberTime, overTime.getTotalTime());
+
+        if (overTime.getOvertimeStatuses() != null) {
+            final String status = overTime.getOvertimeStatuses().getName();
+            if (status.equalsIgnoreCase("Not yet") || status.equalsIgnoreCase("Reviewing")) {
+                //Hide accept time textview
+                holder.rl_acceptedTime.setVisibility(View.GONE);
+                holder.tvStatus.setVisibility(View.GONE);
+                holder.ll_reasonReject.setVisibility(View.GONE);
+                holder.ll_button.setVisibility(View.VISIBLE);
+
+            } else {
+                //show status of overtime
+                holder.ll_button.setVisibility(View.GONE);
+                ViewDataUtils.setDataToView(holder.tvAcceptTime, overTime.getCorrectTotalTime());
+                if (status.equalsIgnoreCase("Accepted")) {
+                    holder.ll_reasonReject.setVisibility(View.GONE);
+                } else {
+                    ViewDataUtils.setDataToView(holder.tvReasonReject, overTime.getReasonReject());
+                }
+            }
+            ViewDataUtils.setDataToView(holder.tvStatus, status);
+        } else {
+            holder.tvStatus.setText(R.string.infor_null);
+        }
+
         holder.imbAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Send status = accepted to server
+                updateStatusToServer();
                 holder.ll_button.setVisibility(View.GONE);
+                holder.ll_reasonReject.setVisibility(View.GONE);
+                holder.tvStatus.setVisibility(View.VISIBLE);
+                holder.tvStatus.setText("Accepted");
+                holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_green));
+                holder.rl_acceptedTime.setVisibility(View.VISIBLE);
             }
         });
         holder.imbReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogReason();
-                holder.ll_button.setVisibility(View.GONE);
+                showDialogReason(holder);
             }
         });
+    }
 
-//        final OverTime overTime = overtimeListFiltered.get(position);
-
-
-
+    /**
+     * TODO:send json contain status to server
+     */
+    private void updateStatusToServer() {
 
     }
 
-    public void showDialogReason() {
+    public void showDialogReason(final MyViewHolder holder) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
-        final EditText edt_acceptTime = (EditText) view.findViewById(R.id.edt_acceptTime);
+        final EditText edt_acceptTime = view.findViewById(R.id.edt_acceptTime);
+        final EditText edt_reasonReject = view.findViewById(R.id.edt_reasonReject);
         builder.setView(view);
-        builder.setTitle("Do you want to reject this form?");
+        builder.setTitle("Please enter accept time and reason reject?");
         builder.setCancelable(false);
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
         });
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                //update status to server
+                updateStatusToServer();
+                holder.ll_button.setVisibility(View.GONE);
+                holder.tvStatus.setVisibility(View.VISIBLE);
+                holder.tvStatus.setText("Rejected");
+                holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_red));
+                holder.ll_reasonReject.setVisibility(View.VISIBLE);
+                holder.rl_acceptedTime.setVisibility(View.VISIBLE);
+                holder.tvReasonReject.setText(edt_reasonReject.getText());
+                holder.tvAcceptTime.setText(edt_acceptTime.getText());
             }
         });
         AlertDialog dialog = builder.create();
@@ -136,13 +180,14 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout absences_layout;
-        TextView tvNameProject,tvNameEmp,tvTypeDate,tvDate,tvFrom,tvTo,tvReason,tvNumberTime,tvAcceptTime;
-        ImageButton imbAccept,imbReject;
-        LinearLayout ll_button;
+        TextView tvNameProject, tvNameEmp, tvTypeDate, tvDate, tvFrom, tvTo, tvReason, tvNumberTime, tvAcceptTime, tvStatus, tvReasonReject;
+        ImageButton imbAccept, imbReject;
+        LinearLayout ll_button, ll_reasonReject;
+        RelativeLayout rl_acceptedTime;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            absences_layout = (LinearLayout) itemView.findViewById(R.id.absences_layout);
+            absences_layout = itemView.findViewById(R.id.absences_layout);
             tvNameProject = itemView.findViewById(R.id.tvItemListOTOfPO_NameProject);
             tvNameEmp = itemView.findViewById(R.id.tvItemListOTOfPO_NameEmp);
             tvTypeDate = itemView.findViewById(R.id.tvItemListOTOfPO_TypeDay);
@@ -152,11 +197,15 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
             tvReason = itemView.findViewById(R.id.tvItemListOTOfPO_Reason);
             tvNumberTime = itemView.findViewById(R.id.tvItemListOTOfPO_NumberTime);
             tvAcceptTime = itemView.findViewById(R.id.tvItemListOTOfPO_AcceptTime);
-
-            ll_button = (LinearLayout) itemView.findViewById(R.id.ll_button);
-            imbAccept =  itemView.findViewById(R.id.imbItemListOTOfPO_Accept);
-            imbReject =  itemView.findViewById(R.id.imbItemListOTOfPO_Reject);
-
+            tvStatus = itemView.findViewById(R.id.tv_status);
+            ll_button = itemView.findViewById(R.id.ll_button);
+            imbAccept = itemView.findViewById(R.id.imbItemListOTOfPO_Accept);
+            imbReject = itemView.findViewById(R.id.imbItemListOTOfPO_Reject);
+            ll_reasonReject = itemView.findViewById(R.id.ll_reasonReject);
+            tvReasonReject = itemView.findViewById(R.id.tvPO_ReasonReject);
+            rl_acceptedTime = itemView.findViewById(R.id.rl_acceptTime);
+            ll_button.setVisibility(View.GONE);
+            ll_reasonReject.setVisibility(View.GONE);
         }
     }
 }

@@ -6,19 +6,33 @@
     android:orientation="vertical">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:textStyle="bold"
-                android:text="@string/overtime_numberAcceptTime" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_padding"
+        android:textStyle="bold"
+        android:text="@string/overtime_numberAcceptTime" />
 
-            <EditText
-                android:id="@+id/edt_acceptTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_padding"
-                android:inputType="number"
-                android:background="@drawable/boder_edittext"
-                />
+    <EditText
+        android:id="@+id/edt_acceptTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_padding"
+        android:inputType="number"
+        android:background="@drawable/boder_edittext"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_padding"
+        android:text="@string/overtime_item_reason_reject"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edt_reasonReject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boder_edittext"
+        android:padding="@dimen/text_padding" />
 </LinearLayout>

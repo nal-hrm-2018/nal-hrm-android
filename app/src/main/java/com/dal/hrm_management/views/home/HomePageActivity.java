@@ -58,8 +58,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, iHomeActivity {
+import static com.dal.hrm_management.utils.VariableUltils.REQUEST_CODE_EDIT_OVERTIME_PERSONAL;
 
+public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, iHomeActivity {
+    private final String TAG = HomePageActivity.class.getSimpleName();
     ExpandableListAdapter expandableListAdapter;
     ExpandableListView expandableListView;
     List<MenuModel> headerList = new ArrayList<>();
@@ -228,10 +230,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                             getSupportFragmentManager().beginTransaction().
                                     replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).
                                     commit();
-                        }
+                        }else
                         if (data.getRole().getNameRole().equals("PO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OTManageOfPOFragment()).commit();
-                        }
+                        }else
                         if (data.getRole().getNameRole().equals("HR")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).commit();
                         }
@@ -339,6 +341,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         //Edit absence success
         if (requestCode == VariableUltils.REQUEST_CODE_ADD_ABSENCE && resultCode == Activity.RESULT_OK) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
+        }
+        if (requestCode == REQUEST_CODE_EDIT_OVERTIME_PERSONAL && resultCode == Activity.RESULT_OK){
+            Log.d(TAG,"edit success - reload page");
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeListFragment()).commit();
         }
     }
 

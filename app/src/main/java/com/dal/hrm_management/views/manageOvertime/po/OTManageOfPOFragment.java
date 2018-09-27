@@ -8,20 +8,24 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listOvertime.OTManagerForPoAdapter;
+import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.DataProject;
+import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.Project;
 import com.dal.hrm_management.models.manageOvertime.po.viewlist.Data;
-import com.dal.hrm_management.models.manageOvertime.po.viewlist.ItemOverTimePO;
+import com.dal.hrm_management.models.manageOvertime.po.viewlist.OverTime;
 import com.dal.hrm_management.presenters.managerOvertime.po.OverTimeManageOfPoPresenter;
 
 import java.util.ArrayList;
@@ -34,17 +38,19 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
     private RecyclerView rv_overtime;
     private ProgressBar prgShowMore;
     private TextView tvNothing;
-
+    private Spinner spnProjects;
     private OTManagerForPoAdapter adapter;
     private OverTimeManageOfPoPresenter overTimeManageOfPoPresenter;
     private SearchView searchView;
-
-    View viewinflate;
-
-    private int current_page =1;
-    private int pageSize =20;
-    private int total;
-    List<ItemOverTimePO> listOvertime;
+    private View viewInflater;
+    private int current_page = 1;
+    private int pageSize = 10;
+    private int totalOvertimes;
+    private int totalProjects;
+    private String idProject;
+    private List<Project> projectList;
+    private List<String> idProjectList;
+    private List<OverTime> listOvertime;
     private LinearLayoutManager layoutManager;
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -57,15 +63,13 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
             int visibleItemCount = layoutManager.getChildCount();
             int totalItemCount = layoutManager.getItemCount();
             int firstitem = layoutManager.findFirstVisibleItemPosition();
-            if (firstitem+visibleItemCount >= totalItemCount && current_page*pageSize < total){
+            if (firstitem + visibleItemCount >= totalItemCount && current_page * pageSize < totalOvertimes) {
                 current_page++;
                 prgShowMore.setVisibility(View.VISIBLE);
-                overTimeManageOfPoPresenter.getListOverTimeForPO("PRO_003",current_page,pageSize);
-
+                overTimeManageOfPoPresenter.getListOverTimeForPO("PRO_003", current_page, pageSize);
             }
         }
     };
-
 
 
     public OTManageOfPOFragment() {
@@ -75,24 +79,28 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        viewinflate = inflater.inflate(R.layout.fragment_otmanage_of_po, container, false);
+        viewInflater = inflater.inflate(R.layout.fragment_otmanage_of_po, container, false);
         init();
         initPresenter();
-        callApi();
-        return viewinflate;
+        getDataProjectInProgress();
+        setEvent(viewInflater);
+        return viewInflater;
     }
 
-    private void callApi() {
-        overTimeManageOfPoPresenter.getListOverTimeForPO("PRO_0003",current_page,pageSize);
+    private void getDataProjectInProgress() {
+        overTimeManageOfPoPresenter.getListProjectInProgressOfPO(current_page, pageSize);
     }
 
     private void init() {
-        rv_overtime = viewinflate.findViewById(R.id.rvOTManagePOFra_list);
+        rv_overtime = viewInflater.findViewById(R.id.rvOTManagePOFra_list);
         layoutManager = new LinearLayoutManager(getContext());
         rv_overtime.setLayoutManager(layoutManager);
-        prgShowMore = viewinflate.findViewById(R.id.prgOTManagePOFra_showMore);
-        tvNothing = viewinflate.findViewById(R.id.tvOTManagePOFra_Nothing);
+        prgShowMore = viewInflater.findViewById(R.id.prgOTManagePOFra_showMore);
+        tvNothing = viewInflater.findViewById(R.id.tvOTManagePOFra_Nothing);
+        spnProjects = viewInflater.findViewById(R.id.spnProjects);
         listOvertime = new ArrayList<>();
+        idProjectList = new ArrayList<>();
+        projectList = new ArrayList<>();
     }
 
 
@@ -124,25 +132,84 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
 //        });
     }
 
+    private void setEvent(View view) {
+        spnProjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                idProject = spnProjects.getSelectedItem().toString();
+                //call presenter to get list overtime of project
+                overTimeManageOfPoPresenter.getListOverTimeForPO(idProject, current_page, pageSize);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                idProject = spnProjects.getSelectedItem().toString();
+                if (idProject.equals("- No Project -")) {
+                    prgShowMore.setVisibility(View.GONE);
+                } else {
+                    //call presenter to get list overtime of project
+                    overTimeManageOfPoPresenter.getListOverTimeForPO(idProject, current_page, pageSize);
+                }
+            }
+        });
+    }
+    @Override
+    public void getListProjectInProgressSuccess(DataProject data) {
+        ArrayAdapter<String> adapter;
+        this.totalProjects = data.getTotal();
+        if (totalProjects != 0) {
+            projectList = data.getProject();
+            for (Project project : projectList) {
+                idProjectList.add(project.getIdProject());
+            }
+        } else {
+            idProjectList.add("- No Project -");
+            tvNothing.setText("Haven't no overtime!");
+            tvNothing.setVisibility(View.VISIBLE);
+        }
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, idProjectList);
+        spnProjects.setAdapter(adapter);
+    }
+
+    @Override
+    public void getListProjectInProgressFailed() {
+
+    }
+
     @Override
     public void getListOTSucess(Data data) {
-        total = data.getTotal();
-        listOvertime.addAll(data.getList());
-        adapter = new OTManagerForPoAdapter(listOvertime,getContext());
-        rv_overtime.setAdapter(adapter);
+        this.totalOvertimes = data.getTotal();
+        if (totalOvertimes != 0) {
+            this.listOvertime.clear();
+            this.listOvertime = data.getList();
+            adapter = new OTManagerForPoAdapter(listOvertime, getActivity());
+            rv_overtime.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            tvNothing.setVisibility(View.GONE);
+        } else {
+            this.listOvertime.clear();
+            tvNothing.setText("No overtime in this project!");
+            tvNothing.setVisibility(View.VISIBLE);
+            prgShowMore.setVisibility(View.GONE);
+        }
         prgShowMore.setVisibility(View.GONE);
-        tvNothing.setVisibility(View.GONE);
+
+//        totalOvertimes = data.getTotal();
+//        listOvertime.addAll(data.getList());
+//        adapter = new OTManagerForPoAdapter(listOvertime, getContext());
+//        rv_overtime.setAdapter(adapter);
+//        prgShowMore.setVisibility(View.GONE);
+//        tvNothing.setVisibility(View.GONE);
     }
 
     @Override
     public void getListOTFailure() {
-//        Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
         prgShowMore.setVisibility(View.GONE);
         tvNothing.setVisibility(View.GONE);
     }
 
     @Override
     public void getlistOTError(Throwable t) {
-//        Toast.makeText(getContext(),t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
     }
 }

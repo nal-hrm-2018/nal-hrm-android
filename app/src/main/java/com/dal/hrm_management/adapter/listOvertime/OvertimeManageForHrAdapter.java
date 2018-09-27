@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageOvertime.hr.viewList.Overtime;
+import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.ViewDataUtils;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
             holder.tvStatus.setText(R.string.infor_null);
         }
         if(overtime.getDayTypes()!=null){
-            ViewDataUtils.setDataToView(holder.tvTypeDay,overtime.getDayTypes().getNameDayType());
+            ViewDataUtils.setDataToView(holder.tvTypeDay, StringUtils.toUpperCaseFirstChar(overtime.getDayTypes().getNameDayType()));
         }
         ViewDataUtils.setDataToView(holder.tvAcceptedTime,overtime.getCorrectTotalTime());
         ViewDataUtils.setDataToView(holder.tvTotalTime,overtime.getTotalTime());
