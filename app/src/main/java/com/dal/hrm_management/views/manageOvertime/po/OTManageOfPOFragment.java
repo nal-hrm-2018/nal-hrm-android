@@ -51,6 +51,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
     private String idProjectSelected;
     private List<Project> projectList;
     private List<String> idProjectList;
+    private List<String> nameProjectList;
     private List<OverTime> listOvertime;
     private LinearLayoutManager layoutManager;
     private UpdateStatusPresenter updateStatusPresenter;
@@ -102,6 +103,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
         spnProjects = viewInflater.findViewById(R.id.spnProjects);
         listOvertime = new ArrayList<>();
         idProjectList = new ArrayList<>();
+        nameProjectList = new ArrayList<>();
         projectList = new ArrayList<>();
     }
 
@@ -138,13 +140,13 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
     private void setEvent(View view) {
         spnProjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                idProjectSelected = spnProjects.getSelectedItem().toString();
+                idProjectSelected = idProjectList.get(spnProjects.getSelectedItemPosition());
                 //call presenter to get list overtime of project
                 overTimeManageOfPoPresenter.getListOverTimeForPO(idProjectSelected, current_page, pageSize);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                idProjectSelected = spnProjects.getSelectedItem().toString();
+                idProjectSelected = idProjectList.get(spnProjects.getSelectedItemPosition());
                 if (idProjectSelected.equals("- No Project -")) {
                     prgShowMore.setVisibility(View.GONE);
                 } else {
@@ -163,13 +165,14 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
             projectList = data.getProject();
             for (Project project : projectList) {
                 idProjectList.add(project.getIdProject());
+                nameProjectList.add(project.getNameProject());
             }
         } else {
             idProjectList.add("- No Project -");
             tvNothing.setText("Haven't no overtime!");
             tvNothing.setVisibility(View.VISIBLE);
         }
-        adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, idProjectList);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, nameProjectList);
         spnProjects.setAdapter(adapter);
     }
 

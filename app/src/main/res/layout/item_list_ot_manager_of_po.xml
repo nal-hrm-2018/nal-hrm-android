@@ -38,15 +38,6 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvItemListOTOfPO_NameProject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/textview.project"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_medium"
-        android:textStyle="bold" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -264,20 +255,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/item_padding"
-        android:paddingLeft="@dimen/activity_vertical_margin">
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/item_padding">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/overtime_item_reason_reject" />
+            android:text="@string/overtime_item_reason_reject"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvPO_ReasonReject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:paddingStart="@dimen/text_padding" />
+            android:paddingStart="@dimen/text_padding"
+            android:textStyle="italic" />
     </LinearLayout>
 </LinearLayout>

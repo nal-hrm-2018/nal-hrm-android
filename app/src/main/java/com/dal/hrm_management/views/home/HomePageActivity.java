@@ -216,9 +216,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployee()).commit();
                     } else if ((model.id.equals(getString(R.string.menu_id_manage_absence)))) {
                         getSupportActionBar().setTitle(getString(R.string.menu_absence_empl));
-                        if (data.getRole().getNameRole().equals("HR")) {
+                        if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
-                        } else if (data.getRole().getNameRole().equals("PO")) {
+                        } else if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
                         }
                     } else if (model.id.equals(getString(R.string.menu_id_manage_holiday))) {
@@ -231,10 +231,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                                     replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).
                                     commit();
                         }else
-                        if (data.getRole().getNameRole().equals("PO")) {
+                        if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OTManageOfPOFragment()).commit();
                         }else
-                        if (data.getRole().getNameRole().equals("HR")) {
+                        if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).commit();
                         }
                     }
@@ -284,7 +284,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        if (data.getRole().getNameRole().equals("HR") || data.getRole().getNameRole().equals("PO") || data.getRole().getNameRole().equals("SM")) {
+        if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO) || data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO) || data.getRole().getNameRole().equals("SM")) {
             menuModel = new MenuModel(getString(R.string.menu_id_manage), getString(R.string.menu_manage), true, true, getResources().getDrawable(R.drawable.ic_manage));
             headerList.add(menuModel);
 
@@ -298,11 +298,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_absence), getString(R.string.menu_absence_empl), false, false, null);
                 childModelsList.add(chilModel);
             }
-//            if (data.getRole().getNameRole().equals("HR")) {
+//            if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
 //                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
 //                childModelsList.add(chilModel);
 //            }
-            if (data.getRole().getNameRole().equals("PO")||data.getRole().getNameRole().equals("HR")) {
+            if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO)||data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
                 childModelsList.add(chilModel);
             }
