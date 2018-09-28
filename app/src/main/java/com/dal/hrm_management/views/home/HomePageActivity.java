@@ -298,10 +298,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_absence), getString(R.string.menu_absence_empl), false, false, null);
                 childModelsList.add(chilModel);
             }
-//            if (data.getRole().getNameRole().equals("HR")) {
-//                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
-//                childModelsList.add(chilModel);
-//            }
+//            if (data.getRole().getNameRole().equals("HR"))
+            {
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
+                childModelsList.add(chilModel);
+            }
             if (data.getRole().getNameRole().equals("PO")||data.getRole().getNameRole().equals("BO")) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
                 childModelsList.add(chilModel);

@@ -1,22 +1,40 @@
 package com.dal.hrm_management.models.holiday;
 
-/**
- * Created by Luu Ngoc Lan on 10-Aug-18.
- */
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Holiday {
-    private String nameHoliday;
-    private String typeHoliday;
-    private String start;
-    private String end;
-    private String note;
 
-    public Holiday(String nameHoliday, String typeHoliday, String start, String end, String note) {
-        this.nameHoliday = nameHoliday;
-        this.typeHoliday = typeHoliday;
-        this.start = start;
-        this.end = end;
-        this.note = note;
+    @SerializedName("idHoliday")
+    @Expose
+    private Integer idHoliday;
+    @SerializedName("dateHoliday")
+    @Expose
+    private String dateHoliday;
+    @SerializedName("nameHoliday")
+    @Expose
+    private String nameHoliday;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("dayTypes")
+    @Expose
+    private DayTypes dayTypes;
+
+    public Integer getIdHoliday() {
+        return idHoliday;
+    }
+
+    public void setIdHoliday(Integer idHoliday) {
+        this.idHoliday = idHoliday;
+    }
+
+    public String getDateHoliday() {
+        return dateHoliday;
+    }
+
+    public void setDateHoliday(String dateHoliday) {
+        this.dateHoliday = dateHoliday;
     }
 
     public String getNameHoliday() {
@@ -27,35 +45,20 @@ public class Holiday {
         this.nameHoliday = nameHoliday;
     }
 
-    public String getTypeHoliday() {
-        return typeHoliday;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTypeHoliday(String typeHoliday) {
-        this.typeHoliday = typeHoliday;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getStart() {
-        return start;
+    public DayTypes getDayTypes() {
+        return dayTypes;
     }
 
-    public void setStart(String start) {
-        this.start = start;
+    public void setDayTypes(DayTypes dayTypes) {
+        this.dayTypes = dayTypes;
     }
 
-    public String getEnd() {
-        return end;
-    }
-
-    public void setEnd(String end) {
-        this.end = end;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
 }

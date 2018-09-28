@@ -65,8 +65,6 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
         }
     };
 
-    //swift
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Nullable
     @Override
@@ -82,15 +80,6 @@ public class ListEmployee extends Fragment implements IListEmployee, ListEmploye
         list_emp_pb_loadEmp = view.findViewById(R.id.list_emp_pb_loadEmp);
         list_emp_pb_loadEmp.setVisibility(View.VISIBLE);
 
-
-        mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mSwipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(getContext(),"refresh Data",Toast.LENGTH_SHORT).show();
-            }
-        });
         return view;
     }
 

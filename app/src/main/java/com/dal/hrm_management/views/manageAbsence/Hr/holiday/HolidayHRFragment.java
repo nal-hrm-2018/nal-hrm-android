@@ -14,10 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.HolidayListAdapter;
-import com.dal.hrm_management.models.holiday.Holiday;
+import com.dal.hrm_management.presenters.holiday.holiday.HolidayPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,11 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HolidayHRFragment extends Fragment {
+public class HolidayHRFragment extends Fragment implements IHolidayFragment {
 
     private RecyclerView recyclerView;
     private HolidayListAdapter adapter;
-    private List<Holiday> holidays;
+    private HolidayPresenter holidayPresenter;
     public HolidayHRFragment() {
     }
 
@@ -38,30 +39,22 @@ public class HolidayHRFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_holiday_hr, container, false);
         setHasOptionsMenu(true);
-        fakeData();
         initUI(view);
+        mapMVP();
         return view;
     }
 
-    private void fakeData() {
-        holidays = new ArrayList<>();
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
-        holidays.add(new Holiday("Lễ 2/9","Nghỉ lễ","2/9/2018","2/9/2018","Nghỉ lễ quẩy thôi!"));
+    private void mapMVP() {
+        holidayPresenter = new HolidayPresenter(this);
+        holidayPresenter.getHoliday();
     }
+
+
 
     private void initUI(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_holiday);
-        adapter = new HolidayListAdapter(getActivity(), holidays);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -89,5 +82,17 @@ public class HolidayHRFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void getHolidaySuccess(List<com.dal.hrm_management.models.holiday.Holiday> data) {
+        adapter = new HolidayListAdapter(getActivity(), data);
+        recyclerView.setAdapter(adapter);
+        Toast.makeText(getContext(),"success",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void getHolidayFailure() {
+        Toast.makeText(getContext(),"failure",Toast.LENGTH_LONG).show();
     }
 }
