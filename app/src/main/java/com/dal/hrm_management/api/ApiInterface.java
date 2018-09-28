@@ -3,6 +3,7 @@ package com.dal.hrm_management.api;
 import com.dal.hrm_management.models.absence.AbsencesResponse;
 import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
+import com.dal.hrm_management.models.holiday.HolidayResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
 import com.dal.hrm_management.models.listProjectEmpJoining.ListProjectJoiningResponse;
@@ -192,4 +193,7 @@ public interface ApiInterface {
     Call<UpdateStatusResponse> putStatusOvertime(@Path(value = "overtime_id", encoded = true) Long idOvertime,
                                                  @Header("Authorization") String token,
                                                  @Body RequestBody json);
+
+    @GET("api/holiday")
+    Call<HolidayResponse> getListHoliday(@Header("Authorization") String token);
 }

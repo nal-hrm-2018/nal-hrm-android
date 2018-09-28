@@ -11,15 +11,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.models.holiday.Holiday;
 
 import java.util.List;
 
 public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.MyViewHolder> {
-    private List<Holiday> arr;
+    private List<com.dal.hrm_management.models.holiday.Holiday> arr;
     private Context context;
 
-    public HolidayListAdapter(Context context, List<Holiday> arr) {
+    public HolidayListAdapter(Context context, List<com.dal.hrm_management.models.holiday.Holiday> arr) {
         this.context = context;
         this.arr = arr;
     }
@@ -32,30 +31,34 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+        String date = arr.get(position).getDateHoliday();
+        String[] split = date.split("-");
+        holder.tv_date.setText(split[2] + " - "+split[1]);
+        holder.tv_year.setText(split[0]);
         holder.tv_nameHoliday.setText(arr.get(position).getNameHoliday());
-        holder.tv_typeHoliday.setText(arr.get(position).getTypeHoliday());
-        holder.tv_note.setText(arr.get(position).getNote());
-        holder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(final View view, int position, boolean isLongClick) {
-                PopupMenu popup = new PopupMenu(view.getContext(), view);
-                popup.getMenuInflater().inflate(R.menu.popup_menu_holiday_list, popup.getMenu());
-
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.action_edit_holiday:
-                                
-                            case R.id.action_remove:
-                                break;
-                        }
-                        return true;
-                    }
-                });
-
-                popup.show();
-            }
-        });
+        holder.tv_typeHoliday.setText(arr.get(position).getDayTypes().getNameDayType());
+        holder.tv_note.setText(arr.get(position).getDescription());
+//        holder.setItemClickListener(new ItemClickListener() {
+//            @Override
+//            public void onClick(final View view, int position, boolean isLongClick) {
+//                PopupMenu popup = new PopupMenu(view.getContext(), view);
+//                popup.getMenuInflater().inflate(R.menu.popup_menu_holiday_list, popup.getMenu());
+//
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        switch (item.getItemId()){
+//                            case R.id.action_edit_holiday:
+//
+//                            case R.id.action_remove:
+//                                break;
+//                        }
+//                        return true;
+//                    }
+//                });
+//
+//                popup.show();
+//            }
+//        });
     }
 
     @Override
