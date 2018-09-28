@@ -73,7 +73,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         mChart1.setOnChartValueSelectedListener(this);
         return view;
     }
-    private static void addDataSet(PieChart pieChart) {
+    private void addDataSet(PieChart pieChart) {
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
         float[] yData = { 25, 40, 70 };
@@ -91,9 +91,9 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         pieDataSet.setValueTextSize(12);
 
         ArrayList<Integer> colors=new ArrayList<>();
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
-        colors.add(Color.RED);
+        colors.add(getResources().getColor(R.color.color_green));
+        colors.add(getResources().getColor(R.color.color_orange));
+        colors.add(getResources().getColor(R.color.color_violet));
 
         pieDataSet.setColors(colors);
 
