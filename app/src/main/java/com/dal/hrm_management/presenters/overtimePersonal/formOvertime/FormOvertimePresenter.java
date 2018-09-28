@@ -57,14 +57,14 @@ public class FormOvertimePresenter implements IFormOvertimePresenter {
                 if (response.code() == 200) {
                     formOvertimeActivity.addOvertimeSuccess();
                 } else if (response.code() == 400) {
-                    formOvertimeActivity.addOvertimeFailure("Duplicate ot");
+                    formOvertimeActivity.addOvertimeFailure("Some thing error");
                 }
 
             }
 
             @Override
             public void onFailure(Call<AddOvertimeResponse> call, Throwable t) {
-                formOvertimeActivity.addOvertimeFailure();
+                formOvertimeActivity.addOvertimeFailure(t.getMessage());
             }
         });
     }
