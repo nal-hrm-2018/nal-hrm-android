@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.listOvertime.OvertimeManageForHrAdapter;
 import com.dal.hrm_management.models.manageOvertime.hr.viewList.DataOvertime;
 import com.dal.hrm_management.models.manageOvertime.hr.viewList.Overtime;
 import com.dal.hrm_management.presenters.managerOvertime.hr.ManageOvertimeOfHRPresenter;
+import com.dal.hrm_management.presenters.managerOvertime.status.UpdateStatusPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
     private int currentPage = 1;
     private int pageSize = 5;
     private int totalOvertime = 0;
+    private UpdateStatusPresenter updateStatusPresenter;
 
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -77,6 +80,7 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
     }
 
     private void initPresenter() {
+        updateStatusPresenter = new UpdateStatusPresenter(this);
         manageOvertimeOfHRPresenter = new ManageOvertimeOfHRPresenter(this);
         manageOvertimeOfHRPresenter.getListOvertime(currentPage, pageSize);
     }
@@ -97,7 +101,7 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
         if (list.size() != 0) {
             overtimeList.addAll(list);
             if (adapter == null) {
-                adapter = new OvertimeManageForHrAdapter(getActivity(), overtimeList);
+                adapter = new OvertimeManageForHrAdapter(getActivity(), overtimeList, updateStatusPresenter);
             } else {
                 adapter.notifyDataSetChanged();
             }
@@ -118,4 +122,23 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
     public void getOvertimeListFailure() {
         progressBar.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void updateStatusSuccess(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        reloadPage();
+    }
+
+    @Override
+    public void updateStatusFailure() {
+        Toast.makeText(getActivity(), "Update status failure!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void reloadPage() {
+        adapter = null;
+        overtimeList.clear();
+        currentPage = 1;
+        manageOvertimeOfHRPresenter.getListOvertime(currentPage, pageSize);
+    }
+
 }

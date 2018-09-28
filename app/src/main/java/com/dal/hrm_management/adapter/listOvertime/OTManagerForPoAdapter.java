@@ -43,6 +43,7 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        holder.setIsRecyclable(false);
         final OverTime overTime = overtimeList.get(position);
         ViewDataUtils.setDataToView(holder.tvNameEmp, overTime.getNameEmployee());
         ViewDataUtils.setDataToView(holder.tvNameProject, overTime.getNameProject());

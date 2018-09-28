@@ -10,4 +10,8 @@ public interface IOvertimeManageOfHrFragment {
     public void getOvertimeListSuccess(DataOvertime dataOvertime);
 
     public void getOvertimeListFailure();
+
+    public void updateStatusSuccess(String msg);
+
+    public void updateStatusFailure();
 }

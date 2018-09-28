@@ -84,7 +84,7 @@
     <string name="menu_overtime">My Overtime</string>
     <string name="menu_dashboard">Dashboard</string>
     <string name="menu_project">Project</string>
-    <string name="menu_absence">Absence</string>
+    <string name="menu_absence">My Absence</string>
     <string name="menu_manage">Manage</string>
     <string name="menu_employee">Employee</string>
     <string name="menu_absence_empl">Absence</string>
