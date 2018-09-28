@@ -45,7 +45,6 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     private Spinner spnProject;
     private ProgressDialog progressDialog;
     private LinearLayout layoutProject;
-
     private Calendar c = Calendar.getInstance();
     private int mYear, mMonth, mDay, hour, minute;
     private DatePickerDialog datePickerDialog;
@@ -246,6 +245,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             int month = Integer.parseInt(split[1]);
             int year = Integer.parseInt(split[2]);
             if (!ValidationDateTime.checkDay(day, month, year)) {
+
                 edtDate.setError(getString(R.string.error_invalid_date));
                 return edtDate;
             }
@@ -254,6 +254,9 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             edtDate.setError(getString(R.string.error_invalid_date));
             return edtDate;
         }
+
+        int maxMinutes = 0,fromMinutes=0,toMinutes=0;
+
         //Check time
         try {
             String[] split = edtFromTime.getText().toString().split(":");
@@ -263,6 +266,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 edtFromTime.setError(getString(R.string.error_invalid_time));
                 return edtFromTime;
             }
+            fromMinutes = hour*60+minute;
         } catch (Exception ex) {
             ex.printStackTrace();
             edtFromTime.setError(getString(R.string.error_invalid_time));
@@ -278,6 +282,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 edtToTime.setError(getString(R.string.error_invalid_time));
                 return edtToTime;
             }
+            toMinutes = hour*60+minute;
         } catch (Exception ex) {
             ex.printStackTrace();
             edtToTime.setError(getString(R.string.error_invalid_time));
@@ -285,8 +290,9 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
         }
         //Check actual
         try {
+            maxMinutes = toMinutes -fromMinutes;
             double total = Double.parseDouble(edtTotalTime.getText().toString());
-            if (total > 24 || total < 0) {
+            if (total > 24 || total < 0 || maxMinutes < total*60) {
                 edtTotalTime.setError(getString(R.string.error_invalid_time));
                 return edtTotalTime;
             }
