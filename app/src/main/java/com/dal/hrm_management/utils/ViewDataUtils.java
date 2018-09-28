@@ -8,6 +8,7 @@ public class ViewDataUtils {
 
     /**
      *  check data have value or null, set default "--" value if data null
+     *  avoid getting data null form server--> crash app
      * @param view
      * @param data
      */

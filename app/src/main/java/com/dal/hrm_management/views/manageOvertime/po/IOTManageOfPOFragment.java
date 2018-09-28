@@ -14,4 +14,8 @@ public interface IOTManageOfPOFragment {
     public void getListOTFailure();
 
     public void getlistOTError(Throwable t);
+
+    public void updateStatusOvertimeSuccess(String msg);
+
+    public void updateStatusOvertimeFailure();
 }

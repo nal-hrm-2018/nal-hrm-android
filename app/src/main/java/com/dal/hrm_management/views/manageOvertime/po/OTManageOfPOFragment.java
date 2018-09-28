@@ -27,6 +27,7 @@ import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.Proj
 import com.dal.hrm_management.models.manageOvertime.po.viewlist.Data;
 import com.dal.hrm_management.models.manageOvertime.po.viewlist.OverTime;
 import com.dal.hrm_management.presenters.managerOvertime.po.OverTimeManageOfPoPresenter;
+import com.dal.hrm_management.presenters.managerOvertime.status.UpdateStatusPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +48,12 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
     private int pageSize = 10;
     private int totalOvertimes;
     private int totalProjects;
-    private String idProject;
+    private String idProjectSelected;
     private List<Project> projectList;
     private List<String> idProjectList;
     private List<OverTime> listOvertime;
     private LinearLayoutManager layoutManager;
+    private UpdateStatusPresenter updateStatusPresenter;
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -106,6 +108,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
 
     private void initPresenter() {
         overTimeManageOfPoPresenter = new OverTimeManageOfPoPresenter(this);
+        updateStatusPresenter = new UpdateStatusPresenter(this);
     }
 
     @Override
@@ -135,22 +138,23 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
     private void setEvent(View view) {
         spnProjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                idProject = spnProjects.getSelectedItem().toString();
+                idProjectSelected = spnProjects.getSelectedItem().toString();
                 //call presenter to get list overtime of project
-                overTimeManageOfPoPresenter.getListOverTimeForPO(idProject, current_page, pageSize);
+                overTimeManageOfPoPresenter.getListOverTimeForPO(idProjectSelected, current_page, pageSize);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                idProject = spnProjects.getSelectedItem().toString();
-                if (idProject.equals("- No Project -")) {
+                idProjectSelected = spnProjects.getSelectedItem().toString();
+                if (idProjectSelected.equals("- No Project -")) {
                     prgShowMore.setVisibility(View.GONE);
                 } else {
                     //call presenter to get list overtime of project
-                    overTimeManageOfPoPresenter.getListOverTimeForPO(idProject, current_page, pageSize);
+                    overTimeManageOfPoPresenter.getListOverTimeForPO(idProjectSelected, current_page, pageSize);
                 }
             }
         });
     }
+
     @Override
     public void getListProjectInProgressSuccess(DataProject data) {
         ArrayAdapter<String> adapter;
@@ -180,7 +184,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
         if (totalOvertimes != 0) {
             this.listOvertime.clear();
             this.listOvertime = data.getList();
-            adapter = new OTManagerForPoAdapter(listOvertime, getActivity());
+            adapter = new OTManagerForPoAdapter(listOvertime, getActivity(), updateStatusPresenter);
             rv_overtime.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             tvNothing.setVisibility(View.GONE);
@@ -212,4 +216,23 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
         Toast.makeText(getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
     }
+
+    @Override
+    public void updateStatusOvertimeSuccess(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        reloadPage();
+    }
+
+    @Override
+    public void updateStatusOvertimeFailure() {
+        Toast.makeText(getContext(), "Update status failure!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void reloadPage() {
+        adapter = null;
+        listOvertime.clear();
+        current_page = 1;
+        overTimeManageOfPoPresenter.getListOverTimeForPO(idProjectSelected,current_page, pageSize);
+    }
+
 }

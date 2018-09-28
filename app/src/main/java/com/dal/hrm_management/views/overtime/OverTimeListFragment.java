@@ -21,6 +21,7 @@ import com.dal.hrm_management.adapter.listOvertime.OvertimeListAdapter;
 import com.dal.hrm_management.models.overtimePersonal.DataOvertime;
 import com.dal.hrm_management.models.overtimePersonal.Overtime;
 import com.dal.hrm_management.presenters.overtimePersonal.OvertimePersonalPresenter;
+import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.views.overtime.formOvertime.FormOvertimeActivity;
 
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_CODE_ADD_OVERTIME ) {
+            if (requestCode == REQUEST_CODE_ADD_OVERTIME) {
                 reloadPage();
             }
         }
@@ -159,9 +160,19 @@ public class OverTimeListFragment extends Fragment implements View.OnClickListen
     }
 
     private void loadData(DataOvertime dataOvertime) {
+        // re-set size textView if value.length()==4; ex: value=12.5 will set to 48sp size, 9.5 still default 68sp size
+        if (StringUtils.formatDisplayNumberDouble(dataOvertime.getNormal() + "").length() == 4) {
+            tvNomarlDay.setTextSize(48);
+        }
+        if (StringUtils.formatDisplayNumberDouble(dataOvertime.getDayOff() + "").length() == 4) {
+            tvDayOff.setTextSize(48);
+        }
+        if (StringUtils.formatDisplayNumberDouble(dataOvertime.getHoliday() + "").length() == 4) {
+            tvHoliday.setTextSize(48);
+        }
         //Set value for Dayoff, NormalDay, Holiday
-        tvNomarlDay.setText(String.valueOf(dataOvertime.getNormal()));
-        tvDayOff.setText(String.valueOf(dataOvertime.getDayOff()));
-        tvHoliday.setText(String.valueOf(dataOvertime.getHoliday()));
+        tvNomarlDay.setText(StringUtils.formatDisplayNumberDouble(dataOvertime.getNormal() + ""));
+        tvDayOff.setText(StringUtils.formatDisplayNumberDouble(dataOvertime.getDayOff() + ""));
+        tvHoliday.setText(StringUtils.formatDisplayNumberDouble(dataOvertime.getHoliday() + ""));
     }
 }
