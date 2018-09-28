@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -34,7 +35,7 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
     private List<Overtime> listOvertime;
     private UpdateStatusPresenter updateStatusPresenter;
 
-    public OvertimeManageForHrAdapter(Context context, List<Overtime> list,UpdateStatusPresenter updateStatusPresenter) {
+    public OvertimeManageForHrAdapter(Context context, List<Overtime> list, UpdateStatusPresenter updateStatusPresenter) {
         this.context = context;
         this.listOvertime = list;
         this.updateStatusPresenter = updateStatusPresenter;
@@ -76,8 +77,10 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
             }
             if (status.toLowerCase().equals("rejected")) {
                 ViewDataUtils.setDataToView(holder.tvReasonReject, overtime.getReasonReject());
+                holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_red));
             } else {
                 holder.ll_reasonReject.setVisibility(View.GONE);
+                holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_green));
             }
             holder.tvStatus.setText(status);
         } else {
@@ -88,11 +91,12 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
         }
         ViewDataUtils.setDataToView(holder.tvAcceptedTime, overtime.getCorrectTotalTime());
         ViewDataUtils.setDataToView(holder.tvTotalTime, overtime.getTotalTime());
-        setEventToButton(holder,position);
+        setEventToButton(holder, position);
     }
 
     /**
      * set onclick listener for accept and reject overtime
+     *
      * @param holder
      */
     private void setEventToButton(final Holder holder, final int position) {
@@ -100,64 +104,68 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
             @Override
             public void onClick(View view) {
                 //Send status = accepted to server
-                updateStatusToServer(position,3,"",0.0);
+                updateStatusToServer(position, 3, "", 0.0);
             }
         });
         holder.btnReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogReason(holder, position);
+                showDialogReason(position);
             }
         });
     }
 
-    public void showDialogReason(final Holder holder, final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    public void showDialogReason(final int position) {
+        final Double timeLimit = Double.parseDouble(listOvertime.get(position).getTotalTime().toString());
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
         final EditText edt_acceptTime = view.findViewById(R.id.edt_acceptTime);
         final EditText edt_reasonReject = view.findViewById(R.id.edt_reasonReject);
-        builder.setView(view);
-        builder.setTitle("Please enter accept time and reason reject?");
-        builder.setCancelable(false);
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        final android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(context)
+                .setView(view)
+                .setTitle("Please enter accept time and reason reject?")
+                .setPositiveButton("OK",null)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
+                    }
+                })
+                .show();
+
+        Button btnPositive = dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE);
+        btnPositive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkValidateAcceptTime()==null) {
+                    updateStatusToServer(position, 4, edt_reasonReject.getText() + "", Double.parseDouble(edt_acceptTime.getText() + ""));
+                    dialog.dismiss();
+                }
+            }
+            private View checkValidateAcceptTime() {
+                edt_acceptTime.setError(null);
+                double acceptTimeEnter = Double.parseDouble(edt_acceptTime.getText().toString());
+                if (acceptTimeEnter > timeLimit){
+                    edt_acceptTime.setError(context.getString(R.string.error_message_enter_accept_time)+" "+timeLimit);
+                    return edt_acceptTime;
+                }
+                return  null;
             }
         });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //update status to server
-                updateStatusToServer(position,4,edt_reasonReject.getText()+"",Double.parseDouble(edt_acceptTime.getText()+""));
-                //todo:reload data
-
-                //check display
-                holder.ll_button.setVisibility(View.GONE);
-                holder.tvStatus.setVisibility(View.VISIBLE);
-                holder.tvStatus.setText("Rejected");
-                holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_red));
-                holder.ll_reasonReject.setVisibility(View.VISIBLE);
-                holder.rl_acceptedTime.setVisibility(View.VISIBLE);
-                holder.tvReasonReject.setText(edt_reasonReject.getText());
-                holder.tvAcceptedTime.setText(edt_acceptTime.getText());
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
-    //TODO: update status to server
-    private void updateStatusToServer(int position, int idStatus,String reasonReject, Double correctTotalTime) {
+    /**
+     * update status to server
+     */
+    private void updateStatusToServer(int position, int idStatus, String reasonReject, Double correctTotalTime) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("overtimeStatusId",idStatus+"");
-            jsonObject.put("reasonReject",reasonReject);
-            jsonObject.put("correctTotalTime",correctTotalTime+"");
+            jsonObject.put("overtimeStatusId", idStatus + "");
+            jsonObject.put("reasonReject", reasonReject);
+            jsonObject.put("correctTotalTime", correctTotalTime + "");
             RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-            updateStatusPresenter.updateStatusOvertime(listOvertime.get(position).getId(),body);
+            updateStatusPresenter.updateStatusOvertime(listOvertime.get(position).getId(), body);
 
-        } catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

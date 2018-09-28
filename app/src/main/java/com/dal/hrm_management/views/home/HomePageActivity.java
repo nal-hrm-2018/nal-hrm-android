@@ -86,8 +86,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         initNavigationMenu();
         addEvent();
         //Chuyển fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceViewFragment()).commit();
-        getSupportActionBar().setTitle(R.string.menu_absence);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
+        getSupportActionBar().setTitle(R.string.menu_dashboard);
 
     }
 
@@ -373,6 +373,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
      * Đăng nhập fail không có profile
      */
     private void populateExpandableList() {
+        Toast.makeText(this,HomePresenter.profile.toString(),Toast.LENGTH_LONG).show();
         expandableListAdapter = new com.dal.hrm_management.adapter.ExpandableListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {

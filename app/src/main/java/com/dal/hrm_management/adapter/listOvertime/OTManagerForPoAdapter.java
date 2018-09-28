@@ -1,8 +1,8 @@
 package com.dal.hrm_management.adapter.listOvertime;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,22 +16,29 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageOvertime.po.viewlist.OverTime;
+import com.dal.hrm_management.presenters.managerOvertime.status.UpdateStatusPresenter;
 import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.ViewDataUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
+
+import okhttp3.RequestBody;
 
 
 public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAdapter.MyViewHolder> {
     private List<OverTime> overtimeList;
     private Context context;
     private List<OverTime> overtimeListFiltered;
+    private UpdateStatusPresenter updateStatusPresenter;
 
-
-    public OTManagerForPoAdapter(List<OverTime> listOvertime, Context context) {
+    public OTManagerForPoAdapter(List<OverTime> listOvertime, Context context, UpdateStatusPresenter updateStatusPresenter) {
         this.overtimeList = listOvertime;
         this.context = context;
         this.overtimeListFiltered = listOvertime;
+        this.updateStatusPresenter = updateStatusPresenter;
     }
 
 
@@ -73,8 +80,11 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
                 ViewDataUtils.setDataToView(holder.tvAcceptTime, overTime.getCorrectTotalTime());
                 if (status.equalsIgnoreCase("Accepted")) {
                     holder.ll_reasonReject.setVisibility(View.GONE);
+                    holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_green));
                 } else {
+                    holder.ll_reasonReject.setVisibility(View.VISIBLE);
                     ViewDataUtils.setDataToView(holder.tvReasonReject, overTime.getReasonReject());
+                    holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_red));
                 }
             }
             ViewDataUtils.setDataToView(holder.tvStatus, status);
@@ -86,61 +96,71 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
             @Override
             public void onClick(View view) {
                 //Send status = accepted to server
-                updateStatusToServer();
-                holder.ll_button.setVisibility(View.GONE);
-                holder.ll_reasonReject.setVisibility(View.GONE);
-                holder.tvStatus.setVisibility(View.VISIBLE);
-                holder.tvStatus.setText("Accepted");
-                holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_green));
-                holder.rl_acceptedTime.setVisibility(View.VISIBLE);
+                updateStatusToServer(position, 3, "", 0.0);
             }
         });
         holder.imbReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogReason(holder);
+                showDialogReason(position);
             }
         });
     }
 
     /**
-     * TODO:send json contain status to server
+     * update status to server
      */
-    private void updateStatusToServer() {
+    private void updateStatusToServer(int position, int idStatus, String reasonReject, Double correctTotalTime) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("overtimeStatusId", idStatus + "");
+            jsonObject.put("reasonReject", reasonReject);
+            jsonObject.put("correctTotalTime", correctTotalTime + "");
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+            updateStatusPresenter.updateStatusOvertime(overtimeList.get(position).getId(), body);
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void showDialogReason(final MyViewHolder holder) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    public void showDialogReason(final int position) {
+        final Double timeLimit = Double.parseDouble(overtimeList.get(position).getTotalTime().toString());
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
         final EditText edt_acceptTime = view.findViewById(R.id.edt_acceptTime);
         final EditText edt_reasonReject = view.findViewById(R.id.edt_reasonReject);
-        builder.setView(view);
-        builder.setTitle("Please enter accept time and reason reject?");
-        builder.setCancelable(false);
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setView(view)
+                .setTitle("Please enter accept time and reason reject?")
+                .setPositiveButton("OK", null)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    }
+                })
+                .show();
+
+        Button btnPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        btnPositive.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //update status to server
-                updateStatusToServer();
-                holder.ll_button.setVisibility(View.GONE);
-                holder.tvStatus.setVisibility(View.VISIBLE);
-                holder.tvStatus.setText("Rejected");
-                holder.tvStatus.setTextColor(context.getResources().getColor(R.color.color_red));
-                holder.ll_reasonReject.setVisibility(View.VISIBLE);
-                holder.rl_acceptedTime.setVisibility(View.VISIBLE);
-                holder.tvReasonReject.setText(edt_reasonReject.getText());
-                holder.tvAcceptTime.setText(edt_acceptTime.getText());
+            public void onClick(View view) {
+                if (checkValidateAcceptTime() == null) {
+                    updateStatusToServer(position, 4, edt_reasonReject.getText() + "", Double.parseDouble(edt_acceptTime.getText() + ""));
+                    dialog.dismiss();
+                }
+            }
+
+            private View checkValidateAcceptTime() {
+                edt_acceptTime.setError(null);
+                double acceptTimeEnter = Double.parseDouble(edt_acceptTime.getText().toString());
+                if (acceptTimeEnter > timeLimit) {
+                    edt_acceptTime.setError(context.getString(R.string.error_message_enter_accept_time) + " " + timeLimit);
+                    return edt_acceptTime;
+                }
+                return null;
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     @Override

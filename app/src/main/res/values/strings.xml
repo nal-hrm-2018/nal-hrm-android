@@ -245,4 +245,5 @@
     <string name="overtime_label_hours">Hours</string>
     <string name="overtime_item_reason_reject">Reason reject:</string>
     <string name="overtime_button_review">Review</string>
+    <string name="error_message_enter_accept_time">Accept time entered must be less than</string>
 </resources>
