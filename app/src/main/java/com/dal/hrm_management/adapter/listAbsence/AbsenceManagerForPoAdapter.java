@@ -45,7 +45,6 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final Absence absence = absenceListFilter.get(position);
         holder.tv_nameEmployee.setText(absence.getNameEmployee());
-        holder.tv_nameProject.setText(absence.getNameProject());
         if (absence.getReason() != null) {
             holder.tv_reason.setText(absence.getReason());
         } else {
@@ -119,7 +118,6 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         LinearLayout absences_layout;
         TextView tv_nameEmployee;
-        TextView tv_nameProject;
         TextView tv_reason;
         TextView tv_from;
         TextView tv_to;
@@ -131,7 +129,6 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
             super(itemView);
             absences_layout = (LinearLayout) itemView.findViewById(R.id.absences_layout);
             tv_nameEmployee = (TextView) itemView.findViewById(R.id.tv_nameEmployee);
-            tv_nameProject = (TextView) itemView.findViewById(R.id.tv_nameProject);
             tv_reason = (TextView) itemView.findViewById(R.id.tv_reason);
             tv_from = (TextView) itemView.findViewById(R.id.tv_from);
             tv_to = (TextView) itemView.findViewById(R.id.tv_to);

@@ -53,7 +53,6 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
         holder.setIsRecyclable(false);
         final OverTime overTime = overtimeList.get(position);
         ViewDataUtils.setDataToView(holder.tvNameEmp, overTime.getNameEmployee());
-        ViewDataUtils.setDataToView(holder.tvNameProject, overTime.getNameProject());
         ViewDataUtils.setDataDateToView(holder.tvDate, overTime.getDate());
         if (overTime.getDayTypes() != null) {
             ViewDataUtils.setDataDateToView(holder.tvTypeDate, StringUtils.toUpperCaseFirstChar(overTime.getDayTypes().getNameDayType()));
@@ -201,7 +200,7 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout absences_layout;
-        TextView tvNameProject, tvNameEmp, tvTypeDate, tvDate, tvFrom, tvTo, tvReason, tvNumberTime, tvAcceptTime, tvStatus, tvReasonReject;
+        TextView tvNameEmp, tvTypeDate, tvDate, tvFrom, tvTo, tvReason, tvNumberTime, tvAcceptTime, tvStatus, tvReasonReject;
         ImageButton imbAccept, imbReject;
         LinearLayout ll_button, ll_reasonReject;
         RelativeLayout rl_acceptedTime;
@@ -209,7 +208,6 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
         public MyViewHolder(View itemView) {
             super(itemView);
             absences_layout = itemView.findViewById(R.id.absences_layout);
-            tvNameProject = itemView.findViewById(R.id.tvItemListOTOfPO_NameProject);
             tvNameEmp = itemView.findViewById(R.id.tvItemListOTOfPO_NameEmp);
             tvTypeDate = itemView.findViewById(R.id.tvItemListOTOfPO_TypeDay);
             tvDate = itemView.findViewById(R.id.tvItemListOTOfPO_DateOT);

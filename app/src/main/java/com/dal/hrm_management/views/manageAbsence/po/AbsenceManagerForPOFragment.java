@@ -44,6 +44,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     private TextView tv_message_nothing;
     private ProgressBar progressBar;
     private List<Project> projectList;
+    private List<String> idProjects;
     private List<String> nameProjects;
     private List<Absence> absenceList;
     private ManageAbsencePOPresenter manageAbsencePOPresenter;
@@ -51,7 +52,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     private int pageSize = 15;
     private int totalProject = 0;
     private int totalAbsenceInProject = 0;
-    private String idProject;
+    private String idProjectSelected;
 
     public AbsenceManagerForPOFragment() {
     }
@@ -72,6 +73,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         projectList = new ArrayList<>();
         absenceList = new ArrayList<>();
         nameProjects = new ArrayList<>();
+        idProjects = new ArrayList<>();
     }
 
     private void initPresenter() {
@@ -91,18 +93,18 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     private void setEvent(View view) {
         spnProjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                idProject = spnProjects.getSelectedItem().toString();
+                idProjectSelected = idProjects.get(spnProjects.getSelectedItemPosition());
                 //call presenter to get list absence of project
-                manageAbsencePOPresenter.getListAbsence(idProject);
+                manageAbsencePOPresenter.getListAbsence(idProjectSelected);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                idProject = spnProjects.getSelectedItem().toString();
-                if (idProject.equals("- No Project -")) {
+                idProjectSelected = idProjects.get(spnProjects.getSelectedItemPosition());
+                if (idProjectSelected.equals("- No Project -")) {
                     progressBar.setVisibility(View.GONE);
                 } else {
                     //call presenter to get list absence of project
-                    manageAbsencePOPresenter.getListAbsence(idProject);
+                    manageAbsencePOPresenter.getListAbsence(idProjectSelected);
                 }
             }
         });
@@ -162,7 +164,8 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
         if (totalProject != 0) {
             projectList = data.getProject();
             for (Project project : projectList) {
-                nameProjects.add(project.getIdProject());
+                nameProjects.add(project.getNameProject());
+                idProjects.add(project.getIdProject());
             }
         } else {
             nameProjects.add("- No Project -");

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.listProjectEmpAttend.ProjectAndProcess;
+import com.dal.hrm_management.utils.Constant;
 import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -40,14 +41,12 @@ public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployee
         holder.tv_nameProject.setText(projects.get(position).getProject().getNameProject());
         if (projects.get(position).getProcesses().getRole() != null) {
             String role = projects.get(position).getProcesses().getRole().getNameRole();
-            if (role.toLowerCase().equals("hr")) {
+            if (role.toUpperCase().equals(Constant.ROLE_SM_AL)) {
                 holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_red));
-            } else if (role.toLowerCase().equals("po")) {
+            } else if (role.toUpperCase().equals(Constant.ROLE_PO)) {
                 holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_orange));
-            } else if (role.toLowerCase().equals("dev")) {
+            } else if (role.toUpperCase().equals(Constant.ROLE_DEV)) {
                 holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_green));
-            } else if (role.toLowerCase().equals("accountant")) {
-                holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_gray));
             }
             holder.tv_role.setText(role);
         } else holder.tv_role.setText(R.string.infor_null);
