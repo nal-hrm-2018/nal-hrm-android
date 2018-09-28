@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -55,6 +56,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
     private List<OverTime> listOvertime;
     private LinearLayoutManager layoutManager;
     private UpdateStatusPresenter updateStatusPresenter;
+    private SwipeRefreshLayout srlReload;
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -105,6 +107,15 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
         idProjectList = new ArrayList<>();
         nameProjectList = new ArrayList<>();
         projectList = new ArrayList<>();
+        srlReload = viewInflater.findViewById(R.id.srlOvertimeManageOfPOFra_reload);
+        srlReload.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srlReload.setRefreshing(true);
+                rv_overtime.setVisibility(View.GONE);
+                reloadPage();
+            }
+        });
     }
 
 
@@ -149,6 +160,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
                 idProjectSelected = idProjectList.get(spnProjects.getSelectedItemPosition());
                 if (idProjectSelected.equals("- No Project -")) {
                     prgShowMore.setVisibility(View.GONE);
+                    rv_overtime.setVisibility(View.GONE);
                 } else {
                     //call presenter to get list overtime of project
                     overTimeManageOfPoPresenter.getListOverTimeForPO(idProjectSelected, current_page, pageSize);
@@ -196,9 +208,11 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
             tvNothing.setText("No overtime in this project!");
             tvNothing.setVisibility(View.VISIBLE);
             prgShowMore.setVisibility(View.GONE);
+            rv_overtime.setVisibility(View.GONE);
         }
         prgShowMore.setVisibility(View.GONE);
-
+        rv_overtime.setVisibility(View.VISIBLE);
+        if (current_page == 1) srlReload.setRefreshing(false);
 //        totalOvertimes = data.getTotal();
 //        listOvertime.addAll(data.getList());
 //        adapter = new OTManagerForPoAdapter(listOvertime, getContext());
@@ -212,6 +226,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
         prgShowMore.setVisibility(View.GONE);
         tvNothing.setVisibility(View.GONE);
+        rv_overtime.setVisibility(View.GONE);
     }
 
     @Override

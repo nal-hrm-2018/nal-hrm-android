@@ -86,7 +86,7 @@
     <string name="menu_project">Project</string>
     <string name="menu_absence">My Absence</string>
     <string name="menu_manage">Manage</string>
-    <string name="menu_employee">Employee</string>
+    <string name="menu_employee">Employees</string>
     <string name="menu_absence_empl">Absence</string>
     <string name="menu_logout">Logout</string>
     <string name="tv_allowAbsence">Số ngày phép có thể nghỉ :</string>
@@ -171,7 +171,7 @@
     <string name="menu_id_dashboard">id_dashboard</string>
     <string name="menu_id_absence">id_absence</string>
     <string name="menu_id_manage">id_manage</string>
-    <string name="menu_id_manage_employee">id_manage_employee</string>
+    <string name="menu_id_employee">id_manage_employee</string>
     <string name="menu_id_manage_absence">id_manage_absence</string>
     <string name="menu_id_manage_holiday">id_manage_holiday</string>
     <string name="menu_id_manage_overtime">id_manage_overtime</string>
@@ -246,4 +246,6 @@
     <string name="overtime_item_reason_reject">Reason reject:</string>
     <string name="overtime_button_review">Review</string>
     <string name="error_message_enter_accept_time">Accept time entered must be less than</string>
+    <string name="menu_holiday">Holiday</string>
+    <string name="menu_overtime_employee">Overtime</string>
 </resources>

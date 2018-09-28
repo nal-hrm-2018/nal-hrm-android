@@ -3,6 +3,7 @@ package com.dal.hrm_management.views.manageOvertime.hr;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,6 +41,7 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
     private int pageSize = 5;
     private int totalOvertime = 0;
     private UpdateStatusPresenter updateStatusPresenter;
+    private SwipeRefreshLayout srlReload;
 
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -91,6 +93,15 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
         rvOvertime = view.findViewById(R.id.rvOvertime);
         layoutManager = new LinearLayoutManager(getContext());
         overtimeList = new ArrayList<>();
+        srlReload = view.findViewById(R.id.srlOvertimeManageOfHRFra_reload);
+        srlReload.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                reloadPage();
+                rvOvertime.setVisibility(View.GONE);
+                srlReload.setRefreshing(true);
+            }
+        });
     }
 
     @Override
@@ -105,6 +116,8 @@ public class OvertimeManageOfHrFragment extends Fragment implements IOvertimeMan
             } else {
                 adapter.notifyDataSetChanged();
             }
+            if (currentPage == 1) srlReload.setRefreshing(false);
+            rvOvertime.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
             tvOvertimeNothingtoShow.setVisibility(View.GONE);
             rvOvertime.setLayoutManager(layoutManager);

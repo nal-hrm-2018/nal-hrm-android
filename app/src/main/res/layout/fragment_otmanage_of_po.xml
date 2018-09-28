@@ -19,13 +19,19 @@
             android:layout_centerHorizontal="true"
             android:padding="@dimen/text_padding" />
     </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvOTManagePOFra_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srlOvertimeManageOfPOFra_reload"
+        android:layout_below="@id/rl_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_layout"
-        android:background="@color/color_gray"></android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvOTManagePOFra_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_layout"
+            android:background="@color/color_gray"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <ProgressBar
         android:id="@+id/prgOTManagePOFra_showMore"

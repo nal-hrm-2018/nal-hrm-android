@@ -193,6 +193,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_absence))) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceViewFragment()).commit();
                             getSupportActionBar().setTitle(R.string.menu_absence);
+                        } else if (headerList.get(groupPosition).id.equals(getString(R.string.menu_id_employee))) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployee()).commit();
+                            getSupportActionBar().setTitle(R.string.menu_employee);
                         } else if (headerList.get(groupPosition).menuName.equals(getString(R.string.menu_logout))) {
                             showDialogLogout();
                         }
@@ -211,10 +214,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
                     Log.d("GROUP", model.menuName);
-                    if (model.id.equals(getString(R.string.menu_id_manage_employee))) {
-                        getSupportActionBar().setTitle(getString(R.string.menu_employee));
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployee()).commit();
-                    } else if ((model.id.equals(getString(R.string.menu_id_manage_absence)))) {
+                    if ((model.id.equals(getString(R.string.menu_id_manage_absence)))) {
                         getSupportActionBar().setTitle(getString(R.string.menu_absence_empl));
                         if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
@@ -222,19 +222,17 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
                         }
                     } else if (model.id.equals(getString(R.string.menu_id_manage_holiday))) {
-                        getSupportActionBar().setTitle("Holiday");
+                        getSupportActionBar().setTitle(R.string.menu_holiday);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HolidayHRFragment()).commit();
                     } else if (model.id.equals(getString(R.string.menu_id_manage_overtime))) {
-                        getSupportActionBar().setTitle("Overtime");
-                        if (data.getEmail().equals(Constant.EMAIL_CEO)){
+                        getSupportActionBar().setTitle(R.string.menu_overtime_employee);
+                        if (data.getEmail().equals(Constant.EMAIL_CEO)) {
                             getSupportFragmentManager().beginTransaction().
                                     replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).
                                     commit();
-                        }else
-                        if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO)) {
+                        } else if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OTManageOfPOFragment()).commit();
-                        }else
-                        if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
+                        } else if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).commit();
                         }
                     }
@@ -284,25 +282,24 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
+        if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_list_employee")) {
+            menuModel = new MenuModel(getString(R.string.menu_id_employee), getString(R.string.menu_employee), true, false, getResources().getDrawable(R.drawable.ic_people));
+            headerList.add(menuModel);
+        }
         if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO) || data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO) || data.getRole().getNameRole().equals("SM")) {
             menuModel = new MenuModel(getString(R.string.menu_id_manage), getString(R.string.menu_manage), true, true, getResources().getDrawable(R.drawable.ic_manage));
             headerList.add(menuModel);
-
             List<MenuModel> childModelsList = new ArrayList<>();
             MenuModel chilModel;
-            if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_list_employee")) {
-                chilModel = new MenuModel(getString(R.string.menu_id_manage_employee), getString(R.string.menu_employee), false, false, null);
-                childModelsList.add(chilModel);
-            }
             if (PermissionManager.isPermited(PermissionManager.listPermissions, "view_employee_absence_history") || PermissionManager.isPermited(PermissionManager.listPermissions, "view_project_absence_history")) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_absence), getString(R.string.menu_absence_empl), false, false, null);
                 childModelsList.add(chilModel);
             }
-//            if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
-//                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
-//                childModelsList.add(chilModel);
-//            }
-            if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO)||data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
+            if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
+                childModelsList.add(chilModel);
+            }
+            if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO) || data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
                 childModelsList.add(chilModel);
             }
@@ -342,8 +339,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         if (requestCode == VariableUltils.REQUEST_CODE_ADD_ABSENCE && resultCode == Activity.RESULT_OK) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
         }
-        if (requestCode == REQUEST_CODE_EDIT_OVERTIME_PERSONAL && resultCode == Activity.RESULT_OK){
-            Log.d(TAG,"edit success - reload page");
+        if (requestCode == REQUEST_CODE_EDIT_OVERTIME_PERSONAL && resultCode == Activity.RESULT_OK) {
+            Log.d(TAG, "edit success - reload page");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OverTimeListFragment()).commit();
         }
     }
@@ -373,7 +370,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
      * Đăng nhập fail không có profile
      */
     private void populateExpandableList() {
-        Toast.makeText(this,HomePresenter.profile.toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, HomePresenter.profile.toString(), Toast.LENGTH_LONG).show();
         expandableListAdapter = new com.dal.hrm_management.adapter.ExpandableListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
