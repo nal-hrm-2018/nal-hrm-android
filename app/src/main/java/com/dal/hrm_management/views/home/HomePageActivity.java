@@ -216,7 +216,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListEmployee()).commit();
                     } else if ((model.id.equals(getString(R.string.menu_id_manage_absence)))) {
                         getSupportActionBar().setTitle(getString(R.string.menu_absence_empl));
-                        if (data.getRole().getNameRole().equals("HR")) {
+                        if (data.getRole().getNameRole().equals("BO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
                         } else if (data.getRole().getNameRole().equals("PO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
@@ -234,7 +234,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         if (data.getRole().getNameRole().equals("PO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OTManageOfPOFragment()).commit();
                         }else
-                        if (data.getRole().getNameRole().equals("HR")) {
+                        if (data.getRole().getNameRole().equals("BO")) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).commit();
                         }
                     }
@@ -284,7 +284,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        if (data.getRole().getNameRole().equals("HR") || data.getRole().getNameRole().equals("PO") || data.getRole().getNameRole().equals("SM")) {
+        if (data.getRole().getNameRole().equals("BO") || data.getRole().getNameRole().equals("PO") || data.getRole().getNameRole().equals("SM")) {
             menuModel = new MenuModel(getString(R.string.menu_id_manage), getString(R.string.menu_manage), true, true, getResources().getDrawable(R.drawable.ic_manage));
             headerList.add(menuModel);
 
@@ -302,7 +302,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 //                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
 //                childModelsList.add(chilModel);
 //            }
-            if (data.getRole().getNameRole().equals("PO")||data.getRole().getNameRole().equals("HR")) {
+            if (data.getRole().getNameRole().equals("PO")||data.getRole().getNameRole().equals("BO")) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
                 childModelsList.add(chilModel);
             }
