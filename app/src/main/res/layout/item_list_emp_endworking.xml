@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/item_padding"
-    android:background="@android:color/white"
+    android:background="@drawable/border_background"
     android:layout_margin="@dimen/item_padding"
     android:padding="@dimen/activity_horizontal_margin">
 
@@ -20,21 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/imv_avaEmp"
-        android:text="Họ và tên"
         android:textSize="@dimen/text_size_medium"
         android:theme="@style/NameEmpInList" />
-
-    <TextView
-        android:id="@+id/tv_chucVu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_hoVaTen"
-        android:layout_toRightOf="@id/imv_avaEmp"
-        android:text="Chức vụ"
-        android:paddingRight="@dimen/text_padding"
-        android:paddingLeft="@dimen/text_padding"
-        android:textSize="@dimen/text_size_small"
-        android:theme="@style/infoEmpInList" />
 
     <TextView
         android:id="@+id/tv_email"
@@ -42,8 +29,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_chucVu"
         android:layout_toRightOf="@id/imv_avaEmp"
-        android:text="Email"
         android:textSize="@dimen/text_size_medium"
+        android:theme="@style/infoEmpInList" />
+    <TextView
+        android:id="@+id/tv_chucVu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_hoVaTen"
+        android:layout_toRightOf="@id/imv_avaEmp"
+        android:paddingRight="@dimen/text_padding"
+        android:paddingLeft="@dimen/text_padding"
+        android:textSize="@dimen/text_size_small"
         android:theme="@style/infoEmpInList" />
 
     <ImageView

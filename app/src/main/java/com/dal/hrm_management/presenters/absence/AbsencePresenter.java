@@ -10,7 +10,8 @@ import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
 import com.dal.hrm_management.models.manageAbsence.hr.editAbsence.EditAbsenceResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.views.absence.IAbsenceFormActivity;
-import com.dal.hrm_management.views.absence.IAbsenceViewActivity;
+import com.dal.hrm_management.views.absence.IAbsenceViewFragment;
+import com.dal.hrm_management.views.dashboard.IDashboardFragment;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -18,17 +19,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AbsencePresenter implements IAbsencePresenter {
-    private IAbsenceViewActivity iAbsenceViewActivity;
+    private IAbsenceViewFragment iAbsenceViewActivity;
     private IAbsenceFormActivity iAbsenceFormActivity;
+    private IDashboardFragment iDashboardFragment;
     private final String TAG = AbsencePresenter.class.getSimpleName();
 
 
-    public AbsencePresenter(IAbsenceViewActivity iAbsenceViewActivity) {
+    public AbsencePresenter(IAbsenceViewFragment iAbsenceViewActivity) {
         this.iAbsenceViewActivity = iAbsenceViewActivity;
     }
 
     public AbsencePresenter(IAbsenceFormActivity iAbsenceFormActivity) {
         this.iAbsenceFormActivity = iAbsenceFormActivity;
+    }
+
+    public AbsencePresenter(IDashboardFragment iDashboardFragment) {
+        this.iDashboardFragment = iDashboardFragment;
     }
 
     @Override
@@ -39,14 +45,26 @@ public class AbsencePresenter implements IAbsencePresenter {
             @Override
             public void onResponse(Call<AbsencesResponse> call, Response<AbsencesResponse> response) {
                 if (response.code() >= 300) {
-                    iAbsenceViewActivity.getAbsencePersonalFailed();
+                    if (iDashboardFragment != null) {
+                        iDashboardFragment.getInforAbsenceFailure();
+                    } else {
+                        iAbsenceViewActivity.getAbsencePersonalFailed();
+                    }
                 } else if (response.code() >= 200) {
                     AbsencesResponse absencesResponse = response.body();
                     if (absencesResponse.getResultCode() == 200) {
-                        iAbsenceViewActivity.getAbsencePersonalSuccess(absencesResponse.getDataAbsence());
+                        if (iDashboardFragment != null) {
+                            iDashboardFragment.getInforAbsenceSuccess(absencesResponse.getDataAbsence());
+                        } else {
+                            iAbsenceViewActivity.getAbsencePersonalSuccess(absencesResponse.getDataAbsence());
+                        }
                     }
                 } else {
-                    iAbsenceViewActivity.getAbsencePersonalFailed();
+                    if (iDashboardFragment != null) {
+                        iDashboardFragment.getInforAbsenceFailure();
+                    } else {
+                        iAbsenceViewActivity.getAbsencePersonalFailed();
+                    }
                 }
             }
 
