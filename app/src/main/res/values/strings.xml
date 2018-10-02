@@ -248,4 +248,5 @@
     <string name="error_message_enter_accept_time">Accept time entered must be less than</string>
     <string name="menu_holiday">Holiday</string>
     <string name="menu_overtime_employee">Overtime</string>
+    <string name="error_overtime_hour_start">Hour overtime start at</string>
 </resources>
