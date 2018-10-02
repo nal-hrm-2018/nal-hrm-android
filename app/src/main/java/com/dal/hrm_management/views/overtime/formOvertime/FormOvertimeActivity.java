@@ -21,8 +21,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.models.holiday.Holiday;
 import com.dal.hrm_management.models.listProjectEmpJoining.Project;
 import com.dal.hrm_management.models.overtimePersonal.Overtime;
+import com.dal.hrm_management.presenters.holiday.holiday.HolidayPresenter;
 import com.dal.hrm_management.presenters.overtimePersonal.formOvertime.FormOvertimePresenter;
 import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.ValidationDateTime;
@@ -54,6 +56,8 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     private boolean isEditOvertime; // isEditOvertime = true --> Chuc nang edit nguoc lai: chuc nang add
     //api
     private FormOvertimePresenter formOvertimePresenter;
+    private HolidayPresenter holidayPresenter;
+    private List<Holiday> holidayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +124,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
         btnSubmit.setOnClickListener(this);
         getCurrentDateTime();
         formOvertimePresenter = new FormOvertimePresenter(this);
+        holidayPresenter = new HolidayPresenter(this);
 
         //progress dialog
         progressDialog = new ProgressDialog(this);
@@ -254,7 +259,8 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             edtDate.setError(getString(R.string.error_invalid_date));
             return edtDate;
         }
-
+        //check day
+        boolean isHoliday = checkHoliday();
         int maxMinutes = 0,fromMinutes=0,toMinutes=0;
 
         //Check time
@@ -265,6 +271,17 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             if (!ValidationDateTime.checkTime(hour, minute)) {
                 edtFromTime.setError(getString(R.string.error_invalid_time));
                 return edtFromTime;
+            }
+            if (!isHoliday){
+                if (hour < 18){
+                    edtFromTime.setError(getString(R.string.error_invalid_time));
+                    return edtFromTime;
+                }else{
+                    if (hour == 18 && minute < 30){
+                        edtFromTime.setError(getString(R.string.error_invalid_time));
+                        return edtFromTime;
+                    }
+                }
             }
             fromMinutes = hour*60+minute;
         } catch (Exception ex) {
@@ -283,6 +300,10 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 return edtToTime;
             }
             toMinutes = hour*60+minute;
+            if (fromMinutes > toMinutes){
+                edtToTime.setError(getString(R.string.error_invalid_time));
+                return edtToTime;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             edtToTime.setError(getString(R.string.error_invalid_time));
@@ -302,6 +323,16 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             return edtTotalTime;
         }
         return null;
+    }
+
+    private boolean checkHoliday() {
+        for (Holiday holiday:holidayList
+             ) {
+            if (holiday.getDateHoliday().equals(StringUtils.convertDateEditTextToServer(edtDate.getText().toString()))){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -355,5 +386,10 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     public void editOvertimeFailure() {
         progressDialog.dismiss();
         Toast.makeText(this, "Edit overtime failure!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getHolidaySuccess(List<Holiday> data) {
+        holidayList = data;
     }
 }

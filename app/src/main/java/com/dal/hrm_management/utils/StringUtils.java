@@ -90,7 +90,7 @@ public class StringUtils {
     /**
      * convert text with format (dd-MM-yyyy) to text with format yyyy-MM-dd
      * @param text
-     * @return ddMMyyyy
+     * @return dd-MM-yyyy
      */
     public static String convertDateEditTextToServer(String text){
         String[] split = text.split("-");

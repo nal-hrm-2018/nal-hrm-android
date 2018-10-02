@@ -28,4 +28,5 @@ public class DayTypes {
         this.nameDayType = nameDayType;
     }
 
+
 }
