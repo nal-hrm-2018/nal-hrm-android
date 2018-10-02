@@ -254,4 +254,5 @@
     <string name="dashboard_general_information">GENERAL INFORMATION</string>
     <string name="dashboard_joining_projects">JOINING PROJECTS</string>
     <string name="dashboard_projects">PROJECTS</string>
+    <string name="error_overtime_hour_start">Hour overtime start at</string>
 </resources>
