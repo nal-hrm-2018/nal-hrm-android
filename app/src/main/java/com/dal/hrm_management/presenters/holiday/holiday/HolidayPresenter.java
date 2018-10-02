@@ -1,21 +1,30 @@
 package com.dal.hrm_management.presenters.holiday.holiday;
 
 
+import android.util.Log;
+
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.holiday.HolidayResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
-import com.dal.hrm_management.views.manageAbsence.Hr.holiday.HolidayHRFragment;
 import com.dal.hrm_management.views.manageAbsence.Hr.holiday.IHolidayFragment;
+import com.dal.hrm_management.views.overtime.formOvertime.FormOvertimeActivity;
+import com.dal.hrm_management.views.overtime.formOvertime.IFormOvertimeActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HolidayPresenter implements IHolidayPresenter{
+    private final String TAG = HolidayPresenter.class.getSimpleName();
     IHolidayFragment iHolidayFragment;
+    IFormOvertimeActivity formOvertimeActivity;
     public HolidayPresenter(IHolidayFragment holidayHRFragment) {
         this.iHolidayFragment = holidayHRFragment;
+    }
+
+    public HolidayPresenter(FormOvertimeActivity formOvertimeActivity) {
+        this.formOvertimeActivity = formOvertimeActivity;
     }
 
     @Override
@@ -26,7 +35,12 @@ public class HolidayPresenter implements IHolidayPresenter{
             @Override
             public void onResponse(Call<HolidayResponse> call, Response<HolidayResponse> response) {
                 if (response.code() ==200){
-                    iHolidayFragment.getHolidaySuccess(response.body().getData());
+                    Log.d(TAG,"get holiday success");
+                    if (iHolidayFragment !=null) {
+                        iHolidayFragment.getHolidaySuccess(response.body().getData());
+                    }else if (formOvertimeActivity != null){
+                        formOvertimeActivity.getHolidaySuccess(response.body().getData());
+                    }
                 }
             }
 
