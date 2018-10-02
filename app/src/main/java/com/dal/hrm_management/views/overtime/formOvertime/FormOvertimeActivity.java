@@ -38,6 +38,9 @@ import java.util.List;
 
 import okhttp3.RequestBody;
 
+import static com.dal.hrm_management.utils.Constant.START_HOUR_OT;
+import static com.dal.hrm_management.utils.Constant.START_MINUTES_OT;
+
 public class FormOvertimeActivity extends AppCompatActivity implements View.OnClickListener, IFormOvertimeActivity {
     private final String TAG = FormOvertimeActivity.class.getSimpleName();
     private EditText edtDate, edtFromTime, edtToTime, edtTotalTime, edtReason;
@@ -51,6 +54,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     private int mYear, mMonth, mDay, hour, minute;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
+    private TextView tvError;
     //Extra
     private Overtime edit_overTime;
     private boolean isEditOvertime; // isEditOvertime = true --> Chuc nang edit nguoc lai: chuc nang add
@@ -98,6 +102,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             }
         } else {
             isEditOvertime = false;
+            setTitle("Add overtime");
             Log.d(TAG, "Add overtime personal");
         }
 
@@ -122,9 +127,11 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
         imbFromTime.setOnClickListener(this);
         imbToTime.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        tvError = findViewById(R.id.tvFormOvertimeAct_error);
         getCurrentDateTime();
         formOvertimePresenter = new FormOvertimePresenter(this);
         holidayPresenter = new HolidayPresenter(this);
+        holidayPresenter.getHoliday();
 
         //progress dialog
         progressDialog = new ProgressDialog(this);
@@ -239,6 +246,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     }
 
     private View checkValidate() {
+        tvError.setVisibility(View.GONE);
         edtDate.setError(null);
         edtFromTime.setError(null);
         edtToTime.setError(null);
@@ -273,11 +281,15 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 return edtFromTime;
             }
             if (!isHoliday){
-                if (hour < 18){
+                if (hour < START_HOUR_OT){
+                    tvError.setVisibility(View.VISIBLE);
+                    tvError.setText(getString(R.string.error_overtime_hour_start) +START_HOUR_OT +":"+START_MINUTES_OT);
                     edtFromTime.setError(getString(R.string.error_invalid_time));
                     return edtFromTime;
                 }else{
-                    if (hour == 18 && minute < 30){
+                    if (hour == START_HOUR_OT && minute < START_MINUTES_OT){
+                        tvError.setVisibility(View.VISIBLE);
+                        tvError.setText(getString(R.string.error_overtime_hour_start) +START_HOUR_OT +":"+START_MINUTES_OT);
                         edtFromTime.setError(getString(R.string.error_invalid_time));
                         return edtFromTime;
                     }
@@ -326,8 +338,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     }
 
     private boolean checkHoliday() {
-        for (Holiday holiday:holidayList
-             ) {
+        for (Holiday holiday:holidayList) {
             if (holiday.getDateHoliday().equals(StringUtils.convertDateEditTextToServer(edtDate.getText().toString()))){
                 return true;
             }

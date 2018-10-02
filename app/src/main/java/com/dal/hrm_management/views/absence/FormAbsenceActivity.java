@@ -52,10 +52,10 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
 
 
     public enum StatusAbsences {enum_Add, enum_Edit;}
+
     StatusAbsences statusAbsences = StatusAbsences.enum_Add;
     private Integer idAbsence;
-    private double remainTotal =0;
-    private double soNgayDangKiNghi =0;
+    private double soNgayDangKiNghi = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,56 +68,52 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void getExtra() {
-        remainTotal = getIntent().getExtras().getDouble(VariableUltils.KEY_PUT_EXTRA_REMAIN_ANNUAL);
-        if (remainTotal >0){
-            Log.d(TAG,"remain: " +remainTotal);
-        }else {
 //        //Nếu như add form absence thì absence khác null còn ko thì absence = null nếu null thì xét trường hợp khác
-            ListAbsenceForHr absenceForHr = (ListAbsenceForHr) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE);
-            if (absenceForHr != null) {
-                setTitle(absenceForHr.getNameEmployee());
-                btnSubmit.setText("Update");
-                String[] split = absenceForHr.getFromDate().split("-");
+        ListAbsenceForHr absenceForHr = (ListAbsenceForHr) getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE);
+        if (absenceForHr != null) {
+            setTitle(absenceForHr.getNameEmployee());
+            btnSubmit.setText("Update");
+            String[] split = absenceForHr.getFromDate().split("-");
+            String ngay = split[2] + split[1] + split[0];
+            Log.d(TAG, "-------------------------------------");
+            Log.d(TAG, "ngay" + absenceForHr.getFromDate());
+            Log.d(TAG, "ngay" + ngay);
+            edt_tuNgay.setText(ngay);
+            split = absenceForHr.getToDate().split("-");
+            ngay = split[2] + split[1] + split[0];
+            edt_denNgay.setText(ngay);
+            spnloaiNghi.setSelection(absenceForHr.getAbsenceType().getIdAbsenceType() - 1);
+            //array start with index = 0
+            spnthoiGianNghi.setSelection(absenceForHr.getAbsenceTime().getIdAbsenceTime() - 1);
+            edtReason.setText(absenceForHr.getReason());
+            edtNote.setText(absenceForHr.getDescription());
+            idAbsence = absenceForHr.getIdAbsences();
+            statusAbsences = StatusAbsences.enum_Edit;
+        } else {
+            com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence absenceInDetail =
+                    (com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence)
+                            getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE_IN_DETAIL);
+            if (absenceInDetail != null) {
+                setTitle(getResources().getString(R.string.text_title_edit_absence));
+                String[] split = absenceInDetail.getFromDate().split("-");
                 String ngay = split[2] + split[1] + split[0];
                 Log.d(TAG, "-------------------------------------");
-                Log.d(TAG, "ngay" + absenceForHr.getFromDate());
+                Log.d(TAG, "ngay" + absenceInDetail.getFromDate());
                 Log.d(TAG, "ngay" + ngay);
                 edt_tuNgay.setText(ngay);
-                split = absenceForHr.getToDate().split("-");
+                split = absenceInDetail.getToDate().split("-");
                 ngay = split[2] + split[1] + split[0];
                 edt_denNgay.setText(ngay);
-                spnloaiNghi.setSelection(absenceForHr.getAbsenceType().getIdAbsenceType() - 1);
+                spnloaiNghi.setSelection(absenceInDetail.getAbsenceType().getIdAbsenceType() - 1);
                 //array start with index = 0
-                spnthoiGianNghi.setSelection(absenceForHr.getAbsenceTime().getIdAbsenceTime() - 1);
-                edtReason.setText(absenceForHr.getReason());
-                edtNote.setText(absenceForHr.getDescription());
-                idAbsence = absenceForHr.getIdAbsences();
+                spnthoiGianNghi.setSelection(absenceInDetail.getAbsenceTime().getIdAbsenceTime() - 1);
+                edtReason.setText(absenceInDetail.getReason());
+                edtNote.setText(absenceInDetail.getDescription());
+                idAbsence = absenceInDetail.getIdAbsences();
                 statusAbsences = StatusAbsences.enum_Edit;
-            } else {
-                com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence absenceInDetail =
-                        (com.dal.hrm_management.models.manageAbsence.hr.absenceEmployee.Absence)
-                                getIntent().getSerializableExtra(VariableUltils.KEY_PUT_EXTRA_EDIT_ABSENCE_IN_DETAIL);
-                if (absenceInDetail != null) {
-                    setTitle(getResources().getString(R.string.text_title_edit_absence));
-                    String[] split = absenceInDetail.getFromDate().split("-");
-                    String ngay = split[2] + split[1] + split[0];
-                    Log.d(TAG, "-------------------------------------");
-                    Log.d(TAG, "ngay" + absenceInDetail.getFromDate());
-                    Log.d(TAG, "ngay" + ngay);
-                    edt_tuNgay.setText(ngay);
-                    split = absenceInDetail.getToDate().split("-");
-                    ngay = split[2] + split[1] + split[0];
-                    edt_denNgay.setText(ngay);
-                    spnloaiNghi.setSelection(absenceInDetail.getAbsenceType().getIdAbsenceType() - 1);
-                    //array start with index = 0
-                    spnthoiGianNghi.setSelection(absenceInDetail.getAbsenceTime().getIdAbsenceTime() - 1);
-                    edtReason.setText(absenceInDetail.getReason());
-                    edtNote.setText(absenceInDetail.getDescription());
-                    idAbsence = absenceInDetail.getIdAbsences();
-                    statusAbsences = StatusAbsences.enum_Edit;
-                }
             }
         }
+
     }
 
     private void mapMVP() {
@@ -212,20 +208,20 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
                         int day = Integer.parseInt(split[0]);
                         int month = Integer.parseInt(split[1]);
                         int year = Integer.parseInt(split[2]);
-                        c.set(Calendar.YEAR,year);
-                        c.set(Calendar.MONTH,month);
-                        c.set(Calendar.DAY_OF_MONTH,day);
+                        c.set(Calendar.YEAR, year);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.DAY_OF_MONTH, day);
                         Date day1 = c.getTime();
                         jsonObject.put("fromDate", tungay);
                         split = edt_denNgay.getText().toString().split("-");
                         day = Integer.parseInt(split[0]);
                         month = Integer.parseInt(split[1]);
                         year = Integer.parseInt(split[2]);
-                        c.set(Calendar.YEAR,year);
-                        c.set(Calendar.MONTH,month);
-                        c.set(Calendar.DAY_OF_MONTH,day);
+                        c.set(Calendar.YEAR, year);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.DAY_OF_MONTH, day);
                         Date day2 = c.getTime();
-                        soNgayDangKiNghi = (day2.getTime()-day1.getTime())/(24*60*60*1000);
+                        soNgayDangKiNghi = (day2.getTime() - day1.getTime()) / (24 * 60 * 60 * 1000);
                         String denngay = split[2] + "-" + split[1] + "-" + split[0];
                         jsonObject.put("toDate", denngay);
                         jsonObject.put("reason", StringUtils.deleteUnnecessarySpace(edtReason.getText().toString()));

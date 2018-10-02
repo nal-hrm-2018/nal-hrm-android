@@ -85,10 +85,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         getDataFromJson();
         initNavigationMenu();
         addEvent();
-        //Chuyển fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
-        getSupportActionBar().setTitle(R.string.menu_dashboard);
-
     }
 
     private void getDataFromJson() {
@@ -255,6 +251,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 updateLogoutKeyValueInSharedPreference();
                 Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
                 startActivity(intent);
+                HomePresenter.profile = null;
+                LoginPresenter.position = null;
                 finish();
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -357,6 +355,10 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         prepareMenuData(HomePresenter.profile);
         populateExpandableList(HomePresenter.profile);
         Log.d("Home", "thanh cong");
+        //Chuyển fragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
+        getSupportActionBar().setTitle(R.string.menu_dashboard);
+
     }
 
     @Override

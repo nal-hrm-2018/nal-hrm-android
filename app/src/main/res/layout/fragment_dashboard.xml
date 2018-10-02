@@ -4,27 +4,601 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/activity_horizontal_margin"
-    android:background="@color/color_white"
-    tools:context=".MainActivity">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:weightSum="2"
-        android:layout_height="wrap_content">
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/piechart1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp" />
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/piechart2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp" />
-    </LinearLayout>
+    android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_padding"
+                android:background="@drawable/border_background"
+                android:padding="1dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:textColor="@android:color/black"
+                    android:background="@color/color_pastel"
+                    android:text="@string/dashboard_notifications" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_notifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/text_padding"
+                    android:layout_marginRight="@dimen/item_padding"
+                    android:layout_weight="1"
+                    android:padding="1dp"
+                    android:background="@drawable/border_background"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_pastel">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/text_padding"
+                            android:textColor="@android:color/black"
+                            android:text="@string/dashboard_absences" />
+
+                        <ImageButton
+                            android:id="@+id/btn_addAbsence"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/text_padding"
+                            android:background="@drawable/shape_button_round"
+                            android:src="@drawable/ic_add"
+                            android:tint="@color/color_white" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/text_padding"
+                        android:text="@string/absence_total_remaining" />
+
+                    <TextView
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        android:id="@+id/tv_totalRemainingAbsence"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:textAlignment="center"
+                        android:textColor="@color/color_violet_2"
+                        android:textSize="@dimen/avatar_size_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/item_padding"
+                    android:layout_marginRight="@dimen/text_padding"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_background"
+                    android:padding="1dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/activity_horizontal_margin">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_pastel">
+
+                        <TextView
+                            android:id="@+id/title_absence"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/text_padding"
+                            android:textColor="@android:color/black"
+                            android:text="@string/dashboard_overtime" />
+
+                        <ImageButton
+                            android:id="@+id/btn_addOvertime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/text_padding"
+                            android:background="@drawable/shape_button_round"
+                            android:src="@drawable/ic_add"
+                            android:tint="@color/color_white" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/color_violet"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_normalOvertime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/text_padding"
+                                    android:paddingRight="@dimen/text_padding"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="@dimen/text_size_large" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/overtime_label_hours"
+                                    android:textColor="@color/color_white" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/text_padding"
+                                    android:text="@string/text_overtime_normal_day"
+                                    android:textColor="@color/color_white" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/color_violet_1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_weekendOvertime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/text_padding"
+                                    android:paddingRight="@dimen/text_padding"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="@dimen/text_size_large" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/overtime_label_hours"
+                                    android:textColor="@color/color_white" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/text_padding"
+                                    android:text="@string/text_overtime_weekend"
+                                    android:textColor="@color/color_white" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/color_violet_2"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_holidayOvertime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/text_padding"
+                                    android:paddingRight="@dimen/text_padding"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="@dimen/text_size_large" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/overtime_label_hours"
+                                    android:textColor="@color/color_white" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/text_padding"
+                                    android:text="@string/text_overtime_holiday"
+                                    android:textColor="@color/color_white" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_generalInformation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/text_padding"
+                android:background="@drawable/border_background"
+                android:padding="1dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:background="@color/color_pastel"
+                    android:text="@string/dashboard_general_information"
+                    android:textColor="@android:color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/piechart1"
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="2"
+
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_joingProjects"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/text_padding"
+                android:layout_marginRight="@dimen/text_padding"
+                android:layout_marginTop="@dimen/text_padding"
+                android:background="@drawable/border_background"
+                android:padding="1dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:textColor="@android:color/black"
+                    android:background="@color/color_pastel"
+                    android:text="@string/dashboard_joining_projects" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_joiningProjects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_projects"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/text_padding"
+                android:background="@drawable/border_background"
+                android:padding="1dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:textColor="@android:color/black"
+                    android:background="@color/color_pastel"
+                    android:text="@string/dashboard_projects" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_projects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/text_padding"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

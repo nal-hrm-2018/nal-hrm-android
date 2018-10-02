@@ -1,4 +1,4 @@
-package com.dal.hrm_management.adapter.listProjectEmployeeAttend;
+package com.dal.hrm_management.adapter.listProjectEmployee;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +14,6 @@ import com.dal.hrm_management.utils.Constant;
 import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.ArrayList;
-
-/**
- * Created by Luu Ngoc Lan on 27-Jul-18.
- */
 
 public class ProjectEmployeeAdapter extends RecyclerView.Adapter<ProjectEmployeeAdapter.ProjectEmployeeViewHolder> {
     private ArrayList<ProjectAndProcess> projects;

@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.adapter.listProjectEmployeeAttend.ProjectEmployeeAdapter;
+import com.dal.hrm_management.adapter.listProjectEmployee.ProjectEmployeeAdapter;
 import com.dal.hrm_management.models.listProjectEmpAttend.ProjectAndProcess;
 import com.dal.hrm_management.presenters.listProject.ListProjectEmpAttendPresenter;
 
@@ -31,7 +31,7 @@ public class ProjectEmployeeFragment extends Fragment
         implements SearchView.OnQueryTextListener,IListProjectEmployeeAttendFragment {
 
     private RecyclerView recyclerView;
-    private ArrayList<ProjectAndProcess> projects = new ArrayList<ProjectAndProcess>();
+    private ArrayList<ProjectAndProcess> projects = new ArrayList<>();
     private ProjectEmployeeAdapter adapter;
     private TextView tv_message_nothing;
     private ListProjectEmpAttendPresenter presenter;

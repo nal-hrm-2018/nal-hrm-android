@@ -28,7 +28,7 @@ import com.dal.hrm_management.utils.VariableUltils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbsenceViewFragment extends Fragment implements IAbsenceViewActivity, View.OnClickListener {
+public class AbsenceViewFragment extends Fragment implements IAbsenceViewFragment, View.OnClickListener {
     private final String TAG = AbsenceViewFragment.class.getSimpleName();
     private RecyclerView rv_absence;
     private AbsencePresenter absencePresenter;
