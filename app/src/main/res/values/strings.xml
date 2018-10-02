@@ -197,7 +197,7 @@
     <string name="overtime_timeEnd">09:55 PM</string>
     <string name="text_overtime_normal_day">Normal</string>
     <string name="text_number">12</string>
-    <string name="text_overtime_day_off">Weekend</string>
+    <string name="text_overtime_weekend">Weekend</string>
     <string name="text_overtime_holiday">Holiday</string>
     <string name="text_hour">12:30</string>
     <string name="text_type_absence">Cả ngày</string>
@@ -248,5 +248,11 @@
     <string name="error_message_enter_accept_time">Accept time entered must be less than</string>
     <string name="menu_holiday">Holiday</string>
     <string name="menu_overtime_employee">Overtime</string>
+    <string name="dashboard_notifications">NOTIFICATIONS</string>
+    <string name="dashboard_absences">ABSENCES</string>
+    <string name="dashboard_overtime">OVERTIMES</string>
+    <string name="dashboard_general_information">GENERAL INFORMATION</string>
+    <string name="dashboard_joining_projects">JOINING PROJECTS</string>
+    <string name="dashboard_projects">PROJECTS</string>
     <string name="error_overtime_hour_start">Hour overtime start at</string>
 </resources>

@@ -102,6 +102,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             }
         } else {
             isEditOvertime = false;
+            setTitle("Add overtime");
             Log.d(TAG, "Add overtime personal");
         }
 
@@ -337,8 +338,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
     }
 
     private boolean checkHoliday() {
-        for (Holiday holiday:holidayList
-             ) {
+        for (Holiday holiday:holidayList) {
             if (holiday.getDateHoliday().equals(StringUtils.convertDateEditTextToServer(edtDate.getText().toString()))){
                 return true;
             }
