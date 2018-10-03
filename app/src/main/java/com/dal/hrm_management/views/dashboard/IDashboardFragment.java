@@ -1,6 +1,7 @@
 package com.dal.hrm_management.views.dashboard;
 
 import com.dal.hrm_management.models.absence.DataAbsence;
+import com.dal.hrm_management.models.eventInMonth.DataEvent;
 import com.dal.hrm_management.models.listProjectEmpJoining.Project;
 import com.dal.hrm_management.models.overtimePersonal.DataOvertime;
 
@@ -19,9 +20,13 @@ public interface IDashboardFragment {
 
     public void getInforJoiningProjectFailure();
 
-    public void getInforProjectsSuccess();
+    public void getInforProjectsCompanySuccess(List<com.dal.hrm_management.models.projectCompany.Project> list);
 
-    public void getInforProjectsFailure();
+    public void getInforProjectsCompanyFailure();
+
+    public void getInforEventInThisMonthSuccess(DataEvent dataEvent);
+
+    public void getInforEventInThisMonthFailure();
 
 
 }

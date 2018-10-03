@@ -14,14 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.adapter.listProjectEmployee.ProjectEmployeeJoiningAdapter;
+import com.dal.hrm_management.adapter.listProject.ProjectCompanyRunningAdapter;
+import com.dal.hrm_management.adapter.listProject.ProjectEmployeeJoiningAdapter;
 import com.dal.hrm_management.models.absence.DataAbsence;
+import com.dal.hrm_management.models.eventInMonth.DataEvent;
 import com.dal.hrm_management.models.listProjectEmpJoining.Project;
 import com.dal.hrm_management.models.overtimePersonal.DataOvertime;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.overtimePersonal.OvertimePersonalPresenter;
-import com.dal.hrm_management.presenters.project.ProjectPersonalPresenter;
+import com.dal.hrm_management.presenters.dashboard.DashboardPresenter;
 import com.dal.hrm_management.utils.Constant;
 import com.dal.hrm_management.utils.ViewDataUtils;
 import com.dal.hrm_management.views.absence.FormAbsenceActivity;
@@ -36,23 +38,29 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashboardFragment extends Fragment implements OnChartValueSelectedListener,IDashboardFragment{
+public class DashboardFragment extends Fragment implements OnChartValueSelectedListener, IDashboardFragment {
     private View view;
     private PieChart mChart;
     private TextView tv_totalRemainingAbsence;
     private TextView tv_normalOvertime;
     private TextView tv_weekendOvertime;
     private TextView tv_holidayOvertime;
+    private TextView tv_newEmployees;
+    private TextView tv_birthdays;
+    private TextView tv_employeesQuit;
+    private TextView tv_titleEventInmonth;
     private ImageButton btn_addAbsence;
     private ImageButton btn_addOvertime;
-    private RecyclerView rv_notifications, rv_joiningProjects, rv_projects;
+    private RecyclerView rv_notifications, rv_joiningProjects, rv_projectsCompanyRunning;
     private LinearLayout ll_generalInformation, ll_joingProjects, ll_projects;
     private List<Project> joiningProjectList;
-    private ProjectEmployeeJoiningAdapter adapter;
+    private List<com.dal.hrm_management.models.projectCompany.Project> projectCompanyRunningList;
+    private ProjectEmployeeJoiningAdapter projectEmployeeJoiningAdapter;
+    private ProjectCompanyRunningAdapter projectCompanyRunningAdapter;
+    private DashboardPresenter dashboardPresenter;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -108,12 +116,19 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
     }
 
     private void getData() {
+        dashboardPresenter = new DashboardPresenter(this);
         AbsencePresenter absencePresenter = new AbsencePresenter(this);
-        absencePresenter.getDataAbsence(1,1); //vì chỉ lấy data là total remaining
+        absencePresenter.getDataAbsence(1, 1); //vì chỉ lấy data là total remaining
         OvertimePersonalPresenter overtimePersonalPresenter = new OvertimePersonalPresenter(this);
-        overtimePersonalPresenter.getOvertimePersonal(1,1);
-        ProjectPersonalPresenter projectPersonalPresenter = new ProjectPersonalPresenter(this);
-        projectPersonalPresenter.getJoiningProject(1,1);
+        overtimePersonalPresenter.getOvertimePersonal(1, 1);
+        if (!LoginPresenter.position.toUpperCase().equals(Constant.ROLE_BO)) {
+            dashboardPresenter.getJoiningProject(1, 1);
+        } else {
+            dashboardPresenter.getInforEventInThisMonth();
+        }
+        if (LoginPresenter.position.toUpperCase().equals(Constant.ROLE_PO)) {
+            dashboardPresenter.getProjectCompanyRunning();
+        }
     }
 
     private void setEvent() {
@@ -137,9 +152,14 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         tv_normalOvertime = view.findViewById(R.id.tv_normalOvertime);
         tv_weekendOvertime = view.findViewById(R.id.tv_weekendOvertime);
         tv_holidayOvertime = view.findViewById(R.id.tv_holidayOvertime);
+        tv_newEmployees = view.findViewById(R.id.tv_newEmployees);
+        tv_birthdays = view.findViewById(R.id.tv_birthdays);
+        tv_employeesQuit = view.findViewById(R.id.tv_employeesQuit);
+        tv_titleEventInmonth = view.findViewById(R.id.tv_titleEventInmonth);
+
         rv_notifications = view.findViewById(R.id.rv_notifications);
         rv_joiningProjects = view.findViewById(R.id.rv_joiningProjects);
-        rv_projects = view.findViewById(R.id.rv_projects);
+        rv_projectsCompanyRunning = view.findViewById(R.id.rv_projects);
         ll_generalInformation = view.findViewById(R.id.ll_generalInformation);
         ll_joingProjects = view.findViewById(R.id.ll_joingProjects);
         ll_projects = view.findViewById(R.id.ll_projects);
@@ -147,6 +167,8 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         btn_addOvertime = view.findViewById(R.id.btn_addOvertime);
         mChart = (PieChart) view.findViewById(R.id.piechart1);
         rv_joiningProjects.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rv_projectsCompanyRunning.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rv_notifications.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 
     private void checkRoleToDisplayInfor() {
@@ -228,7 +250,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
     @Override
     public void getInforAbsenceSuccess(DataAbsence dataAbsence) {
         Double totalRemaining = dataAbsence.getTotalRemain();
-        ViewDataUtils.setDataToView(tv_totalRemainingAbsence,totalRemaining);
+        ViewDataUtils.setDataToView(tv_totalRemainingAbsence, totalRemaining);
     }
 
     @Override
@@ -238,9 +260,9 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
     @Override
     public void getInforOvertimeSuccess(DataOvertime dataOvertime) {
-        ViewDataUtils.setDataToView(tv_normalOvertime,dataOvertime.getNormal());
-        ViewDataUtils.setDataToView(tv_weekendOvertime,dataOvertime.getDayOff());
-        ViewDataUtils.setDataToView(tv_holidayOvertime,dataOvertime.getHoliday());
+        ViewDataUtils.setDataToView(tv_normalOvertime, dataOvertime.getNormal());
+        ViewDataUtils.setDataToView(tv_weekendOvertime, dataOvertime.getDayOff());
+        ViewDataUtils.setDataToView(tv_holidayOvertime, dataOvertime.getHoliday());
     }
 
     @Override
@@ -254,9 +276,9 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
     public void getInforJoiningProjectSuccess(List<Project> projectList) {
         joiningProjectList = new ArrayList<>();
         joiningProjectList.addAll(projectList);
-        adapter = new ProjectEmployeeJoiningAdapter(joiningProjectList,R.layout.item_project_joining_dashboard,getContext());
-        rv_joiningProjects.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        projectEmployeeJoiningAdapter = new ProjectEmployeeJoiningAdapter(joiningProjectList, R.layout.item_project_joining_dashboard, getContext());
+        rv_joiningProjects.setAdapter(projectEmployeeJoiningAdapter);
+        projectEmployeeJoiningAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -265,12 +287,40 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
     }
 
     @Override
-    public void getInforProjectsSuccess() {
+    public void getInforProjectsCompanySuccess(List<com.dal.hrm_management.models.projectCompany.Project> projectCompanyList) {
+        projectCompanyRunningList = new ArrayList<>();
+        projectCompanyRunningList.addAll(projectCompanyList);
+        projectCompanyRunningAdapter = new ProjectCompanyRunningAdapter(projectCompanyRunningList, R.layout.item_project_running_in_company_dashboard, getContext());
+        rv_projectsCompanyRunning.setAdapter(projectCompanyRunningAdapter);
+        projectCompanyRunningAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getInforProjectsCompanyFailure() {
 
     }
 
     @Override
-    public void getInforProjectsFailure() {
+    public void getInforEventInThisMonthSuccess(DataEvent dataEvent) {
+        if (dataEvent != null) {
+            loadDataEventInthisMonth(dataEvent);
+        }
+    }
 
+    private void loadDataEventInthisMonth(DataEvent dataEvent) {
+        ViewDataUtils.setDataToView(tv_newEmployees, dataEvent.getNewEmployees());
+        ViewDataUtils.setDataToView(tv_birthdays, dataEvent.getBirthdays());
+        ViewDataUtils.setDataToView(tv_employeesQuit, dataEvent.getEmployeesQuit());
+    }
+
+    @Override
+    public void getInforEventInThisMonthFailure() {
+        setDefaultView();
+    }
+
+    private void setDefaultView() {
+        tv_newEmployees.setText(R.string.infor_null);
+        tv_employeesQuit.setText(R.string.infor_null);
+        tv_birthdays.setText(R.string.infor_null);
     }
 }

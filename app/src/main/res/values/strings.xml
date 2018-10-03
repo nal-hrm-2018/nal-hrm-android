@@ -253,7 +253,7 @@
     <string name="dashboard_overtime">OVERTIMES</string>
     <string name="dashboard_general_information">GENERAL INFORMATION</string>
     <string name="dashboard_joining_projects">JOINING PROJECTS</string>
-    <string name="dashboard_projects">PROJECTS</string>
+    <string name="dashboard_projects_company">PROJECTS RUNNING OF COMPANY</string>
     <string name="error_overtime_hour_start">Hour overtime start at</string>
     <string name="dashboard_event_in_month">EVENTS IN</string>
     <string name="dashboard_newEmployee">New employees</string>

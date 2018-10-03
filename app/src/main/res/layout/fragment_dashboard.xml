@@ -22,7 +22,7 @@
                 android:layout_margin="@dimen/text_padding"
                 android:background="@drawable/border_background"
                 android:orientation="vertical"
-                android:padding="1dp">
+                android:padding="@dimen/line_border">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -43,19 +43,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:baselineAligned="false">
+                android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/text_padding"
                     android:layout_marginEnd="@dimen/item_padding"
+                    android:layout_marginStart="@dimen/text_padding"
                     android:layout_weight="1"
                     android:background="@drawable/border_background"
                     android:orientation="vertical"
-                    android:padding="1dp">
+                    android:padding="@dimen/line_border">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/border_background"
                     android:orientation="vertical"
-                    android:padding="1dp"
+                    android:padding="@dimen/line_border"
                     android:paddingBottom="@dimen/activity_horizontal_margin">
 
                     <RelativeLayout
@@ -245,7 +245,7 @@
                 android:layout_margin="@dimen/text_padding"
                 android:background="@drawable/border_background"
                 android:orientation="vertical"
-                android:padding="1dp">
+                android:padding="@dimen/line_border">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -266,10 +266,7 @@
                         android:layout_height="200dp"
                         android:layout_marginBottom="20dp"
                         android:layout_marginTop="20dp"
-                        android:layout_weight="2"
-
-                        />
-
+                        android:layout_weight="2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -278,10 +275,12 @@
                     android:background="@color/color_gray"></LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_titleEventInmonth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_pastel"
                     android:padding="@dimen/text_padding"
+                    android:textAllCaps="true"
                     android:text="@string/dashboard_event_in_month"
                     android:textColor="@android:color/black" />
 
@@ -299,35 +298,40 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:weightSum="10"
                             android:paddingLeft="@dimen/text_padding">
 
                             <TextView
                                 android:id="@+id/tv_newEmployees"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:background="@color/color_red"
                                 android:paddingLeft="@dimen/text_padding"
                                 android:paddingRight="@dimen/text_padding"
                                 android:textColor="@color/color_white"
+                                android:layout_weight="3"
                                 android:textSize="25sp" />
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/text_padding"
-                                android:text="@string/dashboard_newEmployee" />
+                                android:text="@string/dashboard_newEmployee"
+                                android:layout_weight="7"/>
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:paddingLeft="@dimen/text_padding">
+                            android:paddingLeft="@dimen/text_padding"
+                            android:weightSum="10">
 
                             <TextView
                                 android:id="@+id/tv_birthdays"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="3"
                                 android:background="@color/colorAccent"
                                 android:paddingLeft="@dimen/text_padding"
                                 android:paddingRight="@dimen/text_padding"
@@ -335,8 +339,9 @@
                                 android:textSize="25sp" />
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="7"
                                 android:paddingLeft="@dimen/text_padding"
                                 android:text="@string/dashboard_birthdays" />
                         </LinearLayout>
@@ -345,21 +350,24 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:weightSum="10"
                             android:paddingStart="@dimen/text_padding">
 
                             <TextView
                                 android:id="@+id/tv_employeesQuit"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:background="@color/color_green"
                                 android:paddingLeft="@dimen/text_padding"
                                 android:paddingRight="@dimen/text_padding"
                                 android:textColor="@color/color_white"
+                                android:layout_weight="3"
                                 android:textSize="25sp" />
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="7"
                                 android:paddingStart="@dimen/text_padding"
                                 android:text="@string/dashboard_employees_quit" />
                         </LinearLayout>
@@ -370,8 +378,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:background="@color/color_gray"></LinearLayout>
-
+                    android:background="@color/color_gray" />
 
             </LinearLayout>
 
@@ -384,7 +391,7 @@
                 android:layout_marginTop="@dimen/text_padding"
                 android:background="@drawable/border_background"
                 android:orientation="vertical"
-                android:padding="1dp">
+                android:padding="@dimen/line_border">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -409,21 +416,20 @@
                 android:layout_margin="@dimen/text_padding"
                 android:background="@drawable/border_background"
                 android:orientation="vertical"
-                android:padding="1dp">
+                android:padding="@dimen/line_border">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_pastel"
                     android:padding="@dimen/text_padding"
-                    android:text="@string/dashboard_projects"
+                    android:text="@string/dashboard_projects_company"
                     android:textColor="@android:color/black" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_projects"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/text_padding"
                     android:visibility="visible" />
 
             </LinearLayout>

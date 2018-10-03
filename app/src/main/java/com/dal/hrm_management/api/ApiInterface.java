@@ -3,6 +3,7 @@ package com.dal.hrm_management.api;
 import com.dal.hrm_management.models.absence.AbsencesResponse;
 import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
+import com.dal.hrm_management.models.eventInMonth.EventInMonthResponse;
 import com.dal.hrm_management.models.holiday.HolidayResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
@@ -22,6 +23,7 @@ import com.dal.hrm_management.models.overtimePersonal.OvertimePersonalResponse;
 import com.dal.hrm_management.models.profile.ProfileResponse;
 import com.dal.hrm_management.models.profile.RolesResponse;
 import com.dal.hrm_management.models.profile.TeamsResponse;
+import com.dal.hrm_management.models.projectCompany.ProjectCompanyResponse;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -42,6 +44,7 @@ public interface ApiInterface {
     @POST("api/login")
     Call<LoginModel> getToKen(@Field("username") String email,
                               @Field("password") String password);
+
     @Headers({
             "X-Requested-With:XMLHttpRequest",
             "Content-Type:application/json"
@@ -63,6 +66,7 @@ public interface ApiInterface {
                                                                 @Query("page") int page,
                                                                 @Query("pageSize") int pageSize,
                                                                 @Header("Authorization") String token);
+
     @GET("api/list/role")
     Call<RolesResponse> getRoles(@Header("Authorization") String token);
 
@@ -74,9 +78,11 @@ public interface ApiInterface {
     Call<AbsencesResponse> getListAbsence(@Query("page") int page,
                                           @Query("pageSize") int pageSize,
                                           @Header("Authorization") String token);
+
     @POST("api/absence/add")
     Call<AddAbsenceResponse> addAbsence(@Header("Authorization") String token,
                                         @Body RequestBody json);
+
     @GET("api/list/type/absence")
     Call<TypeAbsenceResponse> getTypeAbsence(@Header("Authorization") String token);
 
@@ -90,10 +96,10 @@ public interface ApiInterface {
 
     @GET("api/manage/absence/search")
     Call<ManageAbsenceResponse> searchAbsenceInMonth(@Query("month") int month,
-                                              @Query("year") int year,
-                                              @Query("page") int page,
-                                              @Query("pageSize") int pageSize,
-                                              @Header("Authorization") String token);
+                                                     @Query("year") int year,
+                                                     @Query("page") int page,
+                                                     @Query("pageSize") int pageSize,
+                                                     @Header("Authorization") String token);
 
     @GET("api/manage/absence/employee")
     Call<AbsenceEmployeeDetailResponse> getDetailAbsenceEmployee(@Query("id") int id,
@@ -109,8 +115,10 @@ public interface ApiInterface {
     @GET("api/manage/absence/po/project")
     Call<AbsenceInProjectOfPOResponse> getAllAbsenceInProject(@Query("id") String idProject,
                                                               @Header("Authorization") String token);
+
     /**
      * Edit absence with idAbsence
+     *
      * @param idAbsence
      * @param token
      * @param json
@@ -124,12 +132,13 @@ public interface ApiInterface {
 
     /**
      * Delete absence with idAbsence
+     *
      * @param idAbsence
      * @param token
      * @return
      */
     @DELETE("api/manage/absence/delete/{absence_id}")
-    Call<EditAbsenceResponse> deleteAbsence(@Path(value = "absence_id",encoded = true) int idAbsence,
+    Call<EditAbsenceResponse> deleteAbsence(@Path(value = "absence_id", encoded = true) int idAbsence,
                                             @Header("Authorization") String token);
 
     @GET("api/overtime")
@@ -144,6 +153,7 @@ public interface ApiInterface {
 
     /**
      * Get list overtime list for hr
+     *
      * @param token
      * @param idProject
      * @param page
@@ -158,6 +168,7 @@ public interface ApiInterface {
 
     /**
      * list project emp joining
+     *
      * @param token
      * @return
      */
@@ -171,6 +182,7 @@ public interface ApiInterface {
 
     /**
      * Edit overtime with idAbsence
+     *
      * @param idOvertime
      * @param token
      * @param json
@@ -183,7 +195,6 @@ public interface ApiInterface {
                                                @Body RequestBody json);
 
     /**
-     *
      * @param idOvertime
      * @param token
      * @param json
@@ -196,4 +207,23 @@ public interface ApiInterface {
 
     @GET("api/holiday")
     Call<HolidayResponse> getListHoliday(@Header("Authorization") String token);
+
+    /**
+     * Get all projects running of company, role=PO
+     *
+     * @param token
+     * @return
+     */
+    @GET("api/dashboard/project-company")
+    Call<ProjectCompanyResponse> getRunningProjectCompany(@Header("Authorization") String token);
+
+
+    /**
+     * Get infor event in month, role=BO
+     *
+     * @param token
+     * @return
+     */
+    @GET("api/bo/dashboard/event")
+    Call<EventInMonthResponse> getInforEventInThisMonth(@Header("Authorization") String token);
 }
