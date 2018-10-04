@@ -10,5 +10,6 @@ public class Constant {
     //Start ot at 18:30 if normal day
     public static final int START_HOUR_OT = 18;
     public static final int START_MINUTES_OT = 30;
+    public static final int NOTIFICATION_LENGTH =20;
 
 }

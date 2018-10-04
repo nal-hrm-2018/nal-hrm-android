@@ -6,7 +6,8 @@ import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
 
 import com.dal.hrm_management.models.dashboard.employee.DashboardEmployeeResponse;
 
-import com.dal.hrm_management.models.eventInMonth.EventInMonthResponse;
+import com.dal.hrm_management.models.dashboard.eventInMonth.EventInMonthResponse;
+import com.dal.hrm_management.models.dashboard.notification.DashboardNotificationResponse;
 import com.dal.hrm_management.models.holiday.HolidayResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
@@ -232,4 +233,7 @@ public interface ApiInterface {
      */
     @GET("api/bo/dashboard/event")
     Call<EventInMonthResponse> getInforEventInThisMonth(@Header("Authorization") String token);
+
+    @GET("api/dashboard/notification")
+    Call<DashboardNotificationResponse> getNotification(@Header("Authorization") String token);
 }
