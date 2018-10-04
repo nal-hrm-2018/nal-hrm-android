@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
-import com.dal.hrm_management.adapter.listProjectEmployee.ProjectEmployeeAdapter;
+import com.dal.hrm_management.adapter.listProject.ProjectEmployeeAdapter;
 import com.dal.hrm_management.models.listProjectEmpAttend.ProjectAndProcess;
 import com.dal.hrm_management.presenters.listProject.ListProjectEmpAttendPresenter;
 
