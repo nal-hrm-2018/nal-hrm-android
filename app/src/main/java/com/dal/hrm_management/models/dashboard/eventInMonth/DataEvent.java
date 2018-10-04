@@ -1,4 +1,4 @@
-package com.dal.hrm_management.models.eventInMonth;
+package com.dal.hrm_management.models.dashboard.eventInMonth;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

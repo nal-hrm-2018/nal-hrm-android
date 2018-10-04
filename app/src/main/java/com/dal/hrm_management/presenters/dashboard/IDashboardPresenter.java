@@ -7,4 +7,6 @@ public interface IDashboardPresenter {
 
     public void getInforEventInThisMonth();
 
+    public void getNotification();
+
 }

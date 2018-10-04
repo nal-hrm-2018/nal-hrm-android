@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvItemDashboardNotification_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"/>
+
+    <ImageButton
+        android:id="@+id/btnItemDashboardNotification_Detail"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/text_padding"
+        android:background="@drawable/shape_button_round"
+        android:src="@drawable/ic_next"
+        android:tint="@color/color_white" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/btnItemDashboardNotification_Detail"
+        android:background="@color/color_gray"/>
+
+</RelativeLayout>
