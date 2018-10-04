@@ -253,10 +253,18 @@
     <string name="dashboard_overtime">OVERTIMES</string>
     <string name="dashboard_general_information">GENERAL INFORMATION</string>
     <string name="dashboard_joining_projects">JOINING PROJECTS</string>
-    <string name="dashboard_projects_company">PROJECTS RUNNING OF COMPANY</string>
+    <string name="dashboard_projects_company">RUNNING PROJECTS OF COMPANY</string>
     <string name="error_overtime_hour_start">Hour overtime start at</string>
     <string name="dashboard_event_in_month">EVENTS IN</string>
     <string name="dashboard_newEmployee">New employees</string>
     <string name="dashboard_birthdays">Birthdays</string>
     <string name="dashboard_employees_quit">Employees quit</string>
+    <string name="dashboard_new_employees_description">New employees</string>
+    <string name="dashboard_birthdays_description">Birthdays</string>
+    <string name="dashboard_employees_quit_description">Employees quit</string>
+    <string name="dashboard_expiring_contracts_in_month">EXPIRING CONTRACTS IN</string>
+    <string name="dashboard_internship">Internship</string>
+    <string name="dashboard_probation">Probation</string>
+    <string name="dashboard_one_year">One-year</string>
+    <string name="dashboard_three_year">Three-year</string>
 </resources>

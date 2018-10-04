@@ -42,8 +42,12 @@
     <dimen name="dialog_title_checkbox_title_size">24dp</dimen>
     <dimen name="icon_size_lager">56dp</dimen>
     <dimen name="item_padding">6dp</dimen>
-    <dimen name="text_size_big">68sp</dimen>
+    <dimen name="number_size_larger">68sp</dimen>
     <dimen name="text_space_item_absence">60dp</dimen>
     <dimen name="icon_padding">10dp</dimen>
     <dimen name="line_border">1dp</dimen>
+    <dimen name="size_horizontal_line">0.5dp</dimen>
+    <dimen name="size_circle_bullet">50dp</dimen>
+    <dimen name="size_image_icon">30dp</dimen>
+    <dimen name="number_size_medium">30sp</dimen>
 </resources>
