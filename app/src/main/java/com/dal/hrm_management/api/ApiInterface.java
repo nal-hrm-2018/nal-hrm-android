@@ -3,6 +3,7 @@ package com.dal.hrm_management.api;
 import com.dal.hrm_management.models.absence.AbsencesResponse;
 import com.dal.hrm_management.models.absence.addAbsence.AddAbsenceResponse;
 import com.dal.hrm_management.models.absence.addAbsence.TypeAbsenceResponse;
+import com.dal.hrm_management.models.dashboard.employee.DashboardEmployeeResponse;
 import com.dal.hrm_management.models.holiday.HolidayResponse;
 import com.dal.hrm_management.models.listEmployee.ListEmpResponse;
 import com.dal.hrm_management.models.listProjectEmpAttend.ListProjectEmpAttendResponse;
@@ -196,4 +197,7 @@ public interface ApiInterface {
 
     @GET("api/holiday")
     Call<HolidayResponse> getListHoliday(@Header("Authorization") String token);
+
+    @GET("api/bo/dashboard/employee")
+    Call<DashboardEmployeeResponse> getDashboardEmployee(@Header("Authorization") String token);
 }
