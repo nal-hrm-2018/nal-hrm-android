@@ -1,4 +1,4 @@
-package com.dal.hrm_management.adapter.listProjectEmployee;
+package com.dal.hrm_management.adapter.listProject;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
