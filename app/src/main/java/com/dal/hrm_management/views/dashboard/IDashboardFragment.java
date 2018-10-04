@@ -4,7 +4,9 @@ import com.dal.hrm_management.models.absence.DataAbsence;
 
 import com.dal.hrm_management.models.dashboard.employee.Data;
 
-import com.dal.hrm_management.models.eventInMonth.DataEvent;
+import com.dal.hrm_management.models.dashboard.eventInMonth.DataEvent;
+import com.dal.hrm_management.models.dashboard.expiridContractInThisMonth.DataExpiringContract;
+import com.dal.hrm_management.models.dashboard.notification.Notification;
 import com.dal.hrm_management.models.listProjectEmpJoining.Project;
 import com.dal.hrm_management.models.overtimePersonal.DataOvertime;
 
@@ -34,5 +36,13 @@ public interface IDashboardFragment {
     public void getDashboardEmployeeSuccess(Data data);
 
     public void getDashboardEmployeeFailure();
+
+    public void getDashboardNotificationSuccess(List<Notification> data);
+
+    public void getDashboardNotificationFailure(String message);
+
+    public void getExpiringContractsInThisMonthSuccess(DataExpiringContract dataExpiringContract);
+
+    public void getExpiringContractsInThisMonthFailure();
 
 }

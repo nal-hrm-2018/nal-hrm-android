@@ -1,24 +1,24 @@
-package com.dal.hrm_management.models.eventInMonth;
+package com.dal.hrm_management.models.dashboard.expiridContractInThisMonth;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class EventInMonthResponse {
+public class ExpiringContractInthisMonthResponse {
     @SerializedName("result_code")
     @Expose
-    private Long resultCode;
+    private Integer resultCode;
     @SerializedName("result_message")
     @Expose
     private String resultMessage;
     @SerializedName("data")
     @Expose
-    private DataEvent data;
+    private DataExpiringContract data;
 
-    public Long getResultCode() {
+    public Integer getResultCode() {
         return resultCode;
     }
 
-    public void setResultCode(Long resultCode) {
+    public void setResultCode(Integer resultCode) {
         this.resultCode = resultCode;
     }
 
@@ -30,13 +30,11 @@ public class EventInMonthResponse {
         this.resultMessage = resultMessage;
     }
 
-    public DataEvent getData() {
+    public DataExpiringContract getData() {
         return data;
     }
 
-    public void setData(DataEvent data) {
+    public void setData(DataExpiringContract data) {
         this.data = data;
     }
-
-
 }

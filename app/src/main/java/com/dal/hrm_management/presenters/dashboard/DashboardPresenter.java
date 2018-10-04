@@ -1,8 +1,12 @@
 package com.dal.hrm_management.presenters.dashboard;
 
+import android.util.Log;
+
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
-import com.dal.hrm_management.models.eventInMonth.EventInMonthResponse;
+import com.dal.hrm_management.models.dashboard.eventInMonth.EventInMonthResponse;
+import com.dal.hrm_management.models.dashboard.expiridContractInThisMonth.ExpiringContractInthisMonthResponse;
+import com.dal.hrm_management.models.dashboard.notification.DashboardNotificationResponse;
 import com.dal.hrm_management.models.listProjectEmpJoining.ListProjectJoiningResponse;
 import com.dal.hrm_management.models.projectCompany.ProjectCompanyResponse;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
@@ -13,6 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DashboardPresenter implements IDashboardPresenter {
+    private final String TAG = DashboardPresenter.class.getSimpleName();
     private IDashboardFragment iDashboardFragment;
 
     public DashboardPresenter(IDashboardFragment iDashboardFragment) {
@@ -97,6 +102,50 @@ public class DashboardPresenter implements IDashboardPresenter {
                 if (iDashboardFragment != null) {
                     iDashboardFragment.getInforEventInThisMonthFailure();
                 }
+            }
+        });
+    }
+
+    @Override
+    public void getNotification() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<DashboardNotificationResponse> call = apiService.getNotification(LoginPresenter.token);
+        call.enqueue(new Callback<DashboardNotificationResponse>() {
+            @Override
+            public void onResponse(Call<DashboardNotificationResponse> call, Response<DashboardNotificationResponse> response) {
+                if (response.code() == 200) {
+                    Log.d(TAG, "get notification success");
+                    iDashboardFragment.getDashboardNotificationSuccess(response.body().getData());
+                } else {
+                    iDashboardFragment.getDashboardNotificationFailure(String.valueOf(response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DashboardNotificationResponse> call, Throwable t) {
+                Log.d(TAG, "get notification failure");
+                iDashboardFragment.getDashboardNotificationFailure(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void getExpiringContractsInThisMonth() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<ExpiringContractInthisMonthResponse> call = apiService.getExpiringContractInThisMonth(LoginPresenter.token);
+        call.enqueue(new Callback<ExpiringContractInthisMonthResponse>() {
+            @Override
+            public void onResponse(Call<ExpiringContractInthisMonthResponse> call, Response<ExpiringContractInthisMonthResponse> response) {
+                if (response.code() == 200) {
+                    iDashboardFragment.getExpiringContractsInThisMonthSuccess(response.body().getData());
+                } else {
+                    iDashboardFragment.getExpiringContractsInThisMonthFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ExpiringContractInthisMonthResponse> call, Throwable t) {
+                iDashboardFragment.getExpiringContractsInThisMonthFailure();
             }
         });
     }
