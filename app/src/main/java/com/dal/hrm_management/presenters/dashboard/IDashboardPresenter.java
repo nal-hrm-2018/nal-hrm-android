@@ -9,4 +9,6 @@ public interface IDashboardPresenter {
 
     public void getNotification();
 
+    public void getExpiringContractsInThisMonth();
+
 }

@@ -24,6 +24,7 @@ import com.dal.hrm_management.models.dashboard.employee.Data;
 
 import com.dal.hrm_management.models.dashboard.eventInMonth.DataEvent;
 
+import com.dal.hrm_management.models.dashboard.expiridContractInThisMonth.DataExpiringContract;
 import com.dal.hrm_management.models.dashboard.notification.Notification;
 import com.dal.hrm_management.models.listProjectEmpJoining.Project;
 import com.dal.hrm_management.models.overtimePersonal.DataOvertime;
@@ -47,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DashboardFragment extends Fragment implements IDashboardFragment{
+public class DashboardFragment extends Fragment implements IDashboardFragment {
     private final String TAG = DashboardFragment.class.getSimpleName();
 
     private View view;
@@ -60,6 +61,11 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
     private TextView tv_birthdays;
     private TextView tv_employeesQuit;
     private TextView tv_titleEventInmonth;
+    private TextView tv_titleExpiringContractsInMonth;
+    private TextView tv_internship;
+    private TextView tv_probation;
+    private TextView tv_one_year;
+    private TextView tv_three_year;
     private TextView tvNotificationNothing;
     private ImageButton btn_addAbsence;
     private ImageButton btn_addOvertime;
@@ -89,7 +95,6 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
         setEvent();
 
 
-
         return view;
     }
 
@@ -108,7 +113,7 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
         mChart.setCenterTextSize(10);
         //Hiệu ứng chuyển cảnh cho đẹp
         mChart.animateX(1000);
-        addDataSet(mChart,data);
+        addDataSet(mChart, data);
     }
 
     private void getData() {
@@ -119,12 +124,14 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
         //piechart
         dashboardEmployeePresenter = new DashboardEmployeePresenter(this);
         dashboardEmployeePresenter.getDashboardDEmployee();
-
+        // get overtime
         overtimePersonalPresenter.getOvertimePersonal(1, 1);
+
         if (!LoginPresenter.position.toUpperCase().equals(Constant.ROLE_BO)) {
             dashboardPresenter.getJoiningProject(1, 1);
         } else {
             dashboardPresenter.getInforEventInThisMonth();
+            dashboardPresenter.getExpiringContractsInThisMonth();
         }
         if (LoginPresenter.position.toUpperCase().equals(Constant.ROLE_PO)) {
             dashboardPresenter.getProjectCompanyRunning();
@@ -160,6 +167,11 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
         tv_birthdays = view.findViewById(R.id.tv_birthdays);
         tv_employeesQuit = view.findViewById(R.id.tv_employeesQuit);
         tv_titleEventInmonth = view.findViewById(R.id.tv_titleEventInmonth);
+        tv_titleExpiringContractsInMonth = view.findViewById(R.id.tv_titleExpiringContractsInmonth);
+        tv_internship = view.findViewById(R.id.tv_internship);
+        tv_probation = view.findViewById(R.id.tv_probation);
+        tv_one_year = view.findViewById(R.id.tv_one_year);
+        tv_three_year = view.findViewById(R.id.tv_three_year);
         tvNotificationNothing = view.findViewById(R.id.tvDashBoardNotification_nothing);
         rv_notifications = view.findViewById(R.id.rv_notifications);
         rv_joiningProjects = view.findViewById(R.id.rv_joiningProjects);
@@ -190,20 +202,21 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
             ll_joingProjects.setVisibility(View.GONE);
         }
     }
+
     private void addDataSet(PieChart pieChart, Data data) {
         ArrayList<PieEntry> entries = new ArrayList<>();
-        if (data.getOfficial() > 0){
-            entries.add(new PieEntry(data.getOfficial(),"Offical"));
+        if (data.getOfficial() > 0) {
+            entries.add(new PieEntry(data.getOfficial(), "Offical"));
         }
-        if (data.getProbation() > 0){
-            entries.add(new PieEntry(data.getProbation(),"Probation"));
+        if (data.getProbation() > 0) {
+            entries.add(new PieEntry(data.getProbation(), "Probation"));
 
         }
-        if (data.getPartTime() > 0){
-            entries.add(new PieEntry(data.getPartTime(),"Parttime"));
+        if (data.getPartTime() > 0) {
+            entries.add(new PieEntry(data.getPartTime(), "Parttime"));
         }
         if (data.getInternship() != 0) {
-            entries.add(new PieEntry(data.getInternship(),"Internship"));
+            entries.add(new PieEntry(data.getInternship(), "Internship"));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Type Employee");
@@ -291,10 +304,10 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
 
     @Override
     public void getInforEventInThisMonthFailure() {
-        setDefaultView();
+        setDefaultViewEventInThisMonth();
     }
 
-    private void setDefaultView() {
+    private void setDefaultViewEventInThisMonth() {
         tv_newEmployees.setText(R.string.infor_null);
         tv_employeesQuit.setText(R.string.infor_null);
         tv_birthdays.setText(R.string.infor_null);
@@ -302,13 +315,13 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
 
     @Override
     public void getDashboardEmployeeSuccess(Data data) {
-        Log.d(TAG,"get employee dashboard success");
+        Log.d(TAG, "get employee dashboard success");
         pieChart(data);
     }
 
     @Override
     public void getDashboardEmployeeFailure() {
-        Log.d(TAG,"get employee dashboard failure");
+        Log.d(TAG, "get employee dashboard failure");
     }
 
     @Override
@@ -318,7 +331,7 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
             rv_notifications.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_notifications.setAdapter(notificationAdapter);
             tvNotificationNothing.setVisibility(View.GONE);
-        }else {
+        } else {
             rv_notifications.setVisibility(View.GONE);
             tvNotificationNothing.setVisibility(View.VISIBLE);
         }
@@ -326,6 +339,25 @@ public class DashboardFragment extends Fragment implements IDashboardFragment{
 
     @Override
     public void getDashboardNotificationFailure(String message) {
-        Toast.makeText(getContext(),"get notification" + message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "get notification" + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getExpiringContractsInThisMonthSuccess(DataExpiringContract dataExpiringContract) {
+        ViewDataUtils.setDataToView(tv_internship,dataExpiringContract.getInternship());
+        ViewDataUtils.setDataToView(tv_probation,dataExpiringContract.getProbation());
+        ViewDataUtils.setDataToView(tv_one_year,dataExpiringContract.getOneYear());
+        ViewDataUtils.setDataToView(tv_three_year,dataExpiringContract.getThreeYear());
+    }
+
+    @Override
+    public void getExpiringContractsInThisMonthFailure() {
+        setDefaultViewExpiringContractsInThisMonth();
+    }
+    private void setDefaultViewExpiringContractsInThisMonth() {
+        tv_internship.setText(R.string.infor_null);
+        tv_probation.setText(R.string.infor_null);
+        tv_one_year.setText(R.string.infor_null);
+        tv_three_year.setText(R.string.infor_null);
     }
 }

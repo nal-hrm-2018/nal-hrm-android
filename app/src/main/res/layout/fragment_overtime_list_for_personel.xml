@@ -41,7 +41,7 @@
                     android:layout_gravity="center"
                     android:text="@string/text_number"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/text_size_big" />
+                    android:textSize="@dimen/number_size_larger" />
             </LinearLayout>
 
             <LinearLayout
@@ -64,7 +64,7 @@
                     android:layout_gravity="center"
                     android:text="@string/text_number"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/text_size_big" />
+                    android:textSize="@dimen/number_size_larger" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,7 +87,7 @@
                     android:layout_gravity="center"
                     android:text="@string/text_number"
                     android:textColor="@color/color_white"
-                    android:textSize="@dimen/text_size_big" />
+                    android:textSize="@dimen/number_size_larger" />
             </LinearLayout>
         </LinearLayout>
 

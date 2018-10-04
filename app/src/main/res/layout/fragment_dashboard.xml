@@ -144,7 +144,8 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:paddingBottom="@dimen/activity_horizontal_margin">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -271,15 +272,15 @@
                         android:id="@+id/piechart1"
                         android:layout_width="0dp"
                         android:layout_height="200dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
                         android:layout_weight="2" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/color_gray"></LinearLayout>
+                    android:layout_height="@dimen/size_horizontal_line"
+                    android:background="@color/color_gray" />
 
                 <TextView
                     android:id="@+id/tv_titleEventInmonth"
@@ -287,106 +288,278 @@
                     android:layout_height="wrap_content"
                     android:background="@color/color_pastel"
                     android:padding="@dimen/text_padding"
-                    android:textAllCaps="true"
                     android:text="@string/dashboard_event_in_month"
+                    android:textAllCaps="true"
                     android:textColor="@android:color/black" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/activity_horizontal_margin">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:weightSum="3">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/color_violet_2"
                             android:orientation="horizontal"
-                            android:weightSum="10"
-                            android:paddingLeft="@dimen/text_padding">
+                            android:padding="@dimen/text_padding">
 
                             <TextView
                                 android:id="@+id/tv_newEmployees"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@color/color_red"
+                                android:layout_weight="3"
                                 android:paddingLeft="@dimen/text_padding"
                                 android:paddingRight="@dimen/text_padding"
                                 android:textColor="@color/color_white"
-                                android:layout_weight="3"
-                                android:textSize="25sp" />
+                                android:textSize="@dimen/number_size_medium" />
 
                             <TextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_below="@+id/tv_newEmployees"
+                                android:layout_weight="5"
                                 android:paddingLeft="@dimen/text_padding"
                                 android:text="@string/dashboard_newEmployee"
-                                android:layout_weight="7"/>
-                        </LinearLayout>
+                                android:textColor="@color/color_white" />
 
-                        <LinearLayout
+                            <ImageView
+                                android:layout_width="@dimen/size_image_icon"
+                                android:layout_height="@dimen/size_image_icon"
+                                android:layout_alignBottom="@+id/tv_newEmployees"
+                                android:layout_alignParentEnd="true"
+                                android:contentDescription="@string/dashboard_new_employees_description"
+                                android:src="@drawable/ic_new_employees"
+                                android:tint="@color/color_white" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/color_violet_1"
                             android:orientation="horizontal"
-                            android:paddingLeft="@dimen/text_padding"
-                            android:weightSum="10">
+                            android:padding="@dimen/text_padding">
 
                             <TextView
                                 android:id="@+id/tv_birthdays"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:background="@color/colorAccent"
                                 android:paddingLeft="@dimen/text_padding"
                                 android:paddingRight="@dimen/text_padding"
                                 android:textColor="@color/color_white"
-                                android:textSize="25sp" />
+                                android:textSize="@dimen/number_size_medium" />
 
                             <TextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="7"
+                                android:layout_below="@+id/tv_birthdays"
+                                android:layout_weight="5"
                                 android:paddingLeft="@dimen/text_padding"
-                                android:text="@string/dashboard_birthdays" />
-                        </LinearLayout>
+                                android:text="@string/dashboard_birthdays"
+                                android:textColor="@color/color_white" />
 
-                        <LinearLayout
+                            <ImageView
+                                android:layout_width="@dimen/size_image_icon"
+                                android:layout_height="@dimen/size_image_icon"
+                                android:layout_alignBottom="@+id/tv_birthdays"
+                                android:layout_alignParentEnd="true"
+                                android:contentDescription="@string/dashboard_birthdays_description"
+                                android:src="@drawable/ic_birthday"
+                                android:tint="@color/color_white" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@color/color_violet"
                             android:orientation="horizontal"
-                            android:weightSum="10"
-                            android:paddingStart="@dimen/text_padding">
+                            android:padding="@dimen/text_padding">
 
                             <TextView
                                 android:id="@+id/tv_employeesQuit"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@color/color_green"
+                                android:layout_weight="3"
                                 android:paddingLeft="@dimen/text_padding"
                                 android:paddingRight="@dimen/text_padding"
                                 android:textColor="@color/color_white"
-                                android:layout_weight="3"
-                                android:textSize="25sp" />
+                                android:textSize="@dimen/number_size_medium" />
 
                             <TextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="7"
-                                android:paddingStart="@dimen/text_padding"
-                                android:text="@string/dashboard_employees_quit" />
-                        </LinearLayout>
+                                android:layout_below="@+id/tv_employeesQuit"
+                                android:layout_weight="5"
+                                android:paddingLeft="@dimen/text_padding"
+                                android:text="@string/dashboard_employees_quit"
+                                android:textColor="@color/color_white" />
+
+                            <ImageView
+                                android:layout_width="@dimen/size_image_icon"
+                                android:layout_height="@dimen/size_image_icon"
+                                android:layout_alignBottom="@+id/tv_employeesQuit"
+                                android:layout_alignParentEnd="true"
+                                android:contentDescription="@string/dashboard_employees_quit_description"
+                                android:src="@drawable/ic_quit_process"
+                                android:tint="@color/color_white" />
+                        </RelativeLayout>
                     </LinearLayout>
 
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/size_horizontal_line"
                     android:background="@color/color_gray" />
 
+                <TextView
+                    android:id="@+id/tv_titleExpiringContractsInmonth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_pastel"
+                    android:padding="@dimen/text_padding"
+                    android:text="@string/dashboard_expiring_contracts_in_month"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/activity_horizontal_margin">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_circle_bullet"
+                            android:layout_height="@dimen/size_circle_bullet"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/red_circle" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:padding="@dimen/text_padding"
+                            android:text="@string/dashboard_internship" />
+                        <TextView
+                            android:id="@+id/tv_internship"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/text_padding"
+                            android:layout_weight="3"
+                            android:text="1"
+                            android:textColor="@android:color/black" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_circle_bullet"
+                            android:layout_height="@dimen/size_circle_bullet"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/orange_circle" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:padding="@dimen/text_padding"
+                            android:text="@string/dashboard_probation" />
+
+                        <TextView
+                            android:id="@+id/tv_probation"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:padding="@dimen/text_padding"
+                            android:text="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_circle_bullet"
+                            android:layout_height="@dimen/size_circle_bullet"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/blue_circle" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:padding="@dimen/text_padding"
+                            android:text="@string/dashboard_one_year" />
+
+                        <TextView
+                            android:id="@+id/tv_one_year"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:padding="@dimen/text_padding"
+                            android:text="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_circle_bullet"
+                            android:layout_height="@dimen/size_circle_bullet"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:background="@drawable/violet_circle" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:padding="@dimen/text_padding"
+                            android:text="@string/dashboard_three_year" />
+
+                        <TextView
+                            android:id="@+id/tv_three_year"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:padding="@dimen/text_padding"
+                            android:text="1" />
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

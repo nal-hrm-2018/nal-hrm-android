@@ -71,7 +71,7 @@
                         android:gravity="center"
                         android:text="@string/absence_default"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/text_size_big" />
+                        android:textSize="@dimen/number_size_larger" />
 
                     <TextView
                         android:id="@+id/tvDetailAbsenceEmpAct_lastYear"
@@ -81,7 +81,7 @@
                         android:gravity="center"
                         android:text="@string/absence_default"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/text_size_big" />
+                        android:textSize="@dimen/number_size_larger" />
 
                     <TextView
                         android:id="@+id/tvDetailAbsenceEmpAct_RemainTotal"
@@ -91,7 +91,7 @@
                         android:gravity="center"
                         android:text="@string/absence_default"
                         android:textColor="@color/color_white"
-                        android:textSize="@dimen/text_size_big" />
+                        android:textSize="@dimen/number_size_larger" />
                 </LinearLayout>
 
                 <HorizontalScrollView

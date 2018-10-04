@@ -5,6 +5,7 @@ import android.util.Log;
 import com.dal.hrm_management.api.ApiClient;
 import com.dal.hrm_management.api.ApiInterface;
 import com.dal.hrm_management.models.dashboard.eventInMonth.EventInMonthResponse;
+import com.dal.hrm_management.models.dashboard.expiridContractInThisMonth.ExpiringContractInthisMonthResponse;
 import com.dal.hrm_management.models.dashboard.notification.DashboardNotificationResponse;
 import com.dal.hrm_management.models.listProjectEmpJoining.ListProjectJoiningResponse;
 import com.dal.hrm_management.models.projectCompany.ProjectCompanyResponse;
@@ -112,18 +113,39 @@ public class DashboardPresenter implements IDashboardPresenter {
         call.enqueue(new Callback<DashboardNotificationResponse>() {
             @Override
             public void onResponse(Call<DashboardNotificationResponse> call, Response<DashboardNotificationResponse> response) {
-                if (response.code() ==200) {
+                if (response.code() == 200) {
                     Log.d(TAG, "get notification success");
                     iDashboardFragment.getDashboardNotificationSuccess(response.body().getData());
-                }else{
+                } else {
                     iDashboardFragment.getDashboardNotificationFailure(String.valueOf(response.code()));
                 }
             }
 
             @Override
             public void onFailure(Call<DashboardNotificationResponse> call, Throwable t) {
-                Log.d(TAG,"get notification failure");
+                Log.d(TAG, "get notification failure");
                 iDashboardFragment.getDashboardNotificationFailure(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void getExpiringContractsInThisMonth() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<ExpiringContractInthisMonthResponse> call = apiService.getExpiringContractInThisMonth(LoginPresenter.token);
+        call.enqueue(new Callback<ExpiringContractInthisMonthResponse>() {
+            @Override
+            public void onResponse(Call<ExpiringContractInthisMonthResponse> call, Response<ExpiringContractInthisMonthResponse> response) {
+                if (response.code() == 200) {
+                    iDashboardFragment.getExpiringContractsInThisMonthSuccess(response.body().getData());
+                } else {
+                    iDashboardFragment.getExpiringContractsInThisMonthFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ExpiringContractInthisMonthResponse> call, Throwable t) {
+                iDashboardFragment.getExpiringContractsInThisMonthFailure();
             }
         });
     }
