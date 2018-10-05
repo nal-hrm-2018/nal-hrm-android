@@ -26,14 +26,14 @@ public class ManageAbsencePOPresenter implements IManageAbsencePOPresenter {
     @Override
     public void getListProject(int currentPage, int pageSize) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProjectInProgressPOResponse> call = apiService.getProjectInProgressOfPO(currentPage,pageSize, LoginPresenter.token);
+        Call<ProjectInProgressPOResponse> call = apiService.getProjectInProgressOfPO(currentPage, pageSize, LoginPresenter.token);
         call.enqueue(new Callback<ProjectInProgressPOResponse>() {
             @Override
             public void onResponse(Call<ProjectInProgressPOResponse> call, Response<ProjectInProgressPOResponse> response) {
-                if (response.code() >=200 && response.code() < 300){
+                if (response.code() >= 200 && response.code() < 300) {
                     DataProject dataProjects = response.body().getData();
                     iAbsenceManagerForPOFragment.getListProjectInProgressSuccess(dataProjects);
-                }else{
+                } else {
                     iAbsenceManagerForPOFragment.getListProjectInProgressFailed();
                 }
             }
@@ -46,17 +46,17 @@ public class ManageAbsencePOPresenter implements IManageAbsencePOPresenter {
     }
 
     @Override
-    public void getListAbsence(String idProject) {
+    public void getListAbsence(String idProject, int currentPage, int pageSize) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<AbsenceInProjectOfPOResponse> call = apiService.getAllAbsenceInProject(idProject, LoginPresenter.token);
+        Call<AbsenceInProjectOfPOResponse> call = apiService.getAllAbsenceInProject(idProject, currentPage, pageSize, LoginPresenter.token);
         call.enqueue(new Callback<AbsenceInProjectOfPOResponse>() {
             @Override
             public void onResponse(Call<AbsenceInProjectOfPOResponse> call, Response<AbsenceInProjectOfPOResponse> response) {
-                if (response.code() >=200 && response.code() < 300){
+                if (response.code() >= 200 && response.code() < 300) {
                     int total = response.body().getData().getTotal();
                     DataAbsence dataAbsence = response.body().getData();
                     iAbsenceManagerForPOFragment.getListAbsenceInProjectSuccess(dataAbsence);
-                }else{
+                } else {
                     iAbsenceManagerForPOFragment.getListAbsenceInProjectFailed();
                 }
             }

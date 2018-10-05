@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +27,7 @@ import com.dal.hrm_management.models.manageAbsence.po.listAbsence.Absence;
 import com.dal.hrm_management.models.manageAbsence.po.listAbsence.DataAbsence;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.DataProject;
 import com.dal.hrm_management.models.manageAbsence.po.listProjectInProgress.Project;
+import com.dal.hrm_management.presenters.ListEmployee.ListEmployeePresenter;
 import com.dal.hrm_management.presenters.manageAbsence.po.ManageAbsencePOPresenter;
 import com.dal.hrm_management.utils.PermissionManager;
 
@@ -37,7 +39,7 @@ import java.util.List;
  */
 public class AbsenceManagerForPOFragment extends Fragment implements AbsenceManagerForPoAdapter.AbsenceAdapterListener, IAbsenceManagerForPOFragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView rv_allAbsenceInProject;
     private AbsenceManagerForPoAdapter adapter;
     private SearchView searchView;
     private Spinner spnProjects;
@@ -53,6 +55,29 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     private int totalProject = 0;
     private int totalAbsenceInProject = 0;
     private String idProjectSelected;
+    private LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            int visibleItemCount = layoutManager.getChildCount();
+            Log.d("visibleItemCount", String.valueOf(visibleItemCount));
+            int totalItemCount = layoutManager.getItemCount();
+            Log.d("totalItemCount", String.valueOf(totalItemCount));
+            int firstitem = layoutManager.findFirstVisibleItemPosition();
+            Log.d("firstitem", String.valueOf(firstitem));
+            if (firstitem + visibleItemCount >= totalItemCount && currentPage * pageSize < totalAbsenceInProject) {
+                currentPage++;
+                manageAbsencePOPresenter.getListAbsence(idProjectSelected, currentPage, pageSize);
+
+            }
+        }
+    };
 
     public AbsenceManagerForPOFragment() {
     }
@@ -83,8 +108,8 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
 
     private void initUi(View view) {
         getActivity().setTitle(getString(R.string.absence_manage_for_po_fragment_title));
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rv_allAbsenceInProject = (RecyclerView) view.findViewById(R.id.recyclerView);
+        rv_allAbsenceInProject.setLayoutManager(new LinearLayoutManager(view.getContext()));
         spnProjects = (Spinner) view.findViewById(R.id.spnProjects);
         tv_message_nothing = (TextView) view.findViewById(R.id.tv_message_nothing);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
@@ -93,23 +118,24 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
     private void setEvent(View view) {
         spnProjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                idProjectSelected = idProjects.get(spnProjects.getSelectedItemPosition());
-                //call presenter to get list absence of project
-                manageAbsencePOPresenter.getListAbsence(idProjectSelected);
+             getListAbsenceWithValueSelectedItem();
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                idProjectSelected = idProjects.get(spnProjects.getSelectedItemPosition());
-                if (idProjectSelected.equals("- No Project -")) {
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    //call presenter to get list absence of project
-                    manageAbsencePOPresenter.getListAbsence(idProjectSelected);
-                }
+               getListAbsenceWithValueSelectedItem();
             }
         });
     }
 
+    public void getListAbsenceWithValueSelectedItem(){
+        if (spnProjects.getSelectedItem().equals("- No Project -")) {
+            progressBar.setVisibility(View.GONE);
+        } else {
+            idProjectSelected = idProjects.get(spnProjects.getSelectedItemPosition());
+            //call presenter to get list absence of project
+            manageAbsencePOPresenter.getListAbsence(idProjectSelected, currentPage, pageSize);
+        }
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
@@ -187,7 +213,7 @@ public class AbsenceManagerForPOFragment extends Fragment implements AbsenceMana
             this.absenceList.clear();
             this.absenceList = dataAbsence.getAbsence();
             adapter = new AbsenceManagerForPoAdapter(absenceList, getActivity(), this);
-            recyclerView.setAdapter(adapter);
+            rv_allAbsenceInProject.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             tv_message_nothing.setVisibility(View.GONE);
         } else {

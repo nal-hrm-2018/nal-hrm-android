@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/layoutItemNotification"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/layoutItemNotification">
+    android:orientation="vertical">
+
     <TextView
         android:id="@+id/tvItemNotification_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:padding="@dimen/text_padding"
+        android:scrollbars="vertical"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_large"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/tvItemNotification_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:scrollbars="vertical"
-        android:textColor="@color/colorPrimaryDark" />
-        <TextView
-            android:id="@+id/tvItemNotification_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="20"
-            android:scrollbars="vertical"/>
+        android:maxLines="20"
+        android:textSize="@dimen/text_size_medium"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:scrollbars="vertical" />
 </LinearLayout>

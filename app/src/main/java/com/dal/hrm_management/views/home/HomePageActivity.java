@@ -214,11 +214,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
                         } else if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO)) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
                         }
-                    } else if (model.id.equals(getString(R.string.menu_id_manage_holiday))) {
-                        getSupportActionBar().setTitle(R.string.menu_holiday);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HolidayHRFragment()).commit();
                     } else if (model.id.equals(getString(R.string.menu_id_manage_overtime))) {
                         getSupportActionBar().setTitle(R.string.menu_overtime_employee);
                         if (data.getEmail().equals(Constant.EMAIL_CEO)) {
@@ -230,6 +227,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         } else if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new OvertimeManageOfHrFragment()).commit();
                         }
+                    } else if (model.id.equals(getString(R.string.menu_id_manage_holiday))) {
+                        getSupportActionBar().setTitle(R.string.menu_holiday);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HolidayHRFragment()).commit();
                     }
                     Log.e("GROUP", model.menuName);
                     onBackPressed();
@@ -292,15 +292,14 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_absence), getString(R.string.menu_absence_empl), false, false, null);
                 childModelsList.add(chilModel);
             }
-            if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
-                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
-                childModelsList.add(chilModel);
-            }
             if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO) || data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                 chilModel = new MenuModel(getString(R.string.menu_id_manage_overtime), "Overtime", false, false, null);
                 childModelsList.add(chilModel);
             }
-
+            if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
+                childModelsList.add(chilModel);
+            }
             if (menuModel.hasChildren) {
                 childList.put(menuModel, childModelsList);
             }
