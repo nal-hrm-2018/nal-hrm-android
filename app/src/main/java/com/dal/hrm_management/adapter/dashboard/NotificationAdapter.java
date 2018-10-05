@@ -2,14 +2,18 @@ package com.dal.hrm_management.adapter.dashboard;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.dal.hrm_management.R;
+import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.dashboard.notification.Notification;
 import com.dal.hrm_management.utils.Constant;
 
@@ -31,22 +35,34 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(Holder holder, final int position) {
-        String title = list.get(position).getTitle().substring(0, Constant.NOTIFICATION_LENGTH);
+
         if (list.get(position).getTitle().length() > Constant.NOTIFICATION_LENGTH) {
+            String title = list.get(position).getTitle().substring(0, Constant.NOTIFICATION_LENGTH);
             holder.tvTitle.setText(title + " ...");
         }else{
-            holder.tvTitle.setText(title);
+            holder.tvTitle.setText(list.get(position).getTitle());
         }
-        holder.btnDetail.setOnClickListener(new View.OnClickListener() {
+        final View view1 = LayoutInflater.from(context).inflate(R.layout.item_notification, null, false);
+        final TextView title = view1.findViewById(R.id.tvItemNotification_title);
+        final TextView content = view1.findViewById(R.id.tvItemNotification_content);
+        title.setText(list.get(position).getTitle());
+
+        content.setMovementMethod(new ScrollingMovementMethod());
+        title.setMovementMethod(new ScrollingMovementMethod());
+        content.setText(list.get(position).getContent());
+        holder.setItemClickListener(new ItemClickListener() {
             @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(list.get(position).getTitle());
-                builder.setMessage(list.get(position).getContent());
-                builder.setCancelable(true);
-                builder.show();
+            public void onClick(View view, int position, boolean isLongClick) {
+                AlertDialog builder = new AlertDialog.Builder(context)
+                        .setView(view1)
+                        .setCancelable(true)
+                        .show();
+//                builder.setView(view);
+//                builder.setCancelable(true);
+//                builder.show();
             }
         });
+
     }
 
     @Override
@@ -54,14 +70,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return list.size();
     }
 
-    public static class Holder extends RecyclerView.ViewHolder {
+    public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTitle;
-        private ImageButton btnDetail;
+        private ItemClickListener itemClickListener;
         public Holder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvItemDashboardNotification_Title);
-            btnDetail = itemView.findViewById(R.id.btnItemDashboardNotification_Detail);
+            itemView.setOnClickListener(this);
+        }
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
 
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), false);
         }
     }
 }

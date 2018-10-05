@@ -73,7 +73,6 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private Toolbar toolbar;
-
     HomePresenter homePresenter;
 
     @Override

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.mikephil.charting.utils.ColorTemplate.rgb;
+
 
 public class DashboardFragment extends Fragment implements IDashboardFragment {
     private final String TAG = DashboardFragment.class.getSimpleName();
@@ -67,6 +71,8 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
     private TextView tv_one_year;
     private TextView tv_three_year;
     private TextView tvNotificationNothing;
+    private TextView tvShowMore;
+    private TextView tvHideLess;
     private ImageButton btn_addAbsence;
     private ImageButton btn_addOvertime;
     private RecyclerView rv_notifications, rv_joiningProjects, rv_projectsCompanyRunning;
@@ -80,6 +86,8 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
     private ProjectCompanyRunningAdapter projectCompanyRunningAdapter;
     private DashboardPresenter dashboardPresenter;
 
+
+    private int height_layout_notification;
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -106,11 +114,10 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
         //Không hiển thị description
         mChart.getDescription().setEnabled(false);
         mChart.setTransparentCircleRadius(65f);
-        mChart.setHoleRadius(35f);
+        mChart.setHoleRadius(50f);
         mChart.setTransparentCircleAlpha(0);
         mChart.setCenterTextSize(10);
-        mChart.setCenterText(data.getTotalEmployee() + "Employees");
-        mChart.setCenterTextSize(10);
+        mChart.setCenterText(data.getTotalEmployee() + " Employees");
         //Hiệu ứng chuyển cảnh cho đẹp
         mChart.animateX(1000);
         addDataSet(mChart, data);
@@ -172,6 +179,7 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
         tv_probation = view.findViewById(R.id.tv_probation);
         tv_one_year = view.findViewById(R.id.tv_one_year);
         tv_three_year = view.findViewById(R.id.tv_three_year);
+
         tvNotificationNothing = view.findViewById(R.id.tvDashBoardNotification_nothing);
         rv_notifications = view.findViewById(R.id.rv_notifications);
         rv_joiningProjects = view.findViewById(R.id.rv_joiningProjects);
@@ -184,7 +192,42 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
         mChart = (PieChart) view.findViewById(R.id.piechart1);
         rv_joiningProjects.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rv_projectsCompanyRunning.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        rv_notifications.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rv_notifications.setLayoutManager(new LinearLayoutManager(view.getContext()){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        tvShowMore = view.findViewById(R.id.tvDashBoardNotification_ShowMore);
+
+
+        SpannableString content = new SpannableString("Show more");
+        height_layout_notification = rv_notifications.getLayoutParams().height;
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tvShowMore.setText(content);
+        tvShowMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rv_notifications.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                rv_notifications.requestLayout();
+                tvShowMore.setVisibility(View.GONE);
+                tvHideLess.setVisibility(View.VISIBLE);
+            }
+        });
+        tvHideLess = view.findViewById(R.id.tvDashBoardNotification_HideLess);
+        SpannableString hide = new SpannableString("Hide less");
+        hide.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        tvHideLess.setText(hide);
+        tvHideLess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rv_notifications.getLayoutParams().height = height_layout_notification;
+                rv_notifications.requestLayout();
+                tvShowMore.setVisibility(View.VISIBLE);
+                tvHideLess.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     private void checkRoleToDisplayInfor() {
@@ -203,10 +246,17 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
         }
     }
 
+
     private void addDataSet(PieChart pieChart, Data data) {
         ArrayList<PieEntry> entries = new ArrayList<>();
+         int[] COLORS = {
+                rgb("#faa951"), rgb("#e91d24"), rgb("#53cbf2"), rgb("#abe02a")
+        };
         if (data.getOfficial() > 0) {
             entries.add(new PieEntry(data.getOfficial(), "Offical"));
+        }
+        if (data.getInternship() != 0) {
+            entries.add(new PieEntry(data.getInternship(), "Internship"));
         }
         if (data.getProbation() > 0) {
             entries.add(new PieEntry(data.getProbation(), "Probation"));
@@ -215,19 +265,20 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
         if (data.getPartTime() > 0) {
             entries.add(new PieEntry(data.getPartTime(), "Parttime"));
         }
-        if (data.getInternship() != 0) {
-            entries.add(new PieEntry(data.getInternship(), "Internship"));
-        }
 
-        PieDataSet dataSet = new PieDataSet(entries, "Type Employee");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
+        dataSet.setColors(COLORS);
         dataSet.setValueTextSize(10);
-
+        dataSet.setValueLinePart1OffsetPercentage(80.f);
+        dataSet.setValueLinePart1Length(0.2f);
+        dataSet.setValueLinePart2Length(0.5f);
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         //Them chu thich bieu do
         Legend legend = pieChart.getLegend();
         legend.setForm(Legend.LegendForm.SQUARE);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
 
         PieData pieData = new PieData(dataSet);
@@ -331,8 +382,12 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
             rv_notifications.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_notifications.setAdapter(notificationAdapter);
             tvNotificationNothing.setVisibility(View.GONE);
+            tvShowMore.setVisibility(View.VISIBLE);
+            tvHideLess.setVisibility(View.GONE);
         } else {
             rv_notifications.setVisibility(View.GONE);
+            tvShowMore.setVisibility(View.GONE);
+            tvHideLess.setVisibility(View.GONE);
             tvNotificationNothing.setVisibility(View.VISIBLE);
         }
     }
