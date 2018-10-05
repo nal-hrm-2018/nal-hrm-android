@@ -42,21 +42,22 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }else{
             holder.tvTitle.setText(list.get(position).getTitle());
         }
-        final View view1 = LayoutInflater.from(context).inflate(R.layout.item_notification, null, false);
-        final TextView title = view1.findViewById(R.id.tvItemNotification_title);
-        final TextView content = view1.findViewById(R.id.tvItemNotification_content);
-        title.setText(list.get(position).getTitle());
 
-        content.setMovementMethod(new ScrollingMovementMethod());
-        title.setMovementMethod(new ScrollingMovementMethod());
-        content.setText(list.get(position).getContent());
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
+                View view1 = LayoutInflater.from(context).inflate(R.layout.item_notification, null, false);
+                TextView title = view1.findViewById(R.id.tvItemNotification_title);
+                TextView content = view1.findViewById(R.id.tvItemNotification_content);
+                title.setText(list.get(position).getTitle());
+                content.setMovementMethod(new ScrollingMovementMethod());
+                title.setMovementMethod(new ScrollingMovementMethod());
+                content.setText(list.get(position).getContent());
                 AlertDialog builder = new AlertDialog.Builder(context)
                         .setView(view1)
                         .setCancelable(true)
                         .show();
+
 //                builder.setView(view);
 //                builder.setCancelable(true);
 //                builder.show();

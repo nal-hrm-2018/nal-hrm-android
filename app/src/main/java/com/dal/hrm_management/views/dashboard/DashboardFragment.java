@@ -49,6 +49,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.mikephil.charting.utils.ColorTemplate.MATERIAL_COLORS;
 import static com.github.mikephil.charting.utils.ColorTemplate.rgb;
 
 
@@ -268,7 +269,7 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
 
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(COLORS);
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         dataSet.setValueTextSize(10);
         dataSet.setValueLinePart1OffsetPercentage(80.f);
         dataSet.setValueLinePart1Length(0.2f);
@@ -379,7 +380,6 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
     public void getDashboardNotificationSuccess(List<Notification> data) {
         if (data.size() > 0) {
             NotificationAdapter notificationAdapter = new NotificationAdapter(getContext(), data);
-            rv_notifications.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_notifications.setAdapter(notificationAdapter);
             tvNotificationNothing.setVisibility(View.GONE);
             tvShowMore.setVisibility(View.VISIBLE);
