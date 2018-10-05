@@ -32,6 +32,7 @@ import com.dal.hrm_management.models.listProjectEmpJoining.Project;
 import com.dal.hrm_management.models.overtimePersonal.DataOvertime;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
 import com.dal.hrm_management.presenters.dashboard.DashboardEmployeePresenter;
+import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.overtimePersonal.OvertimePersonalPresenter;
 import com.dal.hrm_management.presenters.dashboard.DashboardPresenter;
@@ -245,6 +246,11 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
             ll_projects.setVisibility(View.GONE);
             ll_joingProjects.setVisibility(View.GONE);
         }
+        if (HomePresenter.profile.getEmail().toLowerCase().equals(Constant.EMAIL_CEO)) {
+            ll_generalInformation.setVisibility(View.VISIBLE);
+            ll_projects.setVisibility(View.GONE);
+        }
+
     }
 
 

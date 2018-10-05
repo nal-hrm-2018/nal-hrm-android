@@ -119,6 +119,8 @@ public interface ApiInterface {
 
     @GET("api/manage/absence/po/project")
     Call<AbsenceInProjectOfPOResponse> getAllAbsenceInProject(@Query("id") String idProject,
+                                                              @Query("page") int page,
+                                                              @Query("pageSize") int pageSize,
                                                               @Header("Authorization") String token);
 
     /**
@@ -216,6 +218,7 @@ public interface ApiInterface {
 
     @GET("api/bo/dashboard/employee")
     Call<DashboardEmployeeResponse> getDashboardEmployee(@Header("Authorization") String token);
+
     /**
      * Get all projects running of company, role=PO
      *

@@ -102,7 +102,7 @@ public class AbsenceListForHrAdapter extends RecyclerView.Adapter<AbsenceListFor
         }
 
         // Check permission delete the absence of HR
-        if (!PermissionManager.isPermited(PermissionManager.listPermissions, "cancel_emplyee_absence_history")) {
+        if (!PermissionManager.isPermited(PermissionManager.listPermissions, "cancel_employee_absence_history")) {
             holder.imvDelete.setVisibility(View.GONE);
         } else {
             holder.imvDelete.setOnClickListener(new View.OnClickListener() {
