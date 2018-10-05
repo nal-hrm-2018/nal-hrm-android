@@ -50,4 +50,5 @@
     <dimen name="size_circle_bullet">20dp</dimen>
     <dimen name="size_image_icon">30dp</dimen>
     <dimen name="number_size_medium">30sp</dimen>
+    <dimen name="rv_notification_dashboard_height">120dp</dimen>
 </resources>
