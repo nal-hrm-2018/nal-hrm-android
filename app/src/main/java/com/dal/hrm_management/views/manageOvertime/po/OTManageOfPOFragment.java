@@ -48,7 +48,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
     private int current_page = 1;
     private int pageSize = 10;
     private int totalOvertimes;
-    private int totalProjects;
+    private int totalProjects ;
     private String idProjectSelected;
     private List<Project> projectList;
     private List<String> idProjectList;
@@ -64,6 +64,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
         }
 
         @Override
+
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             int visibleItemCount = layoutManager.getChildCount();
             int totalItemCount = layoutManager.getItemCount();

@@ -18,6 +18,7 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.models.manageOvertime.po.viewlist.OverTime;
 import com.dal.hrm_management.presenters.managerOvertime.status.UpdateStatusPresenter;
 import com.dal.hrm_management.utils.StringUtils;
+import com.dal.hrm_management.utils.ValidationDateTime;
 import com.dal.hrm_management.utils.ViewDataUtils;
 
 import org.json.JSONException;
@@ -124,7 +125,7 @@ public class OTManagerForPoAdapter extends RecyclerView.Adapter<OTManagerForPoAd
     }
 
     public void showDialogReason(final int position) {
-        final Double timeLimit = Double.parseDouble(overtimeList.get(position).getTotalTime().toString());
+        final Double timeLimit = ValidationDateTime.getHoursDistanceFromTimeBeginToEnd(overtimeList.get(position).getStartTime(),overtimeList.get(position).getEndTime());
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
         final EditText edt_acceptTime = view.findViewById(R.id.edt_acceptTime);
         final EditText edt_reasonReject = view.findViewById(R.id.edt_reasonReject);
