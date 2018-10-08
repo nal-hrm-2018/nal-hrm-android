@@ -225,8 +225,8 @@
     <string name="hint_format_time">HHmm</string>
     <string name="hint_actual_overtime">Actual time your overtime</string>
     <string name="hint_input_value_here">Input text here</string>
-    <string name="error_invalid_date">invalid date</string>
-    <string name="error_invalid_time">invalid time</string>
+    <string name="error_invalid_date">Invalid date</string>
+    <string name="error_invalid_time">Invalid time</string>
     <string name="hint_reason">Leave a reason</string>
     <string name="absence_project_name">Project:</string>
     <string name="absence_item_note">Note:</string>
