@@ -38,27 +38,30 @@
                     android:layout_height="@dimen/rv_notification_dashboard_height"
                     android:padding="@dimen/text_padding"
                     android:visibility="visible" />
+
                 <TextView
                     android:id="@+id/tvDashBoardNotification_ShowMore"
-                    android:paddingLeft="@dimen/text_padding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/text_padding"
                     android:textColor="#1758e4"
                     android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/tvDashBoardNotification_HideLess"
-                    android:paddingLeft="@dimen/text_padding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/text_padding"
                     android:textColor="#1758e4"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/tvDashBoardNotification_nothing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:text="@string/fra_list_emp_nothingToShow"/>
+                    android:text="@string/fra_list_emp_nothingToShow"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -289,9 +292,9 @@
 
                         android:layout_marginBottom="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:layout_weight="2"
                         android:paddingBottom="@dimen/activity_horizontal_margin"
-                        android:paddingTop="@dimen/activity_horizontal_margin"
-                        android:layout_weight="2" />
+                        android:paddingTop="@dimen/activity_horizontal_margin" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -465,8 +468,8 @@
                             android:layout_width="@dimen/size_circle_bullet"
                             android:layout_height="@dimen/size_circle_bullet"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginRight="@dimen/activity_horizontal_margin"
                             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
                             android:background="@drawable/red_circle" />
 
                         <TextView
@@ -475,12 +478,13 @@
                             android:layout_weight="4"
                             android:padding="@dimen/text_padding"
                             android:text="@string/dashboard_internship" />
+
                         <TextView
                             android:id="@+id/tv_internship"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/text_padding"
                             android:layout_weight="3"
+                            android:padding="@dimen/text_padding"
                             android:text="1"
                             android:textColor="@android:color/black" />
 
@@ -495,8 +499,8 @@
                             android:layout_width="@dimen/size_circle_bullet"
                             android:layout_height="@dimen/size_circle_bullet"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginRight="@dimen/activity_horizontal_margin"
                             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
                             android:background="@drawable/orange_circle" />
 
 
@@ -513,7 +517,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:padding="@dimen/text_padding"
-                            android:text="1" />
+                            android:text="1"
+                            android:textColor="@android:color/black" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -543,7 +548,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:padding="@dimen/text_padding"
-                            android:text="1" />
+                            android:text="1"
+                            android:textColor="@android:color/black" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -555,8 +561,8 @@
                             android:layout_width="@dimen/size_circle_bullet"
                             android:layout_height="@dimen/size_circle_bullet"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginRight="@dimen/activity_horizontal_margin"
                             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
                             android:background="@drawable/violet_circle" />
 
 
@@ -573,7 +579,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:padding="@dimen/text_padding"
-                            android:text="1" />
+                            android:text="1"
+                            android:textColor="@android:color/black"/>
                     </LinearLayout>
 
                 </LinearLayout>

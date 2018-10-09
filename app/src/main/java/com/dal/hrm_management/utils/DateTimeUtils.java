@@ -1,6 +1,9 @@
 package com.dal.hrm_management.utils;
 
-public class ValidationDateTime {
+import java.util.Calendar;
+import java.util.Locale;
+
+public class DateTimeUtils {
     public static boolean namNhuan(int year) {
         return year % 4 == 0 && year % 100 != 0;
     }
@@ -71,20 +74,30 @@ public class ValidationDateTime {
     /**
      * @param beginTime with format hh:mm:ss. Ex: 18:48:00
      * @param endTime   with format hh:mm:ss. Ex: 23:48:00
-     * @return  5.0
+     * @return 5.0
      */
     public static Double getHoursDistanceFromTimeBeginToEnd(String beginTime, String endTime) {
         int minutesBegin = convertTimeToMinutes(beginTime);
         int minutesEnd = convertTimeToMinutes(endTime);
-        return (minutesEnd-minutesBegin)*1.0/60;
+        return (minutesEnd - minutesBegin) * 1.0 / 60;
     }
 
     /**
      * convert time to minutes
+     *
      * @param time format hh:mm:ss
      * @return h*60+m
      */
     public static int convertTimeToMinutes(String time) {
-        return Integer.parseInt(time.split(":")[0])*60+Integer.parseInt(time.split(":")[1]);
+        return Integer.parseInt(time.split(":")[0]) * 60 + Integer.parseInt(time.split(":")[1]);
+    }
+
+    /**
+     *
+     * @return name of month in English
+     */
+    public static String getNameOfMonthAtRuntime() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
     }
 }

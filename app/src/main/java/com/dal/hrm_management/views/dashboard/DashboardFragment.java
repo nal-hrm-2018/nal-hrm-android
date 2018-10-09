@@ -1,5 +1,6 @@
 package com.dal.hrm_management.views.dashboard;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,8 @@ import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.overtimePersonal.OvertimePersonalPresenter;
 import com.dal.hrm_management.presenters.dashboard.DashboardPresenter;
 import com.dal.hrm_management.utils.Constant;
+import com.dal.hrm_management.utils.DateTimeUtils;
+import com.dal.hrm_management.utils.VariableUltils;
 import com.dal.hrm_management.utils.ViewDataUtils;
 import com.dal.hrm_management.views.absence.FormAbsenceActivity;
 import com.dal.hrm_management.views.overtime.formOvertime.FormOvertimeActivity;
@@ -50,6 +53,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dal.hrm_management.utils.VariableUltils.REQUEST_CODE_ADD_ABSENCE;
+import static com.dal.hrm_management.utils.VariableUltils.REQUEST_CODE_ADD_OVERTIME;
 import static com.github.mikephil.charting.utils.ColorTemplate.MATERIAL_COLORS;
 import static com.github.mikephil.charting.utils.ColorTemplate.rgb;
 
@@ -87,9 +92,10 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
     private ProjectEmployeeJoiningAdapter projectEmployeeJoiningAdapter;
     private ProjectCompanyRunningAdapter projectCompanyRunningAdapter;
     private DashboardPresenter dashboardPresenter;
-
+    private AbsencePresenter absencePresenter;
 
     private int height_layout_notification;
+
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -127,7 +133,7 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
 
     private void getData() {
         dashboardPresenter = new DashboardPresenter(this);
-        AbsencePresenter absencePresenter = new AbsencePresenter(this);
+        absencePresenter = new AbsencePresenter(this);
         absencePresenter.getDataAbsence(1, 1); //vì chỉ lấy data là total remaining
         OvertimePersonalPresenter overtimePersonalPresenter = new OvertimePersonalPresenter(this);
         //piechart
@@ -136,16 +142,17 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
         // get overtime
         overtimePersonalPresenter.getOvertimePersonal(1, 1);
 
+        //Get general information
         if (!LoginPresenter.position.toUpperCase().equals(Constant.ROLE_BO)) {
             dashboardPresenter.getJoiningProject(1, 1);
         } else {
             dashboardPresenter.getInforEventInThisMonth();
             dashboardPresenter.getExpiringContractsInThisMonth();
         }
+        //Get running project in company
         if (LoginPresenter.position.toUpperCase().equals(Constant.ROLE_PO)) {
             dashboardPresenter.getProjectCompanyRunning();
         }
-
         //notification
         dashboardPresenter.getNotification();
 
@@ -155,7 +162,8 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
         btn_addAbsence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), FormAbsenceActivity.class));
+                Intent intent = new Intent(getActivity(), FormAbsenceActivity.class);
+                startActivityForResult(intent, VariableUltils.REQUEST_CODE_ADD_ABSENCE);
             }
         });
 
@@ -194,7 +202,7 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
         mChart = (PieChart) view.findViewById(R.id.piechart1);
         rv_joiningProjects.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rv_projectsCompanyRunning.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        rv_notifications.setLayoutManager(new LinearLayoutManager(view.getContext()){
+        rv_notifications.setLayoutManager(new LinearLayoutManager(view.getContext()) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -229,6 +237,9 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
                 tvHideLess.setVisibility(View.GONE);
             }
         });
+        tv_titleEventInmonth.setText(getResources().getString(R.string.dashboard_event_in_month) + " " + DateTimeUtils.getNameOfMonthAtRuntime());
+        tv_titleExpiringContractsInMonth.setText(getResources().getString(R.string.dashboard_expiring_contracts_in_month) + " " + DateTimeUtils.getNameOfMonthAtRuntime());
+
 
     }
 
@@ -256,7 +267,7 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
 
     private void addDataSet(PieChart pieChart, Data data) {
         ArrayList<PieEntry> entries = new ArrayList<>();
-         int[] COLORS = {
+        int[] COLORS = {
                 rgb("#faa951"), rgb("#e91d24"), rgb("#53cbf2"), rgb("#abe02a")
         };
         if (data.getOfficial() > 0) {
@@ -405,20 +416,36 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
 
     @Override
     public void getExpiringContractsInThisMonthSuccess(DataExpiringContract dataExpiringContract) {
-        ViewDataUtils.setDataToView(tv_internship,dataExpiringContract.getInternship());
-        ViewDataUtils.setDataToView(tv_probation,dataExpiringContract.getProbation());
-        ViewDataUtils.setDataToView(tv_one_year,dataExpiringContract.getOneYear());
-        ViewDataUtils.setDataToView(tv_three_year,dataExpiringContract.getThreeYear());
+        ViewDataUtils.setDataToView(tv_internship, dataExpiringContract.getInternship());
+        ViewDataUtils.setDataToView(tv_probation, dataExpiringContract.getProbation());
+        ViewDataUtils.setDataToView(tv_one_year, dataExpiringContract.getOneYear());
+        ViewDataUtils.setDataToView(tv_three_year, dataExpiringContract.getThreeYear());
     }
 
     @Override
     public void getExpiringContractsInThisMonthFailure() {
         setDefaultViewExpiringContractsInThisMonth();
     }
+
     private void setDefaultViewExpiringContractsInThisMonth() {
         tv_internship.setText(R.string.infor_null);
         tv_probation.setText(R.string.infor_null);
         tv_one_year.setText(R.string.infor_null);
         tv_three_year.setText(R.string.infor_null);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CODE_ADD_ABSENCE) {
+                reloadDataAbsence();
+            }
+        }
+    }
+
+    private void reloadDataAbsence() {
+        absencePresenter.getDataAbsence(1, 1);
+    }
+
 }

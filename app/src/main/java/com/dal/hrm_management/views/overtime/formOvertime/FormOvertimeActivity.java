@@ -27,7 +27,7 @@ import com.dal.hrm_management.models.overtimePersonal.Overtime;
 import com.dal.hrm_management.presenters.holiday.holiday.HolidayPresenter;
 import com.dal.hrm_management.presenters.overtimePersonal.formOvertime.FormOvertimePresenter;
 import com.dal.hrm_management.utils.StringUtils;
-import com.dal.hrm_management.utils.ValidationDateTime;
+import com.dal.hrm_management.utils.DateTimeUtils;
 import com.dal.hrm_management.utils.VariableUltils;
 
 import org.json.JSONException;
@@ -257,7 +257,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             int day = Integer.parseInt(split[0]);
             int month = Integer.parseInt(split[1]);
             int year = Integer.parseInt(split[2]);
-            if (!ValidationDateTime.checkDay(day, month, year)) {
+            if (!DateTimeUtils.checkDay(day, month, year)) {
 
                 edtDate.setError(getString(R.string.error_invalid_date));
                 return edtDate;
@@ -276,7 +276,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             String[] split = edtFromTime.getText().toString().split(":");
             int hour = Integer.parseInt(split[0]);
             int minute = Integer.parseInt(split[1]);
-            if (!ValidationDateTime.checkTime(hour, minute)) {
+            if (!DateTimeUtils.checkTime(hour, minute)) {
                 edtFromTime.setError(getString(R.string.error_invalid_time));
                 return edtFromTime;
             }
@@ -307,7 +307,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
             String[] split = edtToTime.getText().toString().split(":");
             hour = Integer.parseInt(split[0]);
             minute = Integer.parseInt(split[1]);
-            if (!ValidationDateTime.checkTime(hour, minute)) {
+            if (!DateTimeUtils.checkTime(hour, minute)) {
                 edtToTime.setError(getString(R.string.error_invalid_time));
                 return edtToTime;
             }
