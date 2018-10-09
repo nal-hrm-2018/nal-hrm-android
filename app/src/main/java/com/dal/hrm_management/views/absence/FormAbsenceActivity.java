@@ -22,7 +22,7 @@ import com.dal.hrm_management.models.absence.addAbsence.TypeAbsence;
 import com.dal.hrm_management.models.manageAbsence.hr.ListAbsenceForHr;
 import com.dal.hrm_management.presenters.absence.AbsencePresenter;
 import com.dal.hrm_management.utils.StringUtils;
-import com.dal.hrm_management.utils.ValidationDateTime;
+import com.dal.hrm_management.utils.DateTimeUtils;
 import com.dal.hrm_management.utils.VariableUltils;
 
 import org.json.JSONException;
@@ -288,7 +288,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
             int day = Integer.parseInt(split[0]);
             int month = Integer.parseInt(split[1]);
             int year = Integer.parseInt(split[2]);
-            if (!ValidationDateTime.checkDay(day, month, year)) {
+            if (!DateTimeUtils.checkDay(day, month, year)) {
                 edt_tuNgay.setError(getString(R.string.error_invalid_date));
                 return edt_tuNgay;
             }
@@ -303,7 +303,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
             int day = Integer.parseInt(split[0]);
             int month = Integer.parseInt(split[1]);
             int year = Integer.parseInt(split[2]);
-            if (!ValidationDateTime.checkDay(day, month, year)) {
+            if (!DateTimeUtils.checkDay(day, month, year)) {
                 edt_denNgay.setError(getString(R.string.error_invalid_date));
                 return edt_denNgay;
             }
@@ -322,7 +322,7 @@ public class FormAbsenceActivity extends AppCompatActivity implements View.OnCli
             int day1 = Integer.parseInt(split1[0]);
             int month1 = Integer.parseInt(split1[1]);
             int year1 = Integer.parseInt(split1[2]);
-            if (!ValidationDateTime.compareDate(day1, month1, year1, day, month, year)) {
+            if (!DateTimeUtils.compareDate(day1, month1, year1, day, month, year)) {
                 edt_denNgay.setError(getResources().getString(R.string.error_from_not_greater_than_to));
                 Toast.makeText(this, getResources().getString(R.string.error_from_not_greater_than_to), Toast.LENGTH_SHORT).show();
                 return edt_denNgay;
