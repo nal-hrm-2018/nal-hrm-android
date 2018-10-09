@@ -100,6 +100,7 @@ public class OTManageOfPOFragment extends Fragment implements IOTManageOfPOFragm
         rv_overtime = viewInflater.findViewById(R.id.rvOTManagePOFra_list);
         layoutManager = new LinearLayoutManager(getContext());
         rv_overtime.setLayoutManager(layoutManager);
+        rv_overtime.addOnScrollListener(recyclerViewOnScrollListener);
         prgShowMore = viewInflater.findViewById(R.id.prgOTManagePOFra_showMore);
         tvNothing = viewInflater.findViewById(R.id.tvOTManagePOFra_Nothing);
         spnProjects = viewInflater.findViewById(R.id.spnProjects);
