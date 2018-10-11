@@ -1,5 +1,7 @@
 package com.dal.hrm_management.utils;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -7,7 +9,15 @@ public class DateTimeUtils {
     public static boolean namNhuan(int year) {
         return year % 4 == 0 && year % 100 != 0;
     }
-
+    public static boolean isWeekend(Calendar c){
+        String str = c.getTime().toString();
+        str = str.substring(0,3);
+        Log.d("str",str);
+        if (str.equalsIgnoreCase("Sat") || str.equalsIgnoreCase("sun")){
+            return true;
+        }
+        return false;
+    }
     public static boolean checkDay(int day, int month, int year) {
         boolean nhuan = namNhuan(year);
         int max_day = 30;

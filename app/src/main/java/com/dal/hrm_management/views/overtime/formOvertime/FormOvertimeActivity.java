@@ -25,6 +25,7 @@ import com.dal.hrm_management.models.holiday.Holiday;
 import com.dal.hrm_management.models.listProjectEmpJoining.Project;
 import com.dal.hrm_management.models.overtimePersonal.Overtime;
 import com.dal.hrm_management.presenters.holiday.holiday.HolidayPresenter;
+import com.dal.hrm_management.presenters.login.LoginPresenter;
 import com.dal.hrm_management.presenters.overtimePersonal.formOvertime.FormOvertimePresenter;
 import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.DateTimeUtils;
@@ -176,6 +177,8 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                             jsonObject.put("idProject", ((Project) spnProject.getSelectedItem()).getIdProject());
                         }
                         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+                        Log.d(TAG,"token \n" + LoginPresenter.token);
+                        Log.d(TAG,"JSON OBJECT \n" + jsonObject);
                         if (isEditOvertime) {
                             formOvertimePresenter.editOvertime(body, edit_overTime.getId());
                         } else {
@@ -251,17 +254,24 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
         edtFromTime.setError(null);
         edtToTime.setError(null);
         edtTotalTime.setError(null);
+        boolean isWeekend =false;
         //Check date
         try {
             String[] split = edtDate.getText().toString().split("-");
             int day = Integer.parseInt(split[0]);
             int month = Integer.parseInt(split[1]);
             int year = Integer.parseInt(split[2]);
-            if (!DateTimeUtils.checkDay(day, month, year)) {
 
+            if (!DateTimeUtils.checkDay(day, month, year)) {
                 edtDate.setError(getString(R.string.error_invalid_date));
                 return edtDate;
             }
+            Log.d(TAG,"year" + year);
+            Log.d(TAG,"month" + month);
+            Log.d(TAG,"day" + day);
+            c.set(Calendar.YEAR,year);
+            c.set(Calendar.MONTH,month-1);
+            c.set(Calendar.DAY_OF_MONTH,day);
         } catch (Exception ex) {
             ex.printStackTrace();
             edtDate.setError(getString(R.string.error_invalid_date));
@@ -269,6 +279,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
         }
         //check day
         boolean isHoliday = checkHoliday();
+        isWeekend = DateTimeUtils.isWeekend(c);
         int maxMinutes = 0,fromMinutes=0,toMinutes=0;
 
         //Check time
@@ -280,7 +291,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
                 edtFromTime.setError(getString(R.string.error_invalid_time));
                 return edtFromTime;
             }
-            if (!isHoliday){
+            if (!isHoliday && !isWeekend){
                 if (hour < START_HOUR_OT){
                     tvError.setVisibility(View.VISIBLE);
                     tvError.setText(getString(R.string.error_overtime_hour_start) +START_HOUR_OT +":"+START_MINUTES_OT);
@@ -336,6 +347,7 @@ public class FormOvertimeActivity extends AppCompatActivity implements View.OnCl
         }
         return null;
     }
+
 
     private boolean checkHoliday() {
         for (Holiday holiday:holidayList) {
