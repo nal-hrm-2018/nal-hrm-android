@@ -19,6 +19,7 @@ import com.dal.hrm_management.models.manageOvertime.hr.viewList.Overtime;
 import com.dal.hrm_management.presenters.home.HomePresenter;
 import com.dal.hrm_management.presenters.managerOvertime.status.UpdateStatusPresenter;
 import com.dal.hrm_management.utils.Constant;
+import com.dal.hrm_management.utils.DateTimeUtils;
 import com.dal.hrm_management.utils.StringUtils;
 import com.dal.hrm_management.utils.ViewDataUtils;
 import com.dal.hrm_management.views.manageOvertime.hr.IOvertimeManageOfHrFragment;
@@ -91,7 +92,7 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
         }
         ViewDataUtils.setDataToView(holder.tvAcceptedTime, overtime.getCorrectTotalTime());
         ViewDataUtils.setDataToView(holder.tvTotalTime, overtime.getTotalTime());
-        setEventToButton(holder, position);
+        setEventToButton(overtime,holder, position);
     }
 
     /**
@@ -99,7 +100,7 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
      *
      * @param holder
      */
-    private void setEventToButton(final Holder holder, final int position) {
+    private void setEventToButton(final Overtime overtime, final Holder holder, final int position) {
         holder.btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,46 +113,48 @@ public class OvertimeManageForHrAdapter extends RecyclerView.Adapter<OvertimeMan
             public void onClick(View view) {
                 showDialogReason(position);
             }
-        });
-    }
 
-    public void showDialogReason(final int position) {
-        final Double timeLimit = Double.parseDouble(listOvertime.get(position).getTotalTime().toString());
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
-        final EditText edt_acceptTime = view.findViewById(R.id.edt_acceptTime);
-        final EditText edt_reasonReject = view.findViewById(R.id.edt_reasonReject);
-        final android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(context)
-                .setView(view)
-                .setTitle("Please enter accept time and reason reject?")
-                .setPositiveButton("OK",null)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void showDialogReason(final int position) {
+                final Double timeLimit = DateTimeUtils.getHoursDistanceFromTimeBeginToEnd(overtime.getStartTime(),overtime.getEndTime());
+                View view = LayoutInflater.from(context).inflate(R.layout.dialog_input_accept_time, null, false);
+                final EditText edt_acceptTime = view.findViewById(R.id.edt_acceptTime);
+                final EditText edt_reasonReject = view.findViewById(R.id.edt_reasonReject);
+                final android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(context)
+                        .setView(view)
+                        .setTitle("Please enter accept time and reason reject?")
+                        .setPositiveButton("OK",null)
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
+
+                Button btnPositive = dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE);
+                btnPositive.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
+                    public void onClick(View view) {
+                        if (checkValidateAcceptTime()==null) {
+                            updateStatusToServer(position, 4, edt_reasonReject.getText() + "", Double.parseDouble(edt_acceptTime.getText() + ""));
+                            dialog.dismiss();
+                        }
                     }
-                })
-                .show();
-
-        Button btnPositive = dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE);
-        btnPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkValidateAcceptTime()==null) {
-                    updateStatusToServer(position, 4, edt_reasonReject.getText() + "", Double.parseDouble(edt_acceptTime.getText() + ""));
-                    dialog.dismiss();
-                }
-            }
-            private View checkValidateAcceptTime() {
-                edt_acceptTime.setError(null);
-                double acceptTimeEnter = Double.parseDouble(edt_acceptTime.getText().toString());
-                if (acceptTimeEnter > timeLimit){
-                    edt_acceptTime.setError(context.getString(R.string.error_message_enter_accept_time)+" "+timeLimit);
-                    return edt_acceptTime;
-                }
-                return  null;
+                    private View checkValidateAcceptTime() {
+                        edt_acceptTime.setError(null);
+                        double acceptTimeEnter = Double.parseDouble(edt_acceptTime.getText().toString());
+                        if (acceptTimeEnter > timeLimit){
+                            edt_acceptTime.setError(context.getString(R.string.error_message_enter_accept_time)+" "+timeLimit);
+                            return edt_acceptTime;
+                        }
+                        return  null;
+                    }
+                });
             }
         });
     }
+
+
 
     /**
      * update status to server
