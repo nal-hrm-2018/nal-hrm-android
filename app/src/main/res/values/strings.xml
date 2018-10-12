@@ -267,4 +267,6 @@
     <string name="dashboard_probation">Probation</string>
     <string name="dashboard_one_year">One-year</string>
     <string name="dashboard_three_year">Three-year</string>
+    <string name="menu_id_manage_notifications">id_manage_notifications</string>
+    <string name="menu_notifications">Notifications</string>
 </resources>

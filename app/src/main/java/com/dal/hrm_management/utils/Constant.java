@@ -6,6 +6,7 @@ public class Constant {
     public static final String ROLE_SM_AL = "SM/AL";
     public static final String ROLE_PO = "PO";
     public static final String ROLE_DEV = "DEV";
+    public static final String TEAM_DEFAULT = "Nals";
 
     //Start ot at 18:30 if normal day
     public static final int START_HOUR_OT = 18;

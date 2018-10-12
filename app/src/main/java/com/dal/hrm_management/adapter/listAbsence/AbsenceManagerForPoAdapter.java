@@ -95,7 +95,11 @@ public class AbsenceManagerForPoAdapter extends RecyclerView.Adapter<AbsenceMana
                 } else {
                     List<Absence> filteredList = new ArrayList<>();
                     for (Absence row : absenceList) {
-                        if (StringUtils.createSlug(row.getNameEmployee()).contains(StringUtils.createSlug(charString)) || row.getFromDate().toLowerCase().contains(charString.toLowerCase()) || row.getToDate().toLowerCase().contains(charString.toLowerCase()) || row.getAbsenceType().getDescription().toLowerCase().contains(charString.toLowerCase()) || row.getAbsenceTime().getDescription().toLowerCase().contains(charString.toLowerCase())) {
+                        if (StringUtils.createSlug(row.getNameEmployee()).contains(StringUtils.createSlug(charString))
+                                || StringUtils.yyyy_mm_ddTodd_mm_yyyy(row.getFromDate()).toLowerCase().contains(charString.toLowerCase())
+                                || StringUtils.yyyy_mm_ddTodd_mm_yyyy(row.getToDate()).toLowerCase().contains(charString.toLowerCase())
+                                || row.getAbsenceType().getDescription().toLowerCase().contains(charString.toLowerCase())
+                                || row.getAbsenceTime().getDescription().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }

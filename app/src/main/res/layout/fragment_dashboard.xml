@@ -620,7 +620,10 @@
                 android:layout_margin="@dimen/text_padding"
                 android:background="@drawable/border_background"
                 android:orientation="vertical"
-                android:padding="@dimen/line_border">
+                android:paddingLeft="@dimen/line_border"
+                android:paddingRight="@dimen/line_border"
+                android:paddingTop="@dimen/line_border"
+                android:paddingBottom="@dimen/activity_horizontal_margin">
 
                 <TextView
                     android:layout_width="match_parent"
