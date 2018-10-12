@@ -43,6 +43,7 @@ import com.dal.hrm_management.views.login.LoginActivity;
 import com.dal.hrm_management.views.manageAbsence.Hr.ListAbsence.AbsenceListHRFragment;
 import com.dal.hrm_management.views.manageAbsence.Hr.holiday.HolidayHRFragment;
 import com.dal.hrm_management.views.manageAbsence.po.AbsenceManagerForPOFragment;
+import com.dal.hrm_management.views.manageNotifications.NotificationsListFragment;
 import com.dal.hrm_management.views.manageOvertime.hr.OvertimeManageOfHrFragment;
 import com.dal.hrm_management.views.manageOvertime.po.OTManageOfPOFragment;
 import com.dal.hrm_management.views.overtime.OverTimeListFragment;
@@ -214,7 +215,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceListHRFragment()).commit();
                         } else if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_PO)) {
-                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AbsenceManagerForPOFragment()).commit();
                         }
                     } else if (model.id.equals(getString(R.string.menu_id_manage_overtime))) {
                         getSupportActionBar().setTitle(R.string.menu_overtime_employee);
@@ -230,6 +231,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                     } else if (model.id.equals(getString(R.string.menu_id_manage_holiday))) {
                         getSupportActionBar().setTitle(R.string.menu_holiday);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HolidayHRFragment()).commit();
+                    } else if (model.id.equals(getString(R.string.menu_id_manage_notifications))) {
+                        getSupportActionBar().setTitle(R.string.menu_notifications);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NotificationsListFragment()).commit();
                     }
                     Log.e("GROUP", model.menuName);
                     onBackPressed();
@@ -297,7 +301,9 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                 childModelsList.add(chilModel);
             }
             if (data.getRole().getNameRole().toUpperCase().equals(Constant.ROLE_BO)) {
-                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holiday", false, false, null);
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_holiday), "Holidays", false, false, null);
+                childModelsList.add(chilModel);
+                chilModel = new MenuModel(getString(R.string.menu_id_manage_notifications), "Notifications", false, false, null);
                 childModelsList.add(chilModel);
             }
             if (menuModel.hasChildren) {

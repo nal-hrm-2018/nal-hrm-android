@@ -149,9 +149,14 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
             dashboardPresenter.getInforEventInThisMonth();
             dashboardPresenter.getExpiringContractsInThisMonth();
         }
-        //Get running project in company
+        //Get running project in company with po
         if (LoginPresenter.position.toUpperCase().equals(Constant.ROLE_PO)) {
+            if (HomePresenter.profile.getEmail().toLowerCase().equals(Constant.EMAIL_CEO)) {
+                dashboardPresenter.getInforEventInThisMonth();
+                dashboardPresenter.getExpiringContractsInThisMonth();
+            }
             dashboardPresenter.getProjectCompanyRunning();
+            
         }
         //notification
         dashboardPresenter.getNotification();
@@ -245,8 +250,15 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
 
     private void checkRoleToDisplayInfor() {
         if (LoginPresenter.position.toUpperCase().equals(Constant.ROLE_PO)) {
-            ll_projects.setVisibility(View.VISIBLE);
-            ll_generalInformation.setVisibility(View.GONE);
+            if (HomePresenter.profile.getEmail().toLowerCase().equals(Constant.EMAIL_CEO)) {
+                ll_generalInformation.setVisibility(View.VISIBLE);
+                ll_joingProjects.setVisibility(View.GONE);
+                ll_projects.setVisibility(View.VISIBLE);
+            } else {
+                ll_joingProjects.setVisibility(View.VISIBLE);
+                ll_projects.setVisibility(View.VISIBLE);
+                ll_generalInformation.setVisibility(View.GONE);
+            }
         }
         if (LoginPresenter.position.toUpperCase().equals(Constant.ROLE_DEV)) {
             ll_projects.setVisibility(View.GONE);
@@ -256,10 +268,6 @@ public class DashboardFragment extends Fragment implements IDashboardFragment {
             ll_generalInformation.setVisibility(View.VISIBLE);
             ll_projects.setVisibility(View.GONE);
             ll_joingProjects.setVisibility(View.GONE);
-        }
-        if (HomePresenter.profile.getEmail().toLowerCase().equals(Constant.EMAIL_CEO)) {
-            ll_generalInformation.setVisibility(View.VISIBLE);
-            ll_projects.setVisibility(View.GONE);
         }
 
     }

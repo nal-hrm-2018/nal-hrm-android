@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/text_padding"
     android:paddingRight="@dimen/text_padding"
-    android:paddingTop="@dimen/text_padding">
+    android:paddingTop="@dimen/text_padding"
+    android:orientation="horizontal">
 
     <TextView
         android:layout_width="@dimen/size_circle_bullet_small"
         android:layout_height="@dimen/size_circle_bullet_small"
         android:background="@drawable/violet_circle" />
 
+    <!--<TextView-->
+        <!--android:id="@+id/tvItemDashboardNotification_endDate"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="@dimen/text_padding"-->
+        <!--android:textStyle="bold" />-->
+
     <TextView
         android:id="@+id/tvItemDashboardNotification_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_medium"
         android:paddingLeft="@dimen/text_padding"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_medium" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,4 +34,4 @@
         android:layout_below="@+id/tvItemDashboardNotification_Title"
         android:background="@color/color_gray" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,11 +27,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HolidayHRFragment extends Fragment implements IHolidayFragment {
+public class HolidayHRFragment extends Fragment implements IHolidayFragment, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private HolidayListAdapter adapter;
     private HolidayPresenter holidayPresenter;
+    private FloatingActionButton btnAdd;
     public HolidayHRFragment() {
     }
 
@@ -55,28 +57,8 @@ public class HolidayHRFragment extends Fragment implements IHolidayFragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_holiday);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.holiday_menu, menu);
-        //set white color for icon_add
-        Drawable icon_add = menu.getItem(1).getIcon();
-        icon_add.mutate();
-        icon_add.setColorFilter(getResources().getColor(R.color.color_white), PorterDuff.Mode.SRC_IN);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_add:
-                Intent intent = new Intent(getActivity().getApplication(), FormHolidayActivity.class);
-                startActivityForResult(intent,200);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+        btnAdd = view.findViewById(R.id.btn_add);
+        btnAdd.setOnClickListener(this);
     }
 
     @Override
@@ -94,5 +76,15 @@ public class HolidayHRFragment extends Fragment implements IHolidayFragment {
     @Override
     public void getHolidayFailure() {
         Toast.makeText(getContext(),"failure",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_add:
+                Intent intent = new Intent(getActivity().getApplication(), FormHolidayActivity.class);
+                startActivityForResult(intent,200);
+                break;
+        }
     }
 }

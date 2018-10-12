@@ -37,17 +37,6 @@ public class ProjectEmployeeJoiningAdapter extends RecyclerView.Adapter<ProjectE
     public void onBindViewHolder(ProjectEmployeeViewHolder holder, int position) {
         final Project project = projects.get(position);
         ViewDataUtils.setDataToView(holder.tv_nameProject, project.getNameProject());
-//        if (project.getRole() != null) {
-//            String role = projects.get(position).getProcesses().getRole().getNameRole();
-//            if (role.toUpperCase().equals(Constant.ROLE_SM_AL)) {
-//                holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_red));
-//            } else if (role.toUpperCase().equals(Constant.ROLE_PO)) {
-//                holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_orange));
-//            } else if (role.toUpperCase().equals(Constant.ROLE_DEV)) {
-//                holder.tv_role.setBackgroundColor(context.getResources().getColor(R.color.color_green));
-//            }
-//            holder.tv_role.setText(role);
-//        } else holder.tv_role.setText(R.string.infor_null);
         String status = project.getStatus().getNameStatus();
         if (status.toLowerCase().equals("kick off")) {
             holder.tv_status.setBackgroundColor(context.getResources().getColor(R.color.color_green));

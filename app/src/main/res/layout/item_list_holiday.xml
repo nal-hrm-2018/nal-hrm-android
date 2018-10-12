@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/absences_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/item_padding"
     android:background="@drawable/border_background"
     android:orientation="horizontal"
-    android:padding="@dimen/activity_horizontal_margin"
+    android:padding="@dimen/text_padding"
     android:weightSum="12"
-    android:layout_margin="@dimen/item_padding">
+    android:layout_marginRight="@dimen/item_padding"
+    android:layout_marginLeft="@dimen/item_padding"
+    android:layout_marginTop="@dimen/item_padding"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="2-9"
-            android:textSize="32sp"
+            android:textSize="@dimen/number_size_medium"
             android:textColor="@color/color_orange"
             android:textStyle="bold" />
 
