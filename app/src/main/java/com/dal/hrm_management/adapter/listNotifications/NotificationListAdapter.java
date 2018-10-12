@@ -13,6 +13,7 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.dashboard.notification.Notification;
 import com.dal.hrm_management.utils.Constant;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.List;
 
@@ -36,12 +37,12 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
         if (list.get(position).getTitle().length() > Constant.NOTIFICATION_LENGTH) {
             String title = list.get(position).getTitle().substring(0, Constant.NOTIFICATION_LENGTH);
-            holder.tvEndDate.setText("["+ list.get(position).getEndDate()+"]");
+
             holder.tvTitle.setText(title + " ...");
         } else {
             holder.tvTitle.setText(list.get(position).getTitle());
         }
-
+        holder.tvEndDate.setText("[" + StringUtils.yyyy_mm_ddTodd_mm_yyyy(list.get(position).getEndDate()) + "]");
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
@@ -52,7 +53,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 TextView endDate = view1.findViewById(R.id.tvItemNotification_endDate);
                 title.setText(list.get(position).getTitle());
                 team.setText(Constant.TEAM_DEFAULT);
-                endDate.setText("["+list.get(position).getEndDate()+"]");
+                endDate.setText("[" + StringUtils.yyyy_mm_ddTodd_mm_yyyy(list.get(position).getEndDate()) + "]");
                 content.setMovementMethod(new ScrollingMovementMethod());
                 title.setMovementMethod(new ScrollingMovementMethod());
                 content.setText(list.get(position).getContent());

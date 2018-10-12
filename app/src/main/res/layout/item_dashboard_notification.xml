@@ -12,12 +12,12 @@
         android:layout_height="@dimen/size_circle_bullet_small"
         android:background="@drawable/violet_circle" />
 
-    <!--<TextView-->
-        <!--android:id="@+id/tvItemDashboardNotification_endDate"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingLeft="@dimen/text_padding"-->
-        <!--android:textStyle="bold" />-->
+    <TextView
+        android:id="@+id/tvItemDashboardNotification_endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/text_padding"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvItemDashboardNotification_Title"
