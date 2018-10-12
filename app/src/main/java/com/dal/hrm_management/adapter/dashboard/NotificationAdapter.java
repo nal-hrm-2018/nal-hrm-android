@@ -13,6 +13,7 @@ import com.dal.hrm_management.R;
 import com.dal.hrm_management.adapter.ItemClickListener;
 import com.dal.hrm_management.models.dashboard.notification.Notification;
 import com.dal.hrm_management.utils.Constant;
+import com.dal.hrm_management.utils.StringUtils;
 
 import java.util.List;
 
@@ -36,12 +37,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         if (list.get(position).getTitle().length() > Constant.NOTIFICATION_LENGTH) {
             String title = list.get(position).getTitle().substring(0, Constant.NOTIFICATION_LENGTH);
-//            holder.tvEndDate.setText("["+ list.get(position).getEndDate()+"]");
             holder.tvTitle.setText(title + " ...");
         } else {
             holder.tvTitle.setText(list.get(position).getTitle());
         }
-
+        holder.tvEndDate.setText("[" + StringUtils.yyyy_mm_ddTodd_mm_yyyy(list.get(position).getEndDate()) + "]");
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
@@ -52,7 +52,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 TextView endDate = view1.findViewById(R.id.tvItemNotification_endDate);
                 title.setText(list.get(position).getTitle());
                 team.setText(Constant.TEAM_DEFAULT);
-                endDate.setText("["+list.get(position).getEndDate()+"]");
+                endDate.setText("[" + StringUtils.yyyy_mm_ddTodd_mm_yyyy(list.get(position).getEndDate()) + "]");
                 content.setMovementMethod(new ScrollingMovementMethod());
                 title.setMovementMethod(new ScrollingMovementMethod());
                 content.setText(list.get(position).getContent());
@@ -76,13 +76,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public static class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView tvTitle;
-//        private TextView tvEndDate;
+        private TextView tvEndDate;
         private ItemClickListener itemClickListener;
 
         public Holder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvItemDashboardNotification_Title);
-//            tvEndDate = itemView.findViewById(R.id.tvItemDashboardNotification_endDate);
+            tvEndDate = itemView.findViewById(R.id.tvItemDashboardNotification_endDate);
             itemView.setOnClickListener(this);
         }
 
