@@ -82,7 +82,6 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
             tv_date = itemView.findViewById(R.id.tv_date);
             tv_year = itemView.findViewById(R.id.tv_year);
             tv_note = itemView.findViewById(R.id.tv_note);
-            itemView.setOnClickListener(this);
         }
 
 
